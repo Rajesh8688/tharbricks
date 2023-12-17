@@ -1,0 +1,83 @@
+<?php
+
+namespace App\Models;
+
+use App\Permissions\HasPermissionsTrait;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+class User extends Authenticatable
+{
+    use HasFactory, Notifiable ,HasPermissionsTrait;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'first_name', 'email', 'password','mobile','last_name','back_end_user','profile_pic','address'
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+    public function scopeNonSmartOnly($query)
+    {
+        return $query->where('id', '!=', '1');
+    }
+
+    public function scopeBackEndUsers($query)
+    {
+        return $query->where('back_end_user', 1);
+    }
+     
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class)->withTimestamps();
+    }
+
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class)->withTimestamps();
+    }
+
+    // Return the user single role
+    public function hisRole()
+    {
+        foreach ($this->roles as $role) {
+            return $role->name;
+        }
+    }
+
+    public function hasRole($role_slug)
+    {
+        foreach ($this->roles as $role) {
+            if ($role->slug == $role_slug) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function assignRole($role)
+    {
+        $this->roles()->attach($role);
+    }
+}
