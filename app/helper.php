@@ -30,4 +30,20 @@ if (! function_exists('unique_slug')) {
         return $newSlug;
     }
 }
+//function for deleteImage image
+
+if (! function_exists('deleteImage')) {
+    function deleteImage($imagePath, $imageName)
+       {
+           $originalPath = $imagePath;
+   
+           // Delete the previous image
+           $imageCheck = $originalPath . $imageName;
+   
+           if (File::exists($imageCheck)) {
+               \File::delete($imageCheck);
+           }
+           return true;
+       }
+   }
 ?>

@@ -76,7 +76,7 @@ class CategoryController extends Controller
         if ($originalImage != NULL) {
             $newFileName = time() . $originalImage->getClientOriginalName();
 
-            $thumbnailPath = Category::$imageThumbPath;
+            $iconPath = Category::$imageIconPath;
             $originalPath = Category::$imagePath;
 
             if($originalImage->getClientOriginalExtension() == 'svg')
@@ -88,36 +88,39 @@ class CategoryController extends Controller
             else{
                 // Image Upload Process
                 $thumbnailImage = Image::make($originalImage);
-                $thumbnailImage->save($originalPath . $newFileName);
-                $thumbnailImage->resize(150, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                    })->save($thumbnailPath . $newFileName);
+                //$thumbnailImage->save($originalPath . $newFileName);
+                // $thumbnailImage->resize(150, null, function ($constraint) {
+                //     $constraint->aspectRatio();
+                //     })->save($thumbnailPath . $newFileName);
+                $thumbnailImage->resize(601,511)->save($originalPath . $newFileName);
+          
             }
+
 
             $data['image'] = $newFileName;
         }
 
-        $originalImage = $request->file('icon');
+        $iconImage = $request->file('icon');
 
-        if ($originalImage != NULL) {
-            $newFileName = time() . $originalImage->getClientOriginalName();
+        if ($iconImage != NULL) {
+            $newFileName = time() . $iconImage->getClientOriginalName();
 
-            $thumbnailPath = Category::$imageThumbPath;
-            $originalPath = Category::$imagePath;
+            $iconPath = Category::$imageIconPath;
 
-            if($originalImage->getClientOriginalExtension() == 'svg')
+            if($iconImage->getClientOriginalExtension() == 'svg')
             {
-                $newFileName = time().$originalImage->getClientOriginalName();
+                $newFileName = time().$iconImage->getClientOriginalName();
                 $destinationPath = env('SVG_IMAGE_UPLOAD_PATH' , public_path()).$originalPath;
-                $originalImage->move($destinationPath, $newFileName);
+                $iconImage->move($destinationPath, $newFileName);
             }
             else{
                 // Image Upload Process
-                $thumbnailImage = Image::make($originalImage);
-                $thumbnailImage->save($originalPath . $newFileName);
-                $thumbnailImage->resize(150, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                    })->save($thumbnailPath . $newFileName);
+                $thumbnailImage = Image::make($iconImage);
+                //$thumbnailImage->save($originalPath . $newFileName);
+                // $thumbnailImage->resize(150, null, function ($constraint) {
+                //     $constraint->aspectRatio();
+                //     })->save($thumbnailPath . $newFileName);
+                $thumbnailImage->resize(44,44)->save($iconPath . $newFileName);
             }
 
             $data['icon'] = $newFileName;
@@ -127,10 +130,9 @@ class CategoryController extends Controller
         $data['name'] = $request->name;
         $data['description'] = $request->description;
         $data['status'] = $request->status;
-        $data['valid_upto'] = $request->valid_upto;
         
         Category::create($data);
-        return redirect()->route('Category.index')->with('success','Category created Successfully');
+        return redirect()->route('category.index')->with('success','Category created Successfully');
     }
 
     // /**
@@ -150,17 +152,17 @@ class CategoryController extends Controller
     //  * @param int $id
     //  * @return \Illuminate\Http\Response
     //  */
-    // public function edit($id)
-    // {
-    //     $titles = ['title' => 'Manage Brand', 'subTitle' => 'Add Brand', 'listTitle' => 'Brand List'];
-    //     if (!auth()->user()->can('category-update')) {
-    //         return view('admin.abort', compact('titles'));
-    //     }
+    public function edit($id)
+    {
+        $titles = ['title' => 'Manage Category', 'subTitle' => 'Edit Category', 'listTitle' => 'Category List'];
+        if (!auth()->user()->can('category-update')) {
+            return view('admin.abort', compact('titles'));
+        }
 
-    //     $brand = Brand::find($id);
+        $category = Category::find($id);
 
-    //     return view('admin.brand.edit', compact('titles', 'brand'));
-    // }
+        return view('admin.category.edit', compact('titles', 'category'));
+    }
 
     // /**
     //  * Update the specified resource in storage.
@@ -169,45 +171,64 @@ class CategoryController extends Controller
     //  * @param int $id
     //  * @return \Illuminate\Http\Response
     //  */
-    // public function update(Request $request, $id)
-    // {
-    //     if (!auth()->user()->can('category-update')) {
-    //         return view('admin.abort');
-    //     }
+    public function update(Request $request, $id)
+    {
+        if (!auth()->user()->can('category-update')) {
+            return view('admin.abort');
+        }
 
-    //     $this->validate($request, [
-    //         'name_en' => 'required',
-    //         'name_ar' => 'required',
-    //     ]);
+        $this->validate($request, [
+            'name' => 'required',
+            'description' => 'required',
+            'status' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,svg,gif|max:2048',
+            'icon' => 'image|mimes:jpeg,png,jpg,svg,gif|max:2048',
+        ]);
 
-    //     $data = array();
+        $data = array();
 
-    //     $brand = Brand::find($id);
+        $category = Category::find($id);
 
-    //     $brandImage = $request->file('image');
+        $categoryImage = $request->file('image');
+        $categoryIcon = $request->file('icon');
 
-    //     if ($brandImage != NULL) {
+        if ($categoryImage != NULL) {
+            // Delete the previous image
+            deleteImage(Category::$imagePath, $category->image);
 
-    //         // Delete the previous image
-    //         $this->deleteImageBuddy(Brand::$imagePath, $brand->image);
 
-    //         $newFileName = time() . $brandImage->getClientOriginalName();
-    //         $originalPath = Brand::$imagePath;
+            $newFileName = time() . $categoryImage->getClientOriginalName();
+            $originalPath = Category::$imagePath;
 
-    //         // Image Upload Process
-    //         $thumbnailImage = Image::make($brandImage);
-    //         $thumbnailImage->save($originalPath . $newFileName);
+            // Image Upload Process
+            $thumbnailImage = Image::make($categoryImage);
+            //$thumbnailImage->save($originalPath . $newFileName);
+            $thumbnailImage->resize(601,511)->save($originalPath . $newFileName);
+            $category->image = $newFileName;
+        }
 
-    //         $brand->image = $newFileName;
-    //     }
+        
+        if ($categoryIcon != NULL) {
+            $newFileName = time() . $categoryIcon->getClientOriginalName();
+            $originalPath = Category::$imageIconPath;
+              // Delete the previous image
+            deleteImage(Category::$imageIconPath, $category->icon);
 
-    //     $brand->name_en = $request->name_en;
-    //     $brand->name_ar = $request->name_ar;
+            // Image Upload Process
+            $thumbnailImage = Image::make($categoryIcon);
+            //$thumbnailImage->save($originalPath . $newFileName);
+            $thumbnailImage->resize(44,44)->save($originalPath . $newFileName);
+            $category->icon = $newFileName;
+        }
 
-    //     $brand->save();
+        $category->name = $request->name;
+        $category->slug = unique_slug($request->name, 'Category' , $category->id);;
+        $category->status = $request->status;
 
-    //     return redirect()->route('brand.index')->with('success', 'Updated Successfully');
-    // }
+        $category->save();
+
+        return redirect()->route('category.index')->with('success', 'Updated Successfully');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -215,24 +236,21 @@ class CategoryController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    // public function destroy($id, Request $request)
-    // {
-    //     if (!auth()->user()->can('category-delete')) {
-    //         return view('admin.abort');
-    //     }
+    public function destroy($id, Request $request)
+    {
+        if (!auth()->user()->can('category-delete')) {
+            return view('admin.abort');
+        }
+        $deleteId = $request->delete_id;
+        $category = Category::find($deleteId);
 
-    //     $deleteId = $request->delete_id;
-    //     $brand = Brand::find($deleteId);
+        if ($deleteId) {
+            // Delete the previous image
+            deleteImage(Category::$imagePath, $category->image);
+            deleteImage(Category::$imageIconPath, $category->icon);
+            $category->delete();
 
-    //     if ($deleteId) {
-
-    //         // Delete the previous image
-    //         $this->deleteImageBuddy(Brand::$imagePath, $brand->image);
-    //         $this->deleteImageBuddy(Brand::$imagePath, $brand->banner_image);
-    //         $brand->delete();
-
-    //         return redirect()->route('brand.index')->with('success', 'Deleted Successfully');
-
-    //     }
-    // }
+            return redirect()->route('category.index')->with('success', 'Deleted Successfully');
+        }
+    }
 }

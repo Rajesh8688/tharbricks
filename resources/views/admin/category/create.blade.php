@@ -1,13 +1,9 @@
 @extends('admin.layouts.master')
 
 @section('extrastyle')
-
-
     <!-- Drop Zone Styles -->
     <link rel="stylesheet" type="text/css" href="{{asset('admin-assets/vendors/css/file-uploaders/dropzone.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('admin-assets/css/plugins/file-uploaders/dropzone.css')}}">
-
-
 @endsection
 
 @section('content')
@@ -56,8 +52,8 @@
                                                 <div class="row">
                                                     <div class="col-md-6 col-12">
                                                         <div class="form-group">
-                                                            <label for="name_en">Name </label>
-                                                            <input type="text" id="name" class="form-control @error('name') is-invalid @enderror" placeholder="Category Name" name="name_en" value="{{old('name')}}" autocomplete="off" required>
+                                                            <label for="name">Name </label>
+                                                            <input type="text" id="name" class="form-control @error('name') is-invalid @enderror" placeholder="Category Name" name="name" value="{{old('name')}}" autocomplete="off" required>
                                                             @error('name')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
@@ -65,24 +61,7 @@
                                                             @enderror
                                                         </div>
                                                     </div>
-                                                    <div class= "col-md-6 col-12">
-                                                        <div class="col-md-6 col-12">
-                                                            <label for="first-name-column">Image</label>
-                                                            <div class="form-label-group">
-                                                                
-                                                                <input type="file" id="image" class="form-control @error('image') is-invalid @enderror" placeholder="Image" name="image">
-                                                                @error('image')
-                                                                    <span class="invalid-feedback" role="alert">
-                                                                        <strong>{{ $message }}</strong>
-                                                                    </span>
-                                                                @enderror
-                                                                
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                <div class="row">
+                                                    
                                                     <div class="col-md-6 col-12">
                                                         <label for="first-name-column">Status</label>
                                                         <div class="form-label-group">
@@ -99,7 +78,39 @@
                                                   
                                                         </div>
                                                     </div>
-                                                   
+
+                                                </div>
+                                                <div class="row">
+                                                    <div class= "col-md-6 col-12">
+                                                        <div class="col-md-6 col-12">
+                                                            <label for="first-name-column">Icon(44*44)</label>
+                                                            <div class="form-label-group">
+                                                                
+                                                                <input type="file" id="icon" class="form-control @error('icon') is-invalid @enderror" placeholder="icon" name="icon" value="{{old('icon')}}">
+                                                                @error('icon')
+                                                                    <span class="invalid-feedback" role="alert">
+                                                                        <strong>{{ $message }}</strong>
+                                                                    </span>
+                                                                @enderror
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class= "col-md-6 col-12">
+                                                        <div class="col-md-6 col-12">
+                                                            <label for="first-name-column">Image(601*511)</label>
+                                                            <div class="form-label-group">
+                                                                
+                                                                <input type="file" id="image" class="form-control @error('image') is-invalid @enderror" placeholder="Image" name="image" value="{{old('image')}}">
+                                                                @error('image')
+                                                                    <span class="invalid-feedback" role="alert">
+                                                                        <strong>{{ $message }}</strong>
+                                                                    </span>
+                                                                @enderror
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
 
 

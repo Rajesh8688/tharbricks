@@ -1,4 +1,10 @@
-@extends('layouts.admin-master')
+@extends('admin.layouts.master')
+
+@section('extrastyle')
+    <!-- Drop Zone Styles -->
+    <link rel="stylesheet" type="text/css" href="{{asset('admin-assets/vendors/css/file-uploaders/dropzone.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('admin-assets/css/plugins/file-uploaders/dropzone.css')}}">
+@endsection
 
 @section('content')
 
@@ -24,7 +30,7 @@
                                         <hr>
                                         <x-admin-error-list-show></x-admin-error-list-show>
 
-                                        <form class="form" action="{{route('brand.update', $brand->id)}}"
+                                        <form class="form" action="{{route('category.update', $category->id)}}"
                                               method="post"
                                               enctype="multipart/form-data">
                                             @csrf
@@ -32,39 +38,87 @@
                                             <div class="form-body">
                                                 <div class="row">
 
-                                                    <div class="col-md-4 col-12">
+                                                    <div class="col-md-6 col-12">
+                                                        <label for="first-name-column"> Name </label>
                                                         <div class="form-label-group">
-                                                            <input type="text" id="name_en" class="form-control"
-                                                                   placeholder="Brand Name(English)"
-                                                                   name="name_en"
-                                                                   value="{{$brand->name_en}}" autocomplete="off">
-                                                            <label for="first-name-column">Category Name
-                                                                (English)</label>
+                                                            
+                                                            <input type="text" id="name" class="form-control"
+                                                                   placeholder="Category Name"
+                                                                   name="name"
+                                                                   value="{{$category->name}}" autocomplete="off">
+                                                            
+                                                            @error('name')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4 col-12">
+                                                    <div class="col-md-6 col-12">
+                                                        <label for="first-name-column">Status</label>
                                                         <div class="form-label-group">
-                                                            <input type="text" id="name_ar" class="form-control"
-                                                                   placeholder="Brand Name(Arabic)"
-                                                                   name="name_ar"
-                                                                   value="{{$brand->name_ar}}" autocomplete="off">
-                                                            <label for="first-name-column">Category Name
-                                                                (Arabic)</label>
+                                                        <select name="status" class="form-control @error('status') is-invalid @enderror" required>
+                                                            <option value = "" >Select Status</option>
+                                                            <option value = "Active" {{$category->status == 'Active' ? 'selected' : ''}}>Active</option>
+                                                            <option value = "InActive"{{$category->status == 'InActive' ? 'selected' : ''}} >InActive</option>
+                                                        </select>
+                                                        @error('status')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                  
                                                         </div>
                                                     </div>
 
-                                                </div>
+                                              
 
-                                                <div class="col-md-4 col-12"></div>
+                                           
+                                                  
 
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-label-group">
-                                                        <input type="file" id="image" class="form-control"
-                                                               placeholder="Brand Image"
-                                                               name="image">
-                                                        <label for="first-name-column">Image(165*165)</label>
+                                                    <div class= "col-md-6 col-12">
+                                                        <div class="col-md-6 col-12">
+                                                            <label for="first-name-column">Icon(44*44)</label>
+                                                            <div class="form-label-group">
+                                                                <input type="file" id="icon" class="form-control @error('icon') is-invalid @enderror" placeholder="icon" name="icon" value="{{old('icon')}}">
+                                                                {{-- @error('icon')
+                                                                    <span class="invalid-feedback" role="alert">
+                                                                        <strong>{{ $message }}</strong>
+                                                                    </span>
+                                                                @enderror --}}
+                                                                
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                    <div class= "col-md-6 col-12">
+                                                        <div class="col-md-6 col-12">
+                                                            <label for="first-name-column">Image(601*511)</label>
+                                                            <div class="form-label-group">
+                                                                
+                                                                <input type="file" id="image" class="form-control @error('image') is-invalid @enderror" placeholder="Image" name="image" value="{{old('image')}}">
+                                                                {{-- @error('image')
+                                                                    <span class="invalid-feedback" role="alert">
+                                                                        <strong>{{ $message }}</strong>
+                                                                    </span>
+                                                                @enderror --}}
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="description">Description </label>
+                                                                <textarea id="ckeditor" class="form-control @error('description') is-invalid @enderror" rows="5" placeholder="Description" name="description" required>{{$category->description}}</textarea>
+                                                                @error('description')
+                                                                    <span class="invalid-feedback" role="alert">
+                                                                        <strong>{{ $message }}</strong>
+                                                                    </span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>  
 
                                                 <div>&nbsp;</div>
                                                 <div class="col-md-8 offset-md-4">
@@ -89,7 +143,7 @@
 
 @endsection
 
-@section('scripts')
+@section('extrascript')
     <script>
         $('.zero-configuration').DataTable(
             {

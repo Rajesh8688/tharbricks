@@ -37,7 +37,8 @@
                                                 <thead>
                                                 <tr>
                                                     <th>Name</th>
-                                                    <th>Image</th>
+                                                    <th>Icon</th>
+                                                    <th>Status</th>
                                                     <th>Actions</th>
                                                 </tr>
                                                 </thead>
@@ -47,10 +48,14 @@
                                                     @foreach($categories as $category)
                                                         <tr>
                                                             <td>{{$category->name}}</td>
-                                                            <td class="product-img"><img
-                                                                    src="{{$category->image ?  asset('uploads/category/'.$category->image) : $noImage}} "
-                                                                    width="50"/></td>
+                                                            <td class="product-img">
+                                                                <img
+                                                                    src="{{$category->icon ?  asset('uploads/categories/icons/'.$category->icon) : $noImage}} "
+                                                                    width="44"/>
+                                                            </td>
+                                                            <td>{{$category->status}}</td>
                                                             <td>
+                                                          
                                                                 @can('category-update')
                                                                     <a href="{{ route('category.edit', $category->id) }}"><i
                                                                             class="feather icon-edit"></i> Edit</a> |
@@ -90,7 +95,7 @@
 @endsection
 
 
-@section('scripts')
+@section('extrascript')
     <script>
         $('.zero-configuration').DataTable(
             {
