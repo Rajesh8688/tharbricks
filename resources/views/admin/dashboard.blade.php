@@ -12,25 +12,54 @@
             <section id="dashboard-analytics">
                 <div class="row match-height ">
                     <!-- Description lists horizontal -->
-                    <div class="col-sm-12 col-md-3">
+                    <div class="col-sm-12 col-md-6">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">{{__('lang.total_customer')}}</h4>
+                                <h4 class="card-title">Categories</h4>
                             </div>
                             <div class="card-content">
                                 <div class="card-body">
                                     <div class="card-text">
                                         <dl class="row">
-                                            <dt class="col-sm-7 col-7"> {{__('lang.app')}} :</dt>
-                                            <dd class="col-sm-5 col-5"> {{$dashboardDetails['appCustomers']}} </dd>
+                                            <dt class="col-sm-7 col-7"> Total </dt>
+                                            <dd class="col-sm-5 col-5"> : &nbsp; 0 </dd>
                                         </dl>
                                         <dl class="row">
-                                            <dt class="col-sm-7 col-7"> {{__('lang.web')}} :</dt>
-                                            <dd class="col-sm-5 col-5"> {{$dashboardDetails['webCustomers']}} </dd>
+                                            <dt class="col-sm-7 col-7"> Active </dt>
+                                            <dd class="col-sm-5 col-5"> : &nbsp; {{$dashboardDetails['appCustomers']}} </dd>
                                         </dl>
                                         <dl class="row">
-                                            <dt class="col-sm-7 col-7"> {{__('lang.guest')}} :</dt>
-                                            <dd class="col-sm-5 col-5"> {{$dashboardDetails['guestCustomers']}} </dd>
+                                            <dt class="col-sm-7 col-7"> InActive :</dt>
+                                            <dd class="col-sm-5 col-5"> : &nbsp; {{$dashboardDetails['webCustomers']}} </dd>
+                                        </dl>
+                                       
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/ Description lists horizontal-->
+                    <!-- Description lists horizontal -->
+                    <div class="col-sm-12 col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title"> Vendors  </h4>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="card-text">
+                                        <dl class="row">
+                                            <dt class="col-sm-7 col-7">Total </dt>
+                                            <dd class="col-sm-5 col-5"> : &nbsp; 0 </dd>
+                                        </dl>
+                                        <dl class="row">
+                                            <dt class="col-sm-7 col-7">Active </dt>
+                                            <dd class="col-sm-5 col-5"> : &nbsp;  0 </dd>
+                                        </dl>
+                                        <dl class="row">
+                                            <dt class="col-sm-7 col-7">InActive </dt>
+                                            <dd class="col-sm-5 col-5"> : &nbsp; 0 </dd>
                                         </dl>
 
                                     </div>
@@ -40,35 +69,7 @@
                     </div>
                     <!--/ Description lists horizontal-->
                     <!-- Description lists horizontal -->
-                    <div class="col-sm-12 col-md-3">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title"> {{__('lang.total_bookings')}}  </h4>
-                            </div>
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <div class="card-text">
-                                        <dl class="row">
-                                            <dt class="col-sm-7 col-7">{{__('lang.total')}} :</dt>
-                                            <dd class="col-sm-5 col-5">{{$dashboardDetails['totalBookings']}}</dd>
-                                        </dl>
-                                        <dl class="row">
-                                            <dt class="col-sm-7 col-7">{{__('lang.confirmed')}} :</dt>
-                                            <dd class="col-sm-5 col-5"> {{$dashboardDetails['confirmedBookings']}}</dd>
-                                        </dl>
-                                        <dl class="row">
-                                            <dt class="col-sm-7 col-7">{{__('lang.canceled')}} :</dt>
-                                            <dd class="col-sm-5 col-5"> 0 </dd>
-                                        </dl>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/ Description lists horizontal-->
-                    <!-- Description lists horizontal -->
-                    <div class="col-sm-12 col-md-3">
+                    {{-- <div class="col-sm-12 col-md-3">
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">{{__('lang.total_sales')}} </h4>
@@ -93,10 +94,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <!--/ Description lists horizontal-->
                     <!-- Description lists horizontal -->
-                    <div class="col-sm-12 col-md-3">
+                    {{-- <div class="col-sm-12 col-md-3">
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title"> {{__('lang.total_statistics')}} </h4>
@@ -121,7 +122,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <!--/ Description lists horizontal-->
 
                    

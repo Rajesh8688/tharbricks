@@ -27,6 +27,8 @@ Route::group([
     Route::resource('permission', \App\Http\Controllers\Admin\PermissionController::class);//Permissions
     Route::resource('category', \App\Http\Controllers\Admin\CategoryController::class);//Category
 
+    Route::resource('user_request', \App\Http\Controllers\Admin\UserRequestController::class);//UserRequest
+
     Route::get('/user', [App\Http\Controllers\Admin\UserController::class, 'UserList'])->name('admin.userList');
     Route::get('/edit', [App\Http\Controllers\Admin\UserController::class, 'editUser'])->name('admin.editUser');
     Route::post('/updateUser/{id}', [App\Http\Controllers\Admin\UserController::class, 'updateUser'])->name('admin.updateUser');

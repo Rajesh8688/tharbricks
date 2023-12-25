@@ -7,7 +7,7 @@
                 <!--Logo section start-->
                 <div class="logo-header">
                     <div class="logo-header-inner logo-header-one">
-                      <a href="index.html">
+                      <a href="{{url('/')}}">
                       <img src="{{ asset('frontEnd/images/logo-dark.png')}}" alt="">
                       </a>
                     </div>
@@ -27,6 +27,7 @@
 
                     <ul class=" nav navbar-nav">
                       <li class="{{Request::segment(1) == '' ? 'current-menu-item' : '' }}" ><a href="{{url('/')}}">Home</a></li>
+                      <li class="{{Request::segment(1) == 'category' ? 'current-menu-item' : '' }}" ><a href="{{route('category')}}">Category</a></li>
 
                       <li class="has-child">
                           <a href="javascript:;">Pages</a>

@@ -37,7 +37,10 @@
             @can('category-view')
             <li class=" nav-item {{Request::segment(2) == 'category' ? 'active' : '' }}"><a href="{{route('category.index')}}"><i class="feather icon-calendar"></i><span class="menu-title" data-i18n="Categories">Category</span></a>
             </li>
-            
+            @endcan
+            @can('user-request-view')
+                <li class=" nav-item {{Request::segment(2) == 'user_request' ? 'active' : '' }}"><a href="{{route('user_request.index')}}"><i class="feather icon-message-circle"></i><span class="menu-title" data-i18n="User Requests">User Requests</span></a>
+                </li>
             @endcan
             @can('popular-events-news-view')
             <li class=" nav-item {{Request::segment(2) == 'popular-events-news' ? 'active' : '' }}"><a href="{{route('popular-events-news.index')}}"><i class="feather icon-calendar"></i><span class="menu-title" data-i18n="Offers">Popular Events News</span></a>

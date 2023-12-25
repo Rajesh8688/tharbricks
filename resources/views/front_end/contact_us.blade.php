@@ -11,7 +11,7 @@
                 <div class="sf-banner-heading-large">Contact Us</div>
                 <div class="sf-banner-breadcrumbs-nav">
                     <ul class="list-inline">
-                    <li><a href="index.html"> Home </a></li>
+                    <li><a href="{{url('/')}}"> Home </a></li>
                     <li>Contact us</li>
                     </ul>
                 </div>
@@ -44,8 +44,7 @@
                             </div>
                             <div class="sf-contact-info">
                                 <h4 class="sf-title">Mailing Address</h4>
-                                <p>121 King Street, Melbourne 
-                                    Victoria 3000 Australia</p>
+                                <p>#36,2nd floor,opp to muthoot fincrop,TC palya,kR puram, Bangalore -560036</p>
                             </div>
                         </div>
                     </div>
@@ -57,7 +56,8 @@
                             </div>
                             <div class="sf-contact-info">
                                 <h4 class="sf-title">Email Info</h4>
-                                <p>info@brandcoin.com</p><p>support@brandcoin.com</p>
+                                <p>info@tharbricks.com</p>
+                            <br>
                             </div>
                         </div>
                     </div>
@@ -69,8 +69,9 @@
                             </div>
                             <div class="sf-contact-info">
                                 <h4 class="sf-title">Phone Number</h4>
-                                <p>0800-123456 (24/7 Support Line)</p>
-                                <p>0800-123654</p>
+                                <p>7624886912 (24/7 Support Line)</p>
+                            <br>
+                                
                             </div>
                         </div>
                     </div>
@@ -84,45 +85,84 @@
                     <div class="sf-con-form-title text-center">
                         <h2 class="m-b30">Contact Information</h2>
                     </div>
-                    <form class="contact-form" method="post">
+
+                    @if(session('success'))
+                        <div class="alert alert-success alert-dismissible fade show">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong>Success!</strong>  {{session('success')}}
+                          </div>
+                    @endif
+                    @if(session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            {{session('error')}}
+                          </div>
+                    @endif
+                    <form class="contact-form" method="post" action="{{route('submitContactUs')}}">
+                        @csrf
                         <div class="row">
                             
                             <!-- COLUMNS 1 -->
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" name="fullname" placeholder="Name" class="form-control" required>
+                                    <input type="text" name="name" placeholder="Name" class="form-control @error('name') is-invalid @enderror" required>
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             
                             <!-- COLUMNS 2 -->
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" name="email" placeholder="Email" class="form-control" required>
+                                    <input type="text" name="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" required>
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             <!-- COLUMNS 3 -->
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" name="phone" placeholder="Phone" class="form-control">
+                                    <input type="text" name="phone" placeholder="Phone" class="form-control  @error('phone') is-invalid @enderror" required>
+                                    @error('phone')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             <!-- COLUMNS 4 -->
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" name="subject" placeholder="Subject" class="form-control" required>
+                                    <input type="text" name="subject" placeholder="Subject" class="form-control  @error('subject') is-invalid @enderror" required>
+                                    @error('subject')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
 
                             <!-- COLUMNS 5 -->
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <textarea name="message" placeholder="Message" class="form-control" required></textarea>
+                                    <textarea name="message" placeholder="Message" class="form-control @error('message') is-invalid @enderror" required></textarea>
+                                    @error('message')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                                 </div>
                             </div>
                             
-                            <div class="col-md-12">
+                            {{-- <div class="col-md-12">
                                 <div class="g-recaptcha" data-sitekey="6LeBsyIeAAAAAFfgca0q_h1Dxoy8ekbilrjdBlMf"></div>
-                            </div>
+                            </div> --}}
                             
                             
                         </div>
@@ -163,7 +203,7 @@
             </div>
             <div class="sf-map-wrap">
                 <div class="gmap-area">
-                    <iframe src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=1%20Grafton%20Street,%20Dublin,%20Ireland+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3887.2100748581593!2d77.69496307507727!3d13.022290187297722!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTPCsDAxJzIwLjIiTiA3N8KwNDEnNTEuMSJF!5e0!3m2!1sen!2sin!4v1703182080489!5m2!1sen!2sin" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>

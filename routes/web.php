@@ -15,3 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\FrontEnd\HomeController::class, 'index'])->name('home');
 Route::get('contact-us', [App\Http\Controllers\FrontEnd\HomeController::class, 'contactUs'])->name('contactUs');
+Route::post('submitContactUs', [App\Http\Controllers\FrontEnd\HomeController::class, 'submitContactUs'])->name('submitContactUs');
+
+//category
+Route::get('category', [App\Http\Controllers\FrontEnd\CategoryController::class, 'index'])->name('category');
+Route::get('category/{slug}', [App\Http\Controllers\FrontEnd\CategoryController::class, 'categoryDetails'])->name('categoryDetails');
