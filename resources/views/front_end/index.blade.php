@@ -1,4 +1,8 @@
 @extends('front_end.layouts.master')
+@section('extrastyle')
+    <link rel="stylesheet" href="{{ asset('frontEnd/css/image-radio-master/bootstrap-image-checkbox.css')}}">
+    <link rel="stylesheet" href="{{ asset('frontEnd/css/chosen.min.css')}}">
+@endsection
 @section('content')
     <!-- CONTENT START -->
     <div class="page-content">
@@ -114,17 +118,17 @@
                     <div class="aon-categories-area2-section">
                         <div class="row justify-content-center">
                             @foreach ($Categories as $item)
-                            <div class="col-lg-4 col-md-6">
-                                <div class="media-bg-animate mba-bdr-15">
-                                    <div class="aon-categories-area2-iconbox aon-icon-effect">
+                            <div class="col-lg-4 col-md-6" >
+                                <div class="media-bg-animate mba-bdr-15" >
+                                    <div class="aon-categories-area2-iconbox aon-icon-effect" onclick="QuestionsModel({{$item->id}} ,'{{$item->name}}')">
                                         <div class="aon-cate-area2-icon">
                                             <span>
-                                                
                                                 <i class="aon-icon"><img src="{{asset('uploads/categories/icons/'.$item->icon)}}" alt=""></i>
                                             </span>
                                         </div>
                                         <div class="aon-cate-area2-content">
-                                            <h4 class="aon-tilte"><a href="{{route('categoryDetails',['slug'=>$item->slug])}}">{{$item->name}}</a></h4>
+                                            {{-- <h4 class="aon-tilte"><a href="{{route('categoryDetails',['slug'=>$item->slug])}}">{{$item->name}}</a></h4> --}}
+                                            <h4 class="aon-tilte">{{$item->name}}</h4>
                                             <p>0 Listing</p>
                                         </div>
                                     </div>
@@ -526,7 +530,7 @@
                     </div>
                 </div>
                 
-                <div class="section-content">
+                {{-- <div class="section-content">
                     <div class="aon-postjobs-area2-section">
                         <div class="row">
                             <!-- COLUMNS 1 -->
@@ -732,7 +736,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
             </div>
         </div>
@@ -1172,4 +1176,302 @@
 
     </div>
     <!-- CONTENT END -->
+    {{-- <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+      
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+              <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+      
+        </div>
+      </div> --}}
+      <div class="modal fade" id="QuestionModel" >
+        <div class="modal-dialog" style="margin-top:10px">
+          <div class="modal-content">
+              
+              <div class="modal-header">
+                <h4 class="modal-title" id = "CategoryName">Modal </h4>
+                <button type="button" class="close"  onclick = "closeModelPopup()" >&times;</button>
+                {{--  --}}
+              </div>
+              <div class="modal-body">
+                  <div class="sf-custom-tabs sf-custom-new aon-logon-sign-area p-3">
+                    <div id="Upcoming">
+                        <div class="sf-tabs-content">
+                            <form id="multiStepForm" method="POST" action="{{route('addRequirement')}}">
+                                @csrf
+                                <input type="hidden" name="category_id" id="category_id" value ="">
+                                <div id = "stepsList">
+                                    {{-- <div class="checkbox sf-radio-checkbox">
+                                        <label >
+                                            <input id="td2_2" name="abc" value="five" type="checkbox" >
+                                            <label for="td2_2">Keep me logged Keep me logged Keep me logged Keep me logged</label>
+                                        </label>
+                                    </div> --}}
+                                  
+
+                                </div>
+                              </form>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+@endsection
+@section('extraScripts')
+
+<script  src="{{ asset('frontEnd/js/source.js')}}"></script>
+<script src="{{ asset('frontEnd/js/chosen.jquery.js')}}"></script>
+
+
+<script>
+   
+    var url = "{{route('getQuestions')}}";
+    var currentStep = 1;
+
+    function QuestionsModel(categoryId,categoryName){  
+        currentStep = 1;
+        getQuestions(categoryId);
+        $('#QuestionModel').modal({backdrop: 'static',keyboard: true, show: true}); 
+        $("#category_id").val(categoryId);
+        $("#CategoryName").text(categoryName);
+    }
+
+    function prevQuestion(step){
+        $(".step").hide();
+        $(".step[data-step='" + step + "']").show();
+        $(".step[data-step='" + (step+1) + "']").remove();
+    }
+
+    function updateStep() {
+      $(".step").hide();
+      $(".step[data-step='" + currentStep + "']").show();
+    }
+
+    function getQuestions(categoryId=null ,questionId = null,step =1){
+   
+        $.ajax({
+            type: 'get',
+            url: url,
+            data: {
+            'categoryId' : categoryId,
+            'questionId' : questionId,
+            },
+            beforeSend: function () { 
+            //need to show loader
+                },
+            success: function (response) {
+                htmlMaker(response,categoryId,categoryId);
+            },
+            complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                // $("#serachpnrfromsubmit").prop('disabled',false);
+                // $("#serachpnrfromsubmit").find('span').html( '' );
+                
+                },
+            error:function(response){
+            $("#appliedCouponCode").val(couponCode);
+            $html = `<div class="alert alert-danger">
+                            <strong>Error!</strong> `+response.error+`
+                        </div>`;
+                $("#couponResponse").html($html);
+                $("#couponCodeAmount").text(response.CouponAmount);
+                $("#totalamount").text(response.AfterApplyingCouponTotalAmount);
+                $("#standedamount").text(response.AfterApplyingCouponStandedAmount);
+            }
+        });
+
+    }
+
+    function htmlMaker(response,categoryId,questionId,isStatic = "no"){
+        var toAppend = true;
+
+        currentStep = $(".step[data-step]").length;
+        toAppend = false;
+
+        if(isStatic == "no"){
+            if(response.data.length == 0){
+                html = `<h4>No Questions Found</h4>`;
+                toAppend = false;
+            }else{
+                toAppend = true;
+
+                html = `<div class="step" data-step="`+currentStep+`" >
+                            <h3 style="padding-bottom: 10px;">`+response.data.question_text+`</h3>`;
+                if(response.data.type == 'input'){
+                    html += `<div id ="error`+currentStep+`" style="display: none;color: red;" class="alert alert-danger">Please enter the answer</div>
+                    <div class="form-group">
+                        <input type="text" class="form-control QuestionStep`+currentStep+`"  name="`+response.data.slug+`" required>
+                    </div>`;
+                }else if(response.data.type == 'date'){
+                    html += `<div id ="error`+currentStep+`" style="display: none;color: red;" class="alert alert-danger">Please select the date</div>
+                    <div class="form-group">
+                        <input type="date" class="form-control QuestionStep`+currentStep+`"  name="`+response.data.slug+`">
+                    </div>`;
+                }else if(response.data.type == 'normalRadio'){
+                    html += `<div id ="error`+currentStep+`" style="display: none;color: red;" class="alert alert-danger">Please select an option</div>
+                    <div class="form-group">
+                        <div class="aon-inputicon-box"> 
+                            <div class="radio-box">`
+                        response.data.options.forEach(option => {
+                        html += `<div class="checkbox sf-radio-checkbox">
+                                    <input id="loc`+option.id+`" name="`+response.data.slug+`" value="`+option.id+`" type="radio" class = "QuestionStep`+currentStep+`" data-nextQuestionId = "`+option.next_question_id+`">
+                                    <label for="loc`+option.id+`">`+option.option_text+`</label>
+                                </div>`
+                    }); 
+                    // if(response.data.show_other_option == 1){
+                    //     html +=`<div class="checkbox sf-radio-checkbox">
+                    //                 <input id="locOther`+response.data.id+`" name="`+response.data.slug+`" value="other" type="radio" class = "QuestionStep`+currentStep+`" data-nextQuestionId = "">
+                    //                 <label for="locOther`+response.data.id+`"><input type = "text" placeholder ="Other" name=""></label>
+                    //             </div>`;
+                    // }
+                    html +=  `</div>
+                            </div>
+                        </div>`;
+                }else if(response.data.type == 'imageRadio'){
+                    html += `<div id ="error`+currentStep+`" style="display: none;color: red;" class="alert alert-danger">Please select an option</div>
+                    <div class="form-group"> 
+                        <div class="row">`
+                    response.data.options.forEach(option => {
+                        image = "{{asset('uploads/questions/options')}}"+"/"+option.image
+                        html += `<div class="col-md-6 pb-3">
+                                    <div class="custom-control custom-radio image-checkbox card" style="border-radius: 5%;">
+                                        <input type="radio" class="custom-control-input QuestionStep`+currentStep+`" id="ck`+option.id+`" name="`+response.data.slug+`" value = "`+option.id+`" data-nextQuestionId = "`+option.next_question_id+`">
+                                        <label class="custom-control-label" for="ck`+option.id+`">
+                                            <img src="`+image+`" alt="#" class="img-fluid" style="border-radius: 5% 5% 0% 0%;">
+                                                <div style="text-align: center;"> `+option.option_text+` </div>
+                                        </label>
+                                    </div>
+                                </div> `;
+                    }); 
+                    
+                    html +=  `</div>
+                        </div>`;
+                }
+
+                // else if(response.data.type == 'multiSelect'){
+
+                //     html += `<div class="form-group"> 
+                //         <div class="row">
+                //             <select data-placeholder="Choose a Country..." class="mselect QuestionStep`+currentStep+`" name ="`+response.data.slug+`" multiple style="width: 200px">`
+                //     response.data.options.forEach(option => {
+                //         html += `<option value="`+option.id+`">`+option.option_text+`</option>`;
+                //     }); 
+                //     html +=  `
+                //                 </select>
+                //                 </div>
+                //             </div>`;
+                // }
+                else if(response.data.type == 'multiSelect'){
+                html += `<div id ="error`+currentStep+`" style="display: none;color: red;" class="alert alert-danger">Please select an option</div>
+                <div class="form-group">` 
+                    response.data.options.forEach(option => {
+                        html += `<div class="checkbox sf-radio-checkbox">
+                            <label >
+                                <input id="td2_`+option.id+`" name="`+response.data.slug+`[]" value="`+option.id+`" type="checkbox" class ="QuestionStep`+currentStep+`">
+                                <label for="td2_`+option.id+`">`+option.option_text+`</label>
+                            </label>
+                        </div>`
+                    });
+                    html += `</div>`;
+                }
+                html += `<div style="float:right">`
+                if(currentStep != 0){
+                    html += `<button type="button"  class="site-button" onclick = "prevQuestion(`+(currentStep-1)+`)" style="margin-right: 10px;">Prev </button>`
+                }
+                html += `<button type="button"  class="site-button" onclick = "nextQuestion('`+response.data.type+`',`+response.data.next_question_id+`)" >Next </button>
+                            </div>   
+                        </div>`;
+            }
+        }else{
+            toAppend = true;
+            html = `<div class="step" data-step="`+currentStep+`" >
+                        <h3>Email </h3>   
+                        <div class="form-group">
+                            <input type="email" class="form-control QuestionStep`+currentStep+`"  name="email" required>
+                        </div>
+                        <h3>Phone </h3>
+                        <div class="form-group">
+                            <input type="text" class="form-control QuestionStep`+currentStep+`"  name="phone" required>
+                        </div>
+                        <div style="float:right">
+                            <button type="button"  class="site-button" onclick = "prevQuestion(`+(currentStep-1)+`)" style="margin-right: 10px;">Prev </button>
+                            <button type="submit"  class="site-button"  >Submit </button>
+                        </div>
+                    </div>`;
+        }
+
+        if(toAppend == false){
+            $("#stepsList").html(html);
+        }else{
+            $("#stepsList").append(html);
+        }
+        if(isStatic =="no" && response.data.type == 'multiSelect'){
+            $(".mselect").chosen({width: "100%" ,"padding":"16px"}); 
+        }
+        updateStep();
+    }
+
+
+    function nextQuestion(formtype,questionId){
+        validateStep = ($(".step[data-step]").length - 1);
+    
+        var isvalid = false;
+        isvalid = validateAnswer(formtype , validateStep);
+        if(isvalid){
+            if(questionId == null){
+                htmlMaker(null,null,null,'yes');
+            }else{
+                if(formtype == "imageRadio" || formtype == "normalRadio"){
+                    optionNext =  $(".QuestionStep"+validateStep+":checked").data("nextquestionid");
+                    if(!(optionNext == '' || optionNext == null || optionNext == undefined )){
+                        questionId = optionNext;
+                    }
+                }
+                getQuestions(null,questionId);
+            }
+        }   
+    }
+    
+    function validateAnswer(formtype ,validateStep){
+        if(formtype == "input" || formtype == "date" || formtype == "imageRadio" || formtype == "normalRadio" || formtype == "multiSelect"){
+            if(formtype == "input" || formtype == "date"){
+                value = $(".QuestionStep"+validateStep).val();
+            }else if(formtype == "imageRadio"  || formtype == "normalRadio"){
+                value =  $(".QuestionStep"+validateStep+":checked").val();
+            }else if(formtype == "multiSelect"){
+                value =  $('.QuestionStep'+validateStep).is(':checked');
+            }
+            if(value == '' || value == undefined || value == false){
+                console.log("dd",value);
+                $("#error"+validateStep).css("display","block");
+                return false;
+            }else{
+                $("#error"+validateStep).css("display","none");
+            }
+        }
+        return true;
+    }
+
+    function closeModelPopup(){
+        categoryName = $("#CategoryName").text();
+        text = 'Are you sure you want to close the '+categoryName+ ' category ?';
+        confirmMessage = confirm(text);
+        if(confirmMessage){
+            $(".step").remove();
+            $('#QuestionModel').modal('toggle'); 
+        }
+    }
+</script>
 @endsection

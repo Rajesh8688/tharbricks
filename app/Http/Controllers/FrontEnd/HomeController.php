@@ -14,6 +14,7 @@ class HomeController extends Controller
             'title' => "Home",
         ];
         $Categories = Category::where("status" , "Active")->get();
+        //return view('front_end.test');
         return view('front_end.index',compact('titles','Categories'));
     }
 

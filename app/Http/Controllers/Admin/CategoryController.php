@@ -224,6 +224,7 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->slug = unique_slug($request->name, 'Category' , $category->id);;
         $category->status = $request->status;
+        $category->description = $request->description;
 
         $category->save();
 

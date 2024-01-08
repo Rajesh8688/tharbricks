@@ -29,6 +29,9 @@ Route::group([
 
     Route::resource('user_request', \App\Http\Controllers\Admin\UserRequestController::class);//UserRequest
 
+    Route::resource('question', \App\Http\Controllers\Admin\QuestionController::class);//question
+    Route::get('/get-category-question', [\App\Http\Controllers\Admin\QuestionController::class , 'getCategoryQuestions'])->name('getCategoryQuestions');
+
     Route::get('/user', [App\Http\Controllers\Admin\UserController::class, 'UserList'])->name('admin.userList');
     Route::get('/edit', [App\Http\Controllers\Admin\UserController::class, 'editUser'])->name('admin.editUser');
     Route::post('/updateUser/{id}', [App\Http\Controllers\Admin\UserController::class, 'updateUser'])->name('admin.updateUser');

@@ -110,6 +110,11 @@
     <script src="{{asset('admin-assets/js/scripts/tooltip/tooltip.js')}}"></script>
     <!-- END: Page JS-->
     <script>
+        function generateUniqueId() {
+            const randomId = Math.random().toString(36).substr(2, 9);
+            return  randomId;
+        }
+
         ClassicEditor
         .create( document.querySelector( '#ckeditor' ))
         .catch( error => {

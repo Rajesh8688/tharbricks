@@ -22,15 +22,15 @@
                                     <div class="card-text">
                                         <dl class="row">
                                             <dt class="col-sm-7 col-7"> Total </dt>
-                                            <dd class="col-sm-5 col-5"> : &nbsp; 0 </dd>
+                                            <dd class="col-sm-5 col-5"> : &nbsp; {{$dashboardDetails['categoryCount']}} </dd>
                                         </dl>
                                         <dl class="row">
                                             <dt class="col-sm-7 col-7"> Active </dt>
-                                            <dd class="col-sm-5 col-5"> : &nbsp; {{$dashboardDetails['appCustomers']}} </dd>
+                                            <dd class="col-sm-5 col-5"> : &nbsp; {{$dashboardDetails['categoryActiveCount']}} </dd>
                                         </dl>
                                         <dl class="row">
                                             <dt class="col-sm-7 col-7"> InActive :</dt>
-                                            <dd class="col-sm-5 col-5"> : &nbsp; {{$dashboardDetails['webCustomers']}} </dd>
+                                            <dd class="col-sm-5 col-5"> : &nbsp; {{$dashboardDetails['categoryInActiveCount']}} </dd>
                                         </dl>
                                        
 

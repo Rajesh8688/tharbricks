@@ -12,6 +12,11 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable ,HasPermissionsTrait;
 
+    public static $imagePath = 'uploads' . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR;
+    public static $imageThumbPath = 'uploads' . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR . 'thumb' . DIRECTORY_SEPARATOR;
+    public static $imageUrl = 'uploads/users/';
+    public static $imageThumbUrl = 'uploads/users/thumb/';
+
     /**
      * The attributes that are mass assignable.
      *

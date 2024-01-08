@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\FlightBooking;
-use App\Models\FlightBookingTravelsInfo;
+use App\Models\Category;
 use App\Models\GuestUser;
+use Illuminate\Http\Request;
+use App\Models\FlightBooking;
+use App\Http\Controllers\Controller;
+use App\Models\FlightBookingTravelsInfo;
 
 class HomeController extends Controller
 {
@@ -44,13 +45,17 @@ class HomeController extends Controller
         //     $bookings = FlightBooking::with('TravelersInfo','Customercountry')->whereDate('created_at', '=', date('Y-m-d'))->orderBy('id','DESC')->get();
         // }
 
+        $categoryActiveCount = count(Category::where('status' , 'Active')->get());
+        $categoryInActiveCount = count(Category::where('status' , 'InActive')->get());
+        $categoryCount = $categoryActiveCount + $categoryInActiveCount;
+
        
 
 
         $dashboardDetails = array(
-            'appCustomers' => 0,
-            'webCustomers' => 0,
-            'guestCustomers' => 0,
+            'categoryActiveCount' => $categoryActiveCount,
+            'categoryInActiveCount' => $categoryInActiveCount,
+            'categoryCount' => $categoryCount,
             'totalCustomers' => 0,
             'totalBookings' => 0,
             'confirmedBookings' => 0,

@@ -17,6 +17,11 @@ Route::get('/', [App\Http\Controllers\FrontEnd\HomeController::class, 'index'])-
 Route::get('contact-us', [App\Http\Controllers\FrontEnd\HomeController::class, 'contactUs'])->name('contactUs');
 Route::post('submitContactUs', [App\Http\Controllers\FrontEnd\HomeController::class, 'submitContactUs'])->name('submitContactUs');
 
+Route::get('getQuestions', [App\Http\Controllers\FrontEnd\QuestionsController::class, 'getQuestion'])->name('getQuestions');
+Route::post('storeRequirement', [App\Http\Controllers\FrontEnd\RequirementController::class, 'storeRequirement'])->name('addRequirement');
+
+
+
 //category
 Route::get('category', [App\Http\Controllers\FrontEnd\CategoryController::class, 'index'])->name('category');
 Route::get('category/{slug}', [App\Http\Controllers\FrontEnd\CategoryController::class, 'categoryDetails'])->name('categoryDetails');

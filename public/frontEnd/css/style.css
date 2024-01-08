@@ -3454,7 +3454,7 @@ select {
   padding-left: 30px !important;
   position: relative;
   cursor: pointer;
-  line-height: 1.3;
+  line-height: 1.6;
 }
 .sf-radio-checkbox input[type=checkbox] + label:hover:before, .sf-radio-checkbox input[type=radio] + label:hover:before {
   border-color: #402909;

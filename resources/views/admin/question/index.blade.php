@@ -13,8 +13,8 @@
                 <section class="invoice-print mb-1">
                     <div class="row">
                         <div class="col-12 col-md-12 d-flex flex-column flex-md-row justify-content-end">
-                            <a href="{{route('category.create')}}" class="btn btn-primary btn-print mb-1 mb-md-0"><i
-                                    class="feather icon-plus-circle"></i>&nbsp;Add Category</a>
+                            <a href="{{route('question.create')}}" class="btn btn-primary btn-print mb-1 mb-md-0"><i
+                                    class="feather icon-plus-circle"></i>&nbsp;Add Question</a>
                             </a>
                         </div>
                     </div>
@@ -36,39 +36,44 @@
                                             <table class="table zero-configuration">
                                                 <thead>
                                                 <tr>
-                                                    <th>Name</th>
-                                                    <th>Icon</th>
+                                                    <th>Question</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
                                                     <th>Status</th>
                                                     <th>Actions</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
 
-                                                @if(count($categories) > 0)
-                                                    @foreach($categories as $category)
+                                                @if(count($questions) > 0)
+                                                    @foreach($questions as $question)
                                                         <tr>
-                                                            <td>{{$category->name}}</td>
-                                                            <td class="product-img">
-                                                                <img
-                                                                    src="{{$category->icon ?  asset('uploads/categories/icons/'.$category->icon) : $noImage}} "
-                                                                    width="44"/>
+                                                            <td>{{$question->question_text}}</td>
+                                                            <td>@if($question->type == "imageRadio")
+                                                                {{"Image Radio"}}
+                                                                @elseif($question->type == "normalRadio")
+                                                                {{"Normal Radio"}}
+                                                                @elseif($question->type == "multiSelect")
+                                                                {{"Multi Select"}}
+                                                                @else
+                                                                {{ucfirst($question->type)}}
+                                                                @endif
                                                             </td>
-                                                            <td>{{$category->status}}</td>
+                                                            <td>{{$question->category->name}}</td>
+                                                            
+                                                            <td>{{$question->status}}</td>
                                                             <td>
-                                                                @can('question-view')
-                                                                <a href="{{ route('question.index', ['category_id' =>$category->id]) }}"><i
-                                                                        class="feather icon-edit"></i> Question View</a> |
-                                                                @endcan
                                                           
-                                                                @can('category-update')
-                                                                    <a href="{{ route('category.edit', $category->id) }}"><i
+                                                                @can('question-update')
+                                                                    <a href="{{ route('question.edit', $question->id) }}"><i
                                                                             class="feather icon-edit"></i> Edit</a> |
                                                                 @endcan
+                                                               
 
-                                                                @can('category-delete')
+                                                                @can('question-delete')
                                                                     <a href="javascript:" class="text-danger deleteBtn"
-                                                                       onclick="destroy({{$category->id}})"
-                                                                       data-id="{{$category->id}}"
+                                                                       onclick="destroy({{$question->id}})"
+                                                                       data-id="{{$question->id}}"
                                                                        data-toggle="modal"
                                                                        data-target="#deleteModal" id="deleteBtn"><i
                                                                             class="feather icon-trash"></i> Delete</a>
@@ -116,7 +121,7 @@
 
         // Functionality section
         function destroy(delId) {
-            let url = '{{ route("category.destroy", ":id") }}';
+            let url = '{{ route("question.destroy", ":id") }}';
             url = url.replace(':id', delId);
             $("#deleteForm").attr('action', url);
             $("#delete_id").val(delId);
