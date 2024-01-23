@@ -40,6 +40,13 @@ class LoginController extends Controller
     protected function credentials(Request $request)
     {
         //dd(array_merge($request->only($this->username(), 'password'), ['back_end_user' => 0,'status' => 'Active']));
+        //dd($request);
+        $remember = $request->has('remember') ? true : false; 
+        //dd($request->only($this->username(), 'password' ,'remember_me'));
+       
+
+
+
         return array_merge($request->only($this->username(), 'password'), ['back_end_user' => 0,'status' => 'Active']);
     }
 

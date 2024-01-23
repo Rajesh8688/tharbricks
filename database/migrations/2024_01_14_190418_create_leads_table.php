@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRequirementAnswersTable extends Migration
+class CreateLeadsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,15 @@ class CreateRequirementAnswersTable extends Migration
      */
     public function up()
     {
-        Schema::create('requirement_answers', function (Blueprint $table) {
+        Schema::create('leads', function (Blueprint $table) {
             $table->id();
-            $table->integer('requirement_id');
-            $table->integer('question_id');
-            $table->string('answer');
-            $table->string('answer_text',500);
+            $table->integer('category_id');
+            $table->string('name')->nullable();
+            $table->string('address')->nullable();
+            $table->tinyInteger('internal_lead')->default(0);
+            $table->string('email');
+            $table->string('phone');
+            $table->string('pin_code')->nullable();
             $table->enum('status' , ['Active' ,'InActive'])->default('Active');
             $table->timestamps();
         });
@@ -31,6 +34,6 @@ class CreateRequirementAnswersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('requirement_answers');
+        Schema::dropIfExists('leads');
     }
 }

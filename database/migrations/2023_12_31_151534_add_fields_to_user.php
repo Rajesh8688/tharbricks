@@ -14,7 +14,7 @@ class AddFieldsToUser extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            
+            $table->enum('is_vendor' , [0 , 1])->default(0);
         });
     }
 
@@ -26,7 +26,6 @@ class AddFieldsToUser extends Migration
     public function down()
     {
         Schema::table('user', function (Blueprint $table) {
-            //
         });
     }
 }

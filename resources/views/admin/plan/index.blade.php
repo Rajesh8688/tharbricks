@@ -13,8 +13,8 @@
                 <section class="invoice-print mb-1">
                     <div class="row">
                         <div class="col-12 col-md-12 d-flex flex-column flex-md-row justify-content-end">
-                            <a href="{{route('question.create')}}" class="btn btn-primary btn-print mb-1 mb-md-0"><i
-                                    class="feather icon-plus-circle"></i>&nbsp;Add Question</a>
+                            <a href="{{route('plan.create')}}" class="btn btn-primary btn-print mb-1 mb-md-0"><i
+                                    class="feather icon-plus-circle"></i>&nbsp;Add plan</a>
                             </a>
                         </div>
                     </div>
@@ -36,44 +36,33 @@
                                             <table class="table zero-configuration">
                                                 <thead>
                                                 <tr>
-                                                    <th>Question</th>
-                                                    <th>Type</th>
-                                                    <th>Category</th>
+                                                    <th>Plan Name</th>
+                                                    <th>Monthly</th>
+                                                    <th>Yearly</th>
                                                     <th>Status</th>
                                                     <th>Actions</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
 
-                                                @if(count($questions) > 0)
-                                                    @foreach($questions as $question)
+                                                @if(count($plans) > 0)
+                                                    @foreach($plans as $plan)
                                                         <tr>
-                                                            <td>{{$question->question_text}}</td>
-                                                            <td>@if($question->type == "imageRadio")
-                                                                {{"Image Radio"}}
-                                                                @elseif($question->type == "normalRadio")
-                                                                {{"Normal Radio"}}
-                                                                @elseif($question->type == "multiSelect")
-                                                                {{"Multi Select"}}
-                                                                @else
-                                                                {{ucfirst($question->type)}}
-                                                                @endif
-                                                            </td>
-                                                            <td>{{$question->category->name}}</td>
-                                                            
-                                                            <td>{{$question->status}}</td>
+                                                            <td>{{$plan->name}}</td>
+                                                            <td>{{$plan->monthly_amount}}</td>
+                                                            <td>{{$plan->yearly_amount}}</td>
+                                                            <td>{{$plan->status}}</td>
                                                             <td>
-                                                          
-                                                                @can('question-update')
-                                                                    <a href="{{ route('question.edit', $question->id) }}"><i
+                                                                @can('plan-update')
+                                                                    <a href="{{ route('plan.edit', $plan->id) }}"><i
                                                                             class="feather icon-edit"></i> Edit</a> |
                                                                 @endcan
                                                                
 
-                                                                @can('question-delete')
+                                                                @can('plan-delete')
                                                                     <a href="javascript:" class="text-danger deleteBtn"
-                                                                       onclick="destroy({{$question->id}})"
-                                                                       data-id="{{$question->id}}"
+                                                                       onclick="destroy({{$plan->id}})"
+                                                                       data-id="{{$plan->id}}"
                                                                        data-toggle="modal"
                                                                        data-target="#deleteModal" id="deleteBtn"><i
                                                                             class="feather icon-trash"></i> Delete</a>
@@ -83,7 +72,7 @@
                                                     @endforeach
                                                 @else
                                                     <tr align="center" class="alert alert-danger">
-                                                        <td colspan="5">No Questions(s) Found</td>
+                                                        <td colspan="5">No Plan(s) Found</td>
                                                     </tr>
                                                 @endif
 

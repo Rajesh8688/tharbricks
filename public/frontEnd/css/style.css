@@ -7408,6 +7408,7 @@ sf-pres-video-pic .overlay-vid {
 .bootstrap-select .dropdown-toggle {
   border: 1px solid #e1e1e1 !important;
   background-color: #fff !important;
+  height: 45px
 }
 /*Site Pagination*/
 .s-p-center {
@@ -8050,8 +8051,8 @@ ul.share-social-bx li:hover {
   background: #402909;
 }
 .sf-provi-cat {
-  font-size: 18px;
-  margin-bottom: 20px;
+  font-size: 15px;
+  margin-bottom: 15px;
 }
 .sf-provi-cat strong {
   color: #555;
@@ -11863,7 +11864,9 @@ transition: all 0.5s ease;}
 
 .aon-inputicon-box { position: relative; }
 .aon-inputicon-box .form-control { padding-left: 35px; }
+.aon-inputicon-box .form-control { padding-left: 35px; }
 .aon-inputicon-box .aon-input-icon { position: absolute; left: 0; top: 0; width: 40px; height:50px;  z-index: 5;  line-height: 50px;  text-align: center; }
+.aon-inputicon-box .aon-input-icon-right { position: absolute; right: 0; top: 0; width: 40px; height:50px;  z-index: 5;  line-height: 50px;  text-align: center; }
 
 .content-admin-main .aon-inputicon-box .aon-input-icon { color:#402909; }
 .content-admin-main .form-control { background-color:#f7fafc; border-color:#e8edf1; box-shadow:none; -webkit-box-shadow:none; border-radius:5px; }
@@ -12178,7 +12181,7 @@ transition: all 0.5s ease;}
 .msg-find-list .bootstrap-select .dropdown-toggle:active,
 .msg-find-list .bootstrap-select .dropdown-toggle:focus {		border-bottom: 1px solid #dbdbdb !important;}
 
-.wt-dashboard-msg-search-list {	background-color: #FFF;	height: calc(-300px + 100vh);}
+.wt-dashboard-msg-search-list {	background-color: #FFF;	height: calc(-200px + 100vh);}
 .wt-dashboard-msg-search-list-wrap {	display: table;	width: 100%;}
 .msg-user-info {	position: relative;	display: block;	padding: 15px 80px 15px 20px;	background-color: #fff;	border-bottom: 1px solid #dbdbdb;
   -webkit-transition: all 0.2s linear;
@@ -12203,7 +12206,7 @@ transition: all 0.5s ease;}
 
 .single-msg-user-name-box {	padding: 10px 20px;	background-color: #fff;	border-bottom: 1px solid #dbdbdb;	min-height: 85px;}
 .single-msg-user-name-box h4 {	margin-bottom: 6px;}
-.single-user-msg-conversation {	padding: 0px;	margin: 30px 40px;	height: calc(-400px + 100vh);}
+.single-user-msg-conversation {	padding: 0px;	margin: 5px 40px;	height: calc(-150px + 100vh);}
 .single-user-comment-wrap {	padding: 15px 0px;}
 .single-user-comment-block {	position: relative;}
 .single-user-com-pic {	width: 60px;	height: 60px;	float: left;	margin-right: 15px;	overflow: hidden;	border-radius: 100%;	-webkit-border-radius: 100%;	padding: 3px;	background-color: #fff;}

@@ -2,6 +2,7 @@
 @section('extrastyle')
     <link rel="stylesheet" href="{{ asset('frontEnd/css/image-radio-master/bootstrap-image-checkbox.css')}}">
     <link rel="stylesheet" href="{{ asset('frontEnd/css/chosen.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin-assets/vendors/css/extensions/sweetalert2.min.css')}}">
 @endsection
 @section('content')
     <!-- CONTENT START -->
@@ -744,7 +745,7 @@
 
 
         <!-- Pricing Plan -->
-        <div class="section-full aon-pricing-area2">
+        <div class="section-full aon-pricing-area2" id= "pricing">
             <div class="container">
                 <!--Title Section Start-->
                 <div class="section-head">
@@ -763,15 +764,53 @@
                     <div class="aon-priceing-tb-control">
                         <span>Bill Monthly</span>
                         <label class="switch">
-                            <input type="checkbox">
+                            <input type="checkbox" name="planType" id ="planType">
                             <span class="slider round"></span>
                         </label>
                         <span>Bill Yearly</span>
                     </div>
                     <div class="sf-pricing-section-outer">
                         <div class="row no-gutter">
-                            <!-- COLUMNS 1 -->
+                            @foreach ($Plans as $p=>$plan)
                             <div class="col-md-3">
+                                <div class="sf-pricing-section {{$p== 0 ? 'sf-pricing-active' : ''}} pricing" >
+
+                                    <div class="sf-price-tb-info">
+                                        <div class="sf-price-plan-name">{{$plan->name}}</div>
+                                        <div class="sf-price-plan-discount">Save 20%</div>
+                                    </div>
+
+                                    <div class="sf-price-tb-list" style="height: 150px;">
+                                        <ul>
+                                            @foreach ($plan->Details as $detail)
+                                            <li><i class="fa fa-check"></i> {{$detail->title}}</li>
+                                            @endforeach
+                                            
+                                            {{-- <li><i class="fa fa-check"></i> Booking</li>
+                                            <li><i class="fa fa-check"></i> Own Cover Image</li>
+                                            <li class="disable"><i class="fa fa-check"></i> Multiple Categories</li>
+                                            <li class="disable"><i class="fa fa-check"></i> Apply for Job</li>
+                                            <li class="disable"><i class="fa fa-check"></i> Job Alerts</li>
+                                            <li class="disable"><i class="fa fa-check"></i> Google Calendar</li>
+                                            <li class="disable"><i class="fa fa-check"></i> Crop Profile Image</li> --}}
+                                        </ul>
+                                    </div>
+
+                                    <div class="sf-price-tb-plan">
+                                        <div class="sf-price-plan-cost PlanAmountmonthly" >
+                                            ₹<span >{{$plan->monthly_amount}}</span>/month
+                                        </div>
+                                        <div class="sf-price-plan-cost PlanAmountyearly"  style="display:none">
+                                            ₹<span >{{$plan->yearly_amount}}</span>/year
+                                        </div>
+                                    </div>
+                                    <a href="contact-us.html" class="sf-choose-plan-btn">Choose Plan</a>
+                                </div>
+                            </div>
+                                
+                            @endforeach
+                            <!-- COLUMNS 1 -->
+                            {{-- <div class="col-md-3">
                                 <div class="sf-pricing-section">
 
                                     <div class="sf-price-tb-info">
@@ -796,9 +835,9 @@
                                     </div>
                                     <a href="contact-us.html" class="sf-choose-plan-btn">Choose Plan</a>
                                 </div>
-                            </div>
+                            </div> --}}
                             <!-- COLUMNS 2 -->
-                            <div class="col-md-3">
+                            {{-- <div class="col-md-3">
                                 <div class="sf-pricing-section">
 
                                     <div class="sf-price-tb-info">
@@ -823,9 +862,9 @@
                                     </div>
                                     <a href="#" class="sf-choose-plan-btn">Choose Plan</a>
                                 </div>
-                            </div>
+                            </div> --}}
                             <!-- COLUMNS 3 -->
-                            <div class="col-md-3">
+                            {{-- <div class="col-md-3">
                                 <div class="sf-pricing-section sf-pricing-active">
 
                                     <div class="sf-price-tb-info">
@@ -850,9 +889,9 @@
                                     </div>
                                     <a href="contact-us.html" class="sf-choose-plan-btn">Try 1 Month</a>
                                 </div>
-                            </div>
+                            </div> --}}
                             <!-- COLUMNS 4 -->
-                            <div class="col-md-3">
+                            {{-- <div class="col-md-3">
                                 <div class="sf-pricing-section">
 
                                     <div class="sf-price-tb-info">
@@ -877,7 +916,7 @@
                                     </div>
                                     <a href="contact-us.html" class="sf-choose-plan-btn">Choose Plan</a>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -1124,7 +1163,7 @@
                                     <!-- COLUMNS 2 -->
                                     <div class="col-lg-3 col-md-6 col-6">
                                         <div class="aon-static-section2 aon-t-skyblue2">
-                                            <div class="aon-company-static-num2 counter">59</div>
+                                            <div class="aon-company-static-num2 counter">{{count($Categories)}}</div>
                                             <div class="aon-company-static-name2">Categories</div>
                                         </div>
                                     </div>
@@ -1208,7 +1247,7 @@
                   <div class="sf-custom-tabs sf-custom-new aon-logon-sign-area p-3">
                     <div id="Upcoming">
                         <div class="sf-tabs-content">
-                            <form id="multiStepForm" method="POST" action="{{route('addRequirement')}}">
+                            <form id="multiStepForm" method="POST" action="{{route('addLead')}}">
                                 @csrf
                                 <input type="hidden" name="category_id" id="category_id" value ="">
                                 <div id = "stepsList">
@@ -1473,5 +1512,91 @@
             $('#QuestionModel').modal('toggle'); 
         }
     }
+
 </script>
+<script src="{{ asset('admin-assets/vendors/js/extensions/sweetalert2.all.min.js')}}"></script>
+<script>
+    $(document).ready(function () {
+        var planType = 'monthly';
+        $("#planType").change(function() {
+            if ($(this).is(":checked")) {
+                //yearly
+                $(".PlanAmountmonthly").css("display" , "none");
+                $(".PlanAmountyearly").css("display" , "block");
+            } else {
+                $(".PlanAmountmonthly").css("display" , "block");
+                $(".PlanAmountyearly").css("display" , "none");
+            }
+        });
+        $(".pricing").click(function() {
+            activeTab = $(this);
+            $(".pricing").removeClass("sf-pricing-active");
+            activeTab.addClass("sf-pricing-active");
+            
+            // Do something when the button is clicked
+        });
+
+
+
+
+            
+    });
+
+
+    // planUrl = '{{route("getPlans")}}';
+    // function Planning(planType){
+    //     $.ajax({
+    //         type: 'get',
+    //         url: planUrl,
+    //         data: {
+    //         'planType' : planType
+    //         },
+    //         beforeSend: function () { 
+    //         //need to show loader
+    //             },
+    //         success: function (response) {
+    //            console.log(response);
+    //         },
+    //         complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+    //             // $("#serachpnrfromsubmit").prop('disabled',false);
+    //             // $("#serachpnrfromsubmit").find('span').html( '' );
+    //             },
+    //         error:function(response){
+    //             console.log(response);
+    //         }
+    //     });
+    // } 
+</script>
+
+@if(session('success'))
+
+    <script>
+        success = "{{session('success')}}"
+        $(document).ready(function () {
+        
+            Swal.fire({
+                title: "Success",
+                text: success,
+                type: "success",
+                confirmButtonClass: 'site-button',
+                buttonsStyling: false,
+            });
+        });
+    </script>
+@endif
+@if(session('error'))
+
+<script>
+    error = "{{session('error')}}"
+    $(document).ready(function () {
+        Swal.fire({
+            title: "Error!",
+            text: error,
+            type: "error",
+            confirmButtonClass: 'site-button',
+            buttonsStyling: false,
+        });
+    });
+</script>
+@endif
 @endsection

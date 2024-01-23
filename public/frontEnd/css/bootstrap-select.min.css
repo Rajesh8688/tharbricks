@@ -65,6 +65,7 @@ select.selectpicker {
 .bootstrap-select > .dropdown-toggle.bs-placeholder:focus,
 .bootstrap-select > .dropdown-toggle.bs-placeholder:active {
   color: #999;
+  height: 45px;
 }
 .bootstrap-select > .dropdown-toggle.bs-placeholder.btn-primary,
 .bootstrap-select > .dropdown-toggle.bs-placeholder.btn-secondary,

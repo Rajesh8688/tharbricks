@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\FrontEnd;
 
+use App\Models\Plan;
 use App\Models\Category;
+use App\Models\UserRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\UserRequest;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -14,8 +16,8 @@ class HomeController extends Controller
             'title' => "Home",
         ];
         $Categories = Category::where("status" , "Active")->get();
-        //return view('front_end.test');
-        return view('front_end.index',compact('titles','Categories'));
+        $Plans = Plan::with('Details')->OrderBy('order' ,'asc')->get();
+        return view('front_end.index',compact('titles','Categories','Plans'));
     }
 
     public function contactUs(){
@@ -48,9 +50,17 @@ class HomeController extends Controller
         }else{
             return redirect()->route('contactUs')->with('error','something went wrong');
         }
+    }
 
-    
-        
-
+    public function Signup(Request $request)
+    {
+        if(Auth::guard('web')->check()){
+            return redirect()->route('vendor-dashboard');
+        }
+        $titles = [
+            'title' => "SignUp",
+        ];
+        $categories = Category::where('status' ,'Active')->get();
+        return view('front_end.auth.signup',compact('titles' , 'categories'));
     }
 }

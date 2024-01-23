@@ -30,6 +30,7 @@ Route::group([
     Route::resource('user_request', \App\Http\Controllers\Admin\UserRequestController::class);//UserRequest
 
     Route::resource('question', \App\Http\Controllers\Admin\QuestionController::class);//question
+    Route::resource('plan', \App\Http\Controllers\Admin\PlanController::class);//plan
     Route::get('/get-category-question', [\App\Http\Controllers\Admin\QuestionController::class , 'getCategoryQuestions'])->name('getCategoryQuestions');
 
     Route::get('/user', [App\Http\Controllers\Admin\UserController::class, 'UserList'])->name('admin.userList');

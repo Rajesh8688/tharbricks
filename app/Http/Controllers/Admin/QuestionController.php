@@ -92,7 +92,7 @@ class QuestionController extends Controller
         $question->type = $request->input('type');
         $question->category_id = $request->input('category_id');
         $question->next_question_id =  $request->input('next_question_id') ;
-        $question->slug =  unique_slug($request->input('question_text'), 'Offer');
+        $question->slug =  unique_slug($request->input('question_text'), 'Question');
 
         $question->save();
 

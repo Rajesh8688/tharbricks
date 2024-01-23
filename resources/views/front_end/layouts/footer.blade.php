@@ -48,10 +48,10 @@
                             <div class="sf-site-link sf-widget-categories">
                                 <h4 class="sf-f-title">Categories</h4>
                                 <ul>
-                                    <li><a href="categories-detail.html">Car Service</a></li>
-                                    <li><a href="categories-detail.html">House Cleaning</a></li>
-                                    <li><a href="categories-detail.html">Transport</a></li>
-                                    <li><a href="categories-detail.html">Yoga Classes</a></li>
+                                 
+                                    @forEach($footerCategories as $category)
+                                        <li><a href="categories-detail.html">{{$category->name}}</a></li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -61,9 +61,9 @@
                                 <h4 class="sf-f-title">Contact Info</h4>
                                 <ul>
                                     <li>India</li>
-                                    <li>+41 232 525 5257</li>
-                                    <li>+41 856 525 5369</li>
-                                    <li>hello@Servicefinder.com</li>
+                                    <li><a href="tel:+91 7624886912">+91 7624886912</a></li>
+        
+                                    <li> <a href="mailto:info@tharbricks.com">info@tharbricks.com</a></li>
                                 </ul>
                             </div>
                         </div>

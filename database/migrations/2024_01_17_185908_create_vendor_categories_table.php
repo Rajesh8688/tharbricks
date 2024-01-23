@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRequirementsTable extends Migration
+class CreateVendorCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateRequirementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('requirements', function (Blueprint $table) {
+        Schema::create('vendor_categories', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');
             $table->integer('category_id');
-            $table->string('email');
-            $table->string('phone');
-            $table->string('pin_code');
-            $table->enum('status' , ['Active' ,'InActive'])->default('Active');
+            $table->enum('status',[0,1])->comment("0=>InActive,1=>Active")->default(1);
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateRequirementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('requirements');
+        Schema::dropIfExists('vendor_categories');
     }
 }

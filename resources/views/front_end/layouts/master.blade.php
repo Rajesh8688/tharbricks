@@ -59,9 +59,14 @@
 
     @yield('extrastyle')
 
+    <style>
+        .aon-admin-messange:hover { background-color:#fff;!important }
+    </style>
+
 </head>
 
 <body>
+   
     <!-- LOADING AREA START ===== -->
     <div class="loading-area">
         <div class="loading-box"></div>
@@ -102,7 +107,7 @@
 
 
     <!-- Login Sign Up Modal -->
-    <div class="modal fade" id="login-signup-model">
+    {{-- <div class="modal fade" id="login-signup-model">
       <div class="modal-dialog">
         <div class="modal-content">
             <button type="button" class="close aon-login-close" data-dismiss="modal" aria-label="Close">
@@ -114,14 +119,14 @@
 
                     <!--Tabs-->
                     <ul class="nav nav-tabs nav-table-cell">
-                        <li><a data-toggle="tab" href="#Upcoming" class="active">Login</a></li>
-                        <li><a data-toggle="tab" href="#Past">Sign up</a></li>
+                        <li><a data-toggle="tab" href="#LoginForm" class="active">Login</a></li>
+                        <li><a data-toggle="tab" href="#SignUpForm">Sign up</a></li>
                     </ul>
                     <!--Tabs Content--> 
                     <div class="tab-content">
 
                         <!--Login Form-->
-                        <div id="Upcoming" class="tab-pane active">
+                        <div id="LoginForm" class="tab-pane active">
                             <div class="sf-tabs-content">
                                 <form class="aon-login-form">
                                     <div class="row">
@@ -164,7 +169,7 @@
                         </div>
 
                         <!--Sign up Form-->
-                        <div id="Past" class="tab-pane">
+                        <div id="SignUpForm" class="tab-pane">
                             <div class="sf-tabs-content">
                                 <form class="aon-login-form">
                                     <div class="row">
@@ -245,12 +250,9 @@
             </div>
         </div>
       </div>
-    </div>
+    </div> --}}
     <!-- Login Sign Up Modal --> 
     
-    
-    
-    href="{{ asset('frontEnd/css/style.css')}}">
 <!-- JAVASCRIPT  FILES ========================================= --> 
 <script  src="{{ asset('frontEnd/js/jquery-3.6.0.min.js')}}"></script><!-- JQUERY.MIN JS -->
 <script  src="{{ asset('frontEnd/js/popper.min.js')}}"></script><!-- POPPER.MIN JS -->

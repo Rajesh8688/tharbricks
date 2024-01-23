@@ -26,8 +26,13 @@
                 </li>
             @endcan
 
-            @can('user-request-view')
+            @can('question-view')
                 <li class=" nav-item {{Request::segment(2) == 'question' ? 'active' : '' }}"><a href="{{route('question.index')}}"><i class="feather icon-help-circle"></i><span class="menu-title" data-i18n="Question">Question</span></a>
+                </li>
+            @endcan
+
+            @can('plan-view')
+                <li class=" nav-item {{Request::segment(2) == 'plan' ? 'active' : '' }}"><a href="{{route('plan.index')}}"><i class="feather icon-shopping-cart"></i><span class="menu-title" data-i18n="Plan">Plan</span></a>
                 </li>
             @endcan
 
