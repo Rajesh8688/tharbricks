@@ -3,6 +3,11 @@
     <link rel="stylesheet" href="{{ asset('frontEnd/css/image-radio-master/bootstrap-image-checkbox.css')}}">
     <link rel="stylesheet" href="{{ asset('frontEnd/css/chosen.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin-assets/vendors/css/extensions/sweetalert2.min.css')}}">
+    <style>
+        #QuestionModel .modal-dialog{
+            margin-top: 60px !important;
+        }
+        </style>
 @endsection
 @section('content')
     <!-- CONTENT START -->
@@ -33,16 +38,16 @@
                                             
                                             <!-- COLUMNS 1 -->
                                             <div class="aon-search-input category-select">
-                                                <select id="categorysrh" name="catid" class="form-control sf-form-control aon-categories-select sf-select-box" title="Category">
-                                                    <option class="bs-title-option" value="">Select a Category</option>
+                                                <select id="categorysrh" name="catid" class="form-control sf-form-control aon-categories-select sf-select-box" title="Service">
+                                                    <option class="bs-title-option" value="">Select a Service</option>
 
-                                                    @foreach ($Categories as $category)
-                                                    {{$icon = asset('uploads/categories/icons/'.$category->icon)}}
+                                                    @foreach ($Services as $service)
+                                                    {{$icon = asset('uploads/services/icons/'.$service->icon)}}
                                                 
                                                     
-                                                    <option value="{{$category->id}}" data-content="<img class='childcat-img' width='50' height='auto' style='border-radius: 5px !important' src={{$icon}}>
+                                                    <option value="{{$service->id}}" data-content="<img class='childcat-img' width='50' height='auto' style='border-radius: 5px !important' src={{$icon}}>
                                                     
-                                                        <span class='childcat'>{{$category->name}}</span>">{{$category->name}}</option>
+                                                        <span class='childcat'>{{$service->name}}</span>">{{$service->name}}</option>
                                                         
                                                     @endforeach
                                                                                                     
@@ -104,8 +109,8 @@
                     <div class="row">
                         <!-- COLUMNS LEFT -->
                         <div class="col-lg-6 col-md-12">
-                            <span class="aon-sub-title">categories</span>
-                            <h2 class="sf-title">Popular Categories</h2>
+                            <span class="aon-sub-title">Services</span>
+                            <h2 class="sf-title">Popular Services</h2>
                         </div>
                         <!-- COLUMNS RIGHT -->
                         <div class="col-lg-6 col-md-12">
@@ -118,17 +123,17 @@
                 <div class="section-content">
                     <div class="aon-categories-area2-section">
                         <div class="row justify-content-center">
-                            @foreach ($Categories as $item)
+                            @foreach ($Services as $item)
                             <div class="col-lg-4 col-md-6" >
                                 <div class="media-bg-animate mba-bdr-15" >
                                     <div class="aon-categories-area2-iconbox aon-icon-effect" onclick="QuestionsModel({{$item->id}} ,'{{$item->name}}')">
                                         <div class="aon-cate-area2-icon">
                                             <span>
-                                                <i class="aon-icon"><img src="{{asset('uploads/categories/icons/'.$item->icon)}}" alt=""></i>
+                                                <i class="aon-icon"><img src="{{asset('uploads/services/icons/'.$item->icon)}}" alt=""></i>
                                             </span>
                                         </div>
                                         <div class="aon-cate-area2-content">
-                                            {{-- <h4 class="aon-tilte"><a href="{{route('categoryDetails',['slug'=>$item->slug])}}">{{$item->name}}</a></h4> --}}
+                                            {{-- <h4 class="aon-tilte"><a href="{{route('serviceDetails',['slug'=>$item->slug])}}">{{$item->name}}</a></h4> --}}
                                             <h4 class="aon-tilte">{{$item->name}}</h4>
                                             <p>0 Listing</p>
                                         </div>
@@ -140,7 +145,7 @@
                             
                         </div>
                         <div class="aon-btn-pos-center">
-                            <a class="site-button" href="{{route('category')}}">View All</a>
+                            <a class="site-button" href="{{route('service')}}">View All</a>
                         </div>
                     </div>
                 </div>
@@ -745,9 +750,9 @@
 
 
         <!-- Pricing Plan -->
-        <div class="section-full aon-pricing-area2" id= "pricing">
+        {{-- <div class="section-full aon-pricing-area2" id= "pricing">
             <div class="container">
-                <!--Title Section Start-->
+        
                 <div class="section-head">
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
@@ -785,14 +790,6 @@
                                             @foreach ($plan->Details as $detail)
                                             <li><i class="fa fa-check"></i> {{$detail->title}}</li>
                                             @endforeach
-                                            
-                                            {{-- <li><i class="fa fa-check"></i> Booking</li>
-                                            <li><i class="fa fa-check"></i> Own Cover Image</li>
-                                            <li class="disable"><i class="fa fa-check"></i> Multiple Categories</li>
-                                            <li class="disable"><i class="fa fa-check"></i> Apply for Job</li>
-                                            <li class="disable"><i class="fa fa-check"></i> Job Alerts</li>
-                                            <li class="disable"><i class="fa fa-check"></i> Google Calendar</li>
-                                            <li class="disable"><i class="fa fa-check"></i> Crop Profile Image</li> --}}
                                         </ul>
                                     </div>
 
@@ -809,120 +806,12 @@
                             </div>
                                 
                             @endforeach
-                            <!-- COLUMNS 1 -->
-                            {{-- <div class="col-md-3">
-                                <div class="sf-pricing-section">
-
-                                    <div class="sf-price-tb-info">
-                                        <div class="sf-price-plan-name">Intro</div>
-                                        <div class="sf-price-plan-discount">Save 20%</div>
-                                    </div>
-
-                                    <div class="sf-price-tb-list">
-                                        <ul>
-                                            <li><i class="fa fa-check"></i> Booking</li>
-                                            <li><i class="fa fa-check"></i> Own Cover Image</li>
-                                            <li class="disable"><i class="fa fa-check"></i> Multiple Categories</li>
-                                            <li class="disable"><i class="fa fa-check"></i> Apply for Job</li>
-                                            <li class="disable"><i class="fa fa-check"></i> Job Alerts</li>
-                                            <li class="disable"><i class="fa fa-check"></i> Google Calendar</li>
-                                            <li class="disable"><i class="fa fa-check"></i> Crop Profile Image</li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="sf-price-tb-plan">
-                                        <div class="sf-price-plan-cost">$<span>29</span>/month</div>
-                                    </div>
-                                    <a href="contact-us.html" class="sf-choose-plan-btn">Choose Plan</a>
-                                </div>
-                            </div> --}}
-                            <!-- COLUMNS 2 -->
-                            {{-- <div class="col-md-3">
-                                <div class="sf-pricing-section">
-
-                                    <div class="sf-price-tb-info">
-                                        <div class="sf-price-plan-name">Base</div>
-                                        <div class="sf-price-plan-discount">Save 20%</div>
-                                    </div>
-
-                                    <div class="sf-price-tb-list">
-                                        <ul>
-                                            <li><i class="fa fa-check"></i> Booking</li>
-                                            <li><i class="fa fa-check"></i> Own Cover Image</li>
-                                            <li><i class="fa fa-check"></i> Multiple Categories</li>
-                                            <li><i class="fa fa-check"></i> Apply for Job</li>
-                                            <li><i class="fa fa-check"></i> Job Alerts</li>
-                                            <li class="disable"><i class="fa fa-check"></i> Google Calendar</li>
-                                            <li class="disable"><i class="fa fa-check"></i> Crop Profile Image</li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="sf-price-tb-plan">
-                                        <div class="sf-price-plan-cost">$<span>39</span>/month</div>
-                                    </div>
-                                    <a href="#" class="sf-choose-plan-btn">Choose Plan</a>
-                                </div>
-                            </div> --}}
-                            <!-- COLUMNS 3 -->
-                            {{-- <div class="col-md-3">
-                                <div class="sf-pricing-section sf-pricing-active">
-
-                                    <div class="sf-price-tb-info">
-                                        <div class="sf-price-plan-name">Pro</div>
-                                        <div class="sf-price-plan-discount">Save 20%</div>
-                                    </div>
-
-                                    <div class="sf-price-tb-list">
-                                        <ul>
-                                            <li><i class="fa fa-check"></i> Booking</li>
-                                            <li><i class="fa fa-check"></i> Own Cover Image</li>
-                                            <li><i class="fa fa-check"></i> Multiple Categories</li>
-                                            <li><i class="fa fa-check"></i> Apply for Job</li>
-                                            <li><i class="fa fa-check"></i> Job Alerts</li>
-                                            <li><i class="fa fa-check"></i> Google Calendar</li>
-                                            <li><i class="fa fa-check"></i> Crop Profile Image</li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="sf-price-tb-plan">
-                                        <div class="sf-price-plan-cost">$<span>49</span>/month</div>
-                                    </div>
-                                    <a href="contact-us.html" class="sf-choose-plan-btn">Try 1 Month</a>
-                                </div>
-                            </div> --}}
-                            <!-- COLUMNS 4 -->
-                            {{-- <div class="col-md-3">
-                                <div class="sf-pricing-section">
-
-                                    <div class="sf-price-tb-info">
-                                        <div class="sf-price-plan-name">Enterprise</div>
-                                        <div class="sf-price-plan-discount">Save 20%</div>
-                                    </div>
-
-                                    <div class="sf-price-tb-list">
-                                        <ul>
-                                            <li><i class="fa fa-check"></i> Booking</li>
-                                            <li><i class="fa fa-check"></i> Own Cover Image</li>
-                                            <li><i class="fa fa-check"></i> Multiple Categories</li>
-                                            <li><i class="fa fa-check"></i> Apply for Job</li>
-                                            <li><i class="fa fa-check"></i> Job Alerts</li>
-                                            <li><i class="fa fa-check"></i> Google Calendar</li>
-                                            <li><i class="fa fa-check"></i> Crop Profile Image</li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="sf-price-tb-plan">
-                                        <div class="sf-price-plan-cost">$<span>89</span>/month</div>
-                                    </div>
-                                    <a href="contact-us.html" class="sf-choose-plan-btn">Choose Plan</a>
-                                </div>
-                            </div> --}}
                         </div>
                     </div>
                 </div>
 
             </div>
-        </div>
+        </div> --}}
         <!-- Pricing Plan END --> 
 
         <!-- Latest Blog -->
@@ -1163,8 +1052,8 @@
                                     <!-- COLUMNS 2 -->
                                     <div class="col-lg-3 col-md-6 col-6">
                                         <div class="aon-static-section2 aon-t-skyblue2">
-                                            <div class="aon-company-static-num2 counter">{{count($Categories)}}</div>
-                                            <div class="aon-company-static-name2">Categories</div>
+                                            <div class="aon-company-static-num2 counter">{{count($Services)}}</div>
+                                            <div class="aon-company-static-name2">Services</div>
                                         </div>
                                     </div>
 
@@ -1235,11 +1124,11 @@
         </div>
       </div> --}}
       <div class="modal fade" id="QuestionModel" >
-        <div class="modal-dialog" style="margin-top:10px">
+        <div class="modal-dialog" >
           <div class="modal-content">
               
               <div class="modal-header">
-                <h4 class="modal-title" id = "CategoryName">Modal </h4>
+                <h4 class="modal-title" id = "ServiceName">Modal </h4>
                 <button type="button" class="close"  onclick = "closeModelPopup()" >&times;</button>
                 {{--  --}}
               </div>
@@ -1249,7 +1138,7 @@
                         <div class="sf-tabs-content">
                             <form id="multiStepForm" method="POST" action="{{route('addLead')}}">
                                 @csrf
-                                <input type="hidden" name="category_id" id="category_id" value ="">
+                                <input type="hidden" name="service_id" id="service_id" value ="">
                                 <div id = "stepsList">
                                     {{-- <div class="checkbox sf-radio-checkbox">
                                         <label >
@@ -1280,12 +1169,12 @@
     var url = "{{route('getQuestions')}}";
     var currentStep = 1;
 
-    function QuestionsModel(categoryId,categoryName){  
+    function QuestionsModel(serviceId,serviceName){  
         currentStep = 1;
-        getQuestions(categoryId);
+        getQuestions(serviceId);
         $('#QuestionModel').modal({backdrop: 'static',keyboard: true, show: true}); 
-        $("#category_id").val(categoryId);
-        $("#CategoryName").text(categoryName);
+        $("#service_id").val(serviceId);
+        $("#ServiceName").text(serviceName);
     }
 
     function prevQuestion(step){
@@ -1299,20 +1188,20 @@
       $(".step[data-step='" + currentStep + "']").show();
     }
 
-    function getQuestions(categoryId=null ,questionId = null,step =1){
+    function getQuestions(serviceId=null ,questionId = null,step =1){
    
         $.ajax({
             type: 'get',
             url: url,
             data: {
-            'categoryId' : categoryId,
+            'serviceId' : serviceId,
             'questionId' : questionId,
             },
             beforeSend: function () { 
             //need to show loader
                 },
             success: function (response) {
-                htmlMaker(response,categoryId,categoryId);
+                htmlMaker(response,serviceId,serviceId);
             },
             complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
                 // $("#serachpnrfromsubmit").prop('disabled',false);
@@ -1333,7 +1222,7 @@
 
     }
 
-    function htmlMaker(response,categoryId,questionId,isStatic = "no"){
+    function htmlMaker(response,serviceId,questionId,isStatic = "no"){
         var toAppend = true;
 
         currentStep = $(".step[data-step]").length;
@@ -1436,13 +1325,38 @@
         }else{
             toAppend = true;
             html = `<div class="step" data-step="`+currentStep+`" >
-                        <h3>Email </h3>   
+                        <h5>Email </h5>   
                         <div class="form-group">
                             <input type="email" class="form-control QuestionStep`+currentStep+`"  name="email" required>
                         </div>
-                        <h3>Phone </h3>
+                        <h5>Phone </h5>
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="form-group">
+                                    <input type="text" class="form-control QuestionStep`+currentStep+`" name="phone" required>
+                                </div>
+                            </div>
+                            <div>
+                                <button class="site-button" type= "button"> verify </button>
+                            </div>
+                        </div>
+                        <div class ="row">
+                            <div class ="col-6">
+                                <h5>Name </h5>
+                                <div class="form-group">
+                                    <input type="text" class="form-control QuestionStep`+currentStep+`"  name="name" required>
+                                </div>
+                            </div>
+                            <div class ="col-6">
+                                <h5>PinCode </h5>
+                                <div class="form-group">
+                                    <input type="text" class="form-control QuestionStep`+currentStep+`"  name="pin_code" required>
+                                </div>
+                            </div>
+                        </div>
+                        <h5>Address </h5>
                         <div class="form-group">
-                            <input type="text" class="form-control QuestionStep`+currentStep+`"  name="phone" required>
+                            <textarea class="form-control QuestionStep`+currentStep+`" name="address" rows="2" required></textarea>
                         </div>
                         <div style="float:right">
                             <button type="button"  class="site-button" onclick = "prevQuestion(`+(currentStep-1)+`)" style="margin-right: 10px;">Prev </button>
@@ -1504,8 +1418,8 @@
     }
 
     function closeModelPopup(){
-        categoryName = $("#CategoryName").text();
-        text = 'Are you sure you want to close the '+categoryName+ ' category ?';
+        serviceName = $("#ServiceName").text();
+        text = 'Are you sure you want to close the '+serviceName+ ' service ?';
         confirmMessage = confirm(text);
         if(confirmMessage){
             $(".step").remove();

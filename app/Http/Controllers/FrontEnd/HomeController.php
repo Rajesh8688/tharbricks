@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\FrontEnd;
 
 use App\Models\Plan;
-use App\Models\Category;
+use App\Models\Service;
 use App\Models\UserRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -15,9 +15,9 @@ class HomeController extends Controller
         $titles = [
             'title' => "Home",
         ];
-        $Categories = Category::where("status" , "Active")->get();
+        $Services = Service::where("status" , "Active")->get();
         $Plans = Plan::with('Details')->OrderBy('order' ,'asc')->get();
-        return view('front_end.index',compact('titles','Categories','Plans'));
+        return view('front_end.index',compact('titles','Services','Plans'));
     }
 
     public function contactUs(){
@@ -60,7 +60,7 @@ class HomeController extends Controller
         $titles = [
             'title' => "SignUp",
         ];
-        $categories = Category::where('status' ,'Active')->get();
-        return view('front_end.auth.signup',compact('titles' , 'categories'));
+        $services = Service::where('status' ,'Active')->get();
+        return view('front_end.auth.signup',compact('titles' , 'services'));
     }
 }

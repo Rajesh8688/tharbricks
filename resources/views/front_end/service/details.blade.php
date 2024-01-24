@@ -9,19 +9,19 @@
                 <div class="row">
                     <!--Category Detail Left-->
                     <div class="col-md-6">
-                        <?php $image = asset('uploads/categories').'/'.$category->image ;?>
+                        <?php $image = asset('uploads/services').'/'.$service->image ;?>
                         <div class="sf-caty-pic" style="background-image: url({{$image}})">
-                            <div class="sf-caty-btn">View Category</div>
+                            <div class="sf-caty-btn">View Service</div>
                             <div class="sf-caty-cirle"><i class="fa fa-arrow-circle-down"></i></div>
                         </div>
                     </div>
                     <!--Category Detail Right-->
                     <div class="col-md-6">
                         <div class="sf-caty-info">
-                            <div class="m-b10"><strong> Category</strong> / {{$category->name}}</div>
-                            <h3>{{$category->name}}</h3>
+                            <div class="m-b10"><strong> Service</strong> / {{$service->name}}</div>
+                            <h3>{{$service->name}}</h3>
                             <div class="sf-caty-text">
-                                {!!$category->description!!}
+                                {!!$service->description!!}
                             </div>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                 <div class="section-head">
                     <div class="row">
                         <div class="col-md-6">
-                            <h2 class="sf-title text-white">All Categories</h2>
+                            <h2 class="sf-title text-white">All Services</h2>
                         </div>
                         <div class="col-md-6">
                         </div>
@@ -47,15 +47,15 @@
                 <div class="section-content">
                     <div class="owl-carousel owl-caty-carousel sf-owl-arrow">
                         <!-- COLUMNS 1 -->
-                        @foreach ($categories as $item)
+                        @foreach ($services as $item)
                         <div class="item sf-caty-item-col">
                             <div class="sf-catyitem-box">
-                                <?php $image = asset('uploads/categories').'/'.$item->image ;?>
+                                <?php $image = asset('uploads/services').'/'.$item->image ;?>
                                 <div class="sf-catyitem-pic" style="background-image: url({{$image}})">
                                     <span class="sf-caty-num"></span>
-                                    <a href="{{route('categoryDetails',['slug'=>$item->slug])}}" class="sf-caty-link"></a>
+                                    <a href="{{route('serviceDetails',['slug'=>$item->slug])}}" class="sf-caty-link"></a>
                                 </div>
-                                <h5 class="sf-catyitem-title"><a href="{{route('categoryDetails',['slug'=>$item->slug])}}">{{$item->name}}</a></h5>
+                                <h5 class="sf-catyitem-title"><a href="{{route('serviceDetails',['slug'=>$item->slug])}}">{{$item->name}}</a></h5>
                             </div>
                             
                            

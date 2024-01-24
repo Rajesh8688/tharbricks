@@ -4,10 +4,10 @@ namespace App\Http\Controllers\FrontEnd;
 
 use App\Models\Lead;
 use App\Models\User;
-use App\Models\Category;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use App\Models\VendorDetails;
-use App\Models\VendorCategory;
+use App\Models\VendorService;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use App\Models\LeadAnswer;
@@ -21,17 +21,17 @@ class VendorController extends Controller
             return redirect()->route('vendor-dashboard');
         }
         $this->validate($request, [
-            'categoryId' => 'required'
+            'serviceId' => 'required'
         ]);
 
         $titles = [
             'title' => "SignUp",
         ];
 
-        $categorySlugs = $request->input('categoryId');
-        $categorysSlug = implode("," , $categorySlugs);
+        $serviceSlugs = $request->input('serviceId');
+        $servicesSlug = implode("," , $serviceSlugs);
 
-        return view('front_end.auth.create_vendor',compact( 'categorysSlug' , 'titles'));
+        return view('front_end.auth.create_vendor',compact( 'servicesSlug' , 'titles'));
     }
 
     public function storeVendor(Request $request){
@@ -46,7 +46,7 @@ class VendorController extends Controller
             'pin_code' => 'required_if:see_leads_from,custom',
             'email' => ['required','email',Rule::unique('users', 'email')], // 'users' is the table name, and 'email' is the column name
             'mobile' => 'required',
-            'categorysSlug' => 'required',
+            'servicesSlug' => 'required',
             'password' => [
                 'confirmed',
                 'required',
@@ -89,17 +89,17 @@ class VendorController extends Controller
 
             $vendorDetails->save();
 
-            $categorySlugs = explode("," , $request->input('categorysSlug'));
+            $serviceSlugs = explode("," , $request->input('servicesSlug'));
 
-            foreach ($categorySlugs as $categorySlug) {
-               $categoryDetails = Category::where('slug' , $categorySlug)->first();
-               if($categoryDetails){
-                    $vendorCategory = new VendorCategory();
-                    $vendorCategory->user_id = $user_id;
-                    $vendorCategory->category_id =  $categoryDetails->id;
-                    $vendorCategory->status =  1;
+            foreach ($serviceSlugs as $serviceSlug) {
+               $serviceDetails = Service::where('slug' , $serviceSlug)->first();
+               if($serviceDetails){
+                    $vendorService = new VendorService();
+                    $vendorService->user_id = $user_id;
+                    $vendorService->service_id =  $serviceDetails->id;
+                    $vendorService->status =  1;
                }
-               $categoryDetails->save();
+               $serviceDetails->save();
             }
 
             Auth::guard('web')->loginUsingId($user_id);
@@ -130,7 +130,8 @@ class VendorController extends Controller
             'title' => "Vendor Leads",
         ];
 
-        $leads = Lead::with('category')->where("status" , "Active")->get();
+        $leads = Lead::with('service')->where("status" , "Active")->get();
+        //$leads = Lead::with('service')->where("status" , "InActive")->get();
         $firstLead = null;
         $lead = null;
 
@@ -150,7 +151,7 @@ class VendorController extends Controller
         }
         $lead = $firstLead;
         if($firstLead){
-            $lead = Lead::with('category')->find($firstLead);
+            $lead = Lead::with('service')->find($firstLead);
             $email = explode("@",$lead->email);
             $lead->encrypted_email = "**********@".$email[1];
             $lead->encrypted_phone = "*******".substr ($lead->phone, -3);
@@ -168,7 +169,7 @@ class VendorController extends Controller
         if(empty($leadId)){
             return response()->json(['error' => 'Lead Id Required'], 500);
         }else{
-            $lead = Lead::with('category')->find($leadId);
+            $lead = Lead::with('service')->find($leadId);
             if(empty($lead)){
                 return response()->json(['error' => 'Lead does not exist'], 500);
             }

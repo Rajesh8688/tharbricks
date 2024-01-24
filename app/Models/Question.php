@@ -9,9 +9,10 @@ class Question extends Model
 {
     use HasFactory;
 
-    public function category(){
-         return $this->belongsTo(Category::class);
-    }
+
+     public function service(){
+          return $this->belongsTo(Service::class);
+     }
 
     public function options(){
         return $this->hasMany(QuestionOption::class);

@@ -13,8 +13,8 @@
                 {{-- <section class="invoice-print mb-1">
                     <div class="row">
                         <div class="col-12 col-md-12 d-flex flex-column flex-md-row justify-content-end">
-                            <a href="{{route('category.create')}}" class="btn btn-primary btn-print mb-1 mb-md-0"><i
-                                    class="feather icon-plus-circle"></i>&nbsp;Add Category</a>
+                            <a href="{{route('service.create')}}" class="btn btn-primary btn-print mb-1 mb-md-0"><i
+                                    class="feather icon-plus-circle"></i>&nbsp;Add Service</a>
                             </a>
                         </div>
                     </div>
@@ -109,7 +109,7 @@
 
         // Functionality section
         function destroy(delId) {
-            let url = '{{ route("category.destroy", ":id") }}';
+            let url = '{{ route("service.destroy", ":id") }}';
             url = url.replace(':id', delId);
             $("#deleteForm").attr('action', url);
             $("#delete_id").val(delId);

@@ -16,28 +16,28 @@
             </div>
             <div class="col-md-8 widget rounded-sidebar-widget" >
                 <div class="form-group">
-                    <label>Category</label>
+                    <label>Services</label>
                     <form method="get" action="{{route('vendor-create')}}">
                         <div class= "row">
                             <div class ="col-8">
                                 @csrf
-                                <select class="selectpicker" multiple data-live-search="true" style="height: 10px" name="categoryId[]" required>
-                                    @foreach ($categories as $category)
-                                    <option value ="{{$category->slug}}">{{$category->name}}</option>
+                                <select class="selectpicker" multiple data-live-search="true" style="height: 10px" name="serviceId[]" required>
+                                    @foreach ($services as $service)
+                                    <option value ="{{$service->slug}}">{{$service->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class ="col-4">
+                            <div class ="">
                                 <button class="site-button aon-btn-login" type="submit"> Get Started</button>
                             </div>
                         </div>
                     </form>
                     <br>
-                    <label>Popular Category</label>
+                    <label>Popular Service</label>
                     <div class="widget widget_tag_cloud ">                   
                         <div class="tagcloud">
-                            @foreach ($categories as $category)
-                                <a href="javascript:void(0);">{{$category->name}}</a>
+                            @foreach ($services as $service)
+                                <a onclick="addService('{{$service->slug}}')">{{$service->name}}</a>
                             @endforeach
                         </div>
                     </div>
@@ -47,4 +47,6 @@
         </div>
     </section>
 @endsection
-
+@section('extraScripts')
+<script  src="{{ asset('frontEnd/js/customAddons.js')}}"></script>
+@endsection

@@ -27,7 +27,7 @@
 
                     <ul class=" nav navbar-nav">
                       <li class="{{Request::segment(1) == '' ? 'current-menu-item' : '' }}" ><a href="{{url('/')}}">Home</a></li>
-                      <li class="{{Request::segment(1) == 'category' ? 'current-menu-item' : '' }}" ><a href="{{route('category')}}">Category</a></li>
+                      <li class="{{Request::segment(1) == 'service' ? 'current-menu-item' : '' }}" ><a href="{{route('service')}}">Service</a></li>
 
                       {{-- <li class="has-child">
                           <a href="javascript:;">Pages</a>
@@ -118,7 +118,7 @@
                         </a>
                         <!--Sign up-->
                         <a href="{{route('signup')}}" class="site-button aon-btn-login">
-                            <i class="fa fa-plus"></i> Signup
+                            <i class="fa fa-plus"></i> Join as a Professional
                         </a>
                     </div>
                 </div>  

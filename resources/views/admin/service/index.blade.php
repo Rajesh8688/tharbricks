@@ -13,8 +13,8 @@
                 <section class="invoice-print mb-1">
                     <div class="row">
                         <div class="col-12 col-md-12 d-flex flex-column flex-md-row justify-content-end">
-                            <a href="{{route('category.create')}}" class="btn btn-primary btn-print mb-1 mb-md-0"><i
-                                    class="feather icon-plus-circle"></i>&nbsp;Add Category</a>
+                            <a href="{{route('service.create')}}" class="btn btn-primary btn-print mb-1 mb-md-0"><i
+                                    class="feather icon-plus-circle"></i>&nbsp;Add Service</a>
                             </a>
                         </div>
                     </div>
@@ -44,31 +44,31 @@
                                                 </thead>
                                                 <tbody>
 
-                                                @if(count($categories) > 0)
-                                                    @foreach($categories as $category)
+                                                @if(count($services) > 0)
+                                                    @foreach($services as $service)
                                                         <tr>
-                                                            <td>{{$category->name}}</td>
+                                                            <td>{{$service->name}}</td>
                                                             <td class="product-img">
                                                                 <img
-                                                                    src="{{$category->icon ?  asset('uploads/categories/icons/'.$category->icon) : $noImage}} "
+                                                                    src="{{$service->icon ?  asset('uploads/services/icons/'.$service->icon) : $noImage}} "
                                                                     width="44"/>
                                                             </td>
-                                                            <td>{{$category->status}}</td>
+                                                            <td>{{$service->status}}</td>
                                                             <td>
                                                                 @can('question-view')
-                                                                <a href="{{ route('question.index', ['category_id' =>$category->id]) }}"><i
+                                                                <a href="{{ route('question.index', ['service_id' =>$service->id]) }}"><i
                                                                         class="feather icon-edit"></i> Question View</a> |
                                                                 @endcan
                                                           
-                                                                @can('category-update')
-                                                                    <a href="{{ route('category.edit', $category->id) }}"><i
+                                                                @can('service-update')
+                                                                    <a href="{{ route('service.edit', $service->id) }}"><i
                                                                             class="feather icon-edit"></i> Edit</a> |
                                                                 @endcan
 
-                                                                @can('category-delete')
+                                                                @can('service-delete')
                                                                     <a href="javascript:" class="text-danger deleteBtn"
-                                                                       onclick="destroy({{$category->id}})"
-                                                                       data-id="{{$category->id}}"
+                                                                       onclick="destroy({{$service->id}})"
+                                                                       data-id="{{$service->id}}"
                                                                        data-toggle="modal"
                                                                        data-target="#deleteModal" id="deleteBtn"><i
                                                                             class="feather icon-trash"></i> Delete</a>
@@ -116,7 +116,7 @@
 
         // Functionality section
         function destroy(delId) {
-            let url = '{{ route("category.destroy", ":id") }}';
+            let url = '{{ route("service.destroy", ":id") }}';
             url = url.replace(':id', delId);
             $("#deleteForm").attr('action', url);
             $("#delete_id").val(delId);

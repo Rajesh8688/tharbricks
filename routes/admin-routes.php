@@ -25,13 +25,13 @@ Route::group([
 
     Route::resource('role', \App\Http\Controllers\Admin\RoleController::class);//Roles
     Route::resource('permission', \App\Http\Controllers\Admin\PermissionController::class);//Permissions
-    Route::resource('category', \App\Http\Controllers\Admin\CategoryController::class);//Category
+    Route::resource('service', \App\Http\Controllers\Admin\ServiceController::class);//Service
 
     Route::resource('user_request', \App\Http\Controllers\Admin\UserRequestController::class);//UserRequest
 
     Route::resource('question', \App\Http\Controllers\Admin\QuestionController::class);//question
     Route::resource('plan', \App\Http\Controllers\Admin\PlanController::class);//plan
-    Route::get('/get-category-question', [\App\Http\Controllers\Admin\QuestionController::class , 'getCategoryQuestions'])->name('getCategoryQuestions');
+    Route::get('/get-service-question', [\App\Http\Controllers\Admin\QuestionController::class , 'getCategorServiceQuestions'])->name('getServiceQuestions');
 
     Route::get('/user', [App\Http\Controllers\Admin\UserController::class, 'UserList'])->name('admin.userList');
     Route::get('/edit', [App\Http\Controllers\Admin\UserController::class, 'editUser'])->name('admin.editUser');

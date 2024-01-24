@@ -38,7 +38,7 @@
                                                 <tr>
                                                     <th>Question</th>
                                                     <th>Type</th>
-                                                    <th>Category</th>
+                                                    <th>Service</th>
                                                     <th>Status</th>
                                                     <th>Actions</th>
                                                 </tr>
@@ -59,7 +59,7 @@
                                                                 {{ucfirst($question->type)}}
                                                                 @endif
                                                             </td>
-                                                            <td>{{$question->category->name}}</td>
+                                                            <td>{{$question->service->name}}</td>
                                                             
                                                             <td>{{$question->status}}</td>
                                                             <td>

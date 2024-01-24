@@ -23,14 +23,14 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Edit Category</h4>
+                                    <h4 class="card-title">Edit Service</h4>
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
                                         <hr>
                                         <x-admin-error-list-show></x-admin-error-list-show>
 
-                                        <form class="form" action="{{route('category.update', $category->id)}}"
+                                        <form class="form" action="{{route('service.update', $service->id)}}"
                                               method="post"
                                               enctype="multipart/form-data">
                                             @csrf
@@ -43,9 +43,9 @@
                                                         <div class="form-label-group">
                                                             
                                                             <input type="text" id="name" class="form-control"
-                                                                   placeholder="Category Name"
+                                                                   placeholder="Service Name"
                                                                    name="name"
-                                                                   value="{{$category->name}}" autocomplete="off">
+                                                                   value="{{$service->name}}" autocomplete="off">
                                                             
                                                             @error('name')
                                                             <span class="invalid-feedback" role="alert">
@@ -59,8 +59,8 @@
                                                         <div class="form-label-group">
                                                         <select name="status" class="form-control @error('status') is-invalid @enderror" required>
                                                             <option value = "" >Select Status</option>
-                                                            <option value = "Active" {{$category->status == 'Active' ? 'selected' : ''}}>Active</option>
-                                                            <option value = "InActive"{{$category->status == 'InActive' ? 'selected' : ''}} >InActive</option>
+                                                            <option value = "Active" {{$service->status == 'Active' ? 'selected' : ''}}>Active</option>
+                                                            <option value = "InActive"{{$service->status == 'InActive' ? 'selected' : ''}} >InActive</option>
                                                         </select>
                                                         @error('status')
                                                             <span class="invalid-feedback" role="alert">
@@ -110,7 +110,7 @@
                                                         <div class="col-12">
                                                             <div class="form-group">
                                                                 <label for="description">Description </label>
-                                                                <textarea id="ckeditor" class="form-control @error('description') is-invalid @enderror" rows="5" placeholder="Description" name="description" required>{{$category->description}}</textarea>
+                                                                <textarea id="ckeditor" class="form-control @error('description') is-invalid @enderror" rows="5" placeholder="Description" name="description" required>{{$service->description}}</textarea>
                                                                 @error('description')
                                                                     <span class="invalid-feedback" role="alert">
                                                                         <strong>{{ $message }}</strong>

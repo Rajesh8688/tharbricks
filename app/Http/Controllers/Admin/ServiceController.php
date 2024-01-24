@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
-use App\Models\Category;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 
-class CategoryController extends Controller
+class ServiceController extends Controller
 {
         /**
      * Display a listing of the resource.
@@ -17,17 +17,17 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $titles = ['title' => 'Manage Categories', 'subTitle' => 'Add Category', 'listTitle' => 'Category List'];
-        $deleteRouteName = "category.destroy";
+        $titles = ['title' => 'Manage Services', 'subTitle' => 'Add Service', 'listTitle' => 'Service List'];
+        $deleteRouteName = "service.destroy";
 
-        if (!auth()->user()->can('category-view')) {
+        if (!auth()->user()->can('service-view')) {
             return view('admin.abort', compact('titles'));
         }
 
-        $categories = Category::get();
+        $services = Service::get();
         $noImage = asset(Config::get('constants.NO_IMG_ADMIN'));
 
-        return view('admin.category.index', compact('titles', 'categories', 'deleteRouteName', 'noImage'));
+        return view('admin.service.index', compact('titles', 'services', 'deleteRouteName', 'noImage'));
     }
 
       /**
@@ -39,14 +39,14 @@ class CategoryController extends Controller
     {
        
         $titles = [
-            'title' => "Category",
-            'subTitle' => "Add category",
+            'title' => "Service",
+            'subTitle' => "Add service",
         ];
-        if (!auth()->user()->can('category-add')) {
+        if (!auth()->user()->can('service-add')) {
             return view('admin.abort',compact('titles'));
         }
 
-        return view('admin.category.create', compact('titles'));
+        return view('admin.service.create', compact('titles'));
         
     }
 
@@ -58,7 +58,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        if (!auth()->user()->can('category-add')) {
+        if (!auth()->user()->can('service-add')) {
             return view('admin.abort');
         }
 
@@ -76,8 +76,8 @@ class CategoryController extends Controller
         if ($originalImage != NULL) {
             $newFileName = time() . $originalImage->getClientOriginalName();
 
-            $iconPath = Category::$imageIconPath;
-            $originalPath = Category::$imagePath;
+            $iconPath = Service::$imageIconPath;
+            $originalPath = Service::$imagePath;
 
             if($originalImage->getClientOriginalExtension() == 'svg')
             {
@@ -105,7 +105,7 @@ class CategoryController extends Controller
         if ($iconImage != NULL) {
             $newFileName = time() . $iconImage->getClientOriginalName();
 
-            $iconPath = Category::$imageIconPath;
+            $iconPath = Service::$imageIconPath;
 
             if($iconImage->getClientOriginalExtension() == 'svg')
             {
@@ -126,13 +126,13 @@ class CategoryController extends Controller
             $data['icon'] = $newFileName;
         }
 
-        $data['slug'] = unique_slug($request->name, 'Category');
+        $data['slug'] = unique_slug($request->name, 'Service');
         $data['name'] = $request->name;
         $data['description'] = $request->description;
         $data['status'] = $request->status;
         
-        Category::create($data);
-        return redirect()->route('category.index')->with('success','Category created Successfully');
+        Service::create($data);
+        return redirect()->route('service.index')->with('success','Service created Successfully');
     }
 
     // /**
@@ -154,14 +154,14 @@ class CategoryController extends Controller
     //  */
     public function edit($id)
     {
-        $titles = ['title' => 'Manage Category', 'subTitle' => 'Edit Category', 'listTitle' => 'Category List'];
-        if (!auth()->user()->can('category-update')) {
+        $titles = ['title' => 'Manage Service', 'subTitle' => 'Edit Service', 'listTitle' => 'Service List'];
+        if (!auth()->user()->can('service-update')) {
             return view('admin.abort', compact('titles'));
         }
 
-        $category = Category::find($id);
+        $service = Service::find($id);
 
-        return view('admin.category.edit', compact('titles', 'category'));
+        return view('admin.service.edit', compact('titles', 'service'));
     }
 
     // /**
@@ -173,7 +173,7 @@ class CategoryController extends Controller
     //  */
     public function update(Request $request, $id)
     {
-        if (!auth()->user()->can('category-update')) {
+        if (!auth()->user()->can('service-update')) {
             return view('admin.abort');
         }
 
@@ -187,48 +187,48 @@ class CategoryController extends Controller
 
         $data = array();
 
-        $category = Category::find($id);
+        $service = Service::find($id);
 
-        $categoryImage = $request->file('image');
-        $categoryIcon = $request->file('icon');
+        $serviceImage = $request->file('image');
+        $serviceIcon = $request->file('icon');
 
-        if ($categoryImage != NULL) {
+        if ($serviceImage != NULL) {
             // Delete the previous image
-            deleteImage(Category::$imagePath, $category->image);
+            deleteImage(Service::$imagePath, $service->image);
 
 
-            $newFileName = time() . $categoryImage->getClientOriginalName();
-            $originalPath = Category::$imagePath;
+            $newFileName = time() . $serviceImage->getClientOriginalName();
+            $originalPath = Service::$imagePath;
 
             // Image Upload Process
-            $thumbnailImage = Image::make($categoryImage);
+            $thumbnailImage = Image::make($serviceImage);
             //$thumbnailImage->save($originalPath . $newFileName);
             $thumbnailImage->resize(601,511)->save($originalPath . $newFileName);
-            $category->image = $newFileName;
+            $service->image = $newFileName;
         }
 
         
-        if ($categoryIcon != NULL) {
-            $newFileName = time() . $categoryIcon->getClientOriginalName();
-            $originalPath = Category::$imageIconPath;
+        if ($serviceIcon != NULL) {
+            $newFileName = time() . $serviceIcon->getClientOriginalName();
+            $originalPath = Service::$imageIconPath;
               // Delete the previous image
-            deleteImage(Category::$imageIconPath, $category->icon);
+            deleteImage(Service::$imageIconPath, $service->icon);
 
             // Image Upload Process
-            $thumbnailImage = Image::make($categoryIcon);
+            $thumbnailImage = Image::make($serviceIcon);
             //$thumbnailImage->save($originalPath . $newFileName);
             $thumbnailImage->resize(44,44)->save($originalPath . $newFileName);
-            $category->icon = $newFileName;
+            $service->icon = $newFileName;
         }
 
-        $category->name = $request->name;
-        $category->slug = unique_slug($request->name, 'Category' , $category->id);;
-        $category->status = $request->status;
-        $category->description = $request->description;
+        $service->name = $request->name;
+        $service->slug = unique_slug($request->name, 'Service' , $service->id);;
+        $service->status = $request->status;
+        $service->description = $request->description;
 
-        $category->save();
+        $service->save();
 
-        return redirect()->route('category.index')->with('success', 'Updated Successfully');
+        return redirect()->route('service.index')->with('success', 'Updated Successfully');
     }
 
     /**
@@ -239,19 +239,19 @@ class CategoryController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        if (!auth()->user()->can('category-delete')) {
+        if (!auth()->user()->can('service-delete')) {
             return view('admin.abort');
         }
         $deleteId = $request->delete_id;
-        $category = Category::find($deleteId);
+        $service = Service::find($deleteId);
 
         if ($deleteId) {
             // Delete the previous image
-            deleteImage(Category::$imagePath, $category->image);
-            deleteImage(Category::$imageIconPath, $category->icon);
-            $category->delete();
+            deleteImage(Service::$imagePath, $service->image);
+            deleteImage(Service::$imageIconPath, $service->icon);
+            $service->delete();
 
-            return redirect()->route('category.index')->with('success', 'Deleted Successfully');
+            return redirect()->route('service.index')->with('success', 'Deleted Successfully');
         }
     }
 }

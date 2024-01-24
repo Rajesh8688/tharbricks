@@ -18,12 +18,25 @@
     top: 25%;
     width: 50%;
 }
+.mCustomScrollBox{
+    height: inherit !important;
+    /* overflow: visible !important; */
+    /* align-items: center;
+    display: flex */
+}
+.wt-dashboard-msg-user-list{
+    /* display: inline-block !important; */
+}
+
+.wt-admin-dashboard-msg-2{
+    display: flex !important;
+}
     </style>
 
         <div class="card-body aon-card-body">
             <div class="content-admin-main2">
                 <div class="wt-admin-dashboard-msg-2">
-                    <div class="wt-dashboard-msg-user-list">
+                    <div class="col-12 col-lg-4 p-0 wt-dashboard-msg-user-list">
                         <!-- user msg list start-->
                         <div style="position: static;height: 77px;background-color: black;color: white;display: flex;">
                             <div style="padding: 11px 16px;"> 
@@ -42,7 +55,7 @@
                                 <a href="javascript:;" class="msg-user-info clearfix" style="padding: 15px 10px 15px 20px ">
                                     <div class="msg-user-info-text">
                                         <div><div class="msg-user-name"><b>{{$item->name}}</b></div> <div class="msg-user-timing badge badge-success" style="color: #fff;"> {{$item->lead_added_on}}</div></div>
-                                        <div class="msg-user-name">{{$item->category->name}}</div>
+                                        <div class="msg-user-name">{{$item->service->name}}</div>
                                         <div class="msg-user-discription"><i class="aon-input-icon fa fa-map-marker"></i> {{$item->address}}</div>
                                         <div class="msg-user-discription">{{$item->leadAnswersShort}} </div>
                                         <div >
@@ -51,7 +64,7 @@
                                     </div>
                                 </a>
                             </div>
-                                
+
                             @empty
                             <div class="wt-dashboard-msg-search-list-wrap" >
                                 <a href="javascript:;" class="msg-user-info clearfix" style="padding: 15px 10px 15px 20px ">
@@ -69,7 +82,7 @@
                         
                     </div>
                     
-                    <div class="wt-dashboard-msg-box">
+                    <div class="col-12 col-lg-8 p-0 wt-dashboard-msg-box">
                       
                         <div id="msg-chat-wrap" class="single-user-msg-conversation ">
 
@@ -79,7 +92,7 @@
                                     <div class="sf-provi-bio-box cleafix margin-b-50 ">
                                         <br>
                                         <h3>{{$lead->name}} </h3>
-                                        <div class="sf-provi-cat"><strong>Category:</strong> {{$lead->category->name}}</div>
+                                        <div class="sf-provi-cat"><strong>Service:</strong> {{$lead->service->name}}</div>
                                         <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-map-marker"></i> &nbsp; {{$lead->address}}</div>
                                         <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-phone"></i> &nbsp; {{$lead->encrypted_phone}}</div>
                                         <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-envelope"></i> &nbsp; {{$lead->encrypted_email}}</div>

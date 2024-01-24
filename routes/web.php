@@ -41,9 +41,9 @@ Route::post('vendor/createAccount', [App\Http\Controllers\FrontEnd\VendorControl
 
 
 
-//category
-Route::get('category', [App\Http\Controllers\FrontEnd\CategoryController::class, 'index'])->name('category');
-Route::get('category/{slug}', [App\Http\Controllers\FrontEnd\CategoryController::class, 'categoryDetails'])->name('categoryDetails');
+//service
+Route::get('service', [App\Http\Controllers\FrontEnd\ServiceController::class, 'index'])->name('service');
+Route::get('service/{slug}', [App\Http\Controllers\FrontEnd\ServiceController::class, 'serviceDetails'])->name('serviceDetails');
 
 
 //leads

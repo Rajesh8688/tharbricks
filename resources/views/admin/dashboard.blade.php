@@ -15,22 +15,22 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Categories</h4>
+                                <h4 class="card-title">Services</h4>
                             </div>
                             <div class="card-content">
                                 <div class="card-body">
                                     <div class="card-text">
                                         <dl class="row">
                                             <dt class="col-sm-7 col-7"> Total </dt>
-                                            <dd class="col-sm-5 col-5"> : &nbsp; {{$dashboardDetails['categoryCount']}} </dd>
+                                            <dd class="col-sm-5 col-5"> : &nbsp; {{$dashboardDetails['serviceCount']}} </dd>
                                         </dl>
                                         <dl class="row">
                                             <dt class="col-sm-7 col-7"> Active </dt>
-                                            <dd class="col-sm-5 col-5"> : &nbsp; {{$dashboardDetails['categoryActiveCount']}} </dd>
+                                            <dd class="col-sm-5 col-5"> : &nbsp; {{$dashboardDetails['serviceActiveCount']}} </dd>
                                         </dl>
                                         <dl class="row">
                                             <dt class="col-sm-7 col-7"> InActive :</dt>
-                                            <dd class="col-sm-5 col-5"> : &nbsp; {{$dashboardDetails['categoryInActiveCount']}} </dd>
+                                            <dd class="col-sm-5 col-5"> : &nbsp; {{$dashboardDetails['serviceInActiveCount']}} </dd>
                                         </dl>
                                        
 

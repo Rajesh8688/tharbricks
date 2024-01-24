@@ -22,8 +22,8 @@
                     <div class="row">
                         <fieldset class="col-12 col-md-5 mb-1 mb-md-0">&nbsp;</fieldset>
                         <div class="col-12 col-md-7 d-flex flex-column flex-md-row justify-content-end">
-                            @can('category-view')
-                            <a href="{{route('category.index')}}" class="btn btn-primary btn-print mb-1 mb-md-0"><i
+                            @can('service-view')
+                            <a href="{{route('service.index')}}" class="btn btn-primary btn-print mb-1 mb-md-0"><i
                                     class="feather icon-list"></i>&nbsp;Go to List</a>
                             </a>
                             @endcan
@@ -45,7 +45,7 @@
                                         {{-- <x-admin-error-list-show></x-admin-error-list-show> --}}
 
 
-                                        <form class="form-horizontal" action="{{route('category.store')}}" method="post"
+                                        <form class="form-horizontal" action="{{route('service.store')}}" method="post"
                                               enctype="multipart/form-data" novalidate>
                                             @csrf
                                             <div class="form-body">
@@ -53,7 +53,7 @@
                                                     <div class="col-md-6 col-12">
                                                         <div class="form-group">
                                                             <label for="name">Name </label>
-                                                            <input type="text" id="name" class="form-control @error('name') is-invalid @enderror" placeholder="Category Name" name="name" value="{{old('name')}}" autocomplete="off" required>
+                                                            <input type="text" id="name" class="form-control @error('name') is-invalid @enderror" placeholder="Service Name" name="name" value="{{old('name')}}" autocomplete="off" required>
                                                             @error('name')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>

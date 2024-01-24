@@ -15,7 +15,7 @@ class CreateLeadsTable extends Migration
     {
         Schema::create('leads', function (Blueprint $table) {
             $table->id();
-            $table->integer('category_id');
+            $table->integer('service_id');
             $table->string('name')->nullable();
             $table->string('address')->nullable();
             $table->tinyInteger('internal_lead')->default(0);

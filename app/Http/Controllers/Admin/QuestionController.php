@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Category;
+use App\Models\Service;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use App\Models\QuestionOption;
@@ -20,15 +20,15 @@ class QuestionController extends Controller
             return view('admin.abort', compact('titles'));
         }
         
-        $categoryId = null ;
-        if($request->has('category_id'))
+        $serviceId = null ;
+        if($request->has('service_id'))
         {
-            $categoryId = $request->input('category_id');
+            $serviceId = $request->input('service_id');
         }
-        $questions = Question::with('category');
+        $questions = Question::with('service');
 
-        if(!empty($categoryId)){
-            $questions = $questions->where('category_id' , $categoryId );
+        if(!empty($serviceId)){
+            $questions = $questions->where('service_id' , $serviceId );
         }
         
         $questions = $questions->get();
@@ -36,15 +36,15 @@ class QuestionController extends Controller
         return view('admin.question.index', compact('titles', 'questions', 'deleteRouteName'));
     }
 
-    public function getCategoryQuestions(Request $request){
+    public function getServiceQuestions(Request $request){
 
-        $categoryId = $request->input('category_id');
+        $serviceId = $request->input('service_id');
         $questionId = null;
         if($request->has('question_id')){
             $questionId = $request->input('question_id');
         }
         // Logic to fetch updated options based on $selectedValue
-        $questions = Question::where('category_id', $categoryId);
+        $questions = Question::where('service_id', $serviceId);
         if(!empty($questionId)){
                 $question = $questions->whereNotIn('id',[$questionId]);
         }
@@ -65,9 +65,9 @@ class QuestionController extends Controller
             return view('admin.abort',compact('titles'));
         }
 
-        $categories = Category::get();
+        $services = Service::get();
 
-        return view('admin.question.create', compact('titles' ,'categories'));
+        return view('admin.question.create', compact('titles' ,'services'));
         
     }
 
@@ -90,7 +90,7 @@ class QuestionController extends Controller
         $question->status = $request->input('status');
         $question->order = $request->input('order');
         $question->type = $request->input('type');
-        $question->category_id = $request->input('category_id');
+        $question->service_id = $request->input('service_id');
         $question->next_question_id =  $request->input('next_question_id') ;
         $question->slug =  unique_slug($request->input('question_text'), 'Question');
 
@@ -185,12 +185,12 @@ class QuestionController extends Controller
 
         $questionOptions = QuestionOption::where('question_id' , $id)->get();
 
-        $categoryQuestions = Question::where('category_id' , $question->category_id)->whereNotIn('id' ,[$question->id])->get();
+        $serviceQuestions = Question::where('service_id' , $question->service_id)->whereNotIn('id' ,[$question->id])->get();
 
-        $categories = Category::get();
+        $services = Service::get();
 
 
-        return view('admin.question.edit', compact('titles', 'categories' ,'questionOptions' ,'question','categoryQuestions'));
+        return view('admin.question.edit', compact('titles', 'services' ,'questionOptions' ,'question','serviceQuestions'));
     }
 
     public function update(Request $request, $id)
@@ -205,7 +205,7 @@ class QuestionController extends Controller
         $question->status = $request->input('status');
         $question->order = $request->input('order');
         $question->type = $request->input('type');
-        $question->category_id = $request->input('category_id');
+        $question->service_id = $request->input('service_id');
         $question->slug = unique_slug($request->input('question_text'), 'Question' , $question->id);
         $question->save();
         $questionOptionId = [];

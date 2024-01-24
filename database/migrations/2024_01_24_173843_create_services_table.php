@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVendorCategoriesTable extends Migration
+class CreateServicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateVendorCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('vendor_categories', function (Blueprint $table) {
+        Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('category_id');
-            $table->enum('status',[0,1])->comment("0=>InActive,1=>Active")->default(1);
+            $table->string('name');
+            $table->string('slug');
+            $table->string('image');
+            $table->string('icon');
+            $table->text('description')->nullable();
+            $table->enum('status', ['Active', 'InActive'])->default('Active');
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ class CreateVendorCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vendor_categories');
+        Schema::dropIfExists('services');
     }
 }

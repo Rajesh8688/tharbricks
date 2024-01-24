@@ -8,7 +8,7 @@
             <div class="header-left">
                 
                 <div class="my-account-logo">
-                    <a href="{{url('/')}}"><img src="{{ asset('frontEnd/images/logo-dark.png')}}" alt=""></a>
+                    <a href="{{route('vendor-dashboard')}}"><img src="{{ asset('frontEnd/images/logo-dark.png')}}" alt=""></a>
                 </div>
                 
                 {{-- <div class="header-widget aon-admin-search-box">

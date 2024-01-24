@@ -93,15 +93,15 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6 col-12">
-                                                        <label for="first-name-column">Category</label>
+                                                        <label for="first-name-column">Service</label>
                                                         <div class="form-label-group">
-                                                        <select name="category_id" class="form-control @error('category_id') is-invalid @enderror" required id="category_id">
-                                                            <option value = "" >Select Category</option>
-                                                            @foreach($categories as $category)
-                                                                <option value = "{{$category->id}}" {{old('category_id') == $category->id ? 'selected' : ''}}>{{$category->name}}</option>
+                                                        <select name="service_id" class="form-control @error('service_id') is-invalid @enderror" required id="service_id">
+                                                            <option value = "" >Select Service</option>
+                                                            @foreach($services as $service)
+                                                                <option value = "{{$service->id}}" {{old('service_id') == $service->id ? 'selected' : ''}}>{{$service->name}}</option>
                                                             @endforeach
                                                         </select>
-                                                        @error('category_id')
+                                                        @error('service_id')
                                                             <span class="invalid-feedback" role="alert">
                                                                 <strong>{{ $message }}</strong>
                                                             </span>
@@ -333,8 +333,8 @@
                     </div>`;
 
             $("#multiSelectId").append($html);
-            $selectedCategory = $('#category_id').val();
-            QuestionDropdown($selectedCategory,className);
+            $selectedService = $('#service_id').val();
+            QuestionDropdown($selectedService,className);
         }
         function removemultiSelect(id){          
             $("#"+id).remove();
@@ -360,8 +360,8 @@
                     </div>`;
 
             $("#decisionMakingId").append($html);
-            $selectedCategory = $('#category_id').val();
-            QuestionDropdown($selectedCategory,className);
+            $selectedService = $('#service_id').val();
+            QuestionDropdown($selectedService,className);
         }
         function removedecisionMaking(id){          
             $("#"+id).remove();
@@ -475,29 +475,29 @@
                                     </div>
                                 </div>`;
                         $(".typeDiv").html($html);
-                        $selectedCategory = $('#category_id').val();
-                        QuestionDropdown($selectedCategory,className);
+                        $selectedService = $('#service_id').val();
+                        QuestionDropdown($selectedService,className);
                     }
                     $(".typeDiv").html($html);
-                    $selectedCategory = $('#category_id').val();
-                    QuestionDropdown($selectedCategory,className);
+                    $selectedService = $('#service_id').val();
+                    QuestionDropdown($selectedService,className);
                 }
             });
         
-            $('#category_id').on('change', function () {
-                var selectedCategory = $(this).val();
-                QuestionDropdown(selectedCategory);
+            $('#service_id').on('change', function () {
+                var selectedService = $(this).val();
+                QuestionDropdown(selectedService);
             });
         });
 
-    function QuestionDropdown(selectedCategory,className = 'questionDropdown'){
-        var url = '{{route("getCategoryQuestions")}}';
+    function QuestionDropdown(selectedService,className = 'questionDropdown'){
+        var url = '{{route("getServiceQuestions")}}';
          // Make an AJAX request to get the options for the second dropdown
          $.ajax({
                 url: url,
                 type: 'GET',
                 data :{
-                    'category_id' : selectedCategory
+                    'service_id' : selectedService
                 },
                 success: function (response) {
                     // Update the options in the second dropdown

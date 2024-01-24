@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\FrontEnd;
 
 use App\Models\Lead;
-use App\Models\Category;
+use App\Models\Service;
 use App\Models\Question;
 use App\Models\LeadAnswer;
 use Illuminate\Http\Request;
@@ -15,23 +15,32 @@ class LeadController extends Controller
     public function storeLead(Request $request){
         $userRequest = $request->input();
 
-        $categoryId = $userRequest['category_id'];
-        $categoryDetails = Category::find($categoryId);
+        $serviceId = $userRequest['service_id'];
+        $serviceDetails = Service::find($serviceId);
 
         $email = $userRequest['email'];
         $phone = $userRequest['phone'];
+        $name = $userRequest['name'];
+        $pin_code = $userRequest['pin_code'];
+        $address = $userRequest['address'];
 
         unset($userRequest['_token']);
         unset($userRequest['email']);
         unset($userRequest['phone']);
-        unset($userRequest['category_id']);
+        unset($userRequest['name']);
+        unset($userRequest['pin_code']);
+        unset($userRequest['address']);
+        unset($userRequest['service_id']);
 
         try {
             $lead = new Lead();
             $lead->email = $email;
-            $lead->category_id = $categoryId;
+            $lead->service_id = $serviceId;
             $lead->phone = $phone;
             $lead->status = 'Active';
+            $lead->name = $name;
+            $lead->pin_code = $pin_code;
+            $lead->address = $address;
             $lead->save();
 
             foreach($userRequest as $key => $req ){
@@ -70,7 +79,7 @@ class LeadController extends Controller
           
             }
 
-            return redirect()->route('home')->with('success',$categoryDetails->name.' request submitted successfully');
+            return redirect()->route('home')->with('success',$serviceDetails->name.' request submitted successfully');
 
         } catch (\Throwable $th) {
             return redirect()->route('home')->with('error','something went wrong');

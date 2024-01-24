@@ -3,7 +3,7 @@
     <div class="sf-provi-bio-box cleafix margin-b-50 ">
         <br>
         <h3>{{$lead->name}} </h3>
-        <div class="sf-provi-cat"><strong>Category:</strong> {{$lead->category->name}}</div>
+        <div class="sf-provi-cat"><strong>Service:</strong> {{$lead->service->name}}</div>
         <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-map-marker"></i> &nbsp; {{$lead->address}}</div>
         <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-phone"></i> &nbsp; {{$lead->encrypted_phone}}</div>
         <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-envelope"></i> &nbsp; {{$lead->encrypted_email}}</div>

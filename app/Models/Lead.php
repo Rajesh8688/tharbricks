@@ -13,7 +13,7 @@ class Lead extends Model
     //     return $this->hasMany(Lead::class);
     // }
 
-    public function category(){
-        return $this->belongsTo(Category::class);
+    public function service(){
+        return $this->belongsTo(Service::class);
     }
 }

@@ -19,7 +19,7 @@ class CreateQuestionsTable extends Migration
             $table->enum('type' , ['input','imageRadio' , 'normalRadio' , 'date' ,'multiSelect' ,'decisionMaking']);
             $table->integer('show_other_option')->default(0);
             $table->integer('next_question_id')->nullable();
-            $table->integer('category_id');
+            $table->integer('service_id');
             $table->integer('order');
             $table->enum('status' , ['Active' ,'InActive'])->default('Active');
             $table->string('slug');

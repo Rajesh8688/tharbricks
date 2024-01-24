@@ -18,15 +18,15 @@
             <div class="container">
                 <div class="aon-all-categories-block2">
                     <div class="row">
-                        @foreach ($categories as $category)
+                        @foreach ($services as $service)
                             <div class="col-lg-4 col-md-6">
-                                <?php $image = asset('uploads/categories').'/'.$category->image;?>
+                                <?php $image = asset('uploads/services').'/'.$service->image;?>
                                 <div class="aon-all-cat-block" style="background-image: url({{$image}});">
                                     <div class="aon-cat-quantity">
                                         <span><i>+</i>00</span>
                                     </div>
                                     <div class="aon-cat-name">
-                                        <h3><a href="{{route('categoryDetails',['slug'=>$category->slug])}}">{{$category->name}}</a></h3>
+                                        <h3><a href="{{route('serviceDetails',['slug'=>$service->slug])}}">{{$service->name}}</a></h3>
                                     </div>
                                 </div>
                             </div>

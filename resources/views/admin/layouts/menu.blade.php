@@ -17,8 +17,8 @@
             </li>
             @endcan
             
-            @can('category-view')
-            <li class=" nav-item {{Request::segment(2) == 'category' ? 'active' : '' }}"><a href="{{route('category.index')}}"><i class="feather icon-calendar"></i><span class="menu-title" data-i18n="Categories">Category</span></a>
+            @can('service-view')
+            <li class=" nav-item {{Request::segment(2) == 'service' ? 'active' : '' }}"><a href="{{route('service.index')}}"><i class="feather icon-calendar"></i><span class="menu-title" data-i18n="Services">Service</span></a>
             </li>
             @endcan
             @can('user-request-view')

@@ -31,9 +31,9 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Company name</label>
-                        <div class="aon-input"> 
+                        <div class="aon-inputicon-box"> 
                             <input class="form-control sf-form-control" name="company_name" type="text" value="{{old('company_name')}}">
-                            {{-- <i class="aon-input-icon fa fa-globe "></i> --}}
+                            <i class="aon-input-icon fa fa-building"></i>
                         </div>
                         <span>If you aren't a business or don't have this information, you can leave this blank</span>
                     </div>
@@ -78,7 +78,7 @@
                         </div>
                     </div>
                 </div>
-                <input type="hidden" name ="categorysSlug" value = {{$categorysSlug}}>
+                <input type="hidden" name ="servicesSlug" value = {{$servicesSlug}}>
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Where would you like to see leads from?</label>
@@ -182,6 +182,7 @@
                         <label>Password</label>
                         <div class="aon-inputicon-box"> 
                             <input class="form-control sf-form-control" name="password" type="password"  required value="{{ old('password')}}"  id ="password" autocomplete="new-password">
+                            <i class="aon-input-icon fa fa-lock " ></i>
                             <i class="aon-input-icon-right fa fa-eye-slash " id = "toggle-password"></i>
                         </div>
                         @error('password')
@@ -196,6 +197,7 @@
                         <label>Confirm Password</label>
                         <div class="aon-inputicon-box" > 
                             <input class="form-control sf-form-control" name="password_confirmation" type="password"  required value="{{ old('password_confirmation')}}" id ="password_confirmation">
+                            <i class="aon-input-icon fa fa-lock " ></i>
                             <i class="aon-input-icon-right fa fa-eye-slash " id = "toggle-password-confirmation"></i>
                         </div>
                         

@@ -27,7 +27,7 @@
                                     <li><a href="blog-grid.html">Blog</a></li>
                                     <li><a href="contact-us.html">Contact Us</a></li>
                                     <li><a href="job-grid.html">Jobs</a></li>
-                                    <li><a href="all-categories.html">Categories</a></li>
+                                    <li><a href="all-categories.html">Services</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -49,8 +49,8 @@
                                 <h4 class="sf-f-title">Categories</h4>
                                 <ul>
                                  
-                                    @forEach($footerCategories as $category)
-                                        <li><a href="categories-detail.html">{{$category->name}}</a></li>
+                                    @forEach($footerServices as $service)
+                                        <li><a href="categories-detail.html">{{$service->name}}</a></li>
                                     @endforeach
                                 </ul>
                             </div>

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
-use App\Models\Category;
+use App\Models\Service;
 use App\Models\GuestUser;
 use Illuminate\Http\Request;
 use App\Models\FlightBooking;
@@ -45,17 +45,17 @@ class HomeController extends Controller
         //     $bookings = FlightBooking::with('TravelersInfo','Customercountry')->whereDate('created_at', '=', date('Y-m-d'))->orderBy('id','DESC')->get();
         // }
 
-        $categoryActiveCount = count(Category::where('status' , 'Active')->get());
-        $categoryInActiveCount = count(Category::where('status' , 'InActive')->get());
-        $categoryCount = $categoryActiveCount + $categoryInActiveCount;
+        $serviceActiveCount = count(Service::where('status' , 'Active')->get());
+        $serviceInActiveCount = count(Service::where('status' , 'InActive')->get());
+        $serviceCount = $serviceActiveCount + $serviceInActiveCount;
 
        
 
 
         $dashboardDetails = array(
-            'categoryActiveCount' => $categoryActiveCount,
-            'categoryInActiveCount' => $categoryInActiveCount,
-            'categoryCount' => $categoryCount,
+            'serviceActiveCount' => $serviceActiveCount,
+            'serviceInActiveCount' => $serviceInActiveCount,
+            'serviceCount' => $serviceCount,
             'totalCustomers' => 0,
             'totalBookings' => 0,
             'confirmedBookings' => 0,
