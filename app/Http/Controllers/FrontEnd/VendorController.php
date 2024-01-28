@@ -5,12 +5,18 @@ namespace App\Http\Controllers\FrontEnd;
 use App\Models\Lead;
 use App\Models\User;
 use App\Models\Service;
+use App\Models\LeadUser;
+use App\Models\LeadAnswer;
+use App\Models\ServiceUser;
 use Illuminate\Http\Request;
 use App\Models\VendorDetails;
 use App\Models\VendorService;
 use Illuminate\Validation\Rule;
+use App\Models\NotInterestedLead;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\LeadAnswer;
+use App\Models\CreditTransactionLog;
+use App\Models\ResponseActivity;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
@@ -81,6 +87,20 @@ class VendorController extends Controller
             $vendorDetails->company_size = $request->input('company_size');
             $vendorDetails->website = $request->input('website');
             $vendorDetails->see_leads_from = $request->input('see_leads_from');
+            //adding credits to vendor
+            $vendorDetails->credits = 10000;
+            $creditLogs = new CreditTransactionLog();
+
+            $creditLogs->user_id = $user_id;
+            $creditLogs->credits = 10000;
+            $creditLogs->remaining_credits = 10000;
+            $creditLogs->action = "added";
+            $creditLogs->credits_desctiption = "10000 Join Bonus credits";
+            $creditLogs->date_of_transaction = now();
+            $creditLogs->save();
+            $creditLogs->unique_id = 'CT'.str_pad($creditLogs->id, 8, '0', STR_PAD_LEFT);
+            $creditLogs->save();
+
 
             if($request->input('see_leads_from') == 'custom' ){
                 $vendorDetails->serve_customer_with_in = $request->input('serve_customer_with_in');
@@ -90,16 +110,15 @@ class VendorController extends Controller
             $vendorDetails->save();
 
             $serviceSlugs = explode("," , $request->input('servicesSlug'));
-
             foreach ($serviceSlugs as $serviceSlug) {
                $serviceDetails = Service::where('slug' , $serviceSlug)->first();
                if($serviceDetails){
-                    $vendorService = new VendorService();
-                    $vendorService->user_id = $user_id;
-                    $vendorService->service_id =  $serviceDetails->id;
-                    $vendorService->status =  1;
+                    $ServiceUser = new ServiceUser();
+                    $ServiceUser->user_id = $user_id;
+                    $ServiceUser->service_id =  $serviceDetails->id;
+                    $ServiceUser->status =  "Active";
+                    $ServiceUser->save();
                }
-               $serviceDetails->save();
             }
 
             Auth::guard('web')->loginUsingId($user_id);
@@ -107,7 +126,6 @@ class VendorController extends Controller
             return redirect()->route('vendor-dashboard')->with('success', 'Vendor Created successfully');
 
         } catch (\Throwable $th) {
-            dd($th);
             return Redirect::back()->withErrors(['error' => 'The Message']);
             //return redirect()-back()->with('error','something went wrong');
         }
@@ -115,79 +133,23 @@ class VendorController extends Controller
 
 
     public function dashboard(){
-        // dd(auth()->user());
         $titles = [
             'title' => "Vendor Dashboard",
         ];
+        $unInterestedLeads = NotInterestedLead::select('lead_id')->where(['user_id' => auth('web')->user()->id ,"status" => 'Active'])->get();
+        $userServices = ServiceUser::select('service_id')->where(['user_id' => auth('web')->user()->id , "status" => 'Active'])->get();
+        $leads = Lead::with('service')->where("status" , "Active")->whereIn('service_id' ,$userServices);
+        if(!empty($unInterestedLeads)){
+            $leads = $leads->whereNotIn('id',$unInterestedLeads);
+        }
+        $data['totalLeads'] = count($leads->get());
 
-        return view('front_end.vendor.dashboard',compact('titles'));
+        $data['totalResponses'] = count(LeadUser::where("status" , 'Active')->get());
 
+        $vendorDetails = VendorDetails::where("user_id" , auth('web')->user()->id)->first();
+        return view('front_end.vendor.dashboard',compact('titles','vendorDetails','data'));
     }
 
 
-    public function leads(){
-        $titles = [
-            'title' => "Vendor Leads",
-        ];
-
-        $leads = Lead::with('service')->where("status" , "Active")->get();
-        //$leads = Lead::with('service')->where("status" , "InActive")->get();
-        $firstLead = null;
-        $lead = null;
-
-        foreach($leads as $k=>$lead){
-            if($k == 0){
-                $firstLead = $lead->id;
-            }
-            $leadAnswers = LeadAnswer::where("lead_id" , $lead->id)->get();
-            $LeadAns = [];
-            foreach($leadAnswers as $leadAnswer)
-            {
-                $LeadAns[] = ucfirst($leadAnswer->answer_text);
-            }
-            $lead->leadAnswers = implode("|",$LeadAns);
-            $lead->leadAnswersShort = substr($lead->leadAnswers,0,60).((strlen($lead->leadAnswers) > 60) ? "...":"");
-            $lead->lead_added_on = $lead->created_at->diffForHumans(null,null,true);
-        }
-        $lead = $firstLead;
-        if($firstLead){
-            $lead = Lead::with('service')->find($firstLead);
-            $email = explode("@",$lead->email);
-            $lead->encrypted_email = "**********@".$email[1];
-            $lead->encrypted_phone = "*******".substr ($lead->phone, -3);
-            $leadAnswers = LeadAnswer::with('question')->where("lead_id" , $lead->id)->where("status" , "Active")->get();
-            $lead->leadAnswers = $leadAnswers;
-        }
-        return view('front_end.vendor.leads',compact('titles' ,'leads' ,'lead'));
-    }
-
-    public function leadDetails(Request $request){
-        $leadId = null;
-
-        $leadId = $request->has('lead_id') ? $request->input('lead_id') : null;
-
-        if(empty($leadId)){
-            return response()->json(['error' => 'Lead Id Required'], 500);
-        }else{
-            $lead = Lead::with('service')->find($leadId);
-            if(empty($lead)){
-                return response()->json(['error' => 'Lead does not exist'], 500);
-            }
-            $email = explode("@",$lead->email);
-            $lead->encrypted_email = "**********@".$email[1];
-            $lead->encrypted_phone = "*******".substr ($lead->phone, -3);
-            $leadAnswers = LeadAnswer::with('question')->where("lead_id" , $lead->id)->where("status" , "Active")->get();
-            $lead->leadAnswers = $leadAnswers;
-
-            return response()->json([
-                'leadDetails' => view('front_end.vendor.vendor_details_view',compact('lead'))->render()
-            ]);
-
-            //view('front_end.vendor.leads',compact('titles' ,'leads' ,'lead'));
-
-
-        }
-
-
-    }
+  
 }

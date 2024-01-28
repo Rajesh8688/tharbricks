@@ -6,7 +6,7 @@
             <div class="container clearfix"> 
                 <!--Logo section start-->
                 <div class="logo-header">
-                    <div class="logo-header-inner logo-header-one">
+                    <div class="logo-header-inner logo-header-one"> 
                       <a href="{{url('/')}}">
                       <img src="{{ asset('frontEnd/images/logo-dark.png')}}" alt="">
                       </a>

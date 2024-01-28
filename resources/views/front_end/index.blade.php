@@ -15,7 +15,7 @@
         
         
         <!-- BANNER SECTION START -->
-        <section class="aon-banner-area2">
+        <section class="">
             <!--banner 2-->
             <div class="container">
                 <div class="aone-banner-area2-inner">
@@ -37,7 +37,7 @@
                                         <div class="aon-bnr2-search-box">
                                             
                                             <!-- COLUMNS 1 -->
-                                            <div class="aon-search-input category-select">
+                                            <div class="aon-search-input category-select ">
                                                 <select id="categorysrh" name="catid" class="form-control sf-form-control aon-categories-select sf-select-box" title="Service">
                                                     <option class="bs-title-option" value="">Select a Service</option>
 
@@ -45,7 +45,7 @@
                                                     {{$icon = asset('uploads/services/icons/'.$service->icon)}}
                                                 
                                                     
-                                                    <option value="{{$service->id}}" data-content="<img class='childcat-img' width='50' height='auto' style='border-radius: 5px !important' src={{$icon}}>
+                                                    <option value="{{$service->id}}" id = "servicedata{{$service->id}}" data-servicename = "{{$service->name}}" data-content="<img class='childcat-img' width='50' height='auto' style='border-radius: 5px !important' src={{$icon}}>
                                                     
                                                         <span class='childcat'>{{$service->name}}</span>">{{$service->name}}</option>
                                                         
@@ -54,16 +54,22 @@
                                                 </select>
                                             </div>
                                             <!-- COLUMNS 2 -->
-                                            <div class="aon-search-input keywords-input">
-                                                <input type="text" placeholder="Search pincode" class="form-control">
+                                            {{-- <div class="aon-inputicon-box keywords-input">
+                                                <input type="text" placeholder="Pincode" class="form-control">
+                                                <i class="aon-input-icon fa fa-map-marker"></i>
+                                            </div> --}}
+                                            <div class="aon-inputicon-box aon-search-input keywords-input">
+                                                <input type="number" placeholder="Pincode" class="form-control" id = "servicePinCode">
+                                                <i class="aon-input-icon fa fa-map-marker"></i>
                                             </div>
                                             <!-- COLUMNS 3 -->
                                             <div class="aon-search-btn-wrap">
-                                                <button class="aon-search-btn" type="submit">Search</button>
+                                                <button class="aon-search-btn" type="button" onclick="servicepopup()">Search</button>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
+                                <div class="text-danger" style="display: none" id="serviceError">* Please select a service</div>
                                 <!--Seach Bar End-->
                             </div>
                         </div>
@@ -1084,7 +1090,7 @@
         <!-- Statics END -->
 
         <!--Newsletter Start-->
-        <section class="aon-newsletter-area2">
+        {{-- <section class="aon-newsletter-area2">
             <div class="container">
 
                 <div class="aon-newsletter-area2-section">
@@ -1099,7 +1105,7 @@
                 </div>
                 
             </div>
-        </section>
+        </section> --}}
         <!--Newsletter Start-->
 
     </div>
@@ -1162,6 +1168,7 @@
 
 <script  src="{{ asset('frontEnd/js/source.js')}}"></script>
 <script src="{{ asset('frontEnd/js/chosen.jquery.js')}}"></script>
+<script src="{{ asset('admin-assets/vendors/js/extensions/sweetalert2.all.min.js')}}"></script>
 
 
 <script>
@@ -1172,6 +1179,7 @@
     function QuestionsModel(serviceId,serviceName){  
         currentStep = 1;
         getQuestions(serviceId);
+        $("#stepsList").html("");
         $('#QuestionModel').modal({backdrop: 'static',keyboard: true, show: true}); 
         $("#service_id").val(serviceId);
         $("#ServiceName").text(serviceName);
@@ -1227,6 +1235,7 @@
 
         currentStep = $(".step[data-step]").length;
         toAppend = false;
+        pinCode = $("#servicePinCode").val();
 
         if(isStatic == "no"){
             if(response.data.length == 0){
@@ -1316,7 +1325,7 @@
                 }
                 html += `<div style="float:right">`
                 if(currentStep != 0){
-                    html += `<button type="button"  class="site-button" onclick = "prevQuestion(`+(currentStep-1)+`)" style="margin-right: 10px;">Prev </button>`
+                    html += `<button type="button"  class="site-button" onclick = "prevQuestion(`+(currentStep-1)+`)" style="margin-right: 10px;">Back </button>`
                 }
                 html += `<button type="button"  class="site-button" onclick = "nextQuestion('`+response.data.type+`',`+response.data.next_question_id+`)" >Next </button>
                             </div>   
@@ -1337,7 +1346,7 @@
                                 </div>
                             </div>
                             <div>
-                                <button class="site-button" type= "button"> verify </button>
+                                <button class="site-button" type= "button"> Verify </button>
                             </div>
                         </div>
                         <div class ="row">
@@ -1350,7 +1359,7 @@
                             <div class ="col-6">
                                 <h5>PinCode </h5>
                                 <div class="form-group">
-                                    <input type="text" class="form-control QuestionStep`+currentStep+`"  name="pin_code" required>
+                                    <input type="number" class="form-control QuestionStep`+currentStep+`"  name="pin_code" value="`+pinCode+`" required>
                                 </div>
                             </div>
                         </div>
@@ -1359,7 +1368,7 @@
                             <textarea class="form-control QuestionStep`+currentStep+`" name="address" rows="2" required></textarea>
                         </div>
                         <div style="float:right">
-                            <button type="button"  class="site-button" onclick = "prevQuestion(`+(currentStep-1)+`)" style="margin-right: 10px;">Prev </button>
+                            <button type="button"  class="site-button" onclick = "prevQuestion(`+(currentStep-1)+`)" style="margin-right: 10px;">Back </button>
                             <button type="submit"  class="site-button"  >Submit </button>
                         </div>
                     </div>`;
@@ -1427,9 +1436,6 @@
         }
     }
 
-</script>
-<script src="{{ asset('admin-assets/vendors/js/extensions/sweetalert2.all.min.js')}}"></script>
-<script>
     $(document).ready(function () {
         var planType = 'monthly';
         $("#planType").change(function() {
@@ -1449,11 +1455,27 @@
             
             // Do something when the button is clicked
         });
+    
+    });
 
-
-
-
-            
+    function servicepopup(){
+        service = $("#categorysrh").val();
+        if(service == "" || service == undefined){
+            $("#serviceError").css("display","block");
+        }else{
+            $("#serviceError").css("display","none");
+            serviceName = $("#servicedata"+service).data("servicename");
+            console.log(serviceName);
+            QuestionsModel(service ,serviceName);
+        }
+    }
+    $("#categorysrh").on("change", function() {
+        service = $("#categorysrh").val();
+        if(service == "" || service == undefined){
+            $("#serviceError").css("display","block");
+        }else{
+            $("#serviceError").css("display","none");
+        }
     });
 
 

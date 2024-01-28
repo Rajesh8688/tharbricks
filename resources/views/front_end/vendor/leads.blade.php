@@ -40,8 +40,8 @@
                         <!-- user msg list start-->
                         <div style="position: static;height: 77px;background-color: black;color: white;display: flex;">
                             <div style="padding: 11px 16px;"> 
-                                <div>758 matching Leads</div>
-                                <div style="font-size: small;"> 2 services &nbsp; <span><i class="fa fa-map-marker"></i> &nbsp;1 location</span></div>
+                                <div>{{$information['totalAvaiableLeads']}} matching Leads</div>
+                                <div style="font-size: small;"> {{$information['userServices']}}  services &nbsp; <span><i class="fa fa-map-marker"></i> &nbsp;1 location</span></div>
                             </div>
                             <div style="text-align: end;flex: 1;padding: 14px 22px;"> 
                                 <a href="javascript:void(0);" class="site-button">
@@ -54,7 +54,7 @@
                             <div class="wt-dashboard-msg-search-list-wrap" onclick="leadDetails({{$item->id}})">
                                 <a href="javascript:;" class="msg-user-info clearfix" style="padding: 15px 10px 15px 20px ">
                                     <div class="msg-user-info-text">
-                                        <div><div class="msg-user-name"><b>{{$item->name}}</b></div> <div class="msg-user-timing badge badge-success" style="color: #fff;"> {{$item->lead_added_on}}</div></div>
+                                        <div><div class="msg-user-name"><b>{{ucfirst($item->name)}}</b></div> <div class="msg-user-timing badge badge-success" style="color: #fff;"> {{$item->lead_added_on}}</div></div>
                                         <div class="msg-user-name">{{$item->service->name}}</div>
                                         <div class="msg-user-discription"><i class="aon-input-icon fa fa-map-marker"></i> {{$item->address}}</div>
                                         <div class="msg-user-discription">{{$item->leadAnswersShort}} </div>
@@ -91,6 +91,14 @@
                                 <div class="container">
                                     <div class="sf-provi-bio-box cleafix margin-b-50 ">
                                         <br>
+                                        @if(session('error-alert'))
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                             {{session('error-alert')}}
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                              <span aria-hidden="true">×</span>
+                                            </button>
+                                          </div>
+                                        @endif  
                                         <h3>{{$lead->name}} </h3>
                                         <div class="sf-provi-cat"><strong>Service:</strong> {{$lead->service->name}}</div>
                                         <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-map-marker"></i> &nbsp; {{$lead->address}}</div>
@@ -98,10 +106,10 @@
                                         <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-envelope"></i> &nbsp; {{$lead->encrypted_email}}</div>
                                         <div class="sf-provi-bio-text">
                                             <div class="sf-provi-btn" style="padding-bottom: 20px">
-                                                <a href="javascript:void(0);" class="site-button">
+                                                <a href="{{route('vendor-interested-lead',['lead_id'=>$lead->id])}}" class="site-button">
                                                     <i class="fa fa-briefcase"></i>Contact 
                                                 </a>
-                                                <a href="javascript:void(0);" style="padding-left: 35px;">
+                                                <a href="{{route('vendor-not-interested-lead',['lead_id'=>$lead->id])}}" style="padding-left: 35px;">
                                                     Not interested
                                                 </a>
                                             </div>
@@ -185,5 +193,11 @@
         });
 
     }
+    @if(session('success'))
+        toastr.success('{{session('success')}}', 'success');
+    @endif
+    @if(session('error'))
+        toastr.error('{{session('error')}}', 'error');
+    @endif
     </script>
 @endsection

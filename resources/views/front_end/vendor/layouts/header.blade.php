@@ -39,7 +39,7 @@
                         <ul class=" nav navbar-nav">
                             <li class="{{request()->route()->getName() == 'vendor-dashboard' ? 'current-menu-item' : '' }}"><a href="{{route('vendor-dashboard')}}">Dashboard</a></li>  
                             <li class="{{request()->route()->getName() == 'vendor-leads' ? 'current-menu-item' : '' }}"><a href="{{route('vendor-leads')}}">Leads</a></li>  
-                            <li><a href="contact-us.html">My Response</a></li>  
+                            <li class="{{request()->route()->getName() == 'my-tharbricks' ? 'current-menu-item' : '' }}"><a href="{{route('my-tharbricks')}}">My Response</a></li>  
                             <li><a href="contact-us.html">Settings</a></li>  
                             <li><a href="contact-us.html">help</a></li>  
                     

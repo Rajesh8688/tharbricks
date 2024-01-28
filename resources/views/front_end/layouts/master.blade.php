@@ -12,8 +12,8 @@
 
     
     <!-- FAVICONS ICON -->
-    <link rel="icon" href="{{asset('frontEnd/images/favicon.png')}}" type="image/x-icon" />
-    <link rel="shortcut icon" type="image/x-icon" href="{{asset('frontEnd/images/favicon.png')}}" />
+    <link rel="icon" href="{{asset('frontEnd/images/transperent-favion.png')}}" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('frontEnd/images/transperent-favion.png')}}" />
     
     <!-- PAGE TITLE HERE -->
     <title>{{ env('APP_NAME') }} - {{ isset($titles['title']) && !empty($titles['title']) ? $titles['title'] : '' }}</title>

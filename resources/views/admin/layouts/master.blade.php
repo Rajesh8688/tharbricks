@@ -6,11 +6,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta name="description" content="24Flights | Booking Engine | Admin">
-    <meta name="keywords" content="24Flights,Booking Engine,Admin">
+    <meta name="description" content="Tharbricks | Admin">
+    <meta name="keywords" content="Tharbricks,Admin">
     <meta name="author" content="Rajesh Vuppala">
     <title>{{env('APP_NAME')}} - {{ !empty($title) ? $title : $titles['title']}}</title>
-    <link href="{{asset('frontEnd/images/favicon.png')}}" rel="icon" />
+
+    <link rel="icon" href="{{asset('frontEnd/images/transperent-favion.png')}}" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('frontEnd/images/transperent-favion.png')}}" />
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->
@@ -40,7 +42,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('admin-assets/vendors/css/extensions/toastr.css')}}">
     <!-- END: Page CSS-->
 
-    <!-- BEGIN: Custom CSS-->
+    <!-- BEGIN: Custom CSS--> 
     {{-- <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css"> --}}
     <!-- END: Custom CSS-->
    

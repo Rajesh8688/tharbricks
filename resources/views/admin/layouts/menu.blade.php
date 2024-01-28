@@ -13,12 +13,12 @@
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
             @can('dashboard-view')
-            <li class=" nav-item {{Request::segment(2) == 'dashboard' ? 'active' : '' }}"><a href="{{route('admin.dashboard')}}"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">Dashboard</span><span class="badge badge badge-warning badge-pill float-right mr-2"></span></a>
-            </li>
+                <li class=" nav-item {{Request::segment(2) == 'dashboard' ? 'active' : '' }}"><a href="{{route('admin.dashboard')}}"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">Dashboard</span><span class="badge badge badge-warning badge-pill float-right mr-2"></span></a>
+                </li>
             @endcan
             
             @can('service-view')
-            <li class=" nav-item {{Request::segment(2) == 'service' ? 'active' : '' }}"><a href="{{route('service.index')}}"><i class="feather icon-calendar"></i><span class="menu-title" data-i18n="Services">Service</span></a>
+                <li class=" nav-item {{Request::segment(2) == 'service' ? 'active' : '' }}"><a href="{{route('service.index')}}"><i class="feather icon-calendar"></i><span class="menu-title" data-i18n="Services">Service</span></a>
             </li>
             @endcan
             @can('user-request-view')
@@ -35,6 +35,12 @@
                 <li class=" nav-item {{Request::segment(2) == 'plan' ? 'active' : '' }}"><a href="{{route('plan.index')}}"><i class="feather icon-shopping-cart"></i><span class="menu-title" data-i18n="Plan">Plan</span></a>
                 </li>
             @endcan
+
+            @can('email-template-view')
+                <li class=" nav-item {{Request::segment(2) == 'email-template' ? 'active' : '' }}"><a href="{{route('email-template.index')}}"><i class="feather icon-mail"></i><span class="menu-title" data-i18n="Plan">Email Template</span></a>
+                </li>
+            @endcan
+
 
 
             

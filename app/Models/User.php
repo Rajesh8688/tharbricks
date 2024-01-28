@@ -85,4 +85,16 @@ class User extends Authenticatable
     {
         $this->roles()->attach($role);
     }
+
+    public function leads()
+    {
+        return $this->belongsToMany(Lead::class, 'lead_users',
+        'user_id', 'lead_id');
+    }
+
+    public function services()
+    {
+        return $this->belongsToMany(Service::class, 'service_users',
+        'user_id', 'service_id');
+    }
 }

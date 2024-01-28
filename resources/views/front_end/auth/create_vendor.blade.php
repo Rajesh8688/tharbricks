@@ -213,7 +213,7 @@
             
                 
             </div>
-            <div class="center" style="display: flex;justify-content: center;"><button type="submit" class="site-button aon-btn-login">Sign Up</button></div>
+            <div class="center" style="display: flex;justify-content: center;"><button type="submit" class="site-button aon-btn-login">Next</button></div>
         </form>    
     </div>
 </div>  

@@ -16,4 +16,10 @@ class Lead extends Model
     public function service(){
         return $this->belongsTo(Service::class);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'lead_users',
+        'user_id', 'lead_id');
+    }
 }

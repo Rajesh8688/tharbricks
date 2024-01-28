@@ -12,8 +12,11 @@
 
     
     <!-- FAVICONS ICON -->
-    <link rel="icon" href="{{asset('frontEnd/images/favicon.png')}}" type="image/x-icon" />
-    <link rel="shortcut icon" type="image/x-icon" href="{{asset('frontEnd/images/favicon.png')}}" />
+    {{-- <link rel="icon" href="{{asset('frontEnd/images/favicon_io/favicon32.png')}}" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('frontEnd/images/favicon_io/favicon32.png')}}" /> --}}
+
+    <link rel="icon" href="{{asset('frontEnd/images/transperent-favion.png')}}" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('frontEnd/images/transperent-favion.png')}}" />
     
     <!-- PAGE TITLE HERE -->
     <title>{{ env('APP_NAME') }} - {{ isset($titles['title']) && !empty($titles['title']) ? $titles['title'] : '' }}</title>
@@ -54,6 +57,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('frontEnd/css/slick-theme.css')}}">  
     <!-- Main STyle Sheet -->
     <link rel="stylesheet" type="text/css" href="{{ asset('frontEnd/css/style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('admin-assets/css/plugins/extensions/toastr.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('admin-assets/vendors/css/extensions/toastr.css')}}">
     <style>
         #loader-container {
             position: relative;
@@ -164,6 +169,7 @@
 <script  src="{{ asset('frontEnd/js/custom.js')}}"></script><!-- CUSTOM FUCTIONS  -->
 <script src="{{ asset('frontEnd/js/lc_lightbox.lite.js')}}"></script><!-- IMAGE POPUP -->
 <script  src="{{ asset('frontEnd/js/bootstrap-slider.min.js')}}"></script><!-- Form js -->
+<script src="{{asset('admin-assets/vendors/js/extensions/toastr.min.js')}}"></script>
 
 @yield('extraScripts')
     

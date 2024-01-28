@@ -14,4 +14,11 @@ class Service extends Model
     public static $imageIconPath = 'uploads' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'icons' . DIRECTORY_SEPARATOR;
     public static $imageUrl = 'uploads/services/';
     public static $imageIconUrl = 'uploads/services/icons/';
+
+
+    public function users()
+    {
+        return $this->belongsToMany(user::class, 'service_users',
+        'service_id', 'user_id');
+    }
 }

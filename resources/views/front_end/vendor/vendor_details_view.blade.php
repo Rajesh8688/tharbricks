@@ -8,14 +8,16 @@
         <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-phone"></i> &nbsp; {{$lead->encrypted_phone}}</div>
         <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-envelope"></i> &nbsp; {{$lead->encrypted_email}}</div>
         <div class="sf-provi-bio-text">
+
             <div class="sf-provi-btn" style="padding-bottom: 20px">
-                <a href="javascript:void(0);" class="site-button">
+                <a href="{{route('vendor-interested-lead',['lead_id'=>$lead->id])}}" class="site-button">
                     <i class="fa fa-briefcase"></i>Contact 
                 </a>
-                <a href="javascript:void(0);" style="padding-left: 35px;">
+                <a href="{{route('vendor-not-interested-lead',['lead_id'=>$lead->id])}}" style="padding-left: 35px;">
                     Not interested
                 </a>
             </div>
+           
         </div>
     </div>
     <!--Q A-->

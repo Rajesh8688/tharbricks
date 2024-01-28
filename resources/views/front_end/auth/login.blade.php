@@ -5,15 +5,17 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="sf-custom-tabs sf-custom-new aon-logon-sign-area p-3">
-                    <div class="tab-content">
+                    <div class="">
                         <!--Login Form-->
+                        <h1>Login</h1>
                         <div id="LoginForm" class="tab-pane active">
                             <div class="sf-tabs-content">
-                                <form class="aon-login-form"  method="post" action ="{{ route('login') }}">
+                                <form class="aon-login-form"  method="post" action ="{{ route('vendor-login') }}">
                                     @csrf
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="form-group">
+                                            <label><b>Email</b></label>
+                                            <div class="form-group" style="margin-bottom:10px!important">
                                                 <div class="aon-inputicon-box"> 
                                                     <input class="form-control sf-form-control" name="email" type="email" placeholder="Email" value={{ old('email') }}>
                                                     <i class="aon-input-icon fa fa-user"></i>
@@ -26,6 +28,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-12">
+                                            <label><b>Password</b></label>
                                             <div class="form-group">
                                                 <div class="aon-inputicon-box"> 
                                                     <input class="form-control sf-form-control" name="password" type="password" placeholder="Password">
