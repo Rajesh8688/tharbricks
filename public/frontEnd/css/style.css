@@ -128,6 +128,25 @@ GENERAL
 .site-bg-white {
   background-color: #fff;
 }
+.site-bg-orange {
+  background-color: #DF5901;;
+}
+.font-bolder{
+  font-weight: bold;
+}
+.default-avatar,.elite-pro {
+  transition: transform .1s linear;
+}
+.default-avatar.default-avatar-40 {
+  width: 40px;
+  height: 40px;
+}
+.default-avatar {
+  border-radius: 50%;
+  width: 2.25em;
+  height: 2.25em;
+  text-transform: uppercase;
+}
 body {
   color: #626262;
   font-family: 'Mulish', sans-serif;
@@ -11754,7 +11773,7 @@ transition: all 0.5s ease;}
 .aon-admin-messange span,
 .aon-admin-notification span { position: absolute; top:15px; right:12px; width:16px; height:16px; color: #fff; font-size: 10px; text-align: center; line-height: 16px; -webkit-border-radius: 100%;    border-radius: 100%; font-weight: bold; font-family: Arial; }
 
-.aon-admin-messange span { background-color:#00E6E6;}
+/* .aon-admin-messange span { background-color:#00E6E6;} */
 .aon-admin-notification span { background-color:#F04F53;}
 
 .feather-user-pic { width: 34px !important; height: 34px !important; border-radius: 30px; overflow: hidden; }
@@ -12133,10 +12152,10 @@ transition: all 0.5s ease;}
 .notification-scroll { height:180px; }
 }
 @media only screen and (max-width:1430px){
-.aon-provi-links li { width:16.666%; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; text-align:center; }
+.aon-provi-links li { width:20%; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; text-align:center; }
 }
 @media only screen and (max-width:1200px){
-.aon-provi-links li {  width:25%; }
+.aon-provi-links li {  width:20%; }
 }
 
 @media only screen and (max-width:991px){
@@ -13749,5 +13768,17 @@ button.close { line-height: 12px; }
 .color-fill .stickylogo { display:block; }
 
 .g-recaptcha { display: table; margin: 15px auto 30px; }
+@media (min-width: 1200px){
+  .pl-xl-7, .px-xl-7 {
+    padding-left: 7.5em!important;
+}
+}
+  
+@media (min-width: 1200px){
+  .pr-xl-7, .px-xl-7 {
+    padding-right: 7.5em!important;
+}
+}
+  
 
 

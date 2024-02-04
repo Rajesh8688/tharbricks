@@ -1,4 +1,5 @@
   <!-- HEADER START -->
+
         <header class="site-header header-style-2 mobile-sider-drawer-menu header-full-width">
           <div class="sticky-header main-bar-wraper  navbar-expand-lg">
             <div class="main-bar">  
@@ -90,7 +91,15 @@
                 @if(Auth::guard('web')->check())
                 <div class="header-widget">
                     <div class="aon-admin-messange sf-toogle-btn" style="border-bottom: 1px solid #fff">
-                        <span class="feather-user-pic"><img src="images/user.jpg" alt=""/></span>
+                        @if(empty(auth()->user()->profile_pic))
+                        <div class="default-avatar user-letter default-avatar-40  site-bg-orange d-inline-flex text-white ml-3 mr-1 justify-content-center align-items-center" >
+                            <div class="site-text-primary font-bolder">
+                                {{ucfirst(substr(auth()->user()->name,0,1))}}
+                            </div>
+                        </div>
+                        @else
+                        <span class="feather-user-pic"><img src="{{asset('uploads/users/'.auth()->user()->profile_pic)}}" alt=""/></span> 
+                        @endif
                     </div>
                     <div class="ws-toggle-popup popup-tabs-wrap-section user-welcome-area">
                         <ul class="user-welcome-list">

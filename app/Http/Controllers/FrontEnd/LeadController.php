@@ -150,7 +150,7 @@ class LeadController extends Controller
                     $creditLogs->credits = $leadCredits;
                     $creditLogs->remaining_credits = $vendorCredits - $leadCredits;
                     $creditLogs->action = "subtracted";
-                    $creditLogs->credits_desctiption = $leadCredits." credits used to reply to customer";
+                    $creditLogs->credits_description = $leadCredits." credits used to reply to customer";
                     $creditLogs->date_of_transaction = now();
                     $creditLogs->save();
                     $creditLogs->unique_id = 'CT'.str_pad($creditLogs->id, 8, '0', STR_PAD_LEFT);

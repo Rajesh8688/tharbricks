@@ -59,6 +59,14 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::get('vendor/interested-lead', [App\Http\Controllers\FrontEnd\LeadController::class, 'InterestedLead'])->name('vendor-interested-lead');
     Route::get('vendor/my-tharbricks', [App\Http\Controllers\FrontEnd\LeadController::class, 'myleads'])->name('my-tharbricks');
     Route::get('vendor/response/details', [App\Http\Controllers\FrontEnd\LeadController::class, 'responseDetails'])->name('vendor-response-lead-details');
+    Route::get('vendor/edit', [App\Http\Controllers\FrontEnd\VendorController::class, 'edit'])->name('vendor-edit');
+    Route::post('vendor/company/update', [App\Http\Controllers\FrontEnd\VendorController::class, 'updateCompanyDetails'])->name('update-company-details');
+    Route::post('vendor/user/update', [App\Http\Controllers\FrontEnd\VendorController::class, 'updateUserDetails'])->name('update-user-details');
+    Route::post('vendor/social-account/update', [App\Http\Controllers\FrontEnd\VendorController::class, 'updateSocialMediaDetails'])->name('update-vendor-social-account-details');
+    Route::post('vendor/update/services', [App\Http\Controllers\FrontEnd\VendorController::class, 'updateServices'])->name('update-vendor-services');
+    Route::post('vendor/image/upload', [App\Http\Controllers\FrontEnd\VendorController::class, 'uploadCompanyImage'])->name('update-company-image');
+    Route::post('vendor/image/delete', [App\Http\Controllers\FrontEnd\VendorController::class, 'deleteCompanyImage'])->name('delete-company-image');
+    Route::get('vendor/my-credits', [App\Http\Controllers\FrontEnd\VendorController::class, 'myCredits'])->name('my-credits');
 });
 
 

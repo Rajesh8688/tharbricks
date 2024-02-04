@@ -40,11 +40,9 @@
                             <li class="{{request()->route()->getName() == 'vendor-dashboard' ? 'current-menu-item' : '' }}"><a href="{{route('vendor-dashboard')}}">Dashboard</a></li>  
                             <li class="{{request()->route()->getName() == 'vendor-leads' ? 'current-menu-item' : '' }}"><a href="{{route('vendor-leads')}}">Leads</a></li>  
                             <li class="{{request()->route()->getName() == 'my-tharbricks' ? 'current-menu-item' : '' }}"><a href="{{route('my-tharbricks')}}">My Response</a></li>  
-                            <li><a href="contact-us.html">Settings</a></li>  
-                            <li><a href="contact-us.html">help</a></li>  
-                    
+                            <li class="{{request()->route()->getName() == 'vendor-edit' ? 'current-menu-item' : '' }}"><a href="{{route('vendor-edit')}}">Settings</a></li>  
+                            <li><a href="contact-us.html">Help</a></li>  
                         </ul>
-
                     </div>
                 </div>
                 
@@ -183,8 +181,16 @@
                         </div>
                     </li> --}}
                     <li class="header-widget">
-                        <div class="aon-admin-messange sf-toogle-btn">
-                            <span class="feather-user-pic"><img src="images/user.jpg" alt=""/></span>
+                        <div class="aon-admin-messange sf-toogle-btn" style="border-bottom: 1px solid #fff">
+                            @if(empty(auth()->user()->profile_pic))
+                            <div class="default-avatar user-letter default-avatar-40  site-bg-orange d-inline-flex text-white ml-3 mr-1 justify-content-center align-items-center" >
+                                <div class="site-text-primary font-bolder">
+                                    {{ucfirst(substr(auth()->user()->name,0,1))}}
+                                </div>
+                            </div>
+                            @else
+                            <span class="feather-user-pic"><img src="{{asset('uploads/users/'.auth()->user()->profile_pic)}}" alt=""/></span> 
+                            @endif
                         </div>
                         <div class="ws-toggle-popup popup-tabs-wrap-section user-welcome-area">
                             <ul class="user-welcome-list">

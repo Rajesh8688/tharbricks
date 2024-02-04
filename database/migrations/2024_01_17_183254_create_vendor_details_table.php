@@ -19,7 +19,7 @@ class CreateVendorDetailsTable extends Migration
             $table->string('company_name')->nullable();
             $table->string('logo')->nullable();
             $table->string('profile_picture')->nullable();
-            $table->string('description')->nullable();
+            $table->string('company_description')->nullable();
             $table->enum('company_size',[1,2,3,4,5])->comment('1=>Self-employed, Sole trader,2=>2-10,3=>11-50,4=>51-200,5=>200+')->nullable();
             $table->string('website')->nullable();
             $table->enum('see_leads_from',['nationwide','custom'])->nullable();

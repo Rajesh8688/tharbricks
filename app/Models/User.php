@@ -16,6 +16,8 @@ class User extends Authenticatable
     public static $imageThumbPath = 'uploads' . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR . 'thumb' . DIRECTORY_SEPARATOR;
     public static $imageUrl = 'uploads/users/';
     public static $imageThumbUrl = 'uploads/users/thumb/';
+    public static $imageCompanyUrl = 'uploads/company/';
+    public static $imageCompanyThumbUrl = 'uploads/company/thumb/';
 
     /**
      * The attributes that are mass assignable.

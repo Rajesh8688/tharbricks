@@ -20,7 +20,7 @@ class CreateCreditTransactionLogsTable extends Migration
             $table->unsignedBigInteger('lead_id')->nullable();
             $table->integer('credits');
             $table->integer('remaining_credits')->nullable();
-            $table->string('credits_desctiption')->nullable();
+            $table->string('credits_description')->nullable();
             $table->enum('action',['added','subtracted'])->default('added');
             $table->enum('status',['Active','InActive'])->default('Active');
             $table->dateTime('date_of_transaction')->nullable();
