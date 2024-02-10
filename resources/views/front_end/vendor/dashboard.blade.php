@@ -186,12 +186,12 @@
                             <div class="px-3 pb-3">
                                 <div class="border-top pt-3 js-profile-completeness">
                                     <div class="d-flex justify-content-between align-items-center flex-wrap font-bolder" >
-                                        <p class="text-xs mb-0">Your profile is {{$percentage}}% complete</p>
+                                        <p class="text-xs mb-0">Your profile is {{$data['percentage']}}% complete</p>
                                         <a href="{{url('vendor/edit#aon-about-panel')}}" class="text-grey-200 text-xs hover-dark noline">Edit</a>
                                     </div>
                                     <div class="mt-4">
                                         <div class="progress" style="height:8px">
-                                            <div class="progress-bar" role="progressbar" style="width: {{$percentage}}%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar" role="progressbar" style="width: {{$data['percentage']}}%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                 </div>

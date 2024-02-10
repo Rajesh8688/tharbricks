@@ -17,10 +17,12 @@ class CreatePlansTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
-            $table->enum('status' , ['Active' , 'InActive'])->default('Active');
-            $table->integer('monthly_amount');
-            $table->integer('yearly_amount');
+            $table->integer('discount');
+            $table->integer('no_of_credits');
+            $table->integer('no_of_responses');
+            $table->integer('amount');
             $table->integer('order');
+            $table->enum('status' , ['Active' , 'InActive'])->default('Active');
             $table->timestamps();
         });
     }

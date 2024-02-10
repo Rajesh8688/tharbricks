@@ -202,7 +202,7 @@ class LeadController extends Controller
         $unInterestedLeads = NotInterestedLead::select('lead_id')->where(['user_id' => auth('web')->user()->id ,"status" => 'Active'])->get();
         $InterestedLeads = LeadUser::select('lead_id')->where(['user_id' => auth('web')->user()->id ,"status" => 'Active'])->get();
         $userServices = ServiceUser::select('service_id')->where(['user_id' => auth('web')->user()->id , "status" => 'Active'])->get();
-        $leads = Lead::with('service')->where("status" , "Active")->whereIn('service_id' ,$userServices);
+        $leads = Lead::with('service')->where("status" , "InActive")->whereIn('service_id' ,$userServices);
         if(!empty($unInterestedLeads)){
             $leads = $leads->whereNotIn('id',$unInterestedLeads);
         }

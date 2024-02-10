@@ -5,7 +5,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    height: calc(50vh - 75px);
+    /* height: calc(50vh - 75px); */
     /* background: #f9f9fa; */
 }
 .loexp-no-results-container .card-block {
@@ -33,7 +33,8 @@
 }
     </style>
 
-        <div class="card-body aon-card-body">
+        {{-- <div class="card-body aon-card-body"> --}}
+        <div class="">
             <div class="content-admin-main2">
                 <div class="wt-admin-dashboard-msg-2">
                     <div class="col-12 col-lg-4 p-0 wt-dashboard-msg-user-list">
@@ -66,13 +67,23 @@
                             </div>
 
                             @empty
-                            <div class="wt-dashboard-msg-search-list-wrap" >
+                            {{-- <div class="wt-dashboard-msg-search-list-wrap" >
                                 <a href="javascript:;" class="msg-user-info clearfix" style="padding: 15px 10px 15px 20px ">
                                     <div class="msg-user-info-text">
                                         <div><div class="msg-user-name"><b>fdgfdgdfgdgg</b></div> <div class="msg-user-timing badge badge-success" style="color: #fff;"> dsfds</div></div>
                                         
                                     </div>
                                 </a>
+                            </div> --}}
+                            <div class="loexp-no-results-container">
+                                <div class="card-block pt-5">
+                                    <img class="img-fluid" width="156" height="111" src="https://d18jakcjgoan9.cloudfront.net/s/img/frontend-v2/seller-dashboard/noresults-illustration.png!d=PVEswj" srcset="https://d18jakcjgoan9.cloudfront.net/s/img/frontend-v2/seller-dashboard/noresults-illustration.png!d=PVEswj 1x, https://d18jakcjgoan9.cloudfront.net/s/img/frontend-v2/seller-dashboard/noresults-illustration.png!d=KAYSPp 2x">
+                                    <h4 class="mt-2">
+                                        No responses
+                                    </h4>
+                                    <p class="text-center mt-2 text-light-grey">You haven’t responded to any customers yet. When you do, you’ll be able to contact and access their details here.</p>
+                                    <a href="/sellers/dashboard/">View leads</a>
+                                </div>
                             </div>
                                 
                             @endforelse
@@ -145,7 +156,7 @@
                                 @else
                            
                                     <div class="loexp-no-results-container">
-                                        <div class="card-block">
+                                        <div class="card-block pt-5">
                                             <img class="img-fluid" width="156" height="111" src="https://d18jakcjgoan9.cloudfront.net/s/img/frontend-v2/seller-dashboard/noresults-illustration.png!d=PVEswj" srcset="https://d18jakcjgoan9.cloudfront.net/s/img/frontend-v2/seller-dashboard/noresults-illustration.png!d=PVEswj 1x, https://d18jakcjgoan9.cloudfront.net/s/img/frontend-v2/seller-dashboard/noresults-illustration.png!d=KAYSPp 2x">
                                             <h4 class="mt-2">
                                                 No responses

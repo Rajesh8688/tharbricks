@@ -90,9 +90,9 @@
                                                 <div class="row">
                                                     <div class="col-md-6 col-12">
                                                         <div class="form-group">
-                                                            <label for="monthly_amount">Monthly Amount</label>
-                                                            <input type="number" id="monthly_amount" class="form-control @error('monthly_amount') is-invalid @enderror" placeholder="Monthly Amount" name="monthly_amount" value="{{old('monthly_amount')}}" autocomplete="off" required>
-                                                            @error('monthly_amount')
+                                                            <label for="amount"> Amount</label>
+                                                            <input type="number" id="amount" class="form-control @error('amount') is-invalid @enderror" placeholder=" Amount" name="amount" value="{{old('amount')}}" autocomplete="off" required>
+                                                            @error('amount')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
                                                                 </span>
@@ -102,17 +102,35 @@
                                                     
                                                     <div class="col-md-6 col-12">
                                                         <div class="form-group">
-                                                            <label for="yearly_amount">Yearly Amount</label>
-                                                            <input type="number" id="yearly_amount" class="form-control @error('yearly_amount') is-invalid @enderror" placeholder="Yearly Amount" name="yearly_amount" value="{{old('yearly_amount')}}" autocomplete="off" required>
-                                                            @error('yearly_amount')
+                                                            <label for="no_of_credits">No of Credits</label>
+                                                            <input type="number" id="no_of_credits" class="form-control @error('no_of_credits') is-invalid @enderror" placeholder="No of Credits" name="no_of_credits" value="{{old('no_of_credits')}}" autocomplete="off" required>
+                                                            @error('no_of_credits')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
                                                                 </span>
                                                             @enderror
                                                         </div>
                                                     </div>
+
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-group">
+                                                            <label for="no_of_responses">No of Responses</label>
+                                                            <input type="number" id="no_of_responses" class="form-control @error('no_of_responses') is-invalid @enderror" placeholder="No of Responses" name="no_of_responses" value="{{old('no_of_responses')}}" autocomplete="off" required>
+                                                            @error('no_of_responses')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-group">
+                                                            <label for="discount">Discount</label>
+                                                            <input type="number" id="discount" class="form-control " placeholder="Discount" name="discount" value="{{old('discount')}}" autocomplete="off" >
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class= "row ">
+                                                {{-- <div class= "row ">
                                                     <div class="col-12">
                                                         <div class="table-responsive border rounded px-1 pb-1">
                                                             <h6 class="border-bottom py-2 mx-2 mb-0 font-medium-5"><i class="feather icon-lock mr-50 "></i>Details  <button type="button" class="btn btn-primary mr-1" onclick="addDetails()" style="float: right"> Add</button>
@@ -130,7 +148,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> --}}
 
                                                
                                                

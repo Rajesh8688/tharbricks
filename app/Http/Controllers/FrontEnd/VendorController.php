@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\FrontEnd;
 
 use App\Models\Lead;
+use App\Models\Plan;
 use App\Models\User;
 use App\Models\Service;
 use App\Models\LeadUser;
@@ -136,9 +137,13 @@ class VendorController extends Controller
 
 
     public function dashboard(){
+
+        //titles
         $titles = [
             'title' => "Vendor Dashboard",
         ];
+
+        //Leads
         $unInterestedLeads = NotInterestedLead::select('lead_id')->where(['user_id' => auth('web')->user()->id ,"status" => 'Active'])->get();
         $InterestedLeads = LeadUser::select('lead_id')->where(['user_id' => auth('web')->user()->id ,"status" => 'Active'])->get();
         $userServices = ServiceUser::select('service_id')->where(['user_id' => auth('web')->user()->id , "status" => 'Active'])->get();
@@ -151,7 +156,10 @@ class VendorController extends Controller
         }
         $data['totalLeads'] = count($leads->get());
 
-        $data['totalResponses'] = count(LeadUser::where("status" , 'Active')->get());
+        //Responses
+        $data['totalResponses'] = count(LeadUser::where(["status" => "Active" , "user_id" => auth()->user()->id])->get());
+
+        //edits
         $vendorDetails = VendorDetails::where("user_id" , auth('web')->user()->id)->first();
 
         $totalUserfillablefields = ['first_name' , 'last_name' , 'name' ,'email' , 'mobile' ,'description' ,'profile_pic'  ];
@@ -166,10 +174,10 @@ class VendorController extends Controller
             if(!empty($vendorDetails->$item) || $vendorDetails->$item != null){$totalFilledCount++; }
         }
 
-        $percentage = round(($totalFilledCount/$totalFillableCount)*100);
+        $data['percentage'] = round(($totalFilledCount/$totalFillableCount)*100);
 
         
-        return view('front_end.vendor.dashboard',compact('titles','vendorDetails','data','percentage'));
+        return view('front_end.vendor.dashboard',compact('titles','vendorDetails','data'));
     }
 
     //Vendor edit screen
@@ -397,9 +405,11 @@ class VendorController extends Controller
             'title' => "My-Credits",
         ];
 
+        $plans = Plan::where(['status' => 'Active'])->get();
+
         $creditLogs = CreditTransactionLog::where(['user_id' => auth()->user()->id , 'status' => 'Active'])->get();
 
-        return view('front_end.vendor.credits',compact( 'titles' ,'creditLogs'));
+        return view('front_end.vendor.credits',compact( 'titles' ,'creditLogs','plans'));
 
     }
 

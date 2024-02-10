@@ -16,8 +16,8 @@ class HomeController extends Controller
             'title' => "Home",
         ];
         $Services = Service::where("status" , "Active")->get();
-        $Plans = Plan::with('Details')->OrderBy('order' ,'asc')->get();
-        return view('front_end.index',compact('titles','Services','Plans'));
+        // $Plans = Plan::with('Details')->OrderBy('order' ,'asc')->get();
+        return view('front_end.index',compact('titles','Services'));
     }
 
     public function contactUs(){

@@ -99,4 +99,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Service::class, 'service_users',
         'user_id', 'service_id');
     }
+
+    public function vendorDetails(){
+        return $this->hasOne(VendorDetails::class,'user_id','id');
+    }
 }

@@ -47,8 +47,8 @@ class PlanController extends Controller
             'name' => 'required',
             'status' => 'required',
             'order' => 'required',
-            'monthly_amount' => 'required',
-            'yearly_amount' => 'required'
+            'amount' => 'required',
+            'no_of_credits' => 'required'
         ]);
 
         $plan = new plan();
@@ -56,24 +56,13 @@ class PlanController extends Controller
         $plan->name = $request->input('name');
         $plan->status = $request->input('status');
         $plan->order = $request->input('order');
-        $plan->monthly_amount = $request->input('monthly_amount');
-        $plan->yearly_amount = $request->input('yearly_amount');
+        $plan->amount = $request->input('amount');
+        $plan->no_of_credits = $request->input('no_of_credits');
+        $plan->no_of_responses = $request->input('no_of_responses');
+        $plan->discount = !empty($request->input('discount')) ? $request->input('discount') : 0;
         $plan->slug =  unique_slug($request->input('name'), 'Plan');
 
         $plan->save();
-
-        $planDetails = ($request->input('plan_details'));
-        $planDetailsOrder = ($request->input('plan_details_order'));
-
-        foreach($planDetails as $nr => $detail){
-            $planDetails = new PlanDetails();
-            $planDetails->plan_id = $plan->id;
-            $planDetails->title = $detail;
-            $planDetails->order = $planDetailsOrder[$nr];
-            $planDetails->status = 'Active';
-            $planDetails->save();
-        }
-       
         return redirect()->route('plan.index')->with('success','Question created Successfully');
     }
 
@@ -86,10 +75,10 @@ class PlanController extends Controller
 
         $plan = Plan::find($id);
 
-        $planDetails = PlanDetails::where('plan_id' , $id)->orderBy('id', 'ASC')->get();
+        //$planDetails = PlanDetails::where('plan_id' , $id)->orderBy('id', 'ASC')->get();
 
 
-        return view('admin.plan.edit', compact('titles','plan','planDetails'));
+        return view('admin.plan.edit', compact('titles','plan'));
 
     }
 
@@ -103,44 +92,46 @@ class PlanController extends Controller
             'name' => 'required',
             'status' => 'required',
             'order' => 'required',
-            'monthly_amount' => 'required',
-            'yearly_amount' => 'required'
+            'amount' => 'required',
+            'no_of_credits' => 'required'
         ]);
         
         $plan = Plan::find($id);
         $plan->name = $request->input('name');
         $plan->status = $request->input('status');
         $plan->order = $request->input('order');
-        $plan->monthly_amount = $request->input('monthly_amount');
-        $plan->yearly_amount = $request->input('yearly_amount');
+        $plan->amount = $request->input('amount');
+        $plan->no_of_credits = $request->input('no_of_credits');
+        $plan->no_of_responses = $request->input('no_of_responses');
+        $plan->discount = !empty($request->input('discount')) ? $request->input('discount') : 0;
         $plan->slug = unique_slug($request->input('plan_text'), 'plan' , $plan->id);
         $plan->save();
 
-        $planDetailsId = [];
+        // $planDetailsId = [];
      
-        $plan_details_id = $request->input('plan_details_id');
-        $plan_details = $request->input('plan_details');
-        $plan_details_order = $request->input('plan_details_order');
+        // $plan_details_id = $request->input('plan_details_id');
+        // $plan_details = $request->input('plan_details');
+        // $plan_details_order = $request->input('plan_details_order');
 
-        foreach($plan_details as $nrk => $nrv){
-            if(!empty($plan_details_id[$nrk])){
-                //update
-                $planDetails = PlanDetails::find($plan_details_id[$nrk]);
-            }else{
-                //add
-                $planDetails = new PlanDetails();
-            }
+        // foreach($plan_details as $nrk => $nrv){
+        //     if(!empty($plan_details_id[$nrk])){
+        //         //update
+        //         $planDetails = PlanDetails::find($plan_details_id[$nrk]);
+        //     }else{
+        //         //add
+        //         $planDetails = new PlanDetails();
+        //     }
 
 
-            $planDetails->plan_id = $plan->id;
-            $planDetails->title = $plan_details[$nrk];
-            $planDetails->order = $plan_details_order[$nrk];
-            $planDetails->status = 'Active';
-            $planDetails->save();
-            $planDetailsId[] = $planDetails->id;
-        }
+        //     $planDetails->plan_id = $plan->id;
+        //     $planDetails->title = $plan_details[$nrk];
+        //     $planDetails->order = $plan_details_order[$nrk];
+        //     $planDetails->status = 'Active';
+        //     $planDetails->save();
+        //     $planDetailsId[] = $planDetails->id;
+        // }
        
-        $qq = PlanDetails::whereNotIn('id' , $planDetailsId)->where("plan_id" , $plan->id)->delete();
+        // $qq = PlanDetails::whereNotIn('id' , $planDetailsId)->where("plan_id" , $plan->id)->delete();
 
 
         return redirect()->route('plan.index')->with('success', 'Updated Successfully');
