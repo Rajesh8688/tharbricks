@@ -47,6 +47,9 @@ Route::post('vendor/createAccount', [App\Http\Controllers\FrontEnd\VendorControl
 Route::get('service', [App\Http\Controllers\FrontEnd\ServiceController::class, 'index'])->name('service');
 Route::get('service/{slug}', [App\Http\Controllers\FrontEnd\ServiceController::class, 'serviceDetails'])->name('serviceDetails');
 
+//Blogs
+Route::get('blogs', [App\Http\Controllers\FrontEnd\BlogController::class, 'index'])->name('blogs');
+Route::get('blog/{slug}', [App\Http\Controllers\FrontEnd\BlogController::class, 'blogDetails'])->name('blogDetails');
 
 //leads
 Route::post('storeLead', [App\Http\Controllers\FrontEnd\LeadController::class, 'storeLead'])->name('addLead');

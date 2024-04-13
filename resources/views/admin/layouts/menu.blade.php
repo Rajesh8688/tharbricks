@@ -37,7 +37,17 @@
             @endcan
 
             @can('email-template-view')
-                <li class=" nav-item {{Request::segment(2) == 'email-template' ? 'active' : '' }}"><a href="{{route('email-template.index')}}"><i class="feather icon-mail"></i><span class="menu-title" data-i18n="Plan">Email Template</span></a>
+                {{-- <li class=" nav-item {{Request::segment(2) == 'email-template' ? 'active' : '' }}"><a href="{{route('email-template.index')}}"><i class="feather icon-mail"></i><span class="menu-title" data-i18n="Plan">Email Template</span></a>
+                </li> --}}
+            @endcan
+
+            @can('testimonials-view')
+                <li class=" nav-item {{Request::segment(2) == 'testimonials' ? 'active' : '' }}"><a href="{{route('testimonials.index')}}"><i class="feather icon-mail"></i><span class="menu-title" data-i18n="Plan">Testimonials</span></a>
+                </li>
+            @endcan
+            
+            @can('blogs-view')
+                <li class=" nav-item {{Request::segment(2) == 'blogs' ? 'active' : '' }}"><a href="{{route('blogs.index')}}"><i class="feather icon-mail"></i><span class="menu-title" data-i18n="Plan">Blogs</span></a>
                 </li>
             @endcan
 

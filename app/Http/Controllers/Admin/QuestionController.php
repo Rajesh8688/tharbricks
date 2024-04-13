@@ -206,6 +206,7 @@ class QuestionController extends Controller
         $question->order = $request->input('order');
         $question->type = $request->input('type');
         $question->service_id = $request->input('service_id');
+        $question->next_question_id =  $request->input('next_question_id');
         $question->slug = unique_slug($request->input('question_text'), 'Question' , $question->id);
         $question->save();
         $questionOptionId = [];

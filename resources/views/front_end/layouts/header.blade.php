@@ -29,6 +29,7 @@
                     <ul class=" nav navbar-nav">
                       <li class="{{Request::segment(1) == '' ? 'current-menu-item' : '' }}" ><a href="{{url('/')}}">Home</a></li>
                       <li class="{{Request::segment(1) == 'service' ? 'current-menu-item' : '' }}" ><a href="{{route('service')}}">Service</a></li>
+                      <li class="{{Request::segment(1) == 'blogs' ? 'current-menu-item' : '' }}" ><a href="{{route('blogs')}}">Blog</a></li>
 
                       {{-- <li class="has-child">
                           <a href="javascript:;">Pages</a>

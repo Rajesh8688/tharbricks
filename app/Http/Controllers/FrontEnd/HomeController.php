@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\FrontEnd;
 
+use App\Models\Blog;
 use App\Models\Plan;
+use App\Models\User;
 use App\Models\Service;
+use App\Models\Testimonial;
 use App\Models\UserRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 
 class HomeController extends Controller
 {
@@ -16,8 +20,13 @@ class HomeController extends Controller
             'title' => "Home",
         ];
         $Services = Service::where("status" , "Active")->get();
+        $Testimonials = Testimonial::with('service')->where("status" , "Active")->get();
+        $Vendors = User::with('vendorDetails')->where("is_vendor" , '1')->where("status" , "Active")->get();
+        $Blogs = Blog::with('service')->where("status" , "Active")->orderBy('id' ,'DESC')->get();
+        $noImage = asset(Config::get('constants.NO_IMG_ADMIN'));
+        //dd($Vendors);
         // $Plans = Plan::with('Details')->OrderBy('order' ,'asc')->get();
-        return view('front_end.index',compact('titles','Services'));
+        return view('front_end.index',compact('titles','Services','Testimonials','Vendors','noImage','Blogs'));
     }
 
     public function contactUs(){

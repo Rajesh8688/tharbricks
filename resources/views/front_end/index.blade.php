@@ -251,7 +251,8 @@
                 <div class="section-content">
                     <div class="owl-carousel aon-vendor-provider-two-carousel aon-owl-arrow">
 
-                        <!-- COLUMNS 1 -->
+                        @foreach($Vendors as $vendor)
+                        <?php //dd();?>
                         <div class="item">
                             <div class="aon-ow-provider-wrap2">
                                 <div class="aon-ow-provider2 shine-hover">
@@ -260,15 +261,21 @@
                                         <div class="aon-pro-check"><span><i class="fa fa-check"></i></span></div>
                                         <div class="aon-pro-favorite"><a href="#"><i class="fa fa-heart-o"></i></a></div>
                                         <div class="aon-ow-info">
-                                            <h4 class="sf-title"><a href="profile-full.html">Javier Bardem</a></h4>
-                                            <span>Queens, United States</span>
+                                            <h4 class="sf-title"><a href="profile-full.html">{{$vendor->name}}</a></h4>
+                                            <span>{{$vendor->vendorDetails->company_name??''}}</span>
                                         </div>
                                     </div>
                                     <div class="aon-ow-mid">
                                         <div class="aon-ow-media media-bg-animate">
-                                            <a class="shine-box" href="profile-full.html"><img src="{{asset('frontEnd/images/providers/1.jpg')}}" alt=""></a>
+                                            @if(!empty($vendor->vendorDetails->company_logo??''))
+                                                <a class="shine-box" href="profile-full.html"><img src="{{asset('uploads/company/'.$vendor->vendorDetails->company_logo)}}" alt=""></a>
+                                            @else
+                                                <?php //dd($noImage)?>
+                                                <a class="shine-box" href="profile-full.html"><img src="{{asset('frontEnd/images/default-vendor-image.png')}}" alt=""></a>
+                                            @endif
+                                          
                                         </div>
-                                        <p>Through our expertise, technological knowledge, global presence and bespoke.</p>
+                                        <p>{{$vendor->description}}</p>
                                         <div class="aon-ow-pro-rating">
                                             <span class="fa fa-star"></span>
                                             <span class="fa fa-star"></span>
@@ -277,180 +284,18 @@
                                             <span class="fa fa-star text-gray"></span>
                                         </div>
                                         <div class="aon-ow-bottom">
-                                            <a href="profile-full.html" class="site-button">Request A Quote</a>
+                                            <a href="profile-full.html" class="site-button">Details</a>
                                         </div>
                                     </div>
                                 </div>
                                 
                             </div>
                         </div>
-                        <!-- COLUMNS 2 -->
-                        <div class="item">
-                            <div class="aon-ow-provider-wrap2">
-                                <div class="aon-ow-provider2 shine-hover">
+                        @endforeach
 
-                                    <div class="aon-ow-top">
-                                        <div class="aon-pro-check"><span><i class="fa fa-check"></i></span></div>
-                                        <div class="aon-pro-favorite"><a href="#"><i class="fa fa-heart-o"></i></a></div>
-                                        <div class="aon-ow-info">
-                                            <h4 class="sf-title"><a href="profile-full.html">Mila Kunis</a>
-                                            </h4>
-                                            <span>Queens, United States</span>
-                                        </div>
-                                    </div>
-                                    <div class="aon-ow-mid">
-                                        <div class="aon-ow-media media-bg-animate">
-                                            <a class="shine-box" href="profile-full.html"><img src="{{asset('frontEnd/images/providers/2.jpg')}}" alt=""></a>
-                                        </div>
-                                        <p>Through our expertise, technological knowledge, global presence and bespoke.</p>
-                                        <div class="aon-ow-pro-rating">
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star text-gray"></span>
-                                        </div>
-                                        <div class="aon-ow-bottom">
-                                            <a href="profile-full.html" class="site-button">Request A Quote</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <!-- COLUMNS 3 -->
-                        <div class="item">
-                            <div class="aon-ow-provider-wrap2">
-                                <div class="aon-ow-provider2 shine-hover">
-
-                                    <div class="aon-ow-top">
-                                        <div class="aon-pro-check"><span><i class="fa fa-check"></i></span></div>
-                                        <div class="aon-pro-favorite"><a href="#"><i class="fa fa-heart-o"></i></a></div>
-                                        <div class="aon-ow-info">
-                                            <h4 class="sf-title"><a href="profile-full.html">Edward Luise</a>
-                                            </h4>
-                                            <span>Queens, United States</span>
-                                        </div>
-                                    </div>
-                                    <div class="aon-ow-mid">
-                                        <div class="aon-ow-media media-bg-animate">
-                                            <a class="shine-box" href="profile-full.html"><img src="{{asset('frontEnd/images/providers/3.jpg')}}" alt=""></a>
-                                        </div>
-                                        <p>Through our expertise, technological knowledge, global presence and bespoke.</p>
-                                        <div class="aon-ow-pro-rating">
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star text-gray"></span>
-                                        </div>
-                                        <div class="aon-ow-bottom">
-                                            <a href="profile-full.html" class="site-button">Request A Quote</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                            </div> 
-                        </div>
-                        <!-- COLUMNS 4 -->
-                        <div class="item">
-                            <div class="aon-ow-provider-wrap2">
-                                <div class="aon-ow-provider2 shine-hover">
-
-                                    <div class="aon-ow-top">
-                                        <div class="aon-pro-check"><span><i class="fa fa-check"></i></span></div>
-                                        <div class="aon-pro-favorite"><a href="#"><i class="fa fa-heart-o"></i></a></div>
-                                        <div class="aon-ow-info">
-                                            <h4 class="sf-title"><a href="profile-full.html">James McAvoy</a></h4>
-                                            <span>Queens, United States</span>
-                                        </div>
-                                    </div>
-                                    <div class="aon-ow-mid">
-                                        <div class="aon-ow-media media-bg-animate">
-                                            <a class="shine-box" href="profile-full.html"><img src="{{asset('frontEnd/images/providers/1.jpg')}}" alt=""></a>
-                                        </div>
-                                        <p>Through our expertise, technological knowledge, global presence and bespoke.</p>
-                                        <div class="aon-ow-pro-rating">
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star text-gray"></span>
-                                        </div>
-                                        <div class="aon-ow-bottom">
-                                            <a href="profile-full.html" class="site-button">Request A Quote</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                            </div> 
-                        </div>
-                        <!-- COLUMNS 5 -->
-                        <div class="item">
-                            <div class="aon-ow-provider-wrap2">
-                                <div class="aon-ow-provider2 shine-hover">
-
-                                    <div class="aon-ow-top">
-                                        <div class="aon-pro-check"><span><i class="fa fa-check"></i></span></div>
-                                        <div class="aon-pro-favorite"><a href="#"><i class="fa fa-heart-o"></i></a></div>
-                                        <div class="aon-ow-info">
-                                            <h4 class="sf-title"><a href="profile-full.html">Jackie Chan</a></h4>
-                                            <span>Queens, United States</span>
-                                        </div>
-                                    </div>
-                                    <div class="aon-ow-mid">
-                                        <div class="aon-ow-media media-bg-animate">
-                                            <a class="shine-box" href="profile-full.html"><img src="{{asset('frontEnd/images/providers/2.jpg')}}" alt=""></a>
-                                        </div>
-                                        <p>Through our expertise, technological knowledge, global presence and bespoke.</p>
-                                        <div class="aon-ow-pro-rating">
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star text-gray"></span>
-                                        </div>
-                                        <div class="aon-ow-bottom">
-                                            <a href="profile-full.html" class="site-button">Request A Quote</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <!-- COLUMNS 6 -->
-                        <div class="item">
-                            <div class="aon-ow-provider-wrap2">
-                                <div class="aon-ow-provider2 shine-hover">
-
-                                    <div class="aon-ow-top">
-                                        <div class="aon-pro-check"><span><i class="fa fa-check"></i></span></div>
-                                        <div class="aon-pro-favorite"><a href="#"><i class="fa fa-heart-o"></i></a></div>
-                                        <div class="aon-ow-info">
-                                            <h4 class="sf-title"><a href="profile-full.html">Colin Farrell</a></h4>
-                                            <span>Queens, United States</span>
-                                        </div>
-                                    </div>
-                                    <div class="aon-ow-mid">
-                                        <div class="aon-ow-media media-bg-animate">
-                                            <a class="shine-box" href="profile-full.html"><img src="{{asset('frontEnd/images/providers/3.jpg')}}" alt=""></a>
-                                        </div>
-                                        <p>Through our expertise, technological knowledge, global presence and bespoke.</p>
-                                        <div class="aon-ow-pro-rating">
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star text-gray"></span>
-                                        </div>
-                                        <div class="aon-ow-bottom">
-                                            <a href="profile-full.html" class="site-button">Request A Quote</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </div>
+                       
+                        
+                     
 
                     </div>
                 </div>
@@ -839,21 +684,21 @@
                 <div class="section-content">
                     <div class="aon-l-blog-area2-section">
                         <div class="row d-flex justify-content-center">
-                            <!-- COLUMNS 1 -->
+                            @foreach($Blogs as $blog )
                             <div class="col-lg-4 col-md-6 shine-hover">
                                 <div class="aon-blog-style-1 media-bg-animate mba-bdr-20">
                                     <div class="post-bx">
                                         <!-- Content section for blogs start -->
                                         <div class="post-thum shine-box"> 
-                                            <img title="title" alt="" src="{{asset('frontEnd/images/blog/blog-grid/1.jpg')}}">
+                                            <img title="title" alt="" src="{{asset('uploads/blogs/')."/".$blog->image}}">
                                         </div>
                                         <div class="post-info">
-                                            <div class="post-categories"><a href="#">Logistics</a></div>
+                                            <div class="post-categories"><a href="#">{{$blog->service->name}}</a></div>
                                             <div class="post-meta">
                                             <ul>
-                                                <li class="post-date"><span>June 18, 2022</span></li>
+                                                <li class="post-date"><span>{{ Carbon\Carbon::parse($blog->created_at)->format('d M H:i') }}</span></li>
                                                 <li class="post-author">By
-                                                <a href="#" title="Posts by admin" rel="author">Nina Brown</a>
+                                                <a href="#" title="Posts by admin" rel="author">{{$blog->user_name}}</a>
                                                 </li>
                                                 
                                             </ul>
@@ -861,7 +706,7 @@
                                                                                 
                                             <div class="post-text">
                                             <h4 class="post-title">
-                                                <a href="blog-detail.html">Helping Companies in  Their Green Transition</a>
+                                                <a href="blog-detail.html">{{ $blog->name}}</a>
                                             </h4>
                                             </div>
                                             
@@ -870,68 +715,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- COLUMNS 2 -->
-                            <div class="col-lg-4 col-md-6 shine-hover">
-                                <div class="aon-blog-style-1 media-bg-animate mba-bdr-20">
-                                    <div class="post-bx">
-                                        <!-- Content section for blogs start -->
-                                        <div class="post-thum shine-box"> 
-                                            <img title="title" alt="" src="{{asset('frontEnd/images/blog/blog-grid/2.jpg')}}">
-                                        </div>
-                                        <div class="post-info">
-                                            <div class="post-categories"><a href="#">Business</a></div>
-                                            <div class="post-meta">
-                                            <ul>
-                                                <li class="post-date"><span>June 18, 2022</span></li>
-                                                <li class="post-author">By
-                                                <a href="#" title="Posts by admin" rel="author">Nina Brown</a>
-                                                </li>
-                                                
-                                            </ul>
-                                            </div>
-                                                                                
-                                            <div class="post-text">
-                                            <h4 class="post-title">
-                                                <a href="blog-detail.html">There are two thing is very important in Consectetur</a>
-                                            </h4>
-                                            </div>
-                                            
-                                        </div>
-                                        <!-- Content section for blogs end -->
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- COLUMNS 3 -->
-                            <div class="col-lg-4 col-md-6 shine-hover">
-                                <div class="aon-blog-style-1 media-bg-animate mba-bdr-20">
-                                    <div class="post-bx">
-                                        <!-- Content section for blogs start -->
-                                        <div class="post-thum shine-box"> 
-                                            <img title="title" alt="" src="{{asset('frontEnd/images/blog/blog-grid/3.jpg')}}">
-                                        </div>
-                                        <div class="post-info">
-                                            <div class="post-categories"><a href="#">Traveling</a></div>
-                                            <div class="post-meta">
-                                            <ul>
-                                                <li class="post-date"><span>June 18, 2022</span></li>
-                                                <li class="post-author">By
-                                                <a href="#" title="Posts by admin" rel="author">Nina Brown</a>
-                                                </li>
-                                                
-                                            </ul>
-                                            </div>
-                                                                                
-                                            <div class="post-text">
-                                            <h4 class="post-title">
-                                                <a href="blog-detail.html">Officia deserunt mollit anim id est labrum. duis</a>
-                                            </h4>
-                                            </div>
-                                            
-                                        </div>
-                                        <!-- Content section for blogs end -->
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
+                            
+                            
                             
                         </div>
                     </div>
@@ -960,13 +746,14 @@
                     
                 <div class="section-content">
                     <div class="owl-carousel testimonials-two-carousel-owl aon-owl-arrow">
+                        @forEach($Testimonials as $testimonial)
                         <!-- COLUMNS 1 -->
                         <div class="item">
                             <div class="aon-test2-item">
-                                <div class="aon-test2-pic"><img src="{{asset('frontEnd/images/testimonials2/pic1.jpg')}}" alt=""/></div>
-                                <h3 class="aon-test2-name">David Smith</h3>
-                                <div class="aon-test2-position">Web Designer</div>
-                                <div class="aon-test2-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do usmod tempor incididunt ut labore.</div>
+                                <div class="aon-test2-pic"><img src="{{asset('uploads/testimonials/'.$testimonial->image)}}" alt=""/></div>
+                                <h3 class="aon-test2-name">{{$testimonial->name}}</h3>
+                                <div class="aon-test2-position">{{$testimonial->service->name}}</div>
+                                <div class="aon-test2-text">{{$testimonial->description}}</div>
                                 <div class="aon-test2-animate">
                                     <span class="aon-test2-circle1"></span>
                                     <span class="aon-test2-square1"></span>
@@ -976,54 +763,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- COLUMNS 2 -->
-                        <div class="item">
-                            <div class="aon-test2-item">
-                                <div class="aon-test2-pic"><img src="{{asset('frontEnd/images/testimonials2/pic2.jpg')}}" alt=""/></div>
-                                <h3 class="aon-test2-name">David Smith</h3>
-                                <div class="aon-test2-position">Web Designer</div>
-                                <div class="aon-test2-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do usmod tempor incididunt ut labore.</div>
-                                <div class="aon-test2-animate">
-                                    <span class="aon-test2-circle1"></span>
-                                    <span class="aon-test2-square1"></span>
-                                    <span class="aon-test2-square2"></span>
-                                    <span class="aon-test2-circle2"></span>
-                                    <span class="aon-test2-plus">+</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- COLUMNS 3 -->
-                        <div class="item">
-                            <div class="aon-test2-item">
-                                <div class="aon-test2-pic"><img src="{{asset('frontEnd/images/testimonials2/pic3.jpg')}}" alt=""/></div>
-                                <h3 class="aon-test2-name">David Smith</h3>
-                                <div class="aon-test2-position">Web Designer</div>
-                                <div class="aon-test2-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do usmod tempor incididunt ut labore.</div>
-                                <div class="aon-test2-animate">
-                                    <span class="aon-test2-circle1"></span>
-                                    <span class="aon-test2-square1"></span>
-                                    <span class="aon-test2-square2"></span>
-                                    <span class="aon-test2-circle2"></span>
-                                    <span class="aon-test2-plus">+</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- COLUMNS 4 -->
-                        <div class="item">
-                            <div class="aon-test2-item">
-                                <div class="aon-test2-pic"><img src="{{asset('frontEnd/images/testimonials2/pic1.jpg')}}" alt=""/></div>
-                                <h3 class="aon-test2-name">David Smith</h3>
-                                <div class="aon-test2-position">Web Designer</div>
-                                <div class="aon-test2-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do usmod tempor incididunt ut labore.</div>
-                                <div class="aon-test2-animate">
-                                    <span class="aon-test2-circle1"></span>
-                                    <span class="aon-test2-square1"></span>
-                                    <span class="aon-test2-square2"></span>
-                                    <span class="aon-test2-circle2"></span>
-                                    <span class="aon-test2-plus">+</span>
-                                </div>
-                            </div>
-                        </div>                    
+                        @endforeach              
                     </div>
                 </div>
                 
