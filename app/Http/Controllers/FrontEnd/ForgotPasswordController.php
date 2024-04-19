@@ -34,7 +34,6 @@ class ForgotPasswordController extends Controller
      */
     public function submitForgetPasswordForm(Request $request)
     {
-      
         $request->validate([
             'email' => ['required','email','exists:users'],
         ]);
@@ -49,9 +48,7 @@ class ForgotPasswordController extends Controller
         ]);
         $name = $user->name;
 
-        //return view('front_end.email_templates.forgot-password',compact('token','name'));
-
-        Mail::send('front_end.email_templates.forgot-password', ['token' => $token,'name'=>$name,'resetPsswordLink'=>route('user-reset.password.get',['token'=>$token]),'image' => asset('frontEnd/images/logo.png')], function($message) use($request){
+        $mail = Mail::send('front_end.email_templates.forgot-password', ['token' => $token,'name'=>$name,'resetPsswordLink'=>route('user-reset.password.get',['token'=>$token]),'image' => asset('frontEnd/images/logo-dark.png')], function($message) use($request){
             $message->to($request->email);
             $message->subject('Reset Password');
         });

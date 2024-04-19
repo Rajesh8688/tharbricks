@@ -272,7 +272,7 @@ class LeadController extends Controller
             'title' => "Bringing you the best leads for your business",
         ];
         $myleads = LeadUser::select('leads.*','services.name as service_name','lead_users.response_status','lead_users.id as leadUsersId')
-        ->leftJoin("leads", 'lead_users.lead_id', '=', 'leads.id')
+        ->Join("leads", 'lead_users.lead_id', '=', 'leads.id')
         ->leftJoin("services", 'services.id', '=', 'leads.service_id')
         ->where(["user_id" => auth('web')->user()->id , "lead_users.status" => "Active" ] )
         ->orderBy('lead_users.id', 'DESC')

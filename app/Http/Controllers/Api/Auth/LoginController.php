@@ -26,7 +26,6 @@ class LoginController extends BaseApiController
         }
 
 
-
         $user = User::where(['back_end_user' => '0' , 'is_vendor' => '1' ,'status' => 'Active','email'=> $request->email])->first();
 
         if ($user) {

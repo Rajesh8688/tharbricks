@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\VendorDetails;
 use App\Models\ResponseActivity;
 use App\Models\NotInterestedLead;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\CreditTransactionLog;
 
@@ -198,7 +199,7 @@ class LeadController extends BaseApiController
         $userId  = auth('api')->user()->id;
 
         $myleads = LeadUser::select('leads.*','services.name as service_name','lead_users.response_status','lead_users.id as leadUsersId')
-        ->leftJoin("leads", 'lead_users.lead_id', '=', 'leads.id')
+        ->Join("leads", 'lead_users.lead_id', '=', 'leads.id')
         ->leftJoin("services", 'services.id', '=', 'leads.service_id')
         ->where(["user_id" => $userId, "lead_users.status" => "Active" ]);
         if(!empty($status))

@@ -51,7 +51,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="aon-login-opright">
-                                                    <a href="#">Forget Password</a>
+                                                    <a href="{{route('user-forget.password.get')}}">Forget Password</a>
                                                 </div>
                                             </div>
                                         </div>  

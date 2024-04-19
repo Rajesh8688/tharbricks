@@ -45,6 +45,10 @@ Route::prefix('v1')->group(function () {
         Route::get('/responseDetails', [App\Http\Controllers\Api\LeadController::class, 'responseDetails']);
 
         Route::post('/deleteAccount', [App\Http\Controllers\Api\VendorController::class, 'deleteAccount']);
+
+        Route::get('/profile', [App\Http\Controllers\Api\VendorController::class, 'UserProfile']);
+
+        Route::post('/UpdateProfile', [App\Http\Controllers\Api\VendorController::class, 'UpdateProfile']);
     });
 
     Route::get('/appversion', [App\Http\Controllers\Api\GeneralController::class, 'appVersion']);

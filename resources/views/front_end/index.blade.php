@@ -693,12 +693,12 @@
                                             <img title="title" alt="" src="{{asset('uploads/blogs/')."/".$blog->image}}">
                                         </div>
                                         <div class="post-info">
-                                            <div class="post-categories"><a href="#">{{$blog->service->name}}</a></div>
+                                            <div class="post-categories"><a href="{{route('blogDetails',['slug' => $blog->slug])}}">{{$blog->service->name}}</a></div>
                                             <div class="post-meta">
                                             <ul>
                                                 <li class="post-date"><span>{{ Carbon\Carbon::parse($blog->created_at)->format('d M H:i') }}</span></li>
                                                 <li class="post-author">By
-                                                <a href="#" title="Posts by admin" rel="author">{{$blog->user_name}}</a>
+                                                <a href="{{route('blogDetails',['slug' => $blog->slug])}}" title="Posts by {{$blog->user_name}}" rel="author">{{$blog->user_name}}</a>
                                                 </li>
                                                 
                                             </ul>
@@ -706,7 +706,7 @@
                                                                                 
                                             <div class="post-text">
                                             <h4 class="post-title">
-                                                <a href="blog-detail.html">{{ $blog->name}}</a>
+                                                <a href="{{route('blogDetails',['slug' => $blog->slug])}}">{{ $blog->name}}</a>
                                             </h4>
                                             </div>
                                             
