@@ -28,6 +28,8 @@ Route::prefix('v1')->group(function () {
 
     Route::post('/signup', [App\Http\Controllers\Api\Auth\RegisterController::class, 'signup']);
 
+    Route::post('/forgetPassword', [App\Http\Controllers\Api\Auth\RegisterController::class, 'forgotPassword']); 
+
     Route::group(['middleware' => ['auth:api']], function() {
 
         Route::get('/leads', [App\Http\Controllers\Api\LeadController::class, 'leads']);
@@ -47,6 +49,8 @@ Route::prefix('v1')->group(function () {
         Route::post('/deleteAccount', [App\Http\Controllers\Api\VendorController::class, 'deleteAccount']);
 
         Route::get('/profile', [App\Http\Controllers\Api\VendorController::class, 'UserProfile']);
+
+        Route::post('/transactionLogs', [App\Http\Controllers\Api\VendorController::class, 'transactionLogs']);
 
         Route::post('/UpdateProfile', [App\Http\Controllers\Api\VendorController::class, 'UpdateProfile']);
     });

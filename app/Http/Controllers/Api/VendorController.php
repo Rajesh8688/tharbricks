@@ -9,6 +9,7 @@ use App\Models\VendorDetails;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\CreditTransactionLog;
 use Illuminate\Support\Facades\Validator;
 
 class VendorController extends BaseApiController
@@ -77,5 +78,13 @@ class VendorController extends BaseApiController
         return response()->json(['message' => 'User Information updated successfully' ,'data'=> [], 'status' => true]);
 
 
+    }
+
+    public function transactionLogs(Request $request){
+        //function for getting transation logs
+        $user = User::find(auth('api')->user()->id);
+        $transactionLogs = CreditTransactionLog::where("user_id" , $user->id)->get();
+        $response = ['data' => $transactionLogs,"status"=>true ,"message" => "user Transation Logs"];
+        return response($response, 200);
     }
 }

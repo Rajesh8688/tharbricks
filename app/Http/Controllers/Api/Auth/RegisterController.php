@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Api\BaseApiController;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends BaseApiController
 {
@@ -124,5 +128,29 @@ class RegisterController extends BaseApiController
             //return redirect()-back()->with('error','something went wrong');
         }
      
+    }
+
+    public function forgotPassword(Request $request){
+        $request->validate([
+            'email' => ['required','email','exists:users'],
+        ]);
+        $user = User::where('email',$request->email)->first();
+
+        $token = Str::random(64);
+
+        DB::table('password_resets')->insert([
+            'email' => $request->email, 
+            'token' => $token, 
+            'created_at' => Carbon::now()
+        ]);
+        $name = $user->name;
+
+        $mail = Mail::send('front_end.email_templates.forgot-password', ['token' => $token,'name'=>$name,'resetPsswordLink'=>route('user-reset.password.get',['token'=>$token]),'image' => asset('frontEnd/images/logo-dark.png')], function($message) use($request){
+            $message->to($request->email);
+            $message->subject('Reset Password');
+        });
+
+        $response = ['data' => [],"status"=>true ,"message" => "We have e-mailed your password reset link!"];
+        return response($response, 200);
     }
 }
