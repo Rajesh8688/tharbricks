@@ -10,6 +10,7 @@ use App\Models\Testimonial;
 use App\Models\UserRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 
@@ -31,7 +32,11 @@ class HomeController extends Controller
 
     public function contactUs(){
         $titles = ['title' => "Contact Us"];
-        return view('front_end.contact_us',compact('titles'));
+        $supportDetails = Setting::find(1);
+        $data['email'] = $supportDetails->email;
+        $data['phone_number'] = $supportDetails->phone_number;
+        $data['address'] = $supportDetails->address;
+        return view('front_end.contact_us',compact('titles','data'));
     }
 
     public function submitContactUs(Request $request){

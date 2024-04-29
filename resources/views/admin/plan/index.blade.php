@@ -39,7 +39,7 @@
                                                     <th>Plan Name</th>
                                                     <th>Amount</th>
                                                     <th>No of Credits</th>
-                                                    <th>No of Responses</th>
+                                                    {{-- <th>No of Responses</th> --}}
                                                     <th>Actions</th>
                                                 </tr>
                                                 </thead>
@@ -50,7 +50,7 @@
                                                         <tr>
                                                             <td>{{$plan->name}}</td>
                                                             <td>{{$plan->no_of_credits}}</td>
-                                                            <td>{{$plan->no_of_responses}}</td>
+                                                            {{-- <td>{{$plan->no_of_responses}}</td> --}}
                                                             <td>{{$plan->status}}</td>
                                                             <td>
                                                                 @can('plan-update')

@@ -19,7 +19,7 @@ class CreatePlansTable extends Migration
             $table->string('slug');
             $table->integer('discount');
             $table->integer('no_of_credits');
-            $table->integer('no_of_responses');
+            //$table->integer('no_of_responses');
             $table->integer('amount');
             $table->integer('order');
             $table->enum('status' , ['Active' , 'InActive'])->default('Active');

@@ -42,7 +42,7 @@ Route::prefix('v1')->group(function () {
 
         Route::post('/InterestedLead', [App\Http\Controllers\Api\LeadController::class, 'InterestedLead']);
 
-        Route::get('/myleads', [App\Http\Controllers\Api\LeadController::class, 'myleads']);
+        Route::post('/myleads', [App\Http\Controllers\Api\LeadController::class, 'myleads']);
         
         Route::get('/responseDetails', [App\Http\Controllers\Api\LeadController::class, 'responseDetails']);
 
@@ -50,14 +50,19 @@ Route::prefix('v1')->group(function () {
 
         Route::get('/profile', [App\Http\Controllers\Api\VendorController::class, 'UserProfile']);
 
-        Route::post('/transactionLogs', [App\Http\Controllers\Api\VendorController::class, 'transactionLogs']);
+        Route::get('/transactionLogs', [App\Http\Controllers\Api\VendorController::class, 'transactionLogs']);
 
         Route::post('/UpdateProfile', [App\Http\Controllers\Api\VendorController::class, 'UpdateProfile']);
+
+        Route::post('/changePassword', [App\Http\Controllers\Api\VendorController::class, 'changePassword']); 
+
     });
 
     Route::get('/appversion', [App\Http\Controllers\Api\GeneralController::class, 'appVersion']);
 
     Route::get('/plan', [App\Http\Controllers\Api\PlanController::class, 'plan']);
+
+    Route::get('/support', [App\Http\Controllers\Api\GeneralController::class, 'supportDetails']);
 
 
     // Route::post('/updateProfile', [App\Http\Controllers\Api\UserController::class, 'updateProfile'])->middleware('auth:api');

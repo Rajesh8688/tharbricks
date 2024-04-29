@@ -88,6 +88,16 @@
                 </div>
             </div>
         </div> --}}
+        @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+            @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
         <div class="row">
             <div class="col-xl-8 col-lg-8 col-md-12 m-b30">
@@ -217,10 +227,10 @@
                                                     Visit <a class="text-nowrap text-dark-blue hover-light" href="#"><u>help centre</u></a> for tips &amp; advice.
                                                 </p>
                                                 <p class="text-left mb-2">
-                                                    Email <a class="text-dark-blue text-nowrap noline" href="mailto:info@tharbricks.com">info@tharbricks.com</a>
+                                                    Email <a class="text-dark-blue text-nowrap noline" href="mailto:{{$data['email']}}">{{$data['email']}}</a>
                                                 </p>
                                                 <p class="text-dark-blue mb-0">
-                                                    Call <a class="text-nowrap text-dark-blue" href="tel:+917624886912">+91 76248 86912</a>
+                                                    Call <a class="text-nowrap text-dark-blue" href="tel:+91{{$data['phone_number']}}">+91 {{$data['phone_number']}}</a>
                                                 </p>
                                                 <p class="text-xs text-grey-400   mb-0">
                                                     Mon-Fri 8am-8pm, Sat-Sun 9am-6pm

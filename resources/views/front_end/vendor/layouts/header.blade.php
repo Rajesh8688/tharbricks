@@ -199,6 +199,7 @@
                                 <li><a href="#"><i class="feather-file"></i> Add Listing</a></li>
                                 <li><a href="{{route('home')}}"><i class="feather-repeat"></i> Switch to public</a></li>
                                 <li><a href="#"><i class="feather-settings"></i> Setting</a></li>
+                                <li><a href="{{route('change-password')}}"><i class="feather-settings"></i> Change Password</a></li>
                                 <li>
                                     <a href="{{ route('logout') }}"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-in-alt"></i> Log Out</a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

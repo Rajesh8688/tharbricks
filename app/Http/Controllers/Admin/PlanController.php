@@ -58,7 +58,7 @@ class PlanController extends Controller
         $plan->order = $request->input('order');
         $plan->amount = $request->input('amount');
         $plan->no_of_credits = $request->input('no_of_credits');
-        $plan->no_of_responses = $request->input('no_of_responses');
+        //$plan->no_of_responses = $request->input('no_of_responses');
         $plan->discount = !empty($request->input('discount')) ? $request->input('discount') : 0;
         $plan->slug =  unique_slug($request->input('name'), 'Plan');
 
@@ -102,7 +102,7 @@ class PlanController extends Controller
         $plan->order = $request->input('order');
         $plan->amount = $request->input('amount');
         $plan->no_of_credits = $request->input('no_of_credits');
-        $plan->no_of_responses = $request->input('no_of_responses');
+        //$plan->no_of_responses = $request->input('no_of_responses');
         $plan->discount = !empty($request->input('discount')) ? $request->input('discount') : 0;
         $plan->slug = unique_slug($request->input('plan_text'), 'plan' , $plan->id);
         $plan->save();

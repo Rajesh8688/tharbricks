@@ -70,6 +70,10 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::post('vendor/image/upload', [App\Http\Controllers\FrontEnd\VendorController::class, 'uploadCompanyImage'])->name('update-company-image');
     Route::post('vendor/image/delete', [App\Http\Controllers\FrontEnd\VendorController::class, 'deleteCompanyImage'])->name('delete-company-image');
     Route::get('vendor/my-credits', [App\Http\Controllers\FrontEnd\VendorController::class, 'myCredits'])->name('my-credits');
+
+    Route::get('/change-password', [App\Http\Controllers\FrontEnd\VendorController::class, 'ChangePassword'])->name('change-password');
+    Route::post('/change-password', [App\Http\Controllers\FrontEnd\VendorController::class, 'UpdatePassword'])->name('updatePassword');
+
 });
 
 

@@ -6,6 +6,7 @@ use App\Models\Lead;
 use App\Models\Plan;
 use App\Models\User;
 use App\Models\Service;
+use App\Models\Setting;
 use App\Models\LeadUser;
 use App\Models\LeadAnswer;
 use App\Models\ServiceUser;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\CreditTransactionLog;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Redirect;
 
@@ -175,6 +177,11 @@ class VendorController extends Controller
         }
 
         $data['percentage'] = round(($totalFilledCount/$totalFillableCount)*100);
+
+        $supportDetails = Setting::find(1);
+        $data['email'] = $supportDetails->email;
+        $data['phone_number'] = $supportDetails->phone_number;
+        $data['address'] = $supportDetails->address;
 
         
         return view('front_end.vendor.dashboard',compact('titles','vendorDetails','data'));
@@ -411,6 +418,40 @@ class VendorController extends Controller
 
         return view('front_end.vendor.credits',compact( 'titles' ,'creditLogs','plans'));
 
+    }
+
+
+    public function ChangePassword()
+    {
+        $titles = [
+            'title' => "Change Password",
+        ];
+        
+        return view('front_end.auth.change_password',compact('titles'));
+
+    }
+
+    public function UpdatePassword(Request $request)
+    {
+        if (!(Hash::check($request->get('current-password'), Auth::user()->password))) {
+            // The passwords matches
+            return redirect()->back()->with("error","Your current password does not matches with the password.");
+        }
+
+        if(strcmp($request->get('current-password'), $request->get('new-password')) == 0){
+            // Current password and new password same
+            return redirect()->back()->with("error","New Password cannot be same as your current password.");
+        }
+
+        $validatedData = $request->validate([
+            'current-password' => 'required',
+            'new-password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::where("id",Auth::user()->id)->update(['password' =>  Hash::make($request->input('new-password'))]);
+
+        return redirect()->route('vendor-dashboard')->with('success','Password successfully changed!');
+      
     }
 
 

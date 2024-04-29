@@ -33,13 +33,16 @@ class SettingsController extends Controller
     public function settingsUpdate(Request $request)
     {
         $settings = Setting::find(1);
-
+       // dd($request->input());
         $settings->sitename = $request->sitename;
         $settings->app_ios_url = $request->app_ios_url;
         $settings->app_android_url = $request->app_android_url;
         $settings->app_ios_version = $request->app_ios_version;
         $settings->app_android_version = $request->app_android_version;
         $settings->maintenance = $request->maintenance ?? 0;
+        $settings->email = $request->email;
+        $settings->phone_number = $request->phone_number;
+        $settings->address = $request->address;
 
         // $settings->host = $request->host;
         // $settings->port = $request->port;

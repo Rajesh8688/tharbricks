@@ -44,7 +44,7 @@
                             </div>
                             <div class="sf-contact-info">
                                 <h4 class="sf-title">Mailing Address</h4>
-                                <p>#36,2nd floor,opp to muthoot fincrop,TC palya,kR puram, Bangalore -560036</p>
+                                <p>{{$data['address']}}</p>
                             </div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                             </div>
                             <div class="sf-contact-info">
                                 <h4 class="sf-title">Email Info</h4>
-                                <p>info@tharbricks.com</p>
+                                <p>{{$data['email']}}</p>
                             <br>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                             </div>
                             <div class="sf-contact-info">
                                 <h4 class="sf-title">Phone Number</h4>
-                                <p>7624886912 (24/7 Support Line)</p>
+                                <p>+91 {{$data['phone_number']}} (24/7 Support Line)</p>
                             <br>
                                 
                             </div>

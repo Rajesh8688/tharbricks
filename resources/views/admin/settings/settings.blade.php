@@ -98,7 +98,31 @@
                                                                 (Android)</label>
                                                         </div>
                                                     </div>
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-label-group">
+                                                            <input type="text" id="port" class="form-control"
+                                                                   name="email" placeholder="Email"
+                                                                   value="{{$settings->email}}">
+                                                            <label for="Email">Email</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-label-group">
+                                                            <input type="number" id="port" class="form-control"
+                                                                   name="phone_number" placeholder="Phone number"
+                                                                   value="{{$settings->phone_number}}">
+                                                            <label for="host">Phone Number</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                            
+                                                        <div class="form-group">
+                                                            <label for="address">Address </label>
+                                                            <textarea class="form-control " rows="5" placeholder="Address" name="address" required="" >{{$settings->address}}</textarea>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                               
 
                                                 <p>
                                                 <!-- <h3>Email Configuration</h3></p>
@@ -120,14 +144,7 @@
                                                             <label for="host">Port</label>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6 col-12">
-                                                        <div class="form-label-group">
-                                                            <input type="text" id="port" class="form-control"
-                                                                   name="email" placeholder="Email"
-                                                                   value="{{$settings->email}}">
-                                                            <label for="host">Email</label>
-                                                        </div>
-                                                    </div>
+                                                    
                                                     <div class="col-md-6 col-12">
                                                         <div class="form-label-group">
                                                             <input type="text" id="from_name" class="form-control"

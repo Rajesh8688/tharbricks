@@ -112,7 +112,7 @@
                                                             @enderror
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6 col-12">
+                                                    {{-- <div class="col-md-6 col-12">
                                                         <div class="form-group">
                                                             <label for="no_of_responses">No of Responses</label>
                                                             <input type="number" id="no_of_responses" class="form-control @error('no_of_responses') is-invalid @enderror" placeholder="No of Responses" name="no_of_responses" value="{{$plan->no_of_responses}}" autocomplete="off" required>
@@ -122,7 +122,7 @@
                                                                 </span>
                                                             @enderror
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                     <div class="col-md-6 col-12">
                                                         <div class="form-group">
                                                             <label for="discount">Discount</label>

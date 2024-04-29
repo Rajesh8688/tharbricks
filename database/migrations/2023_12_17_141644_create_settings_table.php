@@ -37,6 +37,8 @@ class CreateSettingsTable extends Migration
             $table->string('youtube_url')->nullable();
             $table->text('google_analytics')->nullable();
             $table->enum('maintenance', ['0', '1'])->default('0');
+            $table->string('phone_number')->nullable();
+            $table->text('address')->nullable();
             $table->timestamps();
         });
     }

@@ -86,9 +86,9 @@
                                 <div class="d-block d-md-flex mt-3 mt-md-0 no-gutters" style="font-weight: bold;">
                                     <div class="col-12 col-md-9 d-flex no-gutters">
                                         <div class="col-7 col-md-7 d-block d-md-flex no-gutters">
-                                            <div class="col-12 col-md-7">
+                                            {{-- <div class="col-12 col-md-7">
                                                 About <span class="js-estimated-responses">{{$plan->no_of_responses}}</span> responses
-                                            </div>
+                                            </div> --}}
                                             <div class="col-12 col-md-5 mt-2 mt-md-0">
                                                 <span class="bark-svg-icon bsi-primary-grey-400 d-inline-block align-middle bsi-sm"><!--?xml version="1.0" encoding="UTF-8"?-->
                                                     <svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
