@@ -19,7 +19,7 @@ class BlogController extends Controller
             $serviceId = $request->input('serviceId');
         }
         $blogs = Blog::where('status' , 'Active')->orderBy("id","DESC");
-        if(!empty($blogs))
+        if(!empty($serviceId))
         {
             $blogs = $blogs->where('service_id' , $serviceId);
         }
