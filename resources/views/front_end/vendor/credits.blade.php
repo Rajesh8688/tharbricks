@@ -1,5 +1,5 @@
 @extends('front_end.vendor.layouts.master')
-@section('content')
+@section('content')  
 <style>
     .text-xs {
     font-size: .875em;
@@ -33,6 +33,12 @@
 .text-green {
     color: #47bf9c!important;
 }
+.razorpay-payment-button {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    border-radius: 5px;
+}
     </style>
 <div class="content-admin-main">
                 
@@ -57,6 +63,22 @@
                 </button>
             </div>  --}}
             <div class="col-12 mb-3" id="my_credits">
+                @if($message = Session::get('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                   <span aria-hidden="true">×</span>
+                   </button>
+                   <strong>Error!</strong> {{ $message }}
+                </div>
+                @endif
+                @if($message = Session::get('success'))
+                <div class="alert alert-success alert-dismissible fade {{ Session::has('success') ? 'show' : 'in' }}" role="alert">
+                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                   <span aria-hidden="true">×</span>
+                   </button>
+                   <strong>Success!</strong> {{ $message }}
+                </div>
+                @endif
                 <div class="d-block d-md-flex justify-content-between align-items-center no-gutters mb-md-2 mb-0">
                     <div>
                         <div class="js-atu-header-off p-md-2 text-lg">
@@ -124,7 +146,28 @@
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-3 mt-4 mt-md-0 text-right">
-                                        <span class="btn btn-primary js-purchase-pack d-block d-md-inline-block" data-pack-id="spack" data-atuavail="1" data-credits="{{$plan->no_of_credits}}" data-pack-price="{{$plan->amount}}" data-price-per-credit="{{number_format($plan->amount / $plan->no_of_credits ,2)}}">Buy now</span>
+                                        {{-- <span class="btn btn-primary js-purchase-pack d-block d-md-inline-block" data-pack-id="spack" data-atuavail="1" data-credits="{{$plan->no_of_credits}}" data-pack-price="{{$plan->amount}}" data-price-per-credit="{{number_format($plan->amount / $plan->no_of_credits ,2)}}">Buy now</span> --}}
+
+
+                                        <form action="/vendor/my-credits" method="POST" >
+                                            @csrf
+                                            {{-- <div class="btn btn-primary js-purchase-pack d-block d-md-inline-block"></div> --}}
+                                            <script src="https://checkout.razorpay.com/v1/checkout.js"
+                                               data-key="{{env('RAZOR_PAY_KEY')}}"
+                                               data-amount="{{$plan->amount*100}}" 
+                                               data-currency="INR"
+                                               data-buttontext="Buy now"
+                                               data-name="Tharbricks"
+                                               data-description="{{$plan->id}}"
+                                               data-image="{{asset('frontEnd/images/logo-dark.png')}}"
+                                               data-prefill.name="{{auth()->user()->name}}"
+                                               data-prefill.email="{{auth()->user()->email}}"
+                                               data-theme.color="#F37254"
+                                               
+                                              
+                                              
+                                               ></script>
+                                         </form>
                                         {{-- <div class="atu-container custom-checkbox mt-3 text-center text-md-right">
                                             <input type="checkbox" value="spack" id="atu-toggle-spack" class="custom-control-input my-auto js-atu-toggle">
                                             <label for="atu-toggle-spack" class="custom-control-label cursor-pointer">Auto top-up next time</label>
@@ -188,4 +231,17 @@
     </div>
 </div>
 
+@endsection
+@section('extraScripts')
+
+<script>
+    // $(document).ready(function() {
+    //     $('.example-dt-table').DataTable({
+    //     "order": [[0, "asc"]] // Default sorting by the second column in ascending order
+    // });
+
+     
+    // });
+  </script>
+  
 @endsection

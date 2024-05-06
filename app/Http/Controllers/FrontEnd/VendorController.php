@@ -414,7 +414,8 @@ class VendorController extends Controller
 
         $plans = Plan::where(['status' => 'Active'])->get();
 
-        $creditLogs = CreditTransactionLog::where(['user_id' => auth()->user()->id , 'status' => 'Active'])->get();
+        $creditLogs = CreditTransactionLog::where(['user_id' => auth()->user()->id , 'status' => 'Active'])->orderBy('created_at', 'desc')->get();
+        //dd($creditLogs);
 
         return view('front_end.vendor.credits',compact( 'titles' ,'creditLogs','plans'));
 
