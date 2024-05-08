@@ -48,7 +48,7 @@ class VendorController extends BaseApiController
     public function UpdateProfile(Request $request){
 
         $validator = Validator::make($request->all(), [
-            'email' => ['email',Rule::unique('users', 'email')], // 'users' is the table name, and 'email' is the column name
+            'email' =>  'email|unique:users,email,'.auth('api')->user()->id, // 'users' is the table name, and 'email' is the column 
         ]);
         if ($validator->fails()) {
             $errorMessages = $validator->messages()->all();
@@ -60,7 +60,7 @@ class VendorController extends BaseApiController
 
         $userTableUpdate = ['name' , 'first_name' , 'last_name' , 'mobile' , 'address', 'email' , 'description'];
 
-        $vendorTableUpdate = ['company_name' , 'company_description' , 'company_size' ,'website' , 'facebook_url' , 'twitter_url' , 'youtube_url' , 'alter_mobile' , 'company_address' ,'years_in_business','linked_in_url','pinterest_url','instagram_url'];
+        $vendorTableUpdate = ['company_name' , 'company_description' , 'company_size' ,'website' , 'facebook_url' , 'twitter_url' , 'youtube_url' , 'alter_mobile' , 'company_address' ,'years_in_business','linked_in_url','pinterest_url','instagram_url' ,'is_new_reviews_on_profile_push_notifications','is_new_leads_i_receive_push_notifications','is_customers_sending_me_a_message_push_notifications','is_new_lead_i_receive_email_notifications','is_customers_closing_leads_ive_responded_email_notifications','is_customers_dismissing_my_response_email_notifications','is_customers_hiring_me_email_notifications','is_customers_reading_a_message_i_sent_email_notifications','is_customers_requesting_a_call_form_me_email_notifications','is_customers_requesting_me_to_contact_them_email_notifications','is_customers_viewing_my_profile_email_notifications','is_customers_viewing_my_website_email_notifications','is_a_summary_of_leads_im_matched_to_each_day_email_notifications','is_customers_sending_me_a_message_email_notifications','is_new_reviews_on_my_profile_email_notifications','is_new_reviews_from_other_sources_email_notifications'];
 
         $user = User::find(auth('api')->user()->id);
         $vendorInfo =  VendorDetails::where("user_id" , $user->id)->first();
