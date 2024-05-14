@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use App\Models\ServiceUser;
+use App\Models\VendorImage;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\VendorDetails;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class BaseApiController extends Controller
@@ -117,6 +121,29 @@ class BaseApiController extends Controller
         }
 
         return $out;
+    }
+
+    public function profileInfo($userId){
+        $user = User::find($userId);
+        if (!$user) {
+            return ['status' => false , 'data' => [] ,'message' => 'user not found'] ;
+        }
+        if(!empty($user['profile_pic'])){
+            $user->profile_pic = env("APP_URL")."/uploads/users/".$user['profile_pic'];
+        }
+        //getting all the vendor info from vendor table
+        $vendorInfo =  VendorDetails::where("user_id" , $user->id)->first();
+        $userData = array_merge($user->toArray() ,$vendorInfo->toArray());
+        $vendorImages = VendorImage::select('id',$this->ApiImage("/uploads/company/","image" ))->where(['user_id' => $user->id,'status' => 'Active'])->get();
+        $userData['vendor_image'] = $vendorImages->toArray();
+
+        //user Services
+
+        $userData['services'] = DB::select('SELECT s.*,su.id as service_user_id FROM service_users su left join services s on s.id = su.service_id  WHERE  su.status = ? and su.user_id = ?', ['Active',$userId]);
+        //$userData['services'] = ServiceUser::select('service.*')->with('service')->where('user_id' , $user->id)->get();
+        
+
+        return ['status' => true , 'data' => $userData ,'message' => 'User Information'] ;
     }
 
 

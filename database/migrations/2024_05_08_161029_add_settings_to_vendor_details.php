@@ -30,6 +30,8 @@ class AddSettingsToVendorDetails extends Migration
             $table->tinyInteger('is_customers_sending_me_a_message_email_notifications')->default(1)->nullable();
             $table->tinyInteger('is_new_reviews_on_my_profile_email_notifications')->default(1)->nullable();
             $table->tinyInteger('is_new_reviews_from_other_sources_email_notifications')->default(1)->nullable();
+            $table->string('company_email')->nullable();
+            $table->string('company_phone')->nullable();
         });
     }
 

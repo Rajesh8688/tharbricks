@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPaymentIdTocreditLogTable extends Migration
+class AddFcmTokenToUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddPaymentIdTocreditLogTable extends Migration
      */
     public function up()
     {
-        Schema::table('credit_transaction_logs', function (Blueprint $table) {
-            $table->string('razorpay_payment_id')->nullable();
-            $table->string('razor_pay_payment_invoice_id')->nullable();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('fcm_token')->nullable();
+            $table->string('device_type')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddPaymentIdTocreditLogTable extends Migration
      */
     public function down()
     {
-        Schema::table('credit_transaction_logs', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }

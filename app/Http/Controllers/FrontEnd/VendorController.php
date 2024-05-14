@@ -5,6 +5,7 @@ namespace App\Http\Controllers\FrontEnd;
 use App\Models\Lead;
 use App\Models\Plan;
 use App\Models\User;
+use Razorpay\Api\Api;
 use App\Models\Service;
 use App\Models\Setting;
 use App\Models\LeadUser;
@@ -13,6 +14,7 @@ use App\Models\ServiceUser;
 use App\Models\VendorImage;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\RazorPayOrder;
 use App\Models\VendorDetails;
 use App\Models\VendorService;
 use Illuminate\Validation\Rule;
@@ -453,6 +455,33 @@ class VendorController extends Controller
 
         return redirect()->route('vendor-dashboard')->with('success','Password successfully changed!');
       
+    }
+
+    public function storePayment(Request $request){
+
+        $input = $request->all(); 
+
+        $razorPayPaymentId = $request->input('razorpay_payment_id');
+        // $api = new Api(env('RAZOR_PAY_KEY'), env('RAZOR_PAY_SECRET_KEY'));
+        // $payment = $api->payment->fetch($razorPayPaymentId); 
+        //dd($payment);
+        // if(!empty($payment)){
+        //     $RazorPayOrder = new RazorPayOrder();
+        //     $RazorPayOrder->order_id = $payment['order_id'];
+        //     $RazorPayOrder->user_id = auth('web')->user()->id;
+        //     $RazorPayOrder->plan_id = $payment['description'];
+        //     $RazorPayOrder->save();
+        // }
+        $response = $this->checkPaymentAndUpdate(['order_id' =>  null ,'razorpay_payment_id' =>$razorPayPaymentId , 'userId' => auth('web')->user()->id]);
+        //dd($response);
+
+        if($response['status']){
+            return redirect()->route('my-credits')->with('success', $response['success']);
+        }else{
+            return redirect()->route('my-credits')->with('error' , $response['error']);
+        }
+
+
     }
 
 

@@ -163,9 +163,6 @@
                                                data-prefill.name="{{auth()->user()->name}}"
                                                data-prefill.email="{{auth()->user()->email}}"
                                                data-theme.color="#F37254"
-                                               
-                                              
-                                              
                                                ></script>
                                          </form>
                                         {{-- <div class="atu-container custom-checkbox mt-3 text-center text-md-right">
@@ -185,7 +182,7 @@
 
                 <div class="sf-bs-data-table">
                     <div class="table-responsive">
-                        <table class="table table-striped  example-dt-table" style="width:100%;font-weight:bold">
+                        <table class="table table-striped" style="width:100%;font-weight:bold">
                             <thead>
                                 <tr>
                                     <th>ID</th>

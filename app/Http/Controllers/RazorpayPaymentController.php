@@ -29,7 +29,6 @@ class RazorpayPaymentController extends Controller
 
   
         $payment = $api->payment->fetch($input['razorpay_payment_id']);
-        //dd($payment,$input['razorpay_payment_id']);
 
         $payments = new RazorPayPaymentInvoice();
 
@@ -67,15 +66,11 @@ class RazorpayPaymentController extends Controller
                     //DB::enableQueryLog();
     
                     // and then you can get query log
-    
-    
-    
                     $creditLogs->user_id = $userId;
                     $creditLogs->credits = $planDetails->no_of_credits;
                     $creditLogs->remaining_credits = $planDetails->no_of_credits+$vendorDetails->credits;
                     $creditLogs->action = "added";
                     $creditLogs->credits_description = $planDetails->no_of_credits." credits added ";
-                    $creditLogs->razorpay_payment_id = $input['razorpay_payment_id'];
                     $creditLogs->razorpay_payment_id = $payments->id;
                     $creditLogs->date_of_transaction = now();
                     $creditLogs->save();

@@ -54,8 +54,13 @@ Route::prefix('v1')->group(function () {
 
         Route::post('/UpdateProfile', [App\Http\Controllers\Api\VendorController::class, 'UpdateProfile']);
 
-        Route::post('/changePassword', [App\Http\Controllers\Api\VendorController::class, 'changePassword']); 
-
+        Route::post('/changePassword', [App\Http\Controllers\Api\VendorController::class, 'changePassword']);
+        Route::get('/notifications', [App\Http\Controllers\Api\NotificationsController::class, 'notifications']);
+        Route::post('/uploadimage', [App\Http\Controllers\Api\VendorController::class, 'uploadimage']); // Upload the ad images
+        Route::get('/orderCreation', [App\Http\Controllers\Api\VendorController::class, 'razorpayOrderCreation']); // order id creation
+        Route::post('/updateOrder', [App\Http\Controllers\Api\VendorController::class, 'updateOrder']); // update id creation
+        Route::post('/addService', [App\Http\Controllers\Api\VendorController::class, 'addService']); // Add service creation
+        Route::post('/removeService', [App\Http\Controllers\Api\VendorController::class, 'removeService']); // Add service creation
     });
 
     Route::get('/appversion', [App\Http\Controllers\Api\GeneralController::class, 'appVersion']);

@@ -70,7 +70,8 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::post('vendor/image/upload', [App\Http\Controllers\FrontEnd\VendorController::class, 'uploadCompanyImage'])->name('update-company-image');
     Route::post('vendor/image/delete', [App\Http\Controllers\FrontEnd\VendorController::class, 'deleteCompanyImage'])->name('delete-company-image');
     Route::get('vendor/my-credits', [App\Http\Controllers\FrontEnd\VendorController::class, 'myCredits'])->name('my-credits');
-    Route::post('vendor/my-credits', [App\Http\Controllers\RazorpayPaymentController::class, 'store']);
+    // Route::post('vendor/my-credits', [App\Http\Controllers\RazorpayPaymentController::class, 'store']);
+    Route::post('vendor/my-credits', [App\Http\Controllers\FrontEnd\VendorController::class, 'storePayment']);
 
     // Route::get('vendor/payment', [RazorpayPaymentController::class, 'index']);
     // Route::post('vendor/payment', [App\Http\Controllers\RazorpayPaymentController::class, 'store']);

@@ -89,5 +89,20 @@ if (! function_exists('deleteImage')) {
             return $newSlug;
         }
     }
+
+    function getBase64ImageExtension($base64Image)
+    {
+        // Extract the base64 image data
+        $data = explode(',', $base64Image);
+
+        // Extract the image format
+        $format = explode(';', $data[0])[0];
+
+        // Extract the image extension from the format
+        $extension = explode('/', $format)[1];
+
+        return $extension;
+    }
+
 }
 ?>

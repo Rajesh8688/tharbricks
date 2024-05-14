@@ -2,16 +2,22 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Plan;
 use App\Models\User;
+use Razorpay\Api\Api;
+use App\Models\Service;
 use App\Models\ServiceUser;
 use App\Models\VendorImage;
 use Illuminate\Http\Request;
+use App\Models\RazorPayOrder;
 use App\Models\VendorDetails;
+use App\Models\RazorPayOrders;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\CreditTransactionLog;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
 
 class VendorController extends BaseApiController
@@ -27,22 +33,11 @@ class VendorController extends BaseApiController
         return response()->json(['message' => 'User deleted successfully' , 'status' => true]);
     }
     public function UserProfile(Request $request){
-        $user = User::find(auth('api')->user()->id);
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
-        }
-
-        if(!empty($user['profile_pic'])){
-            $user->profile_pic = env("APP_URL")."/uploads/users/".$user['profile_pic'];
-        }
-        //getting all the vendor info from vendor table
-        $vendorInfo =  VendorDetails::where("user_id" , $user->id)->first();
-
-        $userData = array_merge($user->toArray() ,$vendorInfo->toArray());
-        $vendorImages = VendorImage::select('id',$this->ApiImage("/uploads/company/","image" ))->where(['user_id' => $user->id,'status' => 'Active'])->get();
-        $userData['vendor_image'] = $vendorImages->toArray();
-        return response()->json(['message' => 'User Information' ,'data'=> $userData, 'status' => true]);
+        $info = $this->profileInfo(auth('api')->user()->id);
+        return response()->json($info);
     }
+
+    
 
 
     public function UpdateProfile(Request $request){
@@ -60,7 +55,7 @@ class VendorController extends BaseApiController
 
         $userTableUpdate = ['name' , 'first_name' , 'last_name' , 'mobile' , 'address', 'email' , 'description'];
 
-        $vendorTableUpdate = ['company_name' , 'company_description' , 'company_size' ,'website' , 'facebook_url' , 'twitter_url' , 'youtube_url' , 'alter_mobile' , 'company_address' ,'years_in_business','linked_in_url','pinterest_url','instagram_url' ,'is_new_reviews_on_profile_push_notifications','is_new_leads_i_receive_push_notifications','is_customers_sending_me_a_message_push_notifications','is_new_lead_i_receive_email_notifications','is_customers_closing_leads_ive_responded_email_notifications','is_customers_dismissing_my_response_email_notifications','is_customers_hiring_me_email_notifications','is_customers_reading_a_message_i_sent_email_notifications','is_customers_requesting_a_call_form_me_email_notifications','is_customers_requesting_me_to_contact_them_email_notifications','is_customers_viewing_my_profile_email_notifications','is_customers_viewing_my_website_email_notifications','is_a_summary_of_leads_im_matched_to_each_day_email_notifications','is_customers_sending_me_a_message_email_notifications','is_new_reviews_on_my_profile_email_notifications','is_new_reviews_from_other_sources_email_notifications'];
+        $vendorTableUpdate = ['company_name' , 'company_description' , 'company_size' ,'website' , 'facebook_url' , 'twitter_url' , 'youtube_url' , 'alter_mobile' , 'company_address' ,'years_in_business','linked_in_url','pinterest_url','instagram_url' ,'is_new_reviews_on_profile_push_notifications','is_new_leads_i_receive_push_notifications','is_customers_sending_me_a_message_push_notifications','is_new_lead_i_receive_email_notifications','is_customers_closing_leads_ive_responded_email_notifications','is_customers_dismissing_my_response_email_notifications','is_customers_hiring_me_email_notifications','is_customers_reading_a_message_i_sent_email_notifications','is_customers_requesting_a_call_form_me_email_notifications','is_customers_requesting_me_to_contact_them_email_notifications','is_customers_viewing_my_profile_email_notifications','is_customers_viewing_my_website_email_notifications','is_a_summary_of_leads_im_matched_to_each_day_email_notifications','is_customers_sending_me_a_message_email_notifications','is_new_reviews_on_my_profile_email_notifications','is_new_reviews_from_other_sources_email_notifications','company_email' ,'company_phone'];
 
         $user = User::find(auth('api')->user()->id);
         $vendorInfo =  VendorDetails::where("user_id" , $user->id)->first();
@@ -76,17 +71,11 @@ class VendorController extends BaseApiController
         }
         $user->update(); 
         $vendorInfo->update(); 
-
-        
-
-        if(!empty($user['profile_pic'])){
-            $user->profile_pic = env("APP_URL")."/uploads/users/".$user['profile_pic'];
+        $info = $this->profileInfo(auth('api')->user()->id);
+        if($info['status']){
+            $info['message'] = 'User Information updated successfully';
         }
-
-        $userData = array_merge($user->toArray() ,$vendorInfo->toArray());
-        $vendorImages = VendorImage::select('id',$this->ApiImage("/uploads/company/","image" ))->where(['user_id' => $user->id,'status' => 'Active'])->get();
-        $userData['vendor_image'] = $vendorImages->toArray();
-        return response()->json(['message' => 'User Information updated successfully' ,'data'=> $userData, 'status' => true]);
+        return response()->json($info);
 
 
     }
@@ -152,5 +141,244 @@ class VendorController extends BaseApiController
         $response = ["status" =>true ,"message" => "Password updated successfully"];
         return response($response, 200);
       
+    }
+
+    public function uploadImage(Request $request)
+    {
+        $strLang = app()->getLocale();
+
+        $rules = [
+            'type' => 'required|in:profile_image,company_logo,company_gallery',
+            'image' => 'required',
+        ];
+        $valid = Validator::make($request->all(), $rules);
+        $errorMessages = $valid->messages()->all();
+
+        if ($valid->fails()) {
+            return response()->json([
+                'status' => false,
+                "message" => $errorMessages[0],
+                'link' => ''
+            ], 200);
+        }
+
+        $userId = auth('api')->user()->id;
+        
+        $image = $request->image;
+
+        if ($userId) {
+                $extension = getBase64ImageExtension($image);
+                //$imageInfo = getimagesizefromstring(base64_decode($image));
+
+                // $mime = $imageInfo['mime'];
+                // $extension = explode('/', $mime)[1];
+                 $newFileName = sha1(date('YmdHis') . rand(10, 90)) . "." . $extension;
+                $imageInfo = base64_decode($image);
+                //$imageInfo = imagecreatefromwebp($imageInfo);
+                //$extension = getBase64ImageExtension($decodedImage);
+                //dd($extension);
+
+                if($request->type == 'profile_image'){
+                    if(!empty(auth('api')->user()->profile_pic)){
+                        // Delete the previous image
+                        deleteImage(User::$imagePath, auth('api')->user()->profile_pic);
+                    }
+                    $originalPath = User::$imagePath;
+                    // Image Upload Process
+                    $thumbnailImage = Image::make($imageInfo);
+                    $thumbnailImage->save($originalPath . $newFileName);
+                    $userDetails = User::find($userId);
+                    $userDetails->profile_pic = $newFileName;
+                    $userDetails->save();
+                    
+                }elseif($request->type == 'company_logo'){
+                    $vendorDetails =  VendorDetails::where("user_id" , auth()->user()->id)->first();
+                    if(!empty($vendorDetails->company_logo))
+                    {
+                        // Delete the previous image
+                        deleteImage(User::$imageCompanyUrl, $vendorDetails->company_logo);
+                    }
+                    $originalPath = User::$imageCompanyUrl;
+                    // Image Upload Process
+                    $thumbnailImage = Image::make($imageInfo);
+                    $thumbnailImage->save($originalPath . $newFileName);
+                    $vendorDetails->company_logo = $newFileName;
+                    $vendorDetails->save();
+                }elseif($request->type == 'company_gallery'){
+                    //gallery
+                    $originalPath = User::$imageCompanyUrl;
+
+                    $thumbnailImage = Image::make($imageInfo);
+                    $thumbnailImage->save($originalPath . $newFileName);
+        
+                    $vendorImage = new VendorImage();
+                    $vendorImage->user_id = $userId;
+                    $vendorImage->image = $newFileName;
+                    $vendorImage->status = "Active";
+                    $vendorImage->created_at = now();
+                    $vendorImage->save();
+                }
+                return response()->json([
+                    'status' => true,
+                    "message" => 'image Uploaded successfully',
+                    'link' =>  asset($originalPath . $newFileName)
+                ], 200);
+            
+        }
+
+        return response()->json([
+            'status' => false,
+            "message" => 'Upload Image Error',
+            'link' => ''
+        ], 200);
+    }
+
+    public function razorpayOrderCreation(Request $request){
+        $validator = Validator::make($request->all(), [
+            'plan_id' =>  'required', // 'users' is the table name, and 'email' is the column 
+        ]);
+        if ($validator->fails()) {
+            $errorMessages = $validator->messages()->all();
+            return response()->json([
+                'status' => false,
+                "message" => $errorMessages[0]
+            ], 200);
+        }
+        //$input = $request->all();
+
+        $planDetails = Plan::find($request->input('plan_id'));
+        if(!empty($planDetails)){
+            $api = new Api(env('RAZOR_PAY_KEY'), env('RAZOR_PAY_SECRET_KEY'));
+            $orderDetails = $api->order->create(array('amount' => $planDetails->amount*100, 'currency' => 'INR' ,'notes'=> array('plan_id'=> $request->input('plan_id'))));
+            if(!isset($orderDetails['error'])){
+                $RazorPayOrder = new RazorPayOrder();
+                $RazorPayOrder->order_id = $orderDetails->id;
+                $RazorPayOrder->user_id = auth('api')->user()->id;
+                $RazorPayOrder->plan_id = $request->input('plan_id');
+                $RazorPayOrder->save();
+                $data = [
+                    'order_id' => $orderDetails->id,
+                    'amount' => $planDetails->amount,
+                    'name' => $planDetails->name,
+                    'user_name' => auth('api')->user()->name,
+                    'razorpay_key' => env('RAZOR_PAY_KEY'),
+                    'razorpay_secret_key' => env('RAZOR_PAY_SECRET_KEY')
+                ];
+                $response = ["status" =>true ,"message" => "Order Id created Successfully" , 'data' => $data];
+                return response($response, 200);
+            }else{
+                //error fom Razorpay
+                $response = ["status" =>false ,"message" => $orderDetails['error']['description'] ,'data' => []];
+                return response($response, 200);
+            }
+        }else{
+            $response = ["status" =>false ,"message" => "Plan id Does not exists" ,'data' => []];
+            return response($response, 200);
+        }
+    }
+
+    public function updateOrder(Request $request){
+        $validator = Validator::make($request->all(), [
+            'order_id' =>  'required',
+            'razorpay_payment_id' =>  'required',
+        ]);
+        if ($validator->fails()) {
+            $errorMessages = $validator->messages()->all();
+            return response()->json([
+                'status' => false,
+                "message" => $errorMessages[0]
+            ], 200);
+        }
+
+        $response = $this->checkPaymentAndUpdate(['order_id' => $request->input('order_id')?? null ,'razorpay_payment_id' => $request->input('razorpay_payment_id') , 'userId' => auth('api')->user()->id]);
+
+        if($response['status']){
+            $response = ["status" =>true ,"message" => $response['success'] ,'data' => $response['data']];
+            return response($response, 200);
+        }else{
+            $response = ["status" =>false ,"message" => $response['error'] ,'data' => []];
+            return response($response, 200);
+        }
+
+
+
+
+    }
+
+    public function addService(Request $request){
+        $validator = Validator::make($request->all(), [
+            'service_id' =>  'required', // 'users' is the table name, and 'email' is the column 
+        ]);
+        if ($validator->fails()) {
+            $errorMessages = $validator->messages()->all();
+            return response()->json([
+                'status' => false,
+                "message" => $errorMessages[0]
+            ], 200);
+        }
+
+        $userId = auth('api')->user()->id;
+        $serviceId = $request->input('service_id');
+
+        $serviceUser = ServiceUser::where(['user_id'=>$userId , 'service_id' => $serviceId])->first();
+        if ($serviceUser === null) {
+            $service = Service::where(['id'=>$serviceId , 'status' => 'Active'])->first();
+            if($service === null){
+                $response = ["status" =>false ,"message" => "Service does not exists" ,'data' => []];
+                return response($response, 200);
+            }
+            $userservice = new ServiceUser();
+            $userservice->user_id =  $userId ;
+            $userservice->service_id = $serviceId;
+            $userservice->save();
+            $response = ["status" =>true ,"message" => "Service added successfully" ,'data' => []];
+            return response($response, 200);
+        }else{
+            if($serviceUser->status == 'InActive'){
+                $serviceUser->status = "Active";
+                $serviceUser->save();
+                $response = ["status" =>true ,"message" => "Service activated successfully" ,'data' => []];
+                return response($response, 200);
+            }else{
+                $response = ["status" =>false ,"message" => "Service Already added" ,'data' => []];
+                return response($response, 200);
+            }
+        }
+   
+
+
+
+
+    }
+
+    public function removeService(Request $request){
+        $validator = Validator::make($request->all(), [
+            'service_id' =>  'required', // 'users' is the table name, and 'email' is the column 
+        ]);
+        if ($validator->fails()) {
+            $errorMessages = $validator->messages()->all();
+            return response()->json([
+                'status' => false,
+                "message" => $errorMessages[0]
+            ], 200);
+        }
+
+        $userId = auth('api')->user()->id;
+        $serviceId = $request->input('service_id');
+
+        $serviceUser = ServiceUser::where(['user_id'=>$userId , 'service_id' => $serviceId])->first();
+        if($serviceUser === null){
+            
+            $response = ["status" =>false ,"message" => "Service Not Tagged to this user" ,'data' => []];
+            return response($response, 200);
+        }else{
+            ServiceUser::where(['user_id'=>$userId , 'service_id' => $serviceId])->update(['status'=>'InActive']);
+            $response = ["status" =>true ,"message" => "Service Removed Successfully" ,'data' => []];
+            return response($response, 200);
+        }
+
+
+
+
     }
 }

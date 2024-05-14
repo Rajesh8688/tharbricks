@@ -28,6 +28,7 @@ Route::group([
     Route::resource('service', \App\Http\Controllers\Admin\ServiceController::class);//Service
     Route::resource('testimonials', \App\Http\Controllers\Admin\TestimonialsController::class);//Testimonials
     Route::resource('blogs', \App\Http\Controllers\Admin\BlogController::class);//Blogs
+    Route::resource('notifications', \App\Http\Controllers\Admin\PushNotificationsController::class);//Blogs
 
     Route::resource('user_request', \App\Http\Controllers\Admin\UserRequestController::class);//UserRequest
 

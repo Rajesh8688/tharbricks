@@ -229,8 +229,8 @@ class LeadController extends BaseApiController
             $lead->leadAnswersShort = substr($lead->leadAnswers,0,60).((strlen($lead->leadAnswers) > 60) ? "...":"");
             $lead->lead_added_on = $lead->created_at->diffForHumans(null,null,true);
             $lastActivity = ResponseActivity::where('lead_user_id' , $lead->leadUsersId)->orderBy('id','DESC')->first();
-            $lead->lastActivityDate = $lastActivity->logged_date;
-            $lead->lastActivityMessage = $lastActivity->message;
+            $lead->lastActivityDate = $lastActivity->logged_date ?? null;
+            $lead->lastActivityMessage = $lastActivity->message ?? null;
         }
         
         $response['data'] = ['leads' => $myleads,'information' => $information , 'pagination' => $pagination ];

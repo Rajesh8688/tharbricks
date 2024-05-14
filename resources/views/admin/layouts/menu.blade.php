@@ -50,6 +50,10 @@
                 <li class=" nav-item {{Request::segment(2) == 'blogs' ? 'active' : '' }}"><a href="{{route('blogs.index')}}"><i class="feather icon-mail"></i><span class="menu-title" data-i18n="Plan">Blogs</span></a>
                 </li>
             @endcan
+            @can('notifications-view')
+                <li class=" nav-item {{Request::segment(2) == 'notifications' ? 'active' : '' }}"><a href="{{route('notifications.index')}}"><i class="feather icon-mail"></i><span class="menu-title" data-i18n="Notifications">Notifications</span></a>
+                </li>
+            @endcan
 
 
 
