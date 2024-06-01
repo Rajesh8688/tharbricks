@@ -74,6 +74,7 @@ class PushNotificationsController extends Controller
         $data['to_all'] = 1;
        
         Notification::create($data);
+        sendNotificationFcm('/topics/general_updates', $request->title,$request->message);
         return redirect()->route('notifications.index')->with('success','Notifictions created Successfully');
     }
 

@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Lead;
 use App\Models\Plan;
 use App\Models\User;
 use Razorpay\Api\Api;
+use App\Models\Review;
 use App\Models\Service;
+use App\Models\LeadUser;
+use App\Models\Location;
 use App\Models\ServiceUser;
 use App\Models\VendorImage;
 use Illuminate\Http\Request;
@@ -13,10 +17,13 @@ use App\Models\RazorPayOrder;
 use App\Models\VendorDetails;
 use App\Models\RazorPayOrders;
 use Illuminate\Validation\Rule;
+use App\Models\ReviewLeadChecker;
 use Illuminate\Support\Facades\DB;
+use App\Models\UserServiceLocation;
 use App\Http\Controllers\Controller;
 use App\Models\CreditTransactionLog;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
 
@@ -55,7 +62,7 @@ class VendorController extends BaseApiController
 
         $userTableUpdate = ['name' , 'first_name' , 'last_name' , 'mobile' , 'address', 'email' , 'description'];
 
-        $vendorTableUpdate = ['company_name' , 'company_description' , 'company_size' ,'website' , 'facebook_url' , 'twitter_url' , 'youtube_url' , 'alter_mobile' , 'company_address' ,'years_in_business','linked_in_url','pinterest_url','instagram_url' ,'is_new_reviews_on_profile_push_notifications','is_new_leads_i_receive_push_notifications','is_customers_sending_me_a_message_push_notifications','is_new_lead_i_receive_email_notifications','is_customers_closing_leads_ive_responded_email_notifications','is_customers_dismissing_my_response_email_notifications','is_customers_hiring_me_email_notifications','is_customers_reading_a_message_i_sent_email_notifications','is_customers_requesting_a_call_form_me_email_notifications','is_customers_requesting_me_to_contact_them_email_notifications','is_customers_viewing_my_profile_email_notifications','is_customers_viewing_my_website_email_notifications','is_a_summary_of_leads_im_matched_to_each_day_email_notifications','is_customers_sending_me_a_message_email_notifications','is_new_reviews_on_my_profile_email_notifications','is_new_reviews_from_other_sources_email_notifications','company_email' ,'company_phone'];
+        $vendorTableUpdate = ['company_name' , 'company_description' , 'company_size' ,'website' , 'facebook_url' , 'twitter_url' , 'youtube_url' , 'alter_mobile' , 'company_address' ,'years_in_business','linked_in_url','pinterest_url','instagram_url' ,'is_new_reviews_on_profile_push_notifications','is_new_leads_i_receive_push_notifications','is_customers_sending_me_a_message_push_notifications','is_new_lead_i_receive_email_notifications','is_customers_closing_leads_ive_responded_email_notifications','is_customers_dismissing_my_response_email_notifications','is_customers_hiring_me_email_notifications','is_customers_reading_a_message_i_sent_email_notifications','is_customers_requesting_a_call_form_me_email_notifications','is_customers_requesting_me_to_contact_them_email_notifications','is_customers_viewing_my_profile_email_notifications','is_customers_viewing_my_website_email_notifications','is_a_summary_of_leads_im_matched_to_each_day_email_notifications','is_customers_sending_me_a_message_email_notifications','is_new_reviews_on_my_profile_email_notifications','is_new_reviews_from_other_sources_email_notifications','company_email' ,'company_phone','what_do_you_love_most_about_your_job','what_inspired_you_to_start_your_own_business','why_should_our_clients_choose_you','can_you_provide_your_service_online_or_remotely','what_changes_have_made_to_keep_customers_safe_from_covid19','how_long_have_you_been_in_business','what_guarantee_does_your_work_comes_with'];
 
         $user = User::find(auth('api')->user()->id);
         $vendorInfo =  VendorDetails::where("user_id" , $user->id)->first();
@@ -88,12 +95,18 @@ class VendorController extends BaseApiController
         return response($response, 200);
     }
 
+    public function userService($userId){
+
+        $data = DB::select('SELECT s.*,su.id as service_user_id FROM service_users su left join services s on s.id = su.service_id  WHERE  su.status = ? and su.user_id = ?', ['Active',$userId]);
+        return $data;
+    }
+
     public function myServices(){
         //function for getting My Services
-        $user = User::find(auth('api')->user()->id);
-
-        $userServices = ServiceUser::with('user','service')->where('user_id' , $user->id)->get();
-
+        $userid = auth('api')->user()->id;
+        $services = $this->userService($userid);
+        $response = ['data' => $services,"status"=>true ,"message" => "user services"];
+        return response($response, 200);
     }
 
     public function changePassword(Request $request)
@@ -167,63 +180,59 @@ class VendorController extends BaseApiController
         $image = $request->image;
 
         if ($userId) {
-                $extension = getBase64ImageExtension($image);
-                //$imageInfo = getimagesizefromstring(base64_decode($image));
-
-                // $mime = $imageInfo['mime'];
-                // $extension = explode('/', $mime)[1];
-                 $newFileName = sha1(date('YmdHis') . rand(10, 90)) . "." . $extension;
-                $imageInfo = base64_decode($image);
-                //$imageInfo = imagecreatefromwebp($imageInfo);
-                //$extension = getBase64ImageExtension($decodedImage);
-                //dd($extension);
-
-                if($request->type == 'profile_image'){
-                    if(!empty(auth('api')->user()->profile_pic)){
-                        // Delete the previous image
-                        deleteImage(User::$imagePath, auth('api')->user()->profile_pic);
-                    }
-                    $originalPath = User::$imagePath;
-                    // Image Upload Process
-                    $thumbnailImage = Image::make($imageInfo);
-                    $thumbnailImage->save($originalPath . $newFileName);
-                    $userDetails = User::find($userId);
-                    $userDetails->profile_pic = $newFileName;
-                    $userDetails->save();
-                    
-                }elseif($request->type == 'company_logo'){
-                    $vendorDetails =  VendorDetails::where("user_id" , auth()->user()->id)->first();
-                    if(!empty($vendorDetails->company_logo))
-                    {
-                        // Delete the previous image
-                        deleteImage(User::$imageCompanyUrl, $vendorDetails->company_logo);
-                    }
-                    $originalPath = User::$imageCompanyUrl;
-                    // Image Upload Process
-                    $thumbnailImage = Image::make($imageInfo);
-                    $thumbnailImage->save($originalPath . $newFileName);
-                    $vendorDetails->company_logo = $newFileName;
+            if($request->type == 'profile_image'){
+                $originalPath = User::$imagePath;
+                if(!empty(auth('api')->user()->profile_pic)){
+                    // Delete the previous image
+                    deleteImage($originalPath, auth('api')->user()->profile_pic);
+                }
+                $uploadImage = base64imageUpload($image , $originalPath);
+                if($uploadImage['status']){
+                    $userdetails = User::find( auth('api')->user()->id);
+                    $userdetails->profile_pic = $uploadImage['filename'];
+                    $userdetails->save();
+                }
+            }elseif($request->type == 'company_logo'){
+                $vendorDetails =  VendorDetails::where("user_id" , auth()->user()->id)->first();
+                $originalPath = User::$imageCompanyUrl;
+                if(!empty($vendorDetails->company_logo))
+                {
+                    // Delete the previous image
+                    deleteImage(User::$imageCompanyUrl, $vendorDetails->company_logo);
+                }
+                $uploadImage = base64imageUpload($image , $originalPath);
+                if($uploadImage['status']){
+                    $vendorDetails->company_logo = $uploadImage['filename'];
                     $vendorDetails->save();
-                }elseif($request->type == 'company_gallery'){
-                    //gallery
-                    $originalPath = User::$imageCompanyUrl;
-
-                    $thumbnailImage = Image::make($imageInfo);
-                    $thumbnailImage->save($originalPath . $newFileName);
-        
+                }
+            }elseif($request->type == 'company_gallery'){
+                //gallery
+                $originalPath = User::$imageCompanyUrl;
+                $uploadImage = base64imageUpload($image , $originalPath);
+                if($uploadImage['status']){
                     $vendorImage = new VendorImage();
                     $vendorImage->user_id = $userId;
-                    $vendorImage->image = $newFileName;
+                    $vendorImage->image = $uploadImage['filename'];
                     $vendorImage->status = "Active";
                     $vendorImage->created_at = now();
                     $vendorImage->save();
                 }
+            }
+            
+            if($uploadImage['status']){
+                //image uploaded successfully 
                 return response()->json([
                     'status' => true,
-                    "message" => 'image Uploaded successfully',
-                    'link' =>  asset($originalPath . $newFileName)
+                    "message" => $uploadImage['message'],
+                    'link' =>  $uploadImage['url']
                 ], 200);
-            
+            }else{
+                return response()->json([
+                    'status' => false,
+                    "message" => $uploadImage['message'],
+                    'link' =>  ''
+                ], 200);
+            }
         }
 
         return response()->json([
@@ -290,7 +299,7 @@ class VendorController extends BaseApiController
             ], 200);
         }
 
-        $response = $this->checkPaymentAndUpdate(['order_id' => $request->input('order_id')?? null ,'razorpay_payment_id' => $request->input('razorpay_payment_id') , 'userId' => auth('api')->user()->id]);
+        $response = $this->checkPaymentAndUpdate(['order_id' => $request->input('order_id')?? null ,'razorpay_payment_id' => $request->input('razorpay_payment_id') , 'userId' => auth('api')->user()->id ,'from' => 'mobile']);
 
         if($response['status']){
             $response = ["status" =>true ,"message" => $response['success'] ,'data' => $response['data']];
@@ -307,7 +316,7 @@ class VendorController extends BaseApiController
 
     public function addService(Request $request){
         $validator = Validator::make($request->all(), [
-            'service_id' =>  'required', // 'users' is the table name, and 'email' is the column 
+            'service_ids' =>  'required', // 'users' is the table name, and 'email' is the column 
         ]);
         if ($validator->fails()) {
             $errorMessages = $validator->messages()->all();
@@ -318,37 +327,26 @@ class VendorController extends BaseApiController
         }
 
         $userId = auth('api')->user()->id;
-        $serviceId = $request->input('service_id');
-
-        $serviceUser = ServiceUser::where(['user_id'=>$userId , 'service_id' => $serviceId])->first();
-        if ($serviceUser === null) {
-            $service = Service::where(['id'=>$serviceId , 'status' => 'Active'])->first();
-            if($service === null){
-                $response = ["status" =>false ,"message" => "Service does not exists" ,'data' => []];
-                return response($response, 200);
-            }
-            $userservice = new ServiceUser();
-            $userservice->user_id =  $userId ;
-            $userservice->service_id = $serviceId;
-            $userservice->save();
-            $response = ["status" =>true ,"message" => "Service added successfully" ,'data' => []];
-            return response($response, 200);
-        }else{
-            if($serviceUser->status == 'InActive'){
+        $serviceIds = $request->input('service_ids');
+        $serviceIds = explode("," , $serviceIds);
+        foreach($serviceIds as $serviceId){
+            $serviceUser = ServiceUser::where(['user_id'=>$userId , 'service_id' => $serviceId])->first();
+            if ($serviceUser === null) {
+                //insert
+                $userservice = new ServiceUser();
+                $userservice->user_id =  $userId ;
+                $userservice->service_id = $serviceId;
+                $userservice->save();
+                $services = $this->userService($userId);
+            }else{
+                //update
                 $serviceUser->status = "Active";
                 $serviceUser->save();
-                $response = ["status" =>true ,"message" => "Service activated successfully" ,'data' => []];
-                return response($response, 200);
-            }else{
-                $response = ["status" =>false ,"message" => "Service Already added" ,'data' => []];
-                return response($response, 200);
+                $services = $this->userService($userId);
             }
         }
-   
-
-
-
-
+        $response = ["status" =>true ,"message" => "Service added successfully" ,'data' => $services];
+        return response($response, 200);
     }
 
     public function removeService(Request $request){
@@ -373,7 +371,8 @@ class VendorController extends BaseApiController
             return response($response, 200);
         }else{
             ServiceUser::where(['user_id'=>$userId , 'service_id' => $serviceId])->update(['status'=>'InActive']);
-            $response = ["status" =>true ,"message" => "Service Removed Successfully" ,'data' => []];
+            $services = $this->userService($userId);
+            $response = ["status" =>true ,"message" => "Service Removed Successfully" ,'data' => $services];
             return response($response, 200);
         }
 
@@ -381,4 +380,155 @@ class VendorController extends BaseApiController
 
 
     }
+
+    public function updateUserServiceStatus(Request $request){
+        $validator = Validator::make($request->all(), [
+            'lead_id' =>  'required',
+            'status' => 'required|in:Hired,Archived',
+        ]);
+        if ($validator->fails()) {
+            $errorMessages = $validator->messages()->all();
+            return response()->json([
+                'status' => false,
+                "message" => $errorMessages[0]
+            ], 200);
+        }
+
+        $userId = auth('api')->user()->id;
+
+        $leadId = $request->input('lead_id');
+        $status = $request->input('status');
+
+        $lead = LeadUser::where(['lead_id'=>$leadId , 'user_id' => $userId])->first();
+        if($lead === null){
+            $response = ["status" =>false ,"message" => "Lead Not Tagged to this user" ,'data' => []];
+            return response($response, 200);
+        }else{
+            LeadUser::where(['lead_id'=>$leadId , 'user_id' => $userId])->update(['response_status'=>$status]);
+            $response = ["status" =>true ,"message" => "Status Updated Successfully" ,'data' => []];
+            return response($response, 200);
+        }
+
+    }
+
+    public function addLocation(Request $request){
+        $validator = Validator::make($request->all(), [
+            'type' => 'required|in:nationwide,distance',
+            'distance_value' => 'required_if:type,distance',
+            'latitude' => 'required_if:type,distance',
+            'longitude' => 'required_if:type,distance',
+            'services' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $errorMessages = $validator->messages()->all();
+            return response()->json([
+                'status' => false,
+                "message" => $errorMessages[0]
+            ], 200);
+        }
+
+        $userId = auth('api')->user()->id;
+
+        $location = new Location();
+        $location->type = $request->input('type');
+        if($request->input('type') == 'distance'){
+            $location->latitude = $request->input('latitude');
+            $location->longitude = $request->input('longitude');
+            $location->pincode = '12345';
+            $location->distance_value = $request->input('distance_value');
+        }
+   
+        $location->save();
+
+        $serviceIds = explode(',' , $request->input('services'));
+        if(in_array('all_services' , $serviceIds)){
+            $serviceIds = 'all_services';
+        }
+        if($serviceIds == 'all_services'){
+            $serviceIds = ServiceUser::where(['user_id' => $userId , 'status' => 'Active'])->pluck('service_id')->toArray();
+        }
+
+        foreach($serviceIds as $key => $value){
+            $serviceUser = ServiceUser::where(['user_id' => $userId , 'service_id' => $value , 'status' => 'Active'])->first();
+            $userServiceLocation = new UserServiceLocation();
+            $userServiceLocation->user_id = $userId;
+            $userServiceLocation->service_id = $value;
+            $userServiceLocation->location_id = $location->id;
+            $userServiceLocation->service_user_id = $serviceUser->id;
+            $userServiceLocation->status = 'Active';
+            $userServiceLocation->save();
+        }
+        $response = ["status" =>true ,"message" => "Location Added Successfully" ,'data' => []];
+        return response($response, 200);
+    }
+
+    public function deleteLocation(Request $request){
+        $validator = Validator::make($request->all(), [
+            'location_id' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $errorMessages = $validator->messages()->all();
+            return response()->json([
+                'status' => false,
+                "message" => $errorMessages[0]
+            ], 200);
+        }
+        $location = Location::find($request->input('location_id'));
+        if($location === null){
+            $response = ["status" =>false ,"message" => "Location Not Found" ,'data' => []];
+            return response($response, 200);
+        }
+        $location->delete();
+        UserServiceLocation::where('location_id' , $request->input('location_id'))->delete();
+        $response = ["status" =>true ,"message" => "Location Deleted Successfully" ,'data' => []];
+        return response($response, 200);
+    }
+
+    public function requestReview(Request $request){
+        $validator = Validator::make($request->all(), [
+            'lead_id' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $errorMessages = $validator->messages()->all();
+            return response()->json([
+                'status' => false,
+                "message" => $errorMessages[0]
+            ], 200);
+        } 
+
+        $leadId = $request->input('lead_id');
+        $requesteduserId = auth('api')->user()->id;
+        $leadDeatils = Lead::find($leadId);
+        $reviewLeadChecker = ReviewLeadChecker::where(['lead_id' => $leadId , 'email' => $leadDeatils->email])->get();
+        if($reviewLeadChecker->count() > 0){
+            $url = route('requestReview', ['token' => Crypt::encrypt($reviewLeadChecker[0]->id)]);
+            $response = ["status" =>false ,"message" => "Request Already Sent" , 'link'=>$url];
+            
+            return response($response, 200);
+        }else{
+            $reviewLeadChecker = new ReviewLeadChecker();
+            $reviewLeadChecker->lead_id = $leadId;
+            $reviewLeadChecker->email = $leadDeatils->email;
+            $reviewLeadChecker->requested_user_id= $requesteduserId;
+            $reviewLeadChecker->save();
+            $url = route('requestReview', ['token' => Crypt::encrypt($reviewLeadChecker->id)]);
+            //sending email
+        }
+     
+        $response = ["status" =>true ,"message" => "Request Sent Successfully",  'link'=>$url];
+        return response($response, 200);
+    }
+
+    public function review(Request $request){
+
+        $userId = auth('api')->user()->id;
+        $review = Review::with('lead')->where(['user_id' => $userId])->get();
+        $response = ["status" =>true ,"message" => "Vendor Reviews" ,'data' => $review];
+        return response($response, 200);
+
+
+    }
+
+   
+
 }

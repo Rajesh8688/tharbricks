@@ -20,14 +20,6 @@ class User extends Authenticatable
     public static $imageCompanyUrl = 'uploads/company/';
     public static $imageCompanyThumbUrl = 'uploads/company/thumb/';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'first_name', 'email', 'password','mobile','last_name','back_end_user','profile_pic','address'
-    ];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -46,6 +38,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $guarded = [];
+
     public function scopeNonSmartOnly($query)
     {
         return $query->where('id', '!=', '1');

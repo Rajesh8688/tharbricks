@@ -190,7 +190,7 @@ class BlogController extends Controller
         }
 
         $blog->name = $request->name;
-        $blog->slug = unique_slug($request->name, 'Blog' , $blog->id);;
+        $blog->slug = unique_slug($request->name, 'Blog' , $blog->id);
         $blog->status = $request->status;
         $blog->description = $request->description;
         $blog->service_id = $request->service_id;

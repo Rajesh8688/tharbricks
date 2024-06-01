@@ -9,11 +9,13 @@ use App\Models\LeadUser;
 use App\Models\Question;
 use App\Models\LeadAnswer;
 use App\Models\ServiceUser;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Models\VendorDetails;
 use App\Models\QuestionOption;
 use App\Models\ResponseActivity;
 use App\Models\NotInterestedLead;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\CreditTransactionLog;
 
@@ -87,6 +89,34 @@ class LeadController extends Controller
           
             }
 
+            //storing push notification
+      
+            $users = DB::table('users as u')
+                ->leftJoin('vendor_details as vd', 'vd.user_id', '=', 'u.id')
+                ->leftJoin('service_users as su', 'su.user_id', '=', 'u.id')
+                ->where('vd.is_new_leads_i_receive_push_notifications', 1)
+                ->where('su.service_id', $serviceId)
+                ->where('su.status', 'Active')
+                ->where('u.status', 'Active')
+                ->where(function ($query) {
+                    $query->whereNotNull('u.fcm_token')
+                          ->orWhere('u.fcm_token', '!=', '');
+                })
+                ->select('u.*')
+                ->get();
+                    //dd($users);
+
+            if(count($users) > 0){
+                foreach($users as $user){
+                    $notification = new Notification();
+                    $notification->user_id = $user->id;
+                    $notification->lead_id = $lead->id;
+                    $notification->message = 'in '.$address.'. They are Ready to hire now';
+                    $notification->status = 'Active';
+                    $notification->title = $name.' is looking for '.$serviceDetails->name;
+                    $notification->save();
+                }
+            }
             return redirect()->route('home')->with('success',$serviceDetails->name.' request submitted successfully');
 
         } catch (\Throwable $th) {
@@ -347,5 +377,39 @@ class LeadController extends Controller
             
         }
 
+    }
+
+
+    public function sendNotification(){
+        $rsp =sendNotification('dmVGKAU3SKSGbtydo2FjqJ:APA91bGGH30ld-AY82OFMwuvPbW5lof4UkUCe85rMDk377nmw_4DcL7QtttlTXJ5_NHcG4gbJrupG8phgBUuaS9X9xEHcLlBfG-6XS2frEOlpaeUEwRIWNAy5DIwfx6doYNWk1_7NVnH' ,[]);
+        dd($rsp);
+    }
+
+
+    public function sendOtp(Request $request){
+        $phone = $request->input('phone');
+
+        // Example OTP generation (you might want to use a more secure method)
+        $otp = rand(100000, 999999);
+
+        // Logic to send the OTP via SMS
+        // This example uses a hypothetical SMS gateway API
+        // Replace this with your actual SMS gateway API call
+        $message = "Your OTP code is: $otp";
+        //$response = $this->sendSms( $message , '+91'.$phone);
+        $response['status'] = 200;
+        
+        if ($response['status'] == 200) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'OTP sent successfully!',
+                'otp' => $otp // In a real application, you wouldn't return the OTP
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Failed to send OTP. Please try again.'
+        ], 500);
     }
 }

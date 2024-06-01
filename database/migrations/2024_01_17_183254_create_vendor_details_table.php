@@ -28,6 +28,13 @@ class CreateVendorDetailsTable extends Migration
             $table->string('facebook_url')->nullable();
             $table->string('twitter_url')->nullable();
             $table->string('youtube_url')->nullable();
+            $table->string('what_do_you_love_most_about_your_job')->nullable();
+            $table->string('what_inspired_you_to_start_your_own_business')->nullable();
+            $table->string('why_should_our_clients_choose_you')->nullable();
+            $table->string('can_you_provide_your_service_online_or_remotely')->nullable();
+            $table->string('what_changes_have_made_to_keep_customers_safe_from_covid19')->nullable();
+            $table->string('how_long_have_you_been_in_business')->nullable();
+            $table->string('what_guarantee_does_your_work_comes_with')->nullable();
             $table->timestamps();
         });
     }

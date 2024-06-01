@@ -54,6 +54,15 @@ Route::get('blog/{slug}', [App\Http\Controllers\FrontEnd\BlogController::class, 
 //leads
 Route::post('storeLead', [App\Http\Controllers\FrontEnd\LeadController::class, 'storeLead'])->name('addLead');
 
+
+Route::get('sendNotification', [App\Http\Controllers\FrontEnd\LeadController::class, 'sendNotification']);
+Route::post('sendOtp', [App\Http\Controllers\FrontEnd\LeadController::class, 'sendOtp'])->name('sendOtp');
+Route::get('review/{token}', [App\Http\Controllers\FrontEnd\HomeController::class, 'review'])->name('requestReview');
+Route::post('submitReview', [App\Http\Controllers\FrontEnd\HomeController::class, 'reviewSubmit'])->name('submitReview');
+Route::get('review-success', [App\Http\Controllers\FrontEnd\HomeController::class, 'reviewSuccess'])->name('reviewSuccess');
+Route::get('review-failure', [App\Http\Controllers\FrontEnd\HomeController::class, 'reviewFailure'])->name('reviewFailure');
+
+
 Route::group(['middleware' => ['auth:web']], function() {
     Route::get('vendor/dashboard', [App\Http\Controllers\FrontEnd\VendorController::class, 'dashboard'])->name('vendor-dashboard');
     Route::get('vendor/leads', [App\Http\Controllers\FrontEnd\LeadController::class, 'leads'])->name('vendor-leads');

@@ -6,12 +6,15 @@ use App\Models\Blog;
 use App\Models\Plan;
 use App\Models\User;
 use App\Models\Service;
+use App\Models\Setting;
 use App\Models\Testimonial;
 use App\Models\UserRequest;
 use Illuminate\Http\Request;
+use App\Models\ReviewLeadChecker;
 use App\Http\Controllers\Controller;
-use App\Models\Setting;
+use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Config;
 
 class HomeController extends Controller
@@ -76,5 +79,63 @@ class HomeController extends Controller
         ];
         $services = Service::where('status' ,'Active')->get();
         return view('front_end.auth.signup',compact('titles' , 'services'));
+    }
+
+    public function review($token){
+        $reviewLeadCheckerId = Crypt::decrypt($token);
+        $reviewLeadChecker = ReviewLeadChecker::find($reviewLeadCheckerId);
+
+        if($reviewLeadChecker->count() == 0){
+            //no review found
+            $message = 'Something went wrong';
+            return view('front_end.review.error' , compact('message'));
+        }    
+        else{
+            if($reviewLeadChecker->status != "Answered"){
+                //show review form
+                $reviewLeadChecker->status = "opened";
+                $reviewLeadChecker->save();
+                return view('front_end.review.form',compact('reviewLeadCheckerId'));
+            }elseif($reviewLeadChecker->status == "Answered"){
+                //reviewed
+                $message = 'Review Already Submitted';
+                return view('front_end.review.error' , compact('message'));
+            }
+        }    
+     
+    }
+
+    public function reviewSubmit(Request $request){
+        $this->validate($request, [
+            'rating' => 'required',
+            'comment' => 'required',
+            'reviewLeadCheckerId' => 'required'
+        ]);
+        $reviewLeadCheckerId = $request->input('reviewLeadCheckerId');
+
+        $reviewLeadChecker =  ReviewLeadChecker::find($reviewLeadCheckerId);
+        if($reviewLeadChecker->count() == 1 && $reviewLeadChecker->status != "Answered"){
+            $reviewLeadChecker->status = "Answered";
+            $reviewLeadChecker->save();
+            $review = new Review();
+            $review->rating = $request->input('rating');
+            $review->comment = $request->input('comment');
+            $review->email = $reviewLeadChecker->email;
+            $review->lead_id = $reviewLeadChecker->lead_id;
+            $review->user_id = $reviewLeadChecker->requested_user_id;
+            $review->save();
+            return view('front_end.review.success');
+        }else{
+            $message = 'Review Already Submitted';
+            return view('front_end.review.error' , compact('message'));
+        }
+    }
+
+    public function reviewSuccess(){
+        return view('front_end.review.success');
+    }
+    public function reviewFailure(){
+        $message = 'Something went wrong';
+        return view('front_end.review.error' , compact('message'));
     }
 }

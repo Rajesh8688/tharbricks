@@ -16,7 +16,7 @@ class CreateEmailMailersTable extends Migration
         Schema::create('email_mailers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('email_template_id');
-            $table->unsignedBigInteger('template_user_id');
+            $table->unsignedBigInteger('template_user_id')->nullable();
             $table->string('mail_from');
             $table->string('mail_from_name');
             $table->string('mail_to');

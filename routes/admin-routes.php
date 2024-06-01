@@ -34,7 +34,8 @@ Route::group([
 
     Route::resource('question', \App\Http\Controllers\Admin\QuestionController::class);//question
     Route::resource('plan', \App\Http\Controllers\Admin\PlanController::class);//plan
-    Route::resource('email_template', \App\Http\Controllers\Admin\PlanController::class);//email-template
+    Route::resource('email-template', \App\Http\Controllers\Admin\EmailTemplateController::class);//email-template
+    
     Route::get('/get-service-question', [\App\Http\Controllers\Admin\QuestionController::class , 'getCategorServiceQuestions'])->name('getServiceQuestions');
 
     Route::get('/user', [App\Http\Controllers\Admin\UserController::class, 'UserList'])->name('admin.userList');

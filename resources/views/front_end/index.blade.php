@@ -870,7 +870,7 @@
         </div>
       </div> --}}
       <div class="modal fade" id="QuestionModel" >
-        <div class="modal-dialog" >
+        <div class="modal-dialog modal-lg" >
           <div class="modal-content">
               
               <div class="modal-header">
@@ -1082,13 +1082,30 @@
                         <div class="row">
                             <div class="col-9">
                                 <div class="form-group">
-                                    <input type="text" class="form-control QuestionStep`+currentStep+`" name="phone" required>
+                                    <input type="text" class="form-control QuestionStep`+currentStep+`" name="phone" required id = 'phoneNumber'>
+                                    <div id ="ErrorphoneNumber" style="display: none;color: red;" class=""></div>
+                                    <input type="hidden" name="serverOtp" id = 'serverOtp'>
                                 </div>
                             </div>
                             <div>
-                                <button class="site-button" type= "button"> Verify </button>
+                                <button class="site-button" type= "button" onclick = "verifyPhoneNumber()" id = "otpButton"> Send OTP </button>
                             </div>
                         </div>
+                        <div style = "display: none;" id = "otpDiv">
+                            <h5>Verify OTP </h5>
+                            <div class="row">
+                                <div class="col-9">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control QuestionStep`+currentStep+`" name="otp" required id = 'otp'>
+                                        <div id ="ErrorphoneNumber" style="display: none;color: red;" class="alert alert-danger"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button class="site-button" type= "button" onclick = "verifyOtp()" > Verify </button>
+                                </div>
+                            </div>
+                        </div>
+                       
                         <div class ="row">
                             <div class ="col-6">
                                 <h5>Name </h5>
@@ -1172,6 +1189,12 @@
         confirmMessage = confirm(text);
         if(confirmMessage){
             $(".step").remove();
+            $("#serverOtp").val('');
+            $("#otp").val('');
+            $("#otpDiv").css('display','none');
+            $("#phoneNumber").prop('readonly', false);
+            $('#otpButton').prop('disabled', false);
+            $("#otpButton").html('Send OTP');
             $('#QuestionModel').modal('toggle'); 
         }
     }
@@ -1275,4 +1298,80 @@
     });
 </script>
 @endif
+<script>
+    function verifyPhoneNumber(){
+        
+        phone = $("#phoneNumber").val();
+
+        if(phone == "" || phone == undefined ){
+            $("#ErrorphoneNumber").html("Please enter phone number");
+            $("#ErrorphoneNumber").css("display","block");
+        }else if(!validatePhoneNumber(phone))
+        {
+            $("#ErrorphoneNumber").html("Invalid phone number");
+            $("#ErrorphoneNumber").css("display","block");
+        }else{
+            $("#ErrorphoneNumber").html("");
+            $("#ErrorphoneNumber").css("display","none");
+            sendOTP(phone).then((otp) => {
+                serverOtp = $("#serverOtp").val(otp);
+                $("#otpDiv").css("display","block");
+                $("#otpButton").html("Re-Send OTP");
+            }).catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    }
+    function verifyOtp(){
+        var serverOtp = $("#serverOtp").val();
+        var userEnteredOtp = $("#otp").val();
+
+        if(serverOtp != null){
+            if(serverOtp == $("#otp").val()){
+                $("#phoneNumber").prop('readonly', true);
+                $("#otpDiv").css("display","none");
+                $("#otpButton").html("✔ Verified");
+                $('#otpButton').prop('disabled', true);
+            }else{
+                alert("Invalid otp");
+            }
+        }
+
+
+    }
+
+    async function sendOTP() {
+        var sendOtp = '{{route("sendOtp")}}';
+        try {
+            const response = await fetch(sendOtp, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                body: JSON.stringify({
+                    // Add any data you want to send to the server
+                    phone: phone
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to send OTP');
+            }
+
+            const data = await response.json();
+            return data.otp; // Return the OTP from the response
+        } catch (error) {
+            console.error('Error:', error);
+            return null; // Return null in case of error
+        }
+    }
+    function validatePhoneNumber(phoneNumber) {
+        // Define the regular expression pattern
+        const pattern = /^\d{10}$/;
+
+        // Test the phone number against the pattern
+        return pattern.test(phoneNumber);
+    }
+    </script>
 @endsection

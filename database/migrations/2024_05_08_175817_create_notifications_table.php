@@ -22,6 +22,8 @@ class CreateNotificationsTable extends Migration
             $table->tinyInteger('is_delivered')->default(0)->nullable();
             $table->tinyInteger('to_all')->default(0);
             $table->integer('lead_id')->nullable();
+            $table->tinyInteger('is_failed')->default(0)->nullable();
+            $table->string('failure_reason')->nullable();
             $table->timestamps();
         });
     }

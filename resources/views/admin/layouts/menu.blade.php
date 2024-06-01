@@ -37,8 +37,8 @@
             @endcan
 
             @can('email-template-view')
-                {{-- <li class=" nav-item {{Request::segment(2) == 'email-template' ? 'active' : '' }}"><a href="{{route('email-template.index')}}"><i class="feather icon-mail"></i><span class="menu-title" data-i18n="Plan">Email Template</span></a>
-                </li> --}}
+                <li class=" nav-item {{Request::segment(2) == 'email-template' ? 'active' : '' }}"><a href="{{route('email-template.index')}}"><i class="feather icon-mail"></i><span class="menu-title" data-i18n="Plan">Email Template</span></a>
+                </li>
             @endcan
 
             @can('testimonials-view')

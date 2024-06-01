@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserServiceLocationsTable extends Migration
+class CreateMessageTemplatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateUserServiceLocationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_service_locations', function (Blueprint $table) {
+        Schema::create('message_templates', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('service_id');
-            $table->unsignedBigInteger('service_user_id');
-            $table->unsignedBigInteger('location_id');
+            $table->string('message_template_name');
+            $table->string('slug');
+            $table->text('message');
+            $table->integer('parent_message_template_id')->nullable();
+            $table->text('wildcards');
             $table->enum('status',['Active','InActive'])->default('Active');
             $table->timestamps();
         });
@@ -31,6 +32,6 @@ class CreateUserServiceLocationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_service_locations');
+        Schema::dropIfExists('message_templates');
     }
 }

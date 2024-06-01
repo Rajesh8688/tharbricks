@@ -17,11 +17,15 @@ class CreateEmailTemplatesTable extends Migration
             $table->id();
             $table->string('template_name');
             $table->string('template_slug');
-            $table->enum('module',['user','lead']);
+            $table->string('template_key');
+            $table->enum('module',['user','lead','admin']);
             $table->text('template');
             $table->text('wildcards');
             $table->string('email_from_name');
             $table->string('email_from');
+            $table->string('subject');
+            $table->integer('user_id')->nullable();
+            $table->integer('parent_email_templates_id')->nullable();
             $table->enum('status',['Active','InActive'])->default('Active');
             $table->timestamps();
         });

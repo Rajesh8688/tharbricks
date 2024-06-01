@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use App\Models\Review;
 use App\Models\ServiceUser;
 use App\Models\VendorImage;
 use Illuminate\Support\Str;
@@ -133,13 +134,17 @@ class BaseApiController extends Controller
         }
         //getting all the vendor info from vendor table
         $vendorInfo =  VendorDetails::where("user_id" , $user->id)->first();
-        $userData = array_merge($user->toArray() ,$vendorInfo->toArray());
+
+        //getting all the review from review table
+        $reviewDetails = (int) Review::where('status' , 'Active')->where('user_id' , $user->id)->avg('rating');
+
+        $userData = array_merge($user->toArray() ,$vendorInfo->toArray(),['review' => $reviewDetails]);
         $vendorImages = VendorImage::select('id',$this->ApiImage("/uploads/company/","image" ))->where(['user_id' => $user->id,'status' => 'Active'])->get();
         $userData['vendor_image'] = $vendorImages->toArray();
 
         //user Services
 
-        $userData['services'] = DB::select('SELECT s.*,su.id as service_user_id FROM service_users su left join services s on s.id = su.service_id  WHERE  su.status = ? and su.user_id = ?', ['Active',$userId]);
+        //$userData['services'] = DB::select('SELECT s.*,su.id as service_user_id FROM service_users su left join services s on s.id = su.service_id  WHERE  su.status = ? and su.user_id = ?', ['Active',$userId]);
         //$userData['services'] = ServiceUser::select('service.*')->with('service')->where('user_id' , $user->id)->get();
         
 

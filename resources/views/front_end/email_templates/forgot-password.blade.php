@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>24Flights - forgot Password</title>
+<title>Tharbricks - Forgot Password</title>
 <style type="text/css">
 @media only screen and (max-width: 600px) {
 table[class="contenttable"] {
@@ -46,14 +46,6 @@ table td[class="tablepadding"] {
           <td style="padding:0px 20px;"><table border="0" cellpadding="0" cellspacing="0" width="100%">
               <tbody>
                 <tr>
-                  {{-- <td style="border:4px solid #eee; border-radius:4px; padding:25px 0px;"><table width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
-                      <tbody>
-                        <tr>
-                          <td style="font-size:14px; line-height:20px; padding:0px 25px;"><img alt="" src="mobile-successful.png"></td>
-                          <td style="font-size:16px; font-weight:600; color:#777; line-height:26px; padding-right:20px;">The Vodafone prepaid recharge payment of <span style="color:#000;">$93.10</span> for Mobile No. <span style="color:#000;">9898989898</span> is now <span style="color:#28a745;">successful!</span></td>
-                        </tr>
-                      </tbody>
-                    </table></td> --}}
                     <td style="font-size:16px; font-weight:600; color:#777; line-height:26px; padding-right:20px;">Hello {{$name}},</td>
                 </tr>
                 <tr>

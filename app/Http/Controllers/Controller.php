@@ -85,11 +85,10 @@ class Controller extends BaseController
 
     public function checkPaymentAndUpdate($data){
 
-        //dd($data);
-
         $orderId = $data['order_id'] ?? null ;
         $razorPayPaymentId = $data['razorpay_payment_id'] ?? null ;
         $userId = $data['userId'];
+        $from = $data['from'] ?? 'web';
 
         $api = new Api(env('RAZOR_PAY_KEY'), env('RAZOR_PAY_SECRET_KEY'));
         $payment = $api->payment->fetch($razorPayPaymentId);
@@ -97,60 +96,13 @@ class Controller extends BaseController
        
         if(!empty($razorPayPaymentId)) {
              try {
+                $updateCredits =false;
+                
                 if($payment['status'] == 'authorized'){
-                    $response = $api->payment->fetch($razorPayPaymentId)->capture(array('amount'=>$payment['amount']));
-                    //if($response['status'] == 'captured'){
-                        $razorPayInvoice = new RazorPayPaymentInvoice();
-                        $razorPayInvoice->razorpay_payment_id = $razorPayPaymentId;
-                        $razorPayInvoice->save();
-                        $razorPayInvoice->invoice_id = 'TI'.str_pad($razorPayInvoice->id, 8, '0', STR_PAD_LEFT);
-                        $razorPayInvoice->save();
-                        $razorPayInvoice->amount = $response['amount'];
-                        $razorPayInvoice->razorpay_status = $response['status'];
-                        $razorPayInvoice->method = $response['method'];
-                        $razorPayInvoice->email = $response['email'];
-                        $razorPayInvoice->contact = $response['contact'];
-                        $razorPayInvoice->info = $response['description'];
-                        $razorPayInvoice->acquirer_data = json_encode($response['acquirer_data']);
-                        $razorPayInvoice->upi =  isset($response['upi']) ? json_encode($response['upi']) : null;
-                        $razorPayInvoice->card_id = isset($response['card_id']) ? json_encode($response['card_id']) : null;
-                        $razorPayInvoice->notes = isset($response['notes']) ? json_encode($response['notes']) : null;
-                        $razorPayInvoice->save();
-    
-                        if(isset($response['description']) && !empty($response['description'])){
-                            $planId = $response['description'];
-                        }else{
-                           $razorpayOrderDetails =  RazorPayOrder::where('order_id' , $response['order_id'])->first();
-                           if(!empty($razorpayOrderDetails)){
-                                $planId = $razorpayOrderDetails->plan_id;
-                           }
-                        }
-    
-                        $planDetails = Plan::find($planId);
-                        $vendorDetails = VendorDetails::where('user_id' , $userId)->first();
-        
-                        //credit logs
-                        $creditLogs = new CreditTransactionLog();
-                        //DB::enableQueryLog();
-        
-                        // and then you can get query log
-                        $creditLogs->user_id = $userId;
-                        $creditLogs->credits = $planDetails->no_of_credits;
-                        $creditLogs->remaining_credits = $planDetails->no_of_credits+$vendorDetails->credits;
-                        $creditLogs->action = "added";
-                        $creditLogs->credits_description = $planDetails->no_of_credits." credits added through Razorpay #".$razorPayPaymentId;
-                        $creditLogs->razorpay_payment_id = $razorPayPaymentId;
-                        $creditLogs->razor_pay_payment_invoice_id = $razorPayInvoice->id;
-                        $creditLogs->date_of_transaction = now();
-                        $creditLogs->save();
-                        $creditLogs->unique_id = 'CT'.str_pad($creditLogs->id, 8, '0', STR_PAD_LEFT);
-                        $creditLogs->save();
-                        $vendorDetails->credits = $planDetails->no_of_credits+$vendorDetails->credits;
-                        $vendorDetails->save();
-
-                        return ['status' => true , 'success' =>'payment Successfull '.$planDetails->no_of_credits.' credits added ' ,'data' =>$razorPayInvoice];
-    
-                    // }
+                    if($from == "web"){
+                        $response = $api->payment->fetch($razorPayPaymentId)->capture(array('amount'=>$payment['amount']));
+                        $updateCredits =true;
+                    }
                 } elseif($payment['status'] == 'pending'){
                     return ['status' => false , 'error' =>'Payment is in Pending'];
                 }elseif($payment['status'] == 'created'){
@@ -158,7 +110,63 @@ class Controller extends BaseController
                 }elseif($payment['status'] == 'failed'){
                     return ['status' => false , 'error' =>$payment['error_description']];
                 }elseif($payment['status'] == 'captured'){
-                    return ['status' => false , 'error' =>'Already Payment Caaptured'];
+                    if($from == "mobile"){
+                        $response = $api->payment->fetch($razorPayPaymentId);
+                        $updateCredits =true;
+                    }else{
+                        return ['status' => false , 'error' =>'Already Payment Captured'];
+                    }
+                }
+                if($updateCredits == true){
+                    $razorPayInvoice = new RazorPayPaymentInvoice();
+                    $razorPayInvoice->razorpay_payment_id = $razorPayPaymentId;
+                    $razorPayInvoice->save();
+                    $razorPayInvoice->invoice_id = 'TI'.str_pad($razorPayInvoice->id, 8, '0', STR_PAD_LEFT);
+                    $razorPayInvoice->save();
+                    $razorPayInvoice->amount = $response['amount'];
+                    $razorPayInvoice->razorpay_status = $response['status'];
+                    $razorPayInvoice->method = $response['method'];
+                    $razorPayInvoice->email = $response['email'];
+                    $razorPayInvoice->contact = $response['contact'];
+                    $razorPayInvoice->info = $response['description'];
+                    $razorPayInvoice->acquirer_data = json_encode($response['acquirer_data']);
+                    $razorPayInvoice->upi =  isset($response['upi']) ? json_encode($response['upi']) : null;
+                    $razorPayInvoice->card_id = isset($response['card_id']) ? json_encode($response['card_id']) : null;
+                    $razorPayInvoice->notes = isset($response['notes']) ? json_encode($response['notes']) : null;
+                    $razorPayInvoice->save();
+
+                    if(isset($response['description']) && !empty($response['description'])){
+                        $planId = $response['description'];
+                    }else{
+                        $razorpayOrderDetails =  RazorPayOrder::where('order_id' , $response['order_id'])->first();
+                        if(!empty($razorpayOrderDetails)){
+                            $planId = $razorpayOrderDetails->plan_id;
+                        }
+                    }
+
+                    $planDetails = Plan::find($planId);
+                    $vendorDetails = VendorDetails::where('user_id' , $userId)->first();
+    
+                    //credit logs
+                    $creditLogs = new CreditTransactionLog();
+                    //DB::enableQueryLog();
+    
+                    // and then you can get query log
+                    $creditLogs->user_id = $userId;
+                    $creditLogs->credits = $planDetails->no_of_credits;
+                    $creditLogs->remaining_credits = $planDetails->no_of_credits+$vendorDetails->credits;
+                    $creditLogs->action = "added";
+                    $creditLogs->credits_description = $planDetails->no_of_credits." credits added through Razorpay #".$razorPayPaymentId;
+                    $creditLogs->razorpay_payment_id = $razorPayPaymentId;
+                    $creditLogs->razor_pay_payment_invoice_id = $razorPayInvoice->id;
+                    $creditLogs->date_of_transaction = now();
+                    $creditLogs->save();
+                    $creditLogs->unique_id = 'CT'.str_pad($creditLogs->id, 8, '0', STR_PAD_LEFT);
+                    $creditLogs->save();
+                    $vendorDetails->credits = $planDetails->no_of_credits+$vendorDetails->credits;
+                    $vendorDetails->save();
+
+                    return ['status' => true , 'success' =>'payment Successfull '.$planDetails->no_of_credits.' credits added ' ,'data' =>$razorPayInvoice];
                 }
                
           
