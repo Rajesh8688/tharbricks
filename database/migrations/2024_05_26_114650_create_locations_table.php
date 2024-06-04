@@ -22,6 +22,7 @@ class CreateLocationsTable extends Migration
             $table->string('longitude')->nullable();
             $table->string('pincode')->nullable();
             $table->string('applicable_pincode')->nullable();
+            $table->integer('user_id')->nullable();
             $table->timestamps();
         });
     }

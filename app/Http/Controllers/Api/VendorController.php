@@ -96,8 +96,27 @@ class VendorController extends BaseApiController
     }
 
     public function userService($userId){
+        // public function userService(){
+        //     $userId = 2;
+        //$data = DB::select('SELECT s.*,su.id as service_user_id FROM service_users su left join services s on s.id = su.service_id  WHERE  su.status = ? and su.user_id = ?', ['Active',$userId]);
+       // $data =  Service::withCount('ServiceLocations')->select('services.*','service_users.id as service_user_id','service_locations_count')->leftJoin('service_users', 'service_users.service_id', '=', 'services.id')->where(['service_users.status' => 'Active' , 'service_users.user_id' =>$userId ])->get();
+        // $data = Service::withCount('ServiceLocations')
+        //         ->leftJoin('service_users', function($join) {
+        //             $join->on('service_users.service_id', '=', 'services.id');
+        //         })
+        //         ->addSelect('services.*', 'service_users.id as service_user_id')
+        //        // ->select('services.*', 'service_users.id as service_user_id', 'service_locations_count')
+        //         ->where('service_users.status', 'Active')
+        //         ->where('service_users.user_id', $userId)
+        //         ->get();
 
-        $data = DB::select('SELECT s.*,su.id as service_user_id FROM service_users su left join services s on s.id = su.service_id  WHERE  su.status = ? and su.user_id = ?', ['Active',$userId]);
+        $data = ServiceUser::withCount('ServiceLocations')
+                ->leftJoin('services', function($join) {
+                    $join->on('services.id', '=', 'service_users.id');
+                })
+                ->addSelect('services.*', 'service_users.id as service_user_id')
+                ->where(['service_users.status'=> 'Active' , 'service_users.user_id'=> $userId])
+                ->get();
         return $data;
     }
 
@@ -436,6 +455,7 @@ class VendorController extends BaseApiController
             $location->longitude = $request->input('longitude');
             $location->pincode = '12345';
             $location->distance_value = $request->input('distance_value');
+            $location->user_id = $userId;
         }
    
         $location->save();
@@ -525,10 +545,12 @@ class VendorController extends BaseApiController
         $review = Review::with('lead')->where(['user_id' => $userId])->get();
         $response = ["status" =>true ,"message" => "Vendor Reviews" ,'data' => $review];
         return response($response, 200);
-
-
     }
 
-   
-
+    public function allLocations(){
+        $userId = auth('api')->user()->id;
+        $locations = Location::withCount('UserServices')->where(['user_id' => $userId])->get();
+        $response = ["status" =>true ,"message" => "Locations" ,'data' => $locations];
+        return response($response, 200);
+    }
 }

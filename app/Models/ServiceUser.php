@@ -16,4 +16,8 @@ class ServiceUser extends Model
     public function service(){
         return $this->belongsTo(Service::class);
     }
+    public function ServiceLocations()
+    {
+        return $this->hasMany(UserServiceLocation::class ,'service_user_id','id');
+    }
 }

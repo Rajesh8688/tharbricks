@@ -16,13 +16,13 @@ class CreateEmailTemplatesTable extends Migration
         Schema::create('email_templates', function (Blueprint $table) {
             $table->id();
             $table->string('template_name');
-            $table->string('template_slug');
+            $table->string('slug');
             $table->string('template_key');
             $table->enum('module',['user','lead','admin']);
             $table->text('template');
-            $table->text('wildcards');
-            $table->string('email_from_name');
-            $table->string('email_from');
+            $table->text('wildcards')->nullable();
+            $table->string('email_from_name')->nullable();
+            $table->string('email_from')->nullable();
             $table->string('subject');
             $table->integer('user_id')->nullable();
             $table->integer('parent_email_templates_id')->nullable();

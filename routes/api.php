@@ -69,6 +69,8 @@ Route::prefix('v1')->group(function () {
 
         Route::post('/addLocation', [App\Http\Controllers\Api\VendorController::class, 'addLocation']); // Add Location
         Route::delete('/deleteLocation', [App\Http\Controllers\Api\VendorController::class, 'deleteLocation']); // Delete Location
+        Route::get('/allLocations', [App\Http\Controllers\Api\VendorController::class, 'allLocations']); // Delete Location
+
 
 
     });
@@ -90,6 +92,8 @@ Route::prefix('v1')->group(function () {
     //         Route::get('userBooking', [App\Http\Controllers\Api\UserController::class, 'bookings']);   
     //         Route::post('cancelBooking', [App\Http\Controllers\Api\UserController::class, 'cancelBooking']); 
     // });
+
+    Route::get('/userServices', [App\Http\Controllers\Api\VendorController::class, 'userService']);
 
     
 

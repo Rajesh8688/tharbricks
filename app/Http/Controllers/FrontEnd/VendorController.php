@@ -325,6 +325,24 @@ class VendorController extends Controller
         }
     }
 
+    public function updateQuestions(Request $request){
+        $vendorDetails =  VendorDetails::where("user_id" , auth()->user()->id)->first();
+        $vendorDetails->what_do_you_love_most_about_your_job = $request->what_do_you_love_most_about_your_job;
+        $vendorDetails->what_inspired_you_to_start_your_own_business = $request->what_inspired_you_to_start_your_own_business;
+        $vendorDetails->why_should_our_clients_choose_you = $request->why_should_our_clients_choose_you;
+        $vendorDetails->can_you_provide_your_service_online_or_remotely = $request->can_you_provide_your_service_online_or_remotely;
+        $vendorDetails->what_changes_have_made_to_keep_customers_safe_from_covid19 = $request->what_changes_have_made_to_keep_customers_safe_from_covid19;
+        $vendorDetails->how_long_have_you_been_in_business = $request->how_long_have_you_been_in_business;
+        $vendorDetails->what_guarantee_does_your_work_comes_with = $request->what_guarantee_does_your_work_comes_with;
+
+        if($vendorDetails->save()){
+            return Redirect::back()->with(['success-info' => 'Question Answers Details Updated successfully']);
+        }else{
+            return redirect()->back()->with(['error-info' => 'Something went wrong']);
+        }
+
+    }
+
     //update Service Details
 
     public function updateServices(Request $request){

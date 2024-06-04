@@ -42,7 +42,7 @@ class EmailTemplateController extends BaseApiController
         $emailTemplate->subject = $request->input('subject');
         $emailTemplate->template_name = $request->input('template_name');
         $slug = unique_slug($request->input('template_name'), 'EmailTemplate');
-        $emailTemplate->template_slug = $slug;
+        $emailTemplate->slug = $slug;
         $emailTemplate->template_key = $slug;
     
         $emailTemplate->save();
@@ -58,7 +58,6 @@ class EmailTemplateController extends BaseApiController
         $validator = Validator::make($request->all(), [
             'template' => 'required',
             'subject' => 'required',
-            'id' => 'required',
             'template_name' => 'required'
         ]);
         if ($validator->fails()) {
@@ -69,7 +68,7 @@ class EmailTemplateController extends BaseApiController
             ], 200);
         }
 
-        $emailTemplateid = $request->input('id');
+        $emailTemplateid = $id;
         $emailTemplate = EmailTemplate::find($emailTemplateid);
         $emailTemplate->template = $request->input('template');
         $emailTemplate->subject = $request->input('subject');
@@ -84,20 +83,10 @@ class EmailTemplateController extends BaseApiController
         return response($response, 200);
     }
 
-    public function delete(Request $request){
-        $validator = Validator::make($request->all(), [
-            'id' => 'required'
-        ]);
-        if ($validator->fails()) {
-            $errorMessages = $validator->messages()->all();
-            return response()->json([
-                'status' => false,
-                "message" => $errorMessages[0]
-            ], 200);
-        }
-        $emailTemplateid = $request->input('id');
+    public function destroy($id){
+        $emailTemplateid = $id;
         $emailTemplate = EmailTemplate::find($emailTemplateid);
-        $emailTemplate->update(['status' => 'Inactive']);
+        $emailTemplate->update(['status' => 'InActive']);
         $response['data'] = [];
         $response['status'] = true;
         $response['message'] = "Email Template deleted successfully";

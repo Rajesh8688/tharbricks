@@ -21,4 +21,9 @@ class Service extends Model
         return $this->belongsToMany(user::class, 'service_users',
         'service_id', 'user_id');
     }
+
+    public function ServiceLocations()
+    {
+        return $this->hasMany(UserServiceLocation::class );
+    }
 }

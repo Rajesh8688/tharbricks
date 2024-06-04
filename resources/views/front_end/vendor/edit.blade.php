@@ -18,7 +18,10 @@
                     {{-- <li><a href="#aon-adress-panel">Address</a></li> --}}
                     <li><a href="#aon-socialMedia-panel">Social Media</a></li>
                     <li><a href="#aon-category-panel">Services</a></li>
+                    <li><a href="#aon-location-panel">Locations</a></li>
+                    <li><a href="#aon-qa-panel">Q & A</a></li>
                     <li><a href="#aon-gallery-panel">Gallery</a></li>
+                
                     {{--<li><a href="#aon-video-panel">Video</a></li>
                      <li><a href="#aon-serviceArea-panel">Service Area</a></li>
                     <li><a href="#aon-servicePer-panel">Service Perform</a></li>
@@ -596,6 +599,161 @@
                 </div>
             </form>
         </div>
+
+        <div class="card aon-card" id="aon-location-panel">
+            <div class="card-header aon-card-header"><h4><i class="fa fa-list-alt"></i> Locations</h4> </div>
+            <form method="POST" action ="{{route('update-vendor-services')}}">
+                @csrf
+                <div class="card-body aon-card-body">
+                    <div class="row">
+                        {{-- <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Services</label>
+                            
+                                <select class="selectpicker" multiple data-live-search="true" name="serviceId[]">
+                                    @foreach ($services as $item)
+                                        <option  {{ in_array($item->id, old('serviceId', $userServicesIds) ?: []) ? 'selected' : '' }} value ="{{$item->id}}">{{$item->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class ="col-12" > --}}
+                            <div  style="float:right">
+                                <button type="button"  class="site-button"  style="margin-right: 10px;"> Cancle </button>
+                                <button type="submit"  class="site-button"> Add Location </button>
+                            </div>
+                        </div> 
+
+                    </div>
+                   
+                    {{-- <p>Enter same password in both fields. Use an uppercase letter and a number for stronger password.</p> --}}
+                </div>
+            </form>
+        </div>
+
+        
+
+        <div class="card aon-card" id="aon-qa-panel">
+            <div class="card-header aon-card-header"><h4><i class="fa fa-question-circle"></i> Q & A</h4></div>
+            <div class="card-body aon-card-body">
+                <form method="POST" action = "{{route('update-vendor-questions')}}">
+                    <div class="row">
+                        @csrf
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>What do you love most about your job ?</label>
+                                <div class="editer-wrap">
+                                    <div class="editer-textarea">
+                                        <textarea class="form-control" rows="2" name ="what_do_you_love_most_about_your_job">{{old('what_do_you_love_most_about_your_job', $vendorDetails->what_do_you_love_most_about_your_job)}}</textarea>
+                                    </div>
+                                </div>
+                                @error('what_do_you_love_most_about_your_job')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>What inspired you to start your own business?</label>
+                                <div class="editer-wrap">
+                                    <div class="editer-textarea">
+                                        <textarea class="form-control" rows="2" name ="what_inspired_you_to_start_your_own_business">{{old('what_inspired_you_to_start_your_own_business', $vendorDetails->what_inspired_you_to_start_your_own_business)}}</textarea>
+                                    </div>
+                                </div>
+                                @error('what_inspired_you_to_start_your_own_business')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Why should our clients choose you?</label>
+                                <div class="editer-wrap">
+                                    <div class="editer-textarea">
+                                        <textarea class="form-control" rows="2" name ="why_should_our_clients_choose_you">{{old('why_should_our_clients_choose_you', $vendorDetails->why_should_our_clients_choose_you)}}</textarea>
+                                    </div>
+                                </div>
+                                @error('why_should_our_clients_choose_you')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Can you provide your service online or remotely? If so,please add details</label>
+                                <div class="editer-wrap">
+                                    <div class="editer-textarea">
+                                        <textarea class="form-control" rows="2" name ="can_you_provide_your_service_online_or_remotely">{{old('can_you_provide_your_service_online_or_remotely', $vendorDetails->can_you_provide_your_service_online_or_remotely)}}</textarea>
+                                    </div>
+                                </div>
+                                @error('can_you_provide_your_service_online_or_remotely')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>What changes have made to keep customers safe from Covid-19?</label>
+                                <div class="editer-wrap">
+                                    <div class="editer-textarea">
+                                        <textarea class="form-control" rows="2" name ="what_changes_have_made_to_keep_customers_safe_from_covid19">{{old('what_changes_have_made_to_keep_customers_safe_from_covid19', $vendorDetails->what_changes_have_made_to_keep_customers_safe_from_covid19)}}</textarea>
+                                    </div>
+                                </div>
+                                @error('what_changes_have_made_to_keep_customers_safe_from_covid19')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>How long have you been in business?</label>
+                                <div class="editer-wrap">
+                                    <div class="editer-textarea">
+                                        <textarea class="form-control" rows="2" name ="how_long_have_you_been_in_business">{{old('how_long_have_you_been_in_business', $vendorDetails->how_long_have_you_been_in_business)}}</textarea>
+                                    </div>
+                                </div>
+                                @error('how_long_have_you_been_in_business')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>What guarantee does your work comes with?</label>
+                                <div class="editer-wrap">
+                                    <div class="editer-textarea">
+                                        <textarea class="form-control" rows="2" name ="what_guarantee_does_your_work_comes_with">{{old('what_guarantee_does_your_work_comes_with', $vendorDetails->what_guarantee_does_your_work_comes_with)}}</textarea>
+                                    </div>
+                                </div>
+                                @error('what_guarantee_does_your_work_comes_with')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class ="col-12" >
+                            <div  style="float:right">
+                                <button type="button"  class="site-button"  style="margin-right: 10px;">Cancle </button>
+                                <button type="submit"  class="site-button" >Submit </button>
+                            </div>
+                        </div> 
+                    </div>
+                </form>
+            </div>
+        </div> 
 
 
 

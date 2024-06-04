@@ -76,6 +76,7 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::post('vendor/user/update', [App\Http\Controllers\FrontEnd\VendorController::class, 'updateUserDetails'])->name('update-user-details');
     Route::post('vendor/social-account/update', [App\Http\Controllers\FrontEnd\VendorController::class, 'updateSocialMediaDetails'])->name('update-vendor-social-account-details');
     Route::post('vendor/update/services', [App\Http\Controllers\FrontEnd\VendorController::class, 'updateServices'])->name('update-vendor-services');
+    Route::post('vendor/update/questions', [App\Http\Controllers\FrontEnd\VendorController::class, 'updateQuestions'])->name('update-vendor-questions');
     Route::post('vendor/image/upload', [App\Http\Controllers\FrontEnd\VendorController::class, 'uploadCompanyImage'])->name('update-company-image');
     Route::post('vendor/image/delete', [App\Http\Controllers\FrontEnd\VendorController::class, 'deleteCompanyImage'])->name('delete-company-image');
     Route::get('vendor/my-credits', [App\Http\Controllers\FrontEnd\VendorController::class, 'myCredits'])->name('my-credits');
