@@ -32,15 +32,13 @@ class LoginController extends BaseApiController
             if (Hash::check($request->password, $user->password)) {
                 $user = User::select('id','email','mobile','name',$this->ApiImage("/uploads/users/","profile_pic" ))->find($user->id);
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                //dd($user);
                 $info = $this->profileInfo($user->id);
-                //dd($info);
                 $response = ['user' => $info['data'],'token' => $token,"status"=>true ,"message" => "success"];
                 $user->fcm_token = $request->fcm_token ?? null;
                 $user->save();
                 return response($response, 200);
             } else {
-                $response = ["message" => "Password mismatch" , "status"=>false];
+                $response = ["message" => "Please enter valid password" , "status"=>false];
                 return response($response, 200);
             }
         } else {

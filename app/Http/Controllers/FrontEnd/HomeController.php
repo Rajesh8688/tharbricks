@@ -114,7 +114,7 @@ class HomeController extends Controller
         $reviewLeadCheckerId = $request->input('reviewLeadCheckerId');
 
         $reviewLeadChecker =  ReviewLeadChecker::find($reviewLeadCheckerId);
-        if($reviewLeadChecker->count() == 1 && $reviewLeadChecker->status != "Answered"){
+        if($reviewLeadChecker->status != "Answered"){
             $reviewLeadChecker->status = "Answered";
             $reviewLeadChecker->save();
             $review = new Review();

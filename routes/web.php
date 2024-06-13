@@ -90,6 +90,10 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::get('/change-password', [App\Http\Controllers\FrontEnd\VendorController::class, 'ChangePassword'])->name('change-password');
     Route::post('/change-password', [App\Http\Controllers\FrontEnd\VendorController::class, 'UpdatePassword'])->name('updatePassword');
 
+    Route::post('/addlocation', [App\Http\Controllers\FrontEnd\VendorController::class, 'addLocation'])->name('addlocation');
+
+    
+
 });
 
 

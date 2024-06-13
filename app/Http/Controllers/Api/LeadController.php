@@ -48,8 +48,9 @@ class LeadController extends BaseApiController
             }
             $lead->leadAnswers = implode("|",$LeadAns);
             $lead->leadAnswersShort = substr($lead->leadAnswers,0,60).((strlen($lead->leadAnswers) > 60) ? "...":"");
-            $lead->lead_added_on = $lead->created_at->diffForHumans(null,null,true);
+            $lead->lead_added_on =   str_replace('mos', 'mon', $lead->created_at->diffForHumans(null,null,true));
             $lead->required_credits = env('LEAD_CREDITS');
+            $lead->professional_respond  = LeadUser::where(['lead_id' => $lead->id , 'status' => 'Active'])->count();
         }
 
         $response['data'] = ['leads' => $leads,'information' => $information ,'pagination' => $pagination];
@@ -75,7 +76,9 @@ class LeadController extends BaseApiController
             $email = explode("@",$lead->email);
             $lead->encrypted_email = "**********@".$email[1];
             $lead->encrypted_phone = "*******".substr ($lead->phone, -3);
+            $lead->professional_respond  = LeadUser::where(['lead_id' => $lead->id , 'status' => 'Active'])->count();
             $leadAnswers = LeadAnswer::with('question')->where("lead_id" , $lead->id)->where("status" , "Active")->get();
+            $lead->professional_respond  = LeadUser::where(['lead_id' => $lead->id , 'status' => 'Active'])->count();
             $lead->leadAnswers = $leadAnswers;
             $lead->required_credits = env('LEAD_CREDITS');
             return response(['data' => $lead , "status"=>true ,"message" => Self::SUCCESS_MSG], 200);
@@ -87,9 +90,10 @@ class LeadController extends BaseApiController
             $lead_id = $request->input('lead_id');
             $user_id = auth('api')->user()->id;
 
-            $notIntrested = NotInterestedLead::where(['lead_id' => $lead_id ,'user_id' => $user_id ,'status' => 'Active'])->get();
+            $notIntrested = NotInterestedLead::where(['lead_id' => $lead_id ,'user_id' => $user_id ,'status' => 'Active'])->count();
+            
 
-            if($notIntrested){
+            if($notIntrested > 0){
                 $response = ['message' => 'Lead removed successfully',"status"=>true];
                 return response($response, 200);
             }
@@ -259,7 +263,13 @@ class LeadController extends BaseApiController
                 $lead = Lead::with('service')->find($leadId);
                 $leadAnswers = LeadAnswer::with('question')->where("lead_id" , $lead->id)->where("status" , "Active")->get();
                 $lead->leadAnswers = $leadAnswers;
-     
+                $lead->response_status = $leadUser->response_status;
+                $lead->days_ago =   str_replace('mos', 'mon',$leadUser->created_at->diffForHumans(null,null,true));
+                $lead->credits = 0;
+                $Logs= creditTransactionLog::where(['lead_id' => $lead->id,'status' => 'Active','user_id' => auth('api')->user()->id,'action' => 'subtracted'])->first();
+                if(!empty($Logs)){
+                    $lead->credits = $Logs->credits;
+                }
                 $lead->responseActivities = ResponseActivity::where('lead_user_id' , $leadUser->id)->orderBy('id','DESC')->get();
                 $lastActivity = ResponseActivity::where('lead_user_id' , $leadUser->id)->orderBy('id','DESC')->first();
                 $lead->lastActivityDate = $lastActivity->logged_date;

@@ -264,8 +264,8 @@
                                 <p class="text-secondary text-xs">You'll receive leads in these services</p>
                                 <div class="widget_tag_cloud ">                   
                                     <div class="tagcloud">
-                                        @foreach (auth()->user()->services as $service)
-                                        <a>{{$service->name}}</a>
+                                        @foreach ($data['services'] as $service)
+                                        <a>{{$service->service->name}}</a>
                                         @endforeach
                                        
                                     </div>

@@ -79,7 +79,7 @@
                                 <div class="card-block pt-5">
                                     <img class="img-fluid" width="156" height="111" src="https://d18jakcjgoan9.cloudfront.net/s/img/frontend-v2/seller-dashboard/noresults-illustration.png!d=PVEswj" srcset="https://d18jakcjgoan9.cloudfront.net/s/img/frontend-v2/seller-dashboard/noresults-illustration.png!d=PVEswj 1x, https://d18jakcjgoan9.cloudfront.net/s/img/frontend-v2/seller-dashboard/noresults-illustration.png!d=KAYSPp 2x">
                                     <h4 class="mt-2">
-                                        No responses
+                                        No Lead
                                     </h4>
                                     <p class="text-center mt-2 text-light-grey">You haven’t responded to any customers yet. When you do, you’ll be able to contact and access their details here.</p>
                                     <a href="/sellers/dashboard/">View leads</a>
@@ -159,10 +159,10 @@
                                         <div class="card-block pt-5">
                                             <img class="img-fluid" width="156" height="111" src="https://d18jakcjgoan9.cloudfront.net/s/img/frontend-v2/seller-dashboard/noresults-illustration.png!d=PVEswj" srcset="https://d18jakcjgoan9.cloudfront.net/s/img/frontend-v2/seller-dashboard/noresults-illustration.png!d=PVEswj 1x, https://d18jakcjgoan9.cloudfront.net/s/img/frontend-v2/seller-dashboard/noresults-illustration.png!d=KAYSPp 2x">
                                             <h4 class="mt-2">
-                                                No responses
+                                                No Lead
                                             </h4>
                                             <p class="text-center mt-2 text-light-grey">You haven’t responded to any customers yet. When you do, you’ll be able to contact and access their details here.</p>
-                                            <a href="/sellers/dashboard/">View leads</a>
+                                            {{-- <a href="/sellers/dashboard/">View leads</a> --}}
                                         </div>
                                     </div>
                              

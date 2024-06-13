@@ -23,7 +23,6 @@ class LeadController extends Controller
 {
     public function storeLead(Request $request){
         $userRequest = $request->input();
-
         $serviceId = $userRequest['service_id'];
         $serviceDetails = Service::find($serviceId);
 
@@ -40,6 +39,9 @@ class LeadController extends Controller
         unset($userRequest['pin_code']);
         unset($userRequest['address']);
         unset($userRequest['service_id']);
+        unset($userRequest['otp']);
+        unset($userRequest['serverOtp']);
+        
 
         try {
             $lead = new Lead();
@@ -50,9 +52,11 @@ class LeadController extends Controller
             $lead->name = $name;
             $lead->pin_code = $pin_code;
             $lead->address = $address;
+            $lead->latitude = '40.712776';
+            $lead->longitude = '-74.005974'
             $lead->save();
             $lead->unique_id = 'L'.str_pad($lead->id, 8, '0', STR_PAD_LEFT);
-
+            $lead->save();
             foreach($userRequest as $key => $req ){
 
                 $questionDeatils = Question::where("slug" ,$key)->first();
@@ -232,7 +236,7 @@ class LeadController extends Controller
         $unInterestedLeads = NotInterestedLead::select('lead_id')->where(['user_id' => auth('web')->user()->id ,"status" => 'Active'])->get();
         $InterestedLeads = LeadUser::select('lead_id')->where(['user_id' => auth('web')->user()->id ,"status" => 'Active'])->get();
         $userServices = ServiceUser::select('service_id')->where(['user_id' => auth('web')->user()->id , "status" => 'Active'])->get();
-        $leads = Lead::with('service')->where("status" , "InActive")->whereIn('service_id' ,$userServices);
+        $leads = Lead::with('service')->where("status" , "Active")->whereIn('service_id' ,$userServices);
         if(!empty($unInterestedLeads)){
             $leads = $leads->whereNotIn('id',$unInterestedLeads);
         }
@@ -258,7 +262,7 @@ class LeadController extends Controller
             }
             $lead->leadAnswers = implode("|",$LeadAns);
             $lead->leadAnswersShort = substr($lead->leadAnswers,0,60).((strlen($lead->leadAnswers) > 60) ? "...":"");
-            $lead->lead_added_on = $lead->created_at->diffForHumans(null,null,true);
+            $lead->lead_added_on =   str_replace('mos', 'mon', $lead->created_at->diffForHumans(null,null,true));
         }
         $lead = $firstLead;
         if($firstLead){
@@ -398,12 +402,18 @@ class LeadController extends Controller
         $message = "Your OTP code is: $otp";
         //$response = $this->sendSms( $message , '+91'.$phone);
         $response['status'] = 200;
+
+        $otptable = new Otp();
+        $otptable->number = $phone;
+        $otptable->otp = $otp;
+        $otptable->save();
         
         if ($response['status'] == 200) {
             return response()->json([
                 'status' => 'success',
                 'message' => 'OTP sent successfully!',
-                'otp' => $otp // In a real application, you wouldn't return the OTP
+                'otp' => $otp,
+                'id' => $otptable->id // In a real application, you wouldn't return the OTP
             ]);
         }
 

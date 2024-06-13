@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\EmailTemplate;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\Api\BaseApiController;
 
 class EmailTemplateController extends BaseApiController
 {
@@ -41,7 +43,9 @@ class EmailTemplateController extends BaseApiController
         $emailTemplate->template = $request->input('template');
         $emailTemplate->subject = $request->input('subject');
         $emailTemplate->template_name = $request->input('template_name');
-        $slug = unique_slug($request->input('template_name'), 'EmailTemplate');
+      
+        $slug = unique_slug(Str::random(30), 'EmailTemplate');
+
         $emailTemplate->slug = $slug;
         $emailTemplate->template_key = $slug;
     
@@ -73,7 +77,7 @@ class EmailTemplateController extends BaseApiController
         $emailTemplate->template = $request->input('template');
         $emailTemplate->subject = $request->input('subject');
         $emailTemplate->template_name = $request->input('template_name');
-        $slug = unique_slug($request->input('template_name'), 'EmailTemplate' , $emailTemplateid);
+        $slug = unique_slug(Str::random(30), 'EmailTemplate' , $emailTemplateid);
         $emailTemplate->slug = $slug;
         $emailTemplate->template_key = $slug;
         $emailTemplate->save();

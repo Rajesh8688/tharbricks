@@ -129,11 +129,15 @@ class BaseApiController extends Controller
         if (!$user) {
             return ['status' => false , 'data' => [] ,'message' => 'user not found'] ;
         }
-        if(!empty($user['profile_pic'])){
-            $user->profile_pic = env("APP_URL")."/uploads/users/".$user['profile_pic'];
+        if(!empty($user->profile_pic)){
+            $user->profile_pic = env("APP_URL")."/uploads/users/".$user->profile_pic;
         }
         //getting all the vendor info from vendor table
         $vendorInfo =  VendorDetails::where("user_id" , $user->id)->first();
+        unset($vendorInfo->id);
+        if(!empty($vendorInfo->company_logo)){
+            $vendorInfo->company_logo = env("APP_URL")."/uploads/company/".$vendorInfo->company_logo;
+        }
 
         //getting all the review from review table
         $reviewDetails = (int) Review::where('status' , 'Active')->where('user_id' , $user->id)->avg('rating');

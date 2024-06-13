@@ -1096,7 +1096,7 @@
                             <div class="row">
                                 <div class="col-9">
                                     <div class="form-group">
-                                        <input type="text" class="form-control QuestionStep`+currentStep+`" name="otp" required id = 'otp'>
+                                        <input type="number" class="form-control QuestionStep`+currentStep+`" name="otp" required id = 'otp'>
                                         <div id ="ErrorphoneNumber" style="display: none;color: red;" class="alert alert-danger"></div>
                                     </div>
                                 </div>

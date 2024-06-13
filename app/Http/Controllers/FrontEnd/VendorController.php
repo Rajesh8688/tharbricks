@@ -9,6 +9,7 @@ use Razorpay\Api\Api;
 use App\Models\Service;
 use App\Models\Setting;
 use App\Models\LeadUser;
+use App\Models\Location;
 use App\Models\LeadAnswer;
 use App\Models\ServiceUser;
 use App\Models\VendorImage;
@@ -147,6 +148,10 @@ class VendorController extends Controller
             'title' => "Vendor Dashboard",
         ];
 
+        //userServices 
+        $services = ServiceUser::with('service')->where(['user_id' => auth('web')->user()->id , "status" => 'Active'])->get();
+
+
         //Leads
         $unInterestedLeads = NotInterestedLead::select('lead_id')->where(['user_id' => auth('web')->user()->id ,"status" => 'Active'])->get();
         $InterestedLeads = LeadUser::select('lead_id')->where(['user_id' => auth('web')->user()->id ,"status" => 'Active'])->get();
@@ -184,6 +189,7 @@ class VendorController extends Controller
         $data['email'] = $supportDetails->email;
         $data['phone_number'] = $supportDetails->phone_number;
         $data['address'] = $supportDetails->address;
+        $data['services'] = $services;
 
         
         return view('front_end.vendor.dashboard',compact('titles','vendorDetails','data'));
@@ -212,7 +218,8 @@ class VendorController extends Controller
             $obj['path'] = asset('/uploads/company/'.$file->image);
             $existingImages[] = $obj;
         }
-        return view('front_end.vendor.edit',compact( 'titles','vendorDetails','services','userServicesIds','existingImages'));
+        $myservices = ServiceUser::with('service')->where(['user_id' => auth()->user()->id , 'status' => "Active"])->get();
+        return view('front_end.vendor.edit',compact( 'titles','vendorDetails','services','userServicesIds','existingImages' , 'myservices'));
     }
 
     //Update user details 
@@ -500,6 +507,53 @@ class VendorController extends Controller
         }
 
 
+    }
+
+    public function addLocation(Request $request){
+        $this->validate($request, [
+            'LocationType' => 'required|in:nationwide,distance',
+            'distance_value' => 'required_if:type,distance',
+            // 'latitude' => 'required_if:type,distance',
+            // 'longitude' => 'required_if:type,distance',
+            'services' => 'required',
+        ]);
+     
+
+
+        $userId = auth('web')->user()->id;
+
+        $location = new Location();
+        $location->type = $request->input('type');
+        if($request->input('type') == 'distance'){
+            $location->latitude = $request->input('latitude');
+            $location->longitude = $request->input('longitude');
+            $location->pincode = '12345';
+            $location->distance_value = $request->input('distance_value');
+            $location->user_id = $userId;
+        }
+   
+        $location->save();
+
+        $serviceIds = explode(',' , $request->input('services'));
+        if(in_array('all_services' , $serviceIds)){
+            $serviceIds = 'all_services';
+        }
+        if($serviceIds == 'all_services'){
+            $serviceIds = ServiceUser::where(['user_id' => $userId , 'status' => 'Active'])->pluck('service_id')->toArray();
+        }
+
+        foreach($serviceIds as $key => $value){
+            $serviceUser = ServiceUser::where(['user_id' => $userId , 'service_id' => $value , 'status' => 'Active'])->first();
+            $userServiceLocation = new UserServiceLocation();
+            $userServiceLocation->user_id = $userId;
+            $userServiceLocation->service_id = $value;
+            $userServiceLocation->location_id = $location->id;
+            $userServiceLocation->service_user_id = $serviceUser->id;
+            $userServiceLocation->status = 'Active';
+            $userServiceLocation->save();
+        }
+        $response = ["status" =>true ,"message" => "Location Added Successfully" ,'data' => []];
+        return response($response, 200);
     }
 
 

@@ -17,6 +17,7 @@ class CreateLocationsTable extends Migration
             $table->id();
             $table->enum('type',['nationwide','distance'])->nullable();
             $table->enum('distance',['km','miles'])->nullable();
+            $table->string('address')->nullable();
             $table->string('distance_value')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();

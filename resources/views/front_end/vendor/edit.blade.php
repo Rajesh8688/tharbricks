@@ -4,6 +4,15 @@
         .dz-image img {
             height: 120px;
         }
+ 
+        .error-message {
+            color: red;
+            display: none;
+        }
+        .error {
+            color: red;
+        }
+
     </style>
 
     <div class="content-admin-main">
@@ -606,21 +615,44 @@
                 @csrf
                 <div class="card-body aon-card-body">
                     <div class="row">
-                        {{-- <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Services</label>
-                            
-                                <select class="selectpicker" multiple data-live-search="true" name="serviceId[]">
-                                    @foreach ($services as $item)
-                                        <option  {{ in_array($item->id, old('serviceId', $userServicesIds) ?: []) ? 'selected' : '' }} value ="{{$item->id}}">{{$item->name}}</option>
-                                    @endforeach
-                                </select>
+                        <div class="col-md-12">
+                            <div class="col-lg-3 col-md-4">
+                                <div class="sf-avai-time-slots-wrap">
+                                    <div class="pl-2">
+                                        <p>Within <b>20 kms</b> of <b>Location</b></p>
+                                        
+                                        <p class="" style="color: gray;opacity: 0.7;font-weight: 500;">1 service</p>
+                                    </div>
+                                    <div class="sf-avai-time-slots-control" style="justify-content: center">
+
+                                        <div class="sf-avai-time-slots-btn">
+                                            <button type="button" class="btn slot-delete  has-toltip" title="Delete">
+                                                <i class="fa fa-remove"> &nbsp; Delete</i>
+                                                <span class="header-toltip">Delete</span>
+                                            </button>
+                                         </div>
+                                        
+                                        <div class="sf-avai-time-slots-btn">
+                                            <button type="button" class="btn slot-update has-toltip" title="Update">
+                                                <i class="fa fa-refresh">&nbsp; Update</i>
+                                                <span class="header-toltip">Update</span>
+                                            </button>
+                                        </div>
+        
+                                    </div>
+        
+                                </div>
                             </div>
+                            {{-- <center>No Locations Found</center> --}}
                         </div>
-                        <div class ="col-12" > --}}
+                        <div class ="col-12" > 
+                            <hr>
                             <div  style="float:right">
                                 <button type="button"  class="site-button"  style="margin-right: 10px;"> Cancle </button>
-                                <button type="submit"  class="site-button"> Add Location </button>
+                                <button class="site-button" data-toggle="modal" data-target="#addLocation" type="button">
+                                    <i class="fa fa-plus"></i>
+                                    Add Location
+                                </button>
                             </div>
                         </div> 
 
@@ -786,10 +818,110 @@
 
     </div>
 
+    <div class="modal fade content-admin-main" id="addLocation" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog model-w800" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel2">Add New Location</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form id="locationform">
+                <div class="modal-body">
+                    <div class="sf-md-padding">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Choose how you want to set your location</label>
+                                    <div class="aon-inputicon-box"> 
+                                        <div class="radio-inline-box">
+                                            <div class="checkbox sf-radio-checkbox sf-radio-check-2">
+                                                <input id="loc1" name="locationType" value="nationwide" type="radio" required>
+                                                <label for="loc1">Nationwide</label>
+                                            </div>
+                                            <div class="checkbox sf-radio-checkbox sf-radio-check-2">
+                                                <input id="loc2" name="locationType" value="distance" type="radio" required>
+                                                <label for="loc2">Distance</label>
+                                            </div>
+                                        </div>
+                                        <div class="error-message" id="locationTypeError">Please select a location type.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="LocationType" style="display: none; padding: 0px 20px">
+                                <div class="row">
+                                    <div class="col-md-8"> 
+                                        <div class="form-group">
+                                            <label>Pin Code / City</label>
+                                            <div class="aon-inputicon-box"> 
+                                                <input class="form-control sf-form-control" name="address" id="address" type="text" placeholder="PinCode/City">
+                                                <i class="aon-input-icon fa fa-user"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="col-md-4"> 
+                                        <div class="form-group">
+                                            <label>Distance</label>
+                                            <select class="sf-select-box form-control sf-form-control bs-select-hidden form-control" name="distance_value" id="distance_value" data-live-search="true" title="Distance">
+                                                <option value="1">1 Km</option>
+                                                <option value="2">2 Kms</option>
+                                                <option value="5">5 Kms</option>
+                                                <option value="10">10 Kms</option>
+                                                <option value="20">20 Kms</option>
+                                                <option value="30">30 Kms</option>
+                                                <option value="50">50 Kms</option>
+                                                <option value="75">75 Kms</option>
+                                                <option value="100">100 Kms</option>
+                                                <option value="125">125 Kms</option>
+                                                <option value="150">150 Kms</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Services</label>
+                                    <div class="aon-inputicon-box"> 
+                                        <div class="radio-inline-box">
+                                            <div class="checkbox sf-radio-checkbox sf-radio-check-2">
+                                                <input id="lo1" name="services" value="all_services" type="checkbox" required>
+                                                <label for="lo1">All Services</label>
+                                            </div>
+                                            @foreach($myservices as $UserService)
+                                                <div class="checkbox sf-radio-checkbox sf-radio-check-2">
+                                                    <input id="lo{{$UserService->service->id}}" name="services" value="{{$UserService->service->id}}" type="checkbox" required>
+                                                    <label for="lo{{$UserService->service->id}}">{{ ucfirst($UserService->service->name) }}</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <div class="error-message" id="servicesError">Please select at least one service.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @csrf
+        
+                <div class="modal-footer">
+                    <button type="button" class="site-button" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="site-button" id="addButton">Add</button>
+                </div>
+            </form>
+    
+           
+          </div>
+        </div>
+    </div>
 @endsection
 @section('extraScripts')
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"> </script> 
 
     <script>
         // Array of existing image URLs
@@ -877,6 +1009,101 @@
                         return _results;
                 }
         };
+
+        $(document).ready(function() {
+            // Get the CSRF token from the meta tag
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+            // Show or hide the LocationType div based on radio selection
+            $('input[name="locationType"]').change(function() {
+                if ($(this).val() == 'distance') {
+                    $('#LocationType').show();
+                } else {
+                    $('#LocationType').hide();
+                }
+                $('#locationTypeError').hide();
+            });
+
+            // Set up global AJAX settings
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            });
+
+            // Initialize form validation
+            $("#locationform").validate({
+                rules: {
+                    locationType: {
+                        required: true
+                    },
+                    address: {
+                        required: function() {
+                            return $('input[name="locationType"]:checked').val() == 'distance';
+                        }
+                    },
+                    distance_value: {
+                        required: function() {
+                            return $('input[name="locationType"]:checked').val() == 'distance';
+                        }
+                    },
+                    services: {
+                        required: true
+                    }
+                },
+                messages: {
+                    locationType: {
+                        required: "Please select a location type."
+                    },
+                    address: {
+                        required: "Please enter a valid address."
+                    },
+                    distance_value: {
+                        required: "Please select a distance."
+                    },
+                    services: {
+                        required: "Please select at least one service."
+                    }
+                },
+                errorPlacement: function(error, element) {
+                    console.log(error);
+                    console.log(element);
+                 
+                    if (element.attr("name") == "locationType") {
+                        error.appendTo("#locationTypeError");
+                    } else if (element.attr("name") == "address") {
+                        error.appendTo("#addressError");
+                    } else if (element.attr("name") == "distance_value") {
+                        error.appendTo("#distanceError");
+                    } else if (element.attr("name") == "services") {
+                        error.appendTo("#servicesError");
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+
+            // Form submission
+            $('#addButton').click(function() {console.log($("#locationform").valid());
+                if ($("#locationform").valid()) {
+                    var formData = $('#locationform').serialize();
+
+                    $.ajax({
+                        url: '/your-endpoint',
+                        method: 'POST',
+                        data: formData,
+                        success: function(response) {
+                            console.log(response);
+                            alert('Location added successfully!');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(error);
+                            alert('An error occurred. Please try again.');
+                        }
+                    });
+                }
+            });
+        });
 
     </script>
 

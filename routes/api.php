@@ -59,17 +59,27 @@ Route::prefix('v1')->group(function () {
         Route::post('/uploadimage', [App\Http\Controllers\Api\VendorController::class, 'uploadimage']); // Upload the ad images
         Route::get('/orderCreation', [App\Http\Controllers\Api\VendorController::class, 'razorpayOrderCreation']); // order id 
         Route::post('/updateOrder', [App\Http\Controllers\Api\VendorController::class, 'updateOrder']); // update id 
-        Route::post('/addService', [App\Http\Controllers\Api\VendorController::class, 'addService']); // Add service 
-        Route::post('/removeService', [App\Http\Controllers\Api\VendorController::class, 'removeService']); // Remove service 
+        //Services
         Route::get('/myServices', [App\Http\Controllers\Api\VendorController::class, 'myServices']); // My Services
+        Route::post('/addService', [App\Http\Controllers\Api\VendorController::class, 'addService']); // Add service 
+        Route::post('/editService', [App\Http\Controllers\Api\VendorController::class, 'editService']); // edit service 
+        Route::post('/removeService', [App\Http\Controllers\Api\VendorController::class, 'removeService']); // Remove service 
+        
         Route::post('/updateLeadStatus', [App\Http\Controllers\Api\VendorController::class, 'updateUserServiceStatus']); // update lead status
         Route::post('/requestReview', [App\Http\Controllers\Api\VendorController::class, 'requestReview']); // Review Request
         Route::resource('/emailTemplate', \App\Http\Controllers\Api\EmailTemplateController::class);//email-template
         Route::get('/review', [App\Http\Controllers\Api\VendorController::class, 'review']); // Review Request
 
+        //locations
+        Route::get('/allLocations', [App\Http\Controllers\Api\VendorController::class, 'allLocations']); // all location
         Route::post('/addLocation', [App\Http\Controllers\Api\VendorController::class, 'addLocation']); // Add Location
+        Route::post('/editLocation', [App\Http\Controllers\Api\VendorController::class, 'editLocation']); // Edit Location
         Route::delete('/deleteLocation', [App\Http\Controllers\Api\VendorController::class, 'deleteLocation']); // Delete Location
-        Route::get('/allLocations', [App\Http\Controllers\Api\VendorController::class, 'allLocations']); // Delete Location
+    
+
+        Route::post('/delete-gallary-image', [App\Http\Controllers\Api\VendorController::class, 'deleteGalleryImage']); // available location
+
+
 
 
 

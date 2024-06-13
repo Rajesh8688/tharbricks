@@ -44,9 +44,6 @@ class VendorController extends BaseApiController
         return response()->json($info);
     }
 
-    
-
-
     public function UpdateProfile(Request $request){
 
         $validator = Validator::make($request->all(), [
@@ -96,36 +93,122 @@ class VendorController extends BaseApiController
     }
 
     public function userService($userId){
-        // public function userService(){
-        //     $userId = 2;
-        //$data = DB::select('SELECT s.*,su.id as service_user_id FROM service_users su left join services s on s.id = su.service_id  WHERE  su.status = ? and su.user_id = ?', ['Active',$userId]);
-       // $data =  Service::withCount('ServiceLocations')->select('services.*','service_users.id as service_user_id','service_locations_count')->leftJoin('service_users', 'service_users.service_id', '=', 'services.id')->where(['service_users.status' => 'Active' , 'service_users.user_id' =>$userId ])->get();
-        // $data = Service::withCount('ServiceLocations')
-        //         ->leftJoin('service_users', function($join) {
-        //             $join->on('service_users.service_id', '=', 'services.id');
-        //         })
-        //         ->addSelect('services.*', 'service_users.id as service_user_id')
-        //        // ->select('services.*', 'service_users.id as service_user_id', 'service_locations_count')
-        //         ->where('service_users.status', 'Active')
-        //         ->where('service_users.user_id', $userId)
-        //         ->get();
-
-        $data = ServiceUser::withCount('ServiceLocations')
-                ->leftJoin('services', function($join) {
-                    $join->on('services.id', '=', 'service_users.id');
-                })
-                ->addSelect('services.*', 'service_users.id as service_user_id')
-                ->where(['service_users.status'=> 'Active' , 'service_users.user_id'=> $userId])
-                ->get();
-        return $data;
+        $services = ServiceUser::leftJoin('services', function($join) {
+            $join->on('services.id', '=', 'service_users.service_id');
+        })
+        ->addSelect('services.*', 'service_users.id as service_user_id')
+        ->where(['service_users.status'=> 'Active' , 'service_users.user_id'=> $userId])
+        ->get();
+        foreach($services as $s=>$service){
+            $services[$s]['service_location'] = UserServiceLocation::with('location')->where(['service_user_id' => $service->service_user_id ,'status' => 'Active'])->get();
+        }
+        return $services;
     }
-
+    
     public function myServices(){
         //function for getting My Services
         $userid = auth('api')->user()->id;
         $services = $this->userService($userid);
         $response = ['data' => $services,"status"=>true ,"message" => "user services"];
         return response($response, 200);
+    }
+
+    public function addService(Request $request){
+        $validator = Validator::make($request->all(), [
+            'service_ids' =>  'required', // 'users' is the table name, and 'email' is the column 
+        ]);
+        if ($validator->fails()) {
+            $errorMessages = $validator->messages()->all();
+            return response()->json([
+                'status' => false,
+                "message" => $errorMessages[0]
+            ], 200);
+        }
+
+        $userId = auth('api')->user()->id;
+        $serviceIds = $request->input('service_ids');
+        $serviceIds = explode("," , $serviceIds);
+        foreach($serviceIds as $serviceId){
+            $serviceUser = ServiceUser::where(['user_id'=>$userId , 'service_id' => $serviceId])->first();
+            if ($serviceUser === null) {
+                //insert
+                $userservice = new ServiceUser();
+                $userservice->user_id =  $userId ;
+                $userservice->service_id = $serviceId;
+                $userservice->save();
+                $services = $this->userService($userId);
+            }else{
+                //update
+                $serviceUser->status = "Active";
+                $serviceUser->save();
+                $services = $this->userService($userId);
+            }
+        }
+        $response = ["status" =>true ,"message" => "Service added successfully" ,'data' => $services];
+        return response($response, 200);
+    }
+
+    public function editService(Request $request){
+        $validator = Validator::make($request->all(), [
+            'location_ids' =>  'required',
+            'service_id' =>  'required'
+        ]);
+        if ($validator->fails()) {
+            $errorMessages = $validator->messages()->all();
+            return response()->json([
+                'status' => false,
+                "message" => $errorMessages[0]
+            ], 200);
+        }
+
+        $userId = auth('api')->user()->id;
+        $locationIds = explode("," , $request->input('location_ids'));
+        $serviceId = $request->input('service_id');
+        //deleting unwanted user Service Location 
+        UserServiceLocation::where(['service_id' => $request->input('service_id')])->whereNotIn('location_id' , $locationIds)->delete();
+        foreach($locationIds as $locationId){
+            $userLocation = UserServiceLocation::where(['service_id' => $serviceId , 'location_id' => $locationId])->first();
+            if($userLocation === null){
+                $serviceUser = ServiceUser::where(['service_id' => $serviceId , 'user_id' => $userId])->first();
+                $userLocation = new UserServiceLocation();
+                $userLocation->service_id = $serviceId;
+                $userLocation->location_id = $locationId;
+                $userLocation->user_id = $userId;
+                $userLocation->service_user_id = $serviceUser->id;
+                $userLocation->save();
+            }
+        }
+        $services = $this->userService($userId);
+        $response = ["status" =>true ,"message" => "Service Location Updated Successfully" ,'data' => $services];
+        return response($response, 200);
+    }
+
+    public function removeService(Request $request){
+        $validator = Validator::make($request->all(), [
+            'service_id' =>  'required', // 'users' is the table name, and 'email' is the column 
+        ]);
+        if ($validator->fails()) {
+            $errorMessages = $validator->messages()->all();
+            return response()->json([
+                'status' => false,
+                "message" => $errorMessages[0]
+            ], 200);
+        }
+
+        $userId = auth('api')->user()->id;
+        $serviceId = $request->input('service_id');
+
+        $serviceUser = ServiceUser::where(['user_id'=>$userId , 'service_id' => $serviceId])->first();
+        if($serviceUser === null){
+            
+            $response = ["status" =>false ,"message" => "Service Not Tagged to this user" ,'data' => []];
+            return response($response, 200);
+        }else{
+            ServiceUser::where(['user_id'=>$userId , 'service_id' => $serviceId])->update(['status'=>'InActive']);
+            $services = $this->userService($userId);
+            $response = ["status" =>true ,"message" => "Service Removed Successfully" ,'data' => $services];
+            return response($response, 200);
+        }
     }
 
     public function changePassword(Request $request)
@@ -197,6 +280,7 @@ class VendorController extends BaseApiController
         $userId = auth('api')->user()->id;
         
         $image = $request->image;
+        $id = '';
 
         if ($userId) {
             if($request->type == 'profile_image'){
@@ -235,6 +319,7 @@ class VendorController extends BaseApiController
                     $vendorImage->status = "Active";
                     $vendorImage->created_at = now();
                     $vendorImage->save();
+                    $id = $vendorImage->id;
                 }
             }
             
@@ -243,13 +328,15 @@ class VendorController extends BaseApiController
                 return response()->json([
                     'status' => true,
                     "message" => $uploadImage['message'],
-                    'link' =>  $uploadImage['url']
+                    'link' =>  $uploadImage['url'],
+                    'id' => $id
                 ], 200);
             }else{
                 return response()->json([
                     'status' => false,
                     "message" => $uploadImage['message'],
-                    'link' =>  ''
+                    'link' =>  '',
+                    'id' => $id
                 ], 200);
             }
         }
@@ -333,73 +420,6 @@ class VendorController extends BaseApiController
 
     }
 
-    public function addService(Request $request){
-        $validator = Validator::make($request->all(), [
-            'service_ids' =>  'required', // 'users' is the table name, and 'email' is the column 
-        ]);
-        if ($validator->fails()) {
-            $errorMessages = $validator->messages()->all();
-            return response()->json([
-                'status' => false,
-                "message" => $errorMessages[0]
-            ], 200);
-        }
-
-        $userId = auth('api')->user()->id;
-        $serviceIds = $request->input('service_ids');
-        $serviceIds = explode("," , $serviceIds);
-        foreach($serviceIds as $serviceId){
-            $serviceUser = ServiceUser::where(['user_id'=>$userId , 'service_id' => $serviceId])->first();
-            if ($serviceUser === null) {
-                //insert
-                $userservice = new ServiceUser();
-                $userservice->user_id =  $userId ;
-                $userservice->service_id = $serviceId;
-                $userservice->save();
-                $services = $this->userService($userId);
-            }else{
-                //update
-                $serviceUser->status = "Active";
-                $serviceUser->save();
-                $services = $this->userService($userId);
-            }
-        }
-        $response = ["status" =>true ,"message" => "Service added successfully" ,'data' => $services];
-        return response($response, 200);
-    }
-
-    public function removeService(Request $request){
-        $validator = Validator::make($request->all(), [
-            'service_id' =>  'required', // 'users' is the table name, and 'email' is the column 
-        ]);
-        if ($validator->fails()) {
-            $errorMessages = $validator->messages()->all();
-            return response()->json([
-                'status' => false,
-                "message" => $errorMessages[0]
-            ], 200);
-        }
-
-        $userId = auth('api')->user()->id;
-        $serviceId = $request->input('service_id');
-
-        $serviceUser = ServiceUser::where(['user_id'=>$userId , 'service_id' => $serviceId])->first();
-        if($serviceUser === null){
-            
-            $response = ["status" =>false ,"message" => "Service Not Tagged to this user" ,'data' => []];
-            return response($response, 200);
-        }else{
-            ServiceUser::where(['user_id'=>$userId , 'service_id' => $serviceId])->update(['status'=>'InActive']);
-            $services = $this->userService($userId);
-            $response = ["status" =>true ,"message" => "Service Removed Successfully" ,'data' => $services];
-            return response($response, 200);
-        }
-
-
-
-
-    }
-
     public function updateUserServiceStatus(Request $request){
         $validator = Validator::make($request->all(), [
             'lead_id' =>  'required',
@@ -430,6 +450,19 @@ class VendorController extends BaseApiController
 
     }
 
+    public function allLocations(){
+        $userId = auth('api')->user()->id;
+        $locations = Location::where(['user_id' => $userId])->get();
+
+        //location Services
+        foreach($locations as $l => $location){
+
+            $locations[$l]['user_service'] =UserServiceLocation::with('service')->where(['user_id' => $userId , 'location_id' => $location->id ,'status' => 'Active'])->get();
+        }
+        $response = ["status" =>true ,"message" => "Locations" ,'data' => $locations];
+        return response($response, 200);
+    }
+
     public function addLocation(Request $request){
         $validator = Validator::make($request->all(), [
             'type' => 'required|in:nationwide,distance',
@@ -450,12 +483,13 @@ class VendorController extends BaseApiController
 
         $location = new Location();
         $location->type = $request->input('type');
+        $location->user_id = $userId;
         if($request->input('type') == 'distance'){
             $location->latitude = $request->input('latitude');
             $location->longitude = $request->input('longitude');
             $location->pincode = '12345';
             $location->distance_value = $request->input('distance_value');
-            $location->user_id = $userId;
+            
         }
    
         $location->save();
@@ -478,8 +512,73 @@ class VendorController extends BaseApiController
             $userServiceLocation->status = 'Active';
             $userServiceLocation->save();
         }
-        $response = ["status" =>true ,"message" => "Location Added Successfully" ,'data' => []];
+        $locations = $this->allLocations();
+        $response = ["status" =>true ,"message" => "Location Added Successfully" ,'data' => json_decode($locations->getContent(),true)];
         return response($response, 200);
+    }
+
+    public function editLocation(Request $request){
+        $validator = Validator::make($request->all(), [
+            'type' => 'required|in:nationwide,distance',
+            'distance_value' => 'required_if:type,distance',
+            'latitude' => 'required_if:type,distance',
+            'longitude' => 'required_if:type,distance',
+            'services' => 'required',
+            'id' => 'required'
+        ]);
+        if ($validator->fails()) {
+            $errorMessages = $validator->messages()->all();
+            return response()->json([
+                'status' => false,
+                "message" => $errorMessages[0]
+            ], 200);
+        }
+        $locationDetails = Location::find($request->input('id'));
+        $userId = auth('api')->user()->id;
+        if($locationDetails === null){
+            $response = ["status" =>false ,"message" => "Location Not Found" ,'data' => []];
+            return response($response, 200);
+        }
+        $locationDetails->type = $request->input('type');
+        $locationDetails->user_id = $userId;
+        if($request->input('type') == 'distance'){
+            $locationDetails->latitude = $request->input('latitude');
+            $locationDetails->longitude = $request->input('longitude');
+            $locationDetails->pincode = '12345';
+            $locationDetails->distance_value = $request->input('distance_value');
+        }
+        $locationDetails->save();
+        $serviceIds = explode(',' , $request->input('services'));
+
+        //deleting unwanted user Service Location 
+        UserServiceLocation::where(['location_id' => $request->input('id')])->whereNotIn('service_id' , $serviceIds)->delete();
+
+        //updating or adding new user Service Location
+        foreach($serviceIds as $key => $value){
+            $userServiceLocation = UserServiceLocation::where(['user_id' => $userId , 'service_id' => $value , 'status' => 'Active' ,'location_id' =>$request->input('id')])->first();
+
+            if($userServiceLocation === null){
+
+                //insert
+                $serviceUser = ServiceUser::where(['user_id' => $userId , 'service_id' => $value , 'status' => 'Active'])->first();
+                $userServiceLocation = new UserServiceLocation();
+                $userServiceLocation->user_id = $userId;
+                $userServiceLocation->service_id = $value;
+                $userServiceLocation->location_id = $locationDetails->id;
+                $userServiceLocation->service_user_id = $serviceUser->id;
+                $userServiceLocation->status = 'Active';
+                $userServiceLocation->save();
+
+            }else{
+                //update
+                $userServiceLocation->status = 'Active';
+                $userServiceLocation->save();
+            }
+        }
+        $locations = $this->allLocations();
+        $response = ["status" =>true ,"message" => "Location Updated Successfully" ,'data' => json_decode($locations->getContent(),true)['data']];
+        return response($response, 200);
+
     }
 
     public function deleteLocation(Request $request){
@@ -500,9 +599,11 @@ class VendorController extends BaseApiController
         }
         $location->delete();
         UserServiceLocation::where('location_id' , $request->input('location_id'))->delete();
-        $response = ["status" =>true ,"message" => "Location Deleted Successfully" ,'data' => []];
+        $locations = $this->allLocations();
+        $response = ["status" =>true ,"message" => "Location Deleted Successfully" ,'data' => json_decode($locations->getContent(),true)];
         return response($response, 200);
     }
+
 
     public function requestReview(Request $request){
         $validator = Validator::make($request->all(), [
@@ -547,10 +648,34 @@ class VendorController extends BaseApiController
         return response($response, 200);
     }
 
-    public function allLocations(){
-        $userId = auth('api')->user()->id;
-        $locations = Location::withCount('UserServices')->where(['user_id' => $userId])->get();
-        $response = ["status" =>true ,"message" => "Locations" ,'data' => $locations];
+    
+
+    public function deleteGalleryImage(Request $request){
+        $validator = Validator::make($request->all(), [
+            'image_id' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $errorMessages = $validator->messages()->all();
+            return response()->json([
+                'status' => false,
+                "message" => $errorMessages[0]
+            ], 200);
+        }
+
+        $images = $request->input('image_id');
+        $images =explode("," , $images);
+        foreach($images as $image){
+            $vendorImage = VendorImage::find($image);
+            $originalPath = User::$imageCompanyUrl;
+            if($vendorImage != null){
+                deleteImage($originalPath, $vendorImage->image);
+                $vendorImage->delete();
+            }
+        }
+
+        $response = ["status" =>true ,"message" => "Image Deleted Successfully" ,'data' => []];
         return response($response, 200);
+
+
     }
 }

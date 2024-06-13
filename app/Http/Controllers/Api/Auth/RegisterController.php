@@ -107,21 +107,14 @@ class RegisterController extends BaseApiController
 
 
             if ($user) {
-       
                 $user = User::select('id','email','mobile','name',$this->ApiImage("/uploads/users/","profile_pic" ))->find($user->id);
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                $response = ['user' => $user,'token' => $token,"status"=>true ,"message" => "success"];
+                $info = $this->profileInfo($user->id);
+                $response = ['user' => $info['data'],'token' => $token,"status"=>true ,"message" => "success"];
+                $user->fcm_token = $request->input('fcm_token') ?? null;
+                $user->save();
                 return response($response, 200);
             }
-                
-
-            // Auth::guard('api')->loginUsingId($user_id);
-            // $user = User::select('id','email','mobile','first_name','last_name',$this->ApiImage("/uploads/users/","profile_pic" ))->find($user_id);
-            // $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-            // $response = ['user' => $user,'token' => $token,"status"=>true];
-            // return response($response, 200);
-
-           // return redirect()->route('vendor-dashboard')->with('success', 'Vendor Created successfully');
 
         } catch (\Throwable $th) {
             return response(["status"=>false,'message'=>'something went wrong' , 'token' => "",'user'=> []], 200);
