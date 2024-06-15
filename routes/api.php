@@ -42,9 +42,12 @@ Route::prefix('v1')->group(function () {
 
         Route::post('/InterestedLead', [App\Http\Controllers\Api\LeadController::class, 'InterestedLead']);
 
+        //Response
         Route::post('/myleads', [App\Http\Controllers\Api\LeadController::class, 'myleads']);
-        
         Route::get('/responseDetails', [App\Http\Controllers\Api\LeadController::class, 'responseDetails']);
+        Route::post('/activityLogger', [App\Http\Controllers\Api\LeadController::class, 'activityLogger']);
+        Route::post('/addestimation', [App\Http\Controllers\Api\LeadController::class, 'addestimation']);
+
 
         Route::post('/deleteAccount', [App\Http\Controllers\Api\VendorController::class, 'deleteAccount']);
 

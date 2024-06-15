@@ -212,8 +212,9 @@
     top: 0;
     z-index: 1020;
 }
-    </style>
 
+
+    </style>
         {{-- <div class="card-body aon-card-body"> --}}
             <div class="">
             <div class="content-admin-main2">
@@ -422,7 +423,7 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-tag"></i> &nbsp; Your estimate : <a href="#" target="_blank"> send an estimate</a></div>
+                                        <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-tag"></i> &nbsp; Your estimate : <a href="#" data-toggle="modal" data-target="#add_estimation"> send an estimate</a></div>
                                
                                     </div>
                                     <!--Q A-->
@@ -436,11 +437,9 @@
                                             <div class="tab-content">
                                                 <div id="tab-11111" class="tab-pane active">
                                                     <div id="activity-log">
-    
                                                         <div id="activity-log-container" class="">
                                                             <div id="activity-log-items-container">
                                                                 @foreach ($lead->responseActivities as $k=>$activity)
-
                                                                     <div class="activity-log-item d-flex justify-content-between @if($k==0) first @endif">
                                                                         <div class="left-track flex-grow-0 d-flex flex-column align-items-center">
                                                                             <div class="line top"></div>
@@ -477,68 +476,11 @@
                                                                     </div>
                                                                     
                                                                 @endforeach
-                                                                {{-- <div class="activity-log-item d-flex justify-content-between first">
-                                                                    <div class="left-track flex-grow-0 d-flex flex-column align-items-center">
-                                                                        <div class="line top"></div>
-                                                                        <div class="item-icon item-icon-project_purchased_alt">
-                                                                            <div class="icon-border border rounded-circle d-flex justify-content-center align-items-center" style="">
-                                                                                <img class="" src="{{asset('frontEnd/images/transperent-favion-24.png')}}" alt="">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="line bottom flex-fill"></div>
-                                                                    </div>
-                                                                    <div class="details flex-column flex-grow-1 ml-2 mb-4 p-3 border text-sm card" style="border-radius: 10px;font-weight: bold;">
-                                                                        <div class="details-top d-flex justify-content-between text-sm text-grey-400">
-                                                                            <div class="details-top-left flex-grow-1">
-                                                                                <div class="item-actor-name">You</div>
-                                                                            </div>
-                                                                            <div class="details-top-right">
-                                                                                <div class="item-date">19:50</div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <p class="item-message mb-0 mt-1">Purchased the lead</p>
-                                                                    </div>
-                                                                </div>
-                                                                
-                                                            
-                                                                
-                                                                <div class="activity-log-item d-flex justify-content-between" >
-                                                                    <div class="left-track flex-grow-0 d-flex flex-column align-items-center">
-                                                                        <div class="line top"></div>
-                                                                        <div class="item-icon item-icon-project_released">
-                                                                            <div class="icon-border border rounded-circle d-flex justify-content-center align-items-center" style="background-color:#F3F3F6">
-                                                                                <img class="" src="{{asset('frontEnd/images/looking_for.svg')}}" alt="">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="line bottom flex-fill"></div>
-                                                                    </div>
-                                                                    <div class="details flex-column flex-grow-1 ml-2 mb-4 p-3 border text-sm card" style="border-radius: 10px;font-weight: bold;">
-                                                                        <div class="details-top d-flex justify-content-between text-sm text-grey-400">
-                                                                            <div class="details-top-left flex-grow-1">
-                                                                                <div class="item-actor-name">Janes</div>
-                                                                            </div>
-                                                                            <div class="details-top-right">
-                                                                                <div class="item-date">19:46</div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="details-center">
-                                                                            <p class="item-message mb-0 mt-1">Looking for a Building Contractor</p>
-                                                                        </div>
-                                                                         <hr>
-                                                                       <div class="details-bottom">
-                                                                            <div class="item-content text-grey-600">
-                                                                                <p class="mb-0"><a data-toggle="tab" href="#tab-22222" class="show-project-details" >View details</a></p>
-                                                                                <a href="#" class="show-more-link mt-3">Show more</a>
-                                                                                <a href="#" class="show-less-link mt-3">Show less</a>
-                                                                            </div>
-                                                                        </div> 
-                                                                    </div>
-                                                                </div> --}}
+                                                               
                                                                 
                                                             </div>
                                                            
                                                         </div>
-                                                        
                                                     </div>
                                                 </div>
                                                 <div id="tab-22222" class="tab-pane ">
@@ -550,9 +492,14 @@
                                                     <ul>
                                                 </div>
                                                 <div id="tab-33333" class="tab-pane ">
+                                                    <div class="widget widget_tag_cloud ">                   
+                                                        <div class="tagcloud">
+                                                            <a >sdfjgsdf hgkhsgfhfssdufiysdhfiu </a>
+                                                        </div>
+                                                    </div>
                                                     <div class="editer-wrap">
                                                         <div class="editer-textarea">
-                                                            <textarea class="form-control" rows="6" placeholder="Write a private Notes"></textarea>
+                                                            <textarea class="form-control" rows="6" placeholder="Write a private Notes" id ="notes" name = "notes"></textarea>
                                                         </div>
                                                     </div>
                                                     <div style="float:right;padding-top:20px">
@@ -580,7 +527,7 @@
                                                 <h2 class="btns-title text-center mt-2 mb-3">Update your progress</h2>
                                                 <div class="d-flex justify-content-center align-items-center response-btns-container">
                                                     <div class="text-center d-flex justify-content-center align-items-center flex-column">
-                                                        <button class="btn bg-danger mb-2 js-cfb-no-answer-btn"> <span class="bark-svg-icon bsi-primary-white ">
+                                                        <button class="btn bg-danger mb-2 js-cfb-no-answer-btn" onclick="updateActivityLogger('no_answer' ,{{$lead->id}})"> <span class="bark-svg-icon bsi-primary-white ">
                                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                 <g clip-path="url(#clip0_51_7502)">
                                                                 <path d="M23.7051 16.8C20.6551 13.91 16.5351 12.13 11.9951 12.13C7.45512 12.13 3.33512 13.91 0.285117 16.8C0.105117 16.98 -0.00488281 17.23 -0.00488281 17.51C-0.00488281 17.79 0.105117 18.04 0.285117 18.22L2.76512 20.7C2.94512 20.88 3.19512 20.99 3.47512 20.99C3.74512 20.99 3.99512 20.88 4.17512 20.71C4.96512 19.97 5.86512 19.35 6.83512 18.86C7.16512 18.7 7.39512 18.36 7.39512 17.96V14.86C8.84512 14.38 10.3951 14.13 11.9951 14.13C13.5951 14.13 15.1451 14.38 16.5951 14.85V17.95C16.5951 18.34 16.8251 18.69 17.1551 18.85C18.1351 19.34 19.0251 19.97 19.8251 20.7C20.0051 20.88 20.2551 20.98 20.5251 20.98C20.8051 20.98 21.0551 20.87 21.2351 20.69L23.7151 18.21C23.8951 18.03 24.0051 17.78 24.0051 17.5C24.0051 17.22 23.8851 16.98 23.7051 16.8ZM5.39512 17.36C4.73512 17.73 4.10512 18.16 3.52512 18.63L2.45512 17.56C3.36512 16.81 4.35512 16.17 5.40512 15.66V17.36H5.39512ZM20.4751 18.62C19.8751 18.14 19.2551 17.72 18.5951 17.35V15.65C19.6451 16.16 20.6251 16.8 21.5451 17.55L20.4751 18.62ZM6.99512 6.56001L11.9351 11.5L19.0051 4.43001L17.5951 3.01001L11.9351 8.67001L8.39512 5.13001H10.9951V3.13001H4.99512V9.13001H6.99512V6.56001Z" fill="white"></path>
@@ -640,11 +587,54 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade content-admin-main" id="add_estimation" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog model-w800" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel2">Add Estimation</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" id="estimationForm" enctype="multipart/form-data">
+                            @csrf
+                            <div class="sf-md-padding">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Estimation Text</label>
+                                            <textarea class="form-control" rows="5" name="estimationText" id="estimationText"></textarea>
+                                            <div id="estimationTexterror" style="display: none"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Estimation</label><br>
+                                            <input type="file" name="estimationattachment" id="estimationattachment">
+                                            <div id="estimationattachmentError" style="display: none"></div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="lead_user_id" value="{{$lead->lead_user_id}}">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="admin-button" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="admin-button" onclick="sendEstimationfun()">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         
 @endsection
 @section('extraScripts')
 <script>
     url = "{{route('vendor-response-lead-details')}}";
+    loggerUrl = "{{route('vendor-activity-logger')}}";
+    sendEstimation = "{{route('vendor-estimation')}}";
     
     function responseDetails(id){
         $.ajax({
@@ -671,6 +661,69 @@
         });
 
     }
+    function updateActivityLogger(message,lead_id){
+        $.ajax({
+            type: 'GET',
+            url: loggerUrl,
+            data: {'lead_id' : lead_id,'message' : message},
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            success: function (response) {
+                $("#activity-log").html(response.ajaxActivityLogger);
+            },
+            error:function(response){
+                console.log(response);
+            }
+        });
+    }
+
+    function sendEstimationfun() {
+        var isValid = true;
+
+        var estimationText = $("#estimationText").val();
+        if (estimationText == undefined || estimationText == '' || estimationText == null) {
+            $("#estimationTexterror").css('display', 'block').css('color', 'red').html('Please enter Text');
+            isValid = false;
+        } else {
+            $("#estimationTexterror").css('display', 'none');
+        }
+
+        if ($('#estimationattachment').get(0).files.length === 0) {
+            $("#estimationattachmentError").css('display', 'block').css('color', 'red').html('Please select attachment');
+            isValid = false;
+        } else {
+            $("#estimationattachmentError").css('display', 'none');
+        }
+        if (isValid) {
+            var formData = new FormData($('#estimationForm')[0]);
+            $.ajax({
+                type: 'POST',
+                url: sendEstimation, // Ensure this URL matches your route
+                data: formData,
+                contentType: false,
+                processData: false,
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                success: function (response) {
+                    console.log(response);
+                    // Handle the response
+                    console.log('Success:', response);
+                    $("#activity-log").html(response.ajaxActivityLogger);
+                    $('#estimationForm')[0].reset(); // Reset the form
+                    $('#add_estimation').modal('hide'); // Hide the modal
+                },
+                error: function (response) {
+                    console.log('Error:', response);
+                    $('#upload-result').html('<p>Error: ' + response.responseJSON.error + '</p>');
+                }
+            });
+        }
+    }
+    // Reset form when modal is hidden
+    $('#add_estimation').on('hidden.bs.modal', function () {
+        $('#estimationForm')[0].reset();
+        $("#estimationTexterror").css('display', 'none');
+        $("#estimationattachmentError").css('display', 'none');
+    });
+
     @if(session('success'))
         toastr.success('{{session('success')}}', 'success');
     @endif

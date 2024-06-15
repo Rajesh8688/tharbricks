@@ -69,8 +69,12 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::get('vendor/leads/details', [App\Http\Controllers\FrontEnd\LeadController::class, 'leadDetails'])->name('vendor-lead-details');
     Route::get('vendor/not-interested-lead', [App\Http\Controllers\FrontEnd\LeadController::class, 'notInterestedLead'])->name('vendor-not-interested-lead');
     Route::get('vendor/interested-lead', [App\Http\Controllers\FrontEnd\LeadController::class, 'InterestedLead'])->name('vendor-interested-lead');
+    
     Route::get('vendor/my-tharbricks', [App\Http\Controllers\FrontEnd\LeadController::class, 'myleads'])->name('my-tharbricks');
     Route::get('vendor/response/details', [App\Http\Controllers\FrontEnd\LeadController::class, 'responseDetails'])->name('vendor-response-lead-details');
+    Route::get('vendor/activityLogger', [App\Http\Controllers\FrontEnd\LeadController::class, 'activityLogger'])->name('vendor-activity-logger');
+    Route::post('vendor/addEstimation', [App\Http\Controllers\FrontEnd\LeadController::class, 'addEstimation'])->name('vendor-estimation');
+    
     Route::get('vendor/edit', [App\Http\Controllers\FrontEnd\VendorController::class, 'edit'])->name('vendor-edit');
     Route::post('vendor/company/update', [App\Http\Controllers\FrontEnd\VendorController::class, 'updateCompanyDetails'])->name('update-company-details');
     Route::post('vendor/user/update', [App\Http\Controllers\FrontEnd\VendorController::class, 'updateUserDetails'])->name('update-user-details');

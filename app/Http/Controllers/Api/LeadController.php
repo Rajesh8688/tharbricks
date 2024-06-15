@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Lead;
 use App\Models\LeadUser;
+use App\Models\Estimation;
 use App\Models\LeadAnswer;
 use App\Models\ServiceUser;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use App\Models\NotInterestedLead;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\CreditTransactionLog;
+use Illuminate\Support\Facades\Validator;
 
 class LeadController extends BaseApiController
 {
@@ -282,5 +284,68 @@ class LeadController extends BaseApiController
 
             
         }
+    }
+
+    // Activity Log Store
+
+    public function activityLogger(Request $request){
+        $validator = Validator::make($request->all(), [
+            'lead_id' => 'required',
+            'message' => 'required'
+        ]);
+        if ($validator->fails()) {
+            $errorMessages = $validator->messages()->all();
+            return response()->json([
+                'status' => false,
+                "message" => $errorMessages[0]
+            ], 200);
+        }
+        $userId  = auth('api')->user()->id;
+        $leadId = $request->input('lead_id');
+
+        //checking lead User access
+        $leadUser = LeadUser::where(['user_id' => $userId , 'lead_id' => $leadId , 'status' => 'Active'])->first();
+        if($leadUser === null){
+            return response()->json(['status' => false , "message" => 'Lead Does not Exist' , 'data' => []], 200);
+        }
+        $responseActivity = new ResponseActivity();
+        $responseActivity->lead_user_id = $leadUser->id;
+        $responseActivity->message = $request->input('message');
+        $responseActivity->save();
+        $responseActivity = ResponseActivity::where(['lead_user_id' => $leadUser->id])->orderBy('id','DESC')->get();
+
+        return response()->json(['status' => true , "message" => 'Updated Activity Log' , 'data' => $responseActivity], 200);
+    }
+
+    public function addestimation(Request $request){
+        $validator = Validator::make($request->all(), [
+            'text' => 'required',
+            'attachment' => 'required',
+            'lead_user_id' => 'required'
+        ]);
+        if ($validator->fails()) {
+            $errorMessages = $validator->messages()->all();
+            return response()->json([
+                'status' => false,
+                "message" => $errorMessages[0]
+            ], 200);
+        }
+        $LeadUserId = $request->input('lead_user_id');
+        $leadUser = LeadUser::find($LeadUserId);
+        if($leadUser === null){
+            return response()->json(['status' => false , "message" => 'Lead Does not Exist' , 'data' => []], 200);
+        }
+        $estimation = new Estimation();
+        $estimation->text = $request->input('text');
+        $estimation->attachment = '';
+        $estimation->save();
+
+        //storing in logs
+        $responseActivity = new ResponseActivity();
+        $responseActivity->lead_user_id = $LeadUserId;
+        $responseActivity->message = 'estimation added';
+        $responseActivity->save();
+
+        return response()->json(['status' => true , "message" => 'Estimation added' , 'data' => []], 200);
     }
 }

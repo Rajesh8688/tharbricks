@@ -469,6 +469,7 @@ class VendorController extends BaseApiController
             'distance_value' => 'required_if:type,distance',
             'latitude' => 'required_if:type,distance',
             'longitude' => 'required_if:type,distance',
+            'address' => 'required_if:type,distance',
             'services' => 'required',
         ]);
         if ($validator->fails()) {
@@ -488,6 +489,7 @@ class VendorController extends BaseApiController
             $location->latitude = $request->input('latitude');
             $location->longitude = $request->input('longitude');
             $location->pincode = '12345';
+            $location->address = $request->input('address');
             $location->distance_value = $request->input('distance_value');
             
         }
@@ -513,7 +515,7 @@ class VendorController extends BaseApiController
             $userServiceLocation->save();
         }
         $locations = $this->allLocations();
-        $response = ["status" =>true ,"message" => "Location Added Successfully" ,'data' => json_decode($locations->getContent(),true)];
+        $response = ["status" =>true ,"message" => "Location Added Successfully" ,'data' => json_decode($locations->getContent(),true)['data']];
         return response($response, 200);
     }
 
@@ -523,6 +525,7 @@ class VendorController extends BaseApiController
             'distance_value' => 'required_if:type,distance',
             'latitude' => 'required_if:type,distance',
             'longitude' => 'required_if:type,distance',
+            'address' => 'required_if:type,distance',
             'services' => 'required',
             'id' => 'required'
         ]);
@@ -545,6 +548,7 @@ class VendorController extends BaseApiController
             $locationDetails->latitude = $request->input('latitude');
             $locationDetails->longitude = $request->input('longitude');
             $locationDetails->pincode = '12345';
+            $locationDetails->address = $request->input('address');
             $locationDetails->distance_value = $request->input('distance_value');
         }
         $locationDetails->save();
@@ -600,7 +604,7 @@ class VendorController extends BaseApiController
         $location->delete();
         UserServiceLocation::where('location_id' , $request->input('location_id'))->delete();
         $locations = $this->allLocations();
-        $response = ["status" =>true ,"message" => "Location Deleted Successfully" ,'data' => json_decode($locations->getContent(),true)];
+        $response = ["status" =>true ,"message" => "Location Deleted Successfully" ,'data' => json_decode($locations->getContent(),true)['data']];
         return response($response, 200);
     }
 

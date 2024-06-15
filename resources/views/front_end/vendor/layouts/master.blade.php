@@ -60,37 +60,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('frontEnd/css/style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('admin-assets/css/plugins/extensions/toastr.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('admin-assets/vendors/css/extensions/toastr.css')}}">
-    <style>
-        #loader-container {
-            position: relative;
-        }
-
-        #loader {
-            display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        #loader:before {
-            content: "";
-            border: 8px solid #f3f3f3;
-            border-top: 8px solid #3498db;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
 
    
 
@@ -121,6 +90,7 @@
             </div>
         </div>
     </div>
+    <div id="ajaxLoader" class="ajaxLoader"></div>
     <!-- LOADING AREA  END ====== -->
 
 	<div class="page-wraper">
@@ -172,6 +142,17 @@
 <script  src="{{ asset('frontEnd/js/bootstrap-slider.min.js')}}"></script><!-- Form js -->
 <script src="{{asset('admin-assets/vendors/js/extensions/toastr.min.js')}}"></script>
 
+<script>
+     // Show loader before AJAX call
+     $(document).ajaxStart(function() {
+        $("#ajaxLoader").css("display", "flex");
+    });
+
+    // Hide loader after AJAX call
+    $(document).ajaxStop(function() {
+        $("#ajaxLoader").css("display", "none");
+    });
+</script>
 @yield('extraScripts')
     
 <script>

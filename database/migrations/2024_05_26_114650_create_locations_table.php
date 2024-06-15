@@ -16,7 +16,7 @@ class CreateLocationsTable extends Migration
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
             $table->enum('type',['nationwide','distance'])->nullable();
-            $table->enum('distance',['km','miles'])->nullable();
+            $table->enum('distance',['km','miles'])->default('km')->nullable();
             $table->string('address')->nullable();
             $table->string('distance_value')->nullable();
             $table->string('latitude')->nullable();

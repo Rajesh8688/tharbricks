@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\FrontEnd;
 
+use App\Models\Otp;
 use App\Models\Lead;
 use App\Models\User;
 use App\Models\Service;
 use App\Models\LeadUser;
 use App\Models\Question;
+use App\Models\Estimation;
 use App\Models\LeadAnswer;
 use App\Models\ServiceUser;
 use App\Models\Notification;
@@ -18,6 +20,7 @@ use App\Models\NotInterestedLead;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\CreditTransactionLog;
+use Intervention\Image\Facades\Image;
 
 class LeadController extends Controller
 {
@@ -53,7 +56,7 @@ class LeadController extends Controller
             $lead->pin_code = $pin_code;
             $lead->address = $address;
             $lead->latitude = '40.712776';
-            $lead->longitude = '-74.005974'
+            $lead->longitude = '-74.005974';
             $lead->save();
             $lead->unique_id = 'L'.str_pad($lead->id, 8, '0', STR_PAD_LEFT);
             $lead->save();
@@ -341,7 +344,8 @@ class LeadController extends Controller
             $lastActivity = ResponseActivity::where('lead_user_id' , $myleads[0]->leadUsersId)->orderBy('id','DESC')->first();
             $lead->lastActivityDate = $lastActivity->logged_date;
             $lead->lastActivityMessage = $lastActivity->message;
-            
+            $leadUser = LeadUser::where(['user_id' => auth('web')->user()->id , 'lead_id' => $lead->id])->first();
+            $lead->lead_user_id = $leadUser->id;   
         }
         return view('front_end.vendor.my_leads',compact('titles' ,'myleads' ,'lead' ,'information'));
     }
@@ -421,5 +425,93 @@ class LeadController extends Controller
             'status' => 'error',
             'message' => 'Failed to send OTP. Please try again.'
         ], 500);
+    }
+
+    public function activityLogger(Request $request){
+       
+        $this->validate($request, [
+            'lead_id' => 'required',
+            'message' => 'required'
+        ]);
+        $userId  = auth('web')->user()->id;
+        $leadId = $request->input('lead_id');
+        $messageKey = $request->input('message');
+
+        //checking lead User access
+        $leadUser = LeadUser::where(['user_id' => $userId , 'lead_id' => $leadId , 'status' => 'Active'])->first();
+        if($leadUser === null){
+            return response()->json(['status' => false , "message" => 'Lead Does not Exist' , 'data' => []], 500);
+        }
+        if(in_array($messageKey, ['no_answer' , 'left_voice_mail' , 'we_talked' , 'didnt_call'])){
+            switch ($messageKey) {
+                case 'no_answer':
+                    $message = 'No Answer';
+                    break;
+                case 'left_voice_mail':
+                    $message = 'Left Voice Mail';
+                    break;
+                case 'we_talked':
+                    $message = 'We Talked';
+                    break;
+                case 'didnt_call':
+                    $message = "Didn't Call";
+                    break;
+                default:
+                    $message = 'No Answer';
+                    break;
+            }
+            $responseActivity = new ResponseActivity();
+            $responseActivity->lead_user_id = $leadUser->id;
+            $responseActivity->message = $message;
+            $responseActivity->logged_date = now();
+            $responseActivity->save();
+        }
+        $responseActivity = ResponseActivity::where(['lead_user_id' => $leadUser->id])->orderBy('id','DESC')->get();
+        $lead = Lead::find($leadId);
+        return response()->json([
+            'ajaxActivityLogger' => view('front_end.vendor.ajaxActivityLogger' , compact('responseActivity','lead'))->render()
+        ]);
+    
+    }
+
+    public function addestimation(Request $request){
+       
+        $this->validate($request, [
+            'estimationText' => 'required',
+            'estimationattachment' => 'required',
+            'lead_user_id' => 'required'
+        ]);
+        $LeadUserId = $request->input('lead_user_id');
+        $leadUser = LeadUser::find($LeadUserId);
+        if($leadUser === null){
+            return response()->json(['status' => false , "message" => 'Lead Does not Exist' , 'data' => []], 200);
+        }
+        $attachment = $request->file('estimationattachment');
+        $path = Estimation::$imagePath;
+
+        if ($attachment != NULL) {
+            $newFileName = time() . $attachment->getClientOriginalName();
+            $attachment->move(public_path($path), $newFileName);
+            $dbpath = $path.$newFileName;
+        }
+        $estimation = new Estimation();
+        $estimation->text = $request->input('text');
+        $estimation->attachment = $dbpath;
+        $estimation->save();
+
+
+        //storing in logs
+        $responseActivityLog = new ResponseActivity();
+        $responseActivityLog->lead_user_id = $LeadUserId;
+        $responseActivityLog->message = 'estimation added';
+        $responseActivityLog->logged_date = now();
+        $responseActivityLog->save();
+    
+        $responseActivity = ResponseActivity::where(['lead_user_id' => $LeadUserId])->orderBy('id','DESC')->get();
+        $lead = Lead::find($leadUser->lead_id);
+        return response()->json([
+            'status' => true , "message" => 'Estimation added' ,
+            'ajaxActivityLogger' => view('front_end.vendor.ajaxActivityLogger' , compact('responseActivity','lead'))->render()
+        ]);
     }
 }
