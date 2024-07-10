@@ -12,7 +12,7 @@ class ServiceController extends BaseApiController
         $services = Service::where('status' ,'Active')->get();
         return response()->json([
             'status' => false,
-            'message' => self::SUCCESS_MSG,
+            'message' => __('lang.success'),
             "data" => $services
         ], 200);
     }

@@ -10,16 +10,20 @@ use App\Models\LeadUser;
 use App\Models\Question;
 use App\Models\Estimation;
 use App\Models\LeadAnswer;
+use App\Models\EmailMailer;
 use App\Models\ServiceUser;
 use App\Models\Notification;
+use App\Models\ResponseNote;
 use Illuminate\Http\Request;
 use App\Models\VendorDetails;
 use App\Models\QuestionOption;
 use App\Models\ResponseActivity;
 use App\Models\NotInterestedLead;
+use App\Models\ReviewLeadChecker;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\CreditTransactionLog;
+use Illuminate\Support\Facades\Crypt;
 use Intervention\Image\Facades\Image;
 
 class LeadController extends Controller
@@ -124,11 +128,72 @@ class LeadController extends Controller
                     $notification->save();
                 }
             }
+            //storing email templates
+            $email = explode("@",$lead->email);
+            $lead->service_name = Service::find($lead->service);
+            $lead->encrypted_email = "**********@".$email[1];
+            $lead->encrypted_phone = "*******".substr ($lead->phone, -3);
+            $lead->url = route('vendor-leads');
+            $lead->leadAnswers = LeadAnswer::with('question')->where(['lead_id' => $lead->id])->get();
+
+           //$this->sendEmailtoUsers(['lead_details' => $lead]);
+
             return redirect()->route('home')->with('success',$serviceDetails->name.' request submitted successfully');
 
         } catch (\Throwable $th) {
             return redirect()->route('home')->with('error','something went wrong');
         }
+    }
+
+
+    public function emailChecker(){
+        $leadId = 9;
+        $lead = Lead::find($leadId);
+        $email = explode("@",$lead->email);
+        $lead->encrypted_email = "**********@".$email[1];
+        $lead->encrypted_phone = "*******".substr ($lead->phone, -3);
+        $lead->url = route('vendor-leads');
+        $lead->leadAnswers = LeadAnswer::with('question')->where(['lead_id' => $lead->id])->get();
+        return $this->sendEmailtoUsers(['lead_details' => $lead]);
+      
+    }
+
+
+
+    public function sendEmailtoUsers($data){
+        $leadDetails = $data['lead_details'];
+
+        return view('front_end.email_templates.lead',compact('leadDetails'));
+        
+        $users = DB::table('users as u')
+        ->leftJoin('vendor_details as vd', 'vd.user_id', '=', 'u.id')
+        ->leftJoin('service_users as su', 'su.user_id', '=', 'u.id')
+        ->where('vd.is_new_lead_i_receive_email_notifications', 1)
+        ->where('su.service_id', $data['service_id'])
+        ->where('su.status', 'Active')
+        ->where('u.status', 'Active')
+        ->select('u.*')
+        ->get();
+
+    if(count($users) > 0){
+        foreach($users as $user){
+            $emailMailer = new EmailMailer();
+            $emailMailer->mail_from = env('MAIL_FROM_ADDRESS');
+            $emailMailer->mail_from_name = env('MAIL_FROM_NAME');
+            $emailMailer->mail_to = $user->email;
+            $emailMailer->mail_to_name = $user->name;
+            $emailMailer->reference = 'lead';
+            $emailMailer->reference_id = $data['lead_details']->lead_id;
+            $emailMailer->mail_subject = $data['lead_details']->name;
+            $leadDetails = $data['lead_details'];
+            $emailMailer->mail_message = view('front_end.email_templates.lead',compact($leadDetails));
+            $emailMailer->is_cron = 1;
+            $emailMailer->cron_status = 0;
+            $emailMailer->status = 'Active';
+            $emailMailer->save();
+        }
+    }
+
     }
 
     public function notInterestedLead(Request $request){
@@ -345,8 +410,24 @@ class LeadController extends Controller
             $lead->lastActivityDate = $lastActivity->logged_date;
             $lead->lastActivityMessage = $lastActivity->message;
             $leadUser = LeadUser::where(['user_id' => auth('web')->user()->id , 'lead_id' => $lead->id])->first();
-            $lead->lead_user_id = $leadUser->id;   
+            $lead->lead_user_id = $leadUser->id;  
+            $lead->response_status = $leadUser->response_status;   
+            $lead->notes = ResponseNote::where(['response_id' => $leadUser->id])->orderBy('id','DESC')->get();
+            //send,resend,dontShow,reviewSubmited
+            $lead->reviewLink = "dontShow";
+            if($lead->response_status == "Hired" || $lead->response_status == "Archived"){
+                $reviewChecker = ReviewLeadChecker::where(['lead_id' => $lead->id , 'requested_user_id' => auth('web')->user()->id])->first();
+                if(!empty($reviewChecker)){
+                    $lead->reviewLink = "send";
+                }elseif($reviewChecker != "Answered"){
+                    $lead->reviewLink = "resend";
+                }elseif($reviewChecker == "Answered"){
+                    $lead->reviewLink = "reviewSubmited";
+                }
+            }
         }
+ 
+        
         return view('front_end.vendor.my_leads',compact('titles' ,'myleads' ,'lead' ,'information'));
     }
 
@@ -366,17 +447,19 @@ class LeadController extends Controller
 
             if(!empty($leadUser)){
                 $lead = Lead::with('service')->find($leadId);
+                $lastActivity = ResponseActivity::where('lead_user_id' , $leadUser->id)->orderBy('id','DESC')->first();
                 $leadAnswers = LeadAnswer::with('question')->where("lead_id" , $lead->id)->where("status" , "Active")->get();
                 $lead->leadAnswers = $leadAnswers;
-     
                 $lead->responseActivities = ResponseActivity::where('lead_user_id' , $leadUser->id)->orderBy('id','DESC')->get();
-                $lastActivity = ResponseActivity::where('lead_user_id' , $leadUser->id)->orderBy('id','DESC')->first();
+                $lead->notes = ResponseNote::where(['response_id' => $leadUser->id])->orderBy('id','DESC')->get();
                 $lead->lastActivityDate = $lastActivity->logged_date;
                 $lead->lastActivityMessage = $lastActivity->message;
+                $lead->lead_user_id = $leadUser->id;   
+                $lead->response_status = $leadUser->response_status;
+                $lead->notes = ResponseNote::where(['response_id' => $leadUser->id])->orderBy('id','DESC')->get();
                 return response()->json([
-                    'leadDetails' => view('front_end.vendor.vendor_response_details_view',compact('lead'))->render()
+                    'leadDetails' => view('front_end.ajax.response-details',compact('lead'))->render()
                 ]);
-
             }else{
                 return response()->json(['error' => "Don't have access to this lead"], 500);
             }
@@ -437,12 +520,18 @@ class LeadController extends Controller
         $leadId = $request->input('lead_id');
         $messageKey = $request->input('message');
 
+        $leadDetails = Lead::find($leadId);
+
         //checking lead User access
         $leadUser = LeadUser::where(['user_id' => $userId , 'lead_id' => $leadId , 'status' => 'Active'])->first();
         if($leadUser === null){
             return response()->json(['status' => false , "message" => 'Lead Does not Exist' , 'data' => []], 500);
         }
-        if(in_array($messageKey, ['no_answer' , 'left_voice_mail' , 'we_talked' , 'didnt_call'])){
+        if(in_array($messageKey, ['no_answer' , 'left_voice_mail' , 'we_talked' , 'didnt_call' ,'send_whats_app' ,'send_email'])){
+            $openwhatsapp = false;
+            $whatsapp = null;
+            $openemail = false;
+            $email = null;
             switch ($messageKey) {
                 case 'no_answer':
                     $message = 'No Answer';
@@ -456,6 +545,16 @@ class LeadController extends Controller
                 case 'didnt_call':
                     $message = "Didn't Call";
                     break;
+                case 'send_whats_app':
+                    $message = "Sent Whatsapp Message";
+                    $openwhatsapp = true;
+                    $whatsapp = "+91".$leadDetails->phone;
+                    break;  
+                case 'send_email':
+                    $message = "Sent Email";
+                    $openemail = true;
+                    $email = $leadDetails->email;
+                    break;        
                 default:
                     $message = 'No Answer';
                     break;
@@ -466,15 +565,21 @@ class LeadController extends Controller
             $responseActivity->logged_date = now();
             $responseActivity->save();
         }
-        $responseActivity = ResponseActivity::where(['lead_user_id' => $leadUser->id])->orderBy('id','DESC')->get();
-        $lead = Lead::find($leadId);
+        $leadResponse = new Request(['lead_id' => $leadId]);
+        $responseData = $this->responseDetails($leadResponse);
         return response()->json([
-            'ajaxActivityLogger' => view('front_end.vendor.ajaxActivityLogger' , compact('responseActivity','lead'))->render()
+            'ajaxActivityLogger' => $this->activityLogs($leadUser->id),
+            'message' => "Log Updated Successfully",
+            'openwhatsapp' => $openwhatsapp,
+            'whatsappNumber' => $whatsapp,
+            'openemail' => $openemail,
+            'email' => $email,
+            'responseDetails' => json_decode($responseData->getContent(),true)['leadDetails']
         ]);
     
     }
-
-    public function addestimation(Request $request){
+    
+    public function addEstimation(Request $request){
        
         $this->validate($request, [
             'estimationText' => 'required',
@@ -507,11 +612,123 @@ class LeadController extends Controller
         $responseActivityLog->logged_date = now();
         $responseActivityLog->save();
     
-        $responseActivity = ResponseActivity::where(['lead_user_id' => $LeadUserId])->orderBy('id','DESC')->get();
-        $lead = Lead::find($leadUser->lead_id);
         return response()->json([
             'status' => true , "message" => 'Estimation added' ,
-            'ajaxActivityLogger' => view('front_end.vendor.ajaxActivityLogger' , compact('responseActivity','lead'))->render()
+            'ajaxActivityLogger' => $this->activityLogs($LeadUserId)
         ]);
     }
+
+    public function addNotes(Request $request){
+        $this->validate($request, [
+            'notes' => 'required',
+            'lead_user_id' => 'required'
+        ]);
+        $LeadUserId = $request->input('lead_user_id');
+        $leadUser = LeadUser::find($LeadUserId);
+        if($leadUser === null){
+            return response()->json(['status' => false , "message" => 'Lead Does not Exist' , 'data' => []], 200);
+        }
+        $responseNotes = new ResponseNote();
+        $responseNotes->notes = $request->input('notes');
+        $responseNotes->response_id = $request->input('lead_user_id');
+        $responseNotes->save();
+
+        $responseNotes = ResponseNote::where(['response_id' => $request->input('lead_user_id')])->get();
+
+        
+        //storing in logs
+        $responseActivityLog = new ResponseActivity();
+        $responseActivityLog->lead_user_id = $LeadUserId;
+        $responseActivityLog->message = 'Notes added';
+        $responseActivityLog->logged_date = now();
+        $responseActivityLog->save();
+
+        return response()->json([
+            'status' => true , "message" => 'Estimation added' ,
+            'ajaxActivityLogger' => $this->activityLogs($request->input('lead_user_id')),
+            'ajaxnotes' => $this->notesLogs($request->input('lead_user_id'))
+        ]);
+    }
+
+    public function activityLogs($responseId){
+        //$responseId = $lead_user_id
+        $leadUser = LeadUser::find($responseId);
+        $responseActivity = ResponseActivity::where(['lead_user_id' => $responseId])->orderBy('id','DESC')->get();
+        $lead = Lead::find($leadUser->lead_id);
+        return view('front_end.ajax.activityLogger' , compact('responseActivity','lead'))->render();
+    }
+
+    public function notesLogs($responseId){
+        $leadUser = LeadUser::find($responseId);
+        $responseNotes = ResponseNote::where(['response_id' => $responseId])->orderBy('id','DESC')->get();
+        return view('front_end.ajax.notesLogs' , compact('responseNotes'))->render();
+    }
+
+    public function updateResponse(Request $request){
+
+        $responseStatus = $request->input('response_status');
+        $lead_id = $request->input('lead_id');
+        $leadUser = LeadUser::where(['lead_id' => $lead_id , 'user_id' => auth('web')->user()->id ,'status' => 'Active'])->first();
+        if($leadUser === null){
+            return response()->json(['status' => false , "message" => 'Lead Does not Exist' , 'data' => []], 500);
+        }
+        if(in_array($responseStatus , ['Pending' , 'Hired' , 'Archived']) && !empty($lead_id)){
+            //update the data
+            $leadUser->response_status = $responseStatus;
+            $leadUser->save();
+
+            $responseActivityLog = new ResponseActivity();
+            $responseActivityLog->lead_user_id = $leadUser->id;
+            $responseActivityLog->message = 'Status Updated added';
+            $responseActivityLog->logged_date = now();
+            $responseActivityLog->save();
+        }
+        $leadResponse = new Request(['lead_id' => $lead_id]);
+        $responseData = $this->responseDetails($leadResponse);
+        return response()->json(['status' => true , "message" => 'Status Updated' , 'data' => json_decode($responseData->getContent(),true)['leadDetails'] ], 200);
+    }
+
+    public function requestReview(Request $request){
+        $this->validate($request, [
+            'lead_id' => 'required',
+        ]);
+
+        $leadId = $request->input('lead_id');
+        $requesteduserId = auth('web')->user()->id;
+        $leadDeatils = Lead::find($leadId);
+        $reviewLeadChecker = ReviewLeadChecker::where(['lead_id' => $leadId , 'email' => $leadDeatils->email ,'requested_user_id' => auth('web')->user()->id])->get();
+
+        $LeadUser = LeadUser::where(['lead_id' => $leadId , 'user_id' => auth('web')->user()->id])->first();
+        if($reviewLeadChecker->count() > 0){
+            $url = route('requestReview', ['token' => Crypt::encrypt($reviewLeadChecker[0]->id)]);
+            $message = "Again Review requested to user";
+            $request = "resend";
+        }else{
+            $reviewLeadChecker = new ReviewLeadChecker();
+            $reviewLeadChecker->lead_id = $leadId;
+            $reviewLeadChecker->email = $leadDeatils->email;
+            $reviewLeadChecker->requested_user_id= $requesteduserId;
+            $reviewLeadChecker->save();
+            $url = route('requestReview', ['token' => Crypt::encrypt($reviewLeadChecker->id)]);
+            $message = "Review requested to user";
+            $request = "send";
+            //sending email
+        }
+
+        $responseActivityLog = new ResponseActivity();
+        $responseActivityLog->lead_user_id = $LeadUser->id;
+        $responseActivityLog->message = $message;
+        $responseActivityLog->logged_date = now();
+        $responseActivityLog->save();
+        $leadResponse = new Request(['lead_id' => $leadId]);
+        $responseData = $this->responseDetails($leadResponse);
+       
+    
+        $response = ["status" =>true ,"message" => $message , 'link'=>$url , 'request' =>$request ,'number' =>$leadDeatils->phone , 'responseDetails' => json_decode($responseData->getContent(),true)['leadDetails']];
+     
+        
+        return response($response, 200);
+    }
+
+
 }

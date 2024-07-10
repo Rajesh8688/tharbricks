@@ -24,6 +24,7 @@ class CreateLocationsTable extends Migration
             $table->string('pincode')->nullable();
             $table->string('applicable_pincode')->nullable();
             $table->integer('user_id')->nullable();
+            $table->enum('status',['Active','InActive'])->default('Active');
             $table->timestamps();
         });
     }

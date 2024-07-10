@@ -23,14 +23,14 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Edit Blog</h4>
+                                    <h4 class="card-title">Edit Email Template</h4>
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
                                         <hr>
                                         <x-admin-error-list-show></x-admin-error-list-show>
 
-                                        <form class="form" action="{{route('blogs.update', $blog->id)}}"
+                                        <form class="form" action="{{route('email-template.update', $emailTemplate->id)}}"
                                               method="post"
                                               enctype="multipart/form-data">
                                             @csrf
@@ -45,7 +45,7 @@
                                                             <input type="text" id="name" class="form-control"
                                                                    placeholder="Name"
                                                                    name="name"
-                                                                   value="{{$blog->name}}" autocomplete="off">
+                                                                   value="{{$emailTemplate->name}}" autocomplete="off">
                                                             
                                                             @error('name')
                                                             <span class="invalid-feedback" role="alert">
@@ -59,8 +59,8 @@
                                                         <div class="form-label-group">
                                                         <select name="status" class="form-control @error('status') is-invalid @enderror" required>
                                                             <option value = "" >Select Status</option>
-                                                            <option value = "Active" {{$blog->status == 'Active' ? 'selected' : ''}}>Active</option>
-                                                            <option value = "InActive"{{$blog->status == 'InActive' ? 'selected' : ''}} >InActive</option>
+                                                            <option value = "Active" {{$emailTemplate->status == 'Active' ? 'selected' : ''}}>Active</option>
+                                                            <option value = "InActive"{{$emailTemplate->status == 'InActive' ? 'selected' : ''}} >InActive</option>
                                                         </select>
                                                         @error('status')
                                                             <span class="invalid-feedback" role="alert">
@@ -72,52 +72,12 @@
                                                     </div>
                                                 </div>    
                                                 <div class="row">
-                                                    <div class= "col-md-6 col-12">
-                                                      
-                                                            <label for="first-name-column">Image(836*446)</label>
-                                                            <div class="form-label-group">
-                                                                
-                                                                <input type="file" id="image" class="form-control @error('image') is-invalid @enderror" placeholder="Image" name="image" value="{{old('image')}}">
-                                                                {{-- @error('image')
-                                                                    <span class="invalid-feedback" role="alert">
-                                                                        <strong>{{ $message }}</strong>
-                                                                    </span>
-                                                                @enderror --}}
-                                                                
-                                                            </div>
+                                                    <div class= "col-12">
                                                     
-                                                    </div>
-                                                    <div class="col-md-6 col-12">
-                                                        <label for="first-name-column">Service</label>
-                                                        <div class="form-label-group">
-                                                        <select name="service_id" class="form-control @error('service_id') is-invalid @enderror" required>
-                                                            <option value = "" >Select Service</option>
-                                                            @foreach ($services as $service)
-                                                            <option value = "{{$service->id}}" {{$blog->service_id == $service->id ? 'selected' : ''}}>{{$service->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        @error('service_id')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    
-                                                    <div class= "col-md-6 col-12">
-                                                        <label for="first-name-column">Tags(plaese add with Comma (,))</label>
-                                                        <div class="form-label-group">
-                                                            <input type="text" id="tags" class="form-control " placeholder="Tags" name="tags" value="{{$blog->tags}}" autocomplete="off" required >
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 col-12">
-                                                        <label for="first-name-column">User Name</label>
-                                                        <div class="form-label-group">
-                                                            <input type="text" id="user_name" class="form-control @error('user_name') is-invalid @enderror" placeholder="User Name" name="user_name" value="{{$blog->user_name}}" autocomplete="off" required>
-                                                            @error('user_name')
+                                                        <div class="form-group">
+                                                            <label for="subject">Subject </label>
+                                                            <input type ="text"  class="form-control @error('subject') is-invalid @enderror"  placeholder="Subject" name="subject" required value ="{{$emailTemplate->subject}}">
+                                                            @error('subject')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
                                                                 </span>
@@ -125,21 +85,22 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                    <div class="row">
-                                                        <div class= "col-12">
-                                                        
-                                                            <div class="form-group">
-                                                                <label for="description">Description </label>
-                                                                <textarea  class="form-control @error('description') is-invalid @enderror" rows="5" id= "ckeditor" placeholder="Description" name="description" required>{{$blog->description}}</textarea>
-                                                                @error('description')
-                                                                    <span class="invalid-feedback" role="alert">
-                                                                        <strong>{{ $message }}</strong>
-                                                                    </span>
-                                                                @enderror
-                                                            </div>
+                                                <div class="row">
+                                                    <div class= "col-12">
+                                                    
+                                                        <div class="form-group">
+                                                            <label for="template">Template </label>
+                                                            <textarea  class="form-control @error('template') is-invalid @enderror" rows="5" id= "ckeditor" placeholder="Template" name="template" required>{{$emailTemplate->template}}</textarea>
+                                                            @error('template')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
                                                         </div>
-                                                        </div>
-                                                    </div>  
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>  
                                                     
 
                                                 <div>&nbsp;</div>

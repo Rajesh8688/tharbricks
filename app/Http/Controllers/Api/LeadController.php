@@ -7,6 +7,7 @@ use App\Models\LeadUser;
 use App\Models\Estimation;
 use App\Models\LeadAnswer;
 use App\Models\ServiceUser;
+use App\Models\ResponseNote;
 use Illuminate\Http\Request;
 use App\Models\VendorDetails;
 use App\Models\ResponseActivity;
@@ -274,6 +275,7 @@ class LeadController extends BaseApiController
                 }
                 $lead->responseActivities = ResponseActivity::where('lead_user_id' , $leadUser->id)->orderBy('id','DESC')->get();
                 $lastActivity = ResponseActivity::where('lead_user_id' , $leadUser->id)->orderBy('id','DESC')->first();
+                $lead->notes = ResponseNote::where('response_id' , $leadUser->id)->orderBy('id','DESC')->get();
                 $lead->lastActivityDate = $lastActivity->logged_date;
                 $lead->lastActivityMessage = $lastActivity->message;
                 return response(['data' => $lead , "status"=>true ,"message" => Self::SUCCESS_MSG], 200);
@@ -308,10 +310,33 @@ class LeadController extends BaseApiController
         if($leadUser === null){
             return response()->json(['status' => false , "message" => 'Lead Does not Exist' , 'data' => []], 200);
         }
-        $responseActivity = new ResponseActivity();
-        $responseActivity->lead_user_id = $leadUser->id;
-        $responseActivity->message = $request->input('message');
-        $responseActivity->save();
+
+        $messageKey = $request->input('message');
+        if(in_array($messageKey, ['no_answer' , 'left_voice_mail' , 'we_talked' , 'didnt_call'])){
+            switch ($messageKey) {
+                case 'no_answer':
+                    $message = 'No Answer';
+                    break;
+                case 'left_voice_mail':
+                    $message = 'Left Voice Mail';
+                    break;
+                case 'we_talked':
+                    $message = 'We Talked';
+                    break;
+                case 'didnt_call':
+                    $message = "Didn't Call";
+                    break;
+                default:
+                    $message = 'No Answer';
+                    break;
+            }
+            $responseActivity = new ResponseActivity();
+            $responseActivity->lead_user_id = $leadUser->id;
+            $responseActivity->message = $message;
+            $responseActivity->logged_date = now();
+            $responseActivity->save();
+        }
+
         $responseActivity = ResponseActivity::where(['lead_user_id' => $leadUser->id])->orderBy('id','DESC')->get();
 
         return response()->json(['status' => true , "message" => 'Updated Activity Log' , 'data' => $responseActivity], 200);
@@ -320,8 +345,7 @@ class LeadController extends BaseApiController
     public function addestimation(Request $request){
         $validator = Validator::make($request->all(), [
             'text' => 'required',
-            'attachment' => 'required',
-            'lead_user_id' => 'required'
+            'lead_id' => 'required'
         ]);
         if ($validator->fails()) {
             $errorMessages = $validator->messages()->all();
@@ -330,22 +354,78 @@ class LeadController extends BaseApiController
                 "message" => $errorMessages[0]
             ], 200);
         }
-        $LeadUserId = $request->input('lead_user_id');
-        $leadUser = LeadUser::find($LeadUserId);
+        $lead_id = $request->input('lead_id');
+        $leadUser = LeadUser::where(['lead_id' => $lead_id , 'user_id' => auth('api')->user()->id ,'status' => 'Active'])->first();
         if($leadUser === null){
             return response()->json(['status' => false , "message" => 'Lead Does not Exist' , 'data' => []], 200);
         }
         $estimation = new Estimation();
+        $estimation->text = $request->input('text');
         $estimation->text = $request->input('text');
         $estimation->attachment = '';
         $estimation->save();
 
         //storing in logs
         $responseActivity = new ResponseActivity();
-        $responseActivity->lead_user_id = $LeadUserId;
+        $responseActivity->lead_user_id = $leadUser->id;
         $responseActivity->message = 'estimation added';
         $responseActivity->save();
 
-        return response()->json(['status' => true , "message" => 'Estimation added' , 'data' => []], 200);
+        //mail to triggred
+
+
+        return response()->json(['status' => true , "message" => 'Estimation added' ], 200);
+    }
+
+    public function addNotes(Request $request){
+        $validator = Validator::make($request->all(), [
+            'notes' => 'required',
+            'lead_id' => 'required'
+        ]);
+        if ($validator->fails()) {
+            $errorMessages = $validator->messages()->all();
+            return response()->json([
+                'status' => false,
+                "message" => $errorMessages[0]
+            ], 200);
+        }
+        $LeadId = $request->input('lead_id');
+        $leadUser = LeadUser::where(['lead_id' => $LeadId , 'user_id' => auth('api')->user()->id ,'status' => 'Active'])->first();
+        if($leadUser === null){
+            return response()->json(['status' => false , "message" => 'Lead Does not Exist' , 'data' => []], 200);
+        }
+        $LeadUserId = $leadUser->id;
+        $responseNotes = new ResponseNote();
+        $responseNotes->notes = $request->input('notes');
+        $responseNotes->response_id = $leadUser->id;
+        $responseNotes->save();
+
+        $responseNotes = ResponseNote::where(['response_id' => $request->input('lead_id')])->get();
+
+        
+        //storing in logs
+        $responseActivityLog = new ResponseActivity();
+        $responseActivityLog->lead_user_id = $LeadUserId;
+        $responseActivityLog->message = 'Notes added';
+        $responseActivityLog->logged_date = now();
+        $responseActivityLog->save();
+
+        $responseNotes = ResponseNote::where(['response_id' => $LeadUserId])->get();
+        //$responseActivity = ResponseActivity::where(['lead_user_id' => $leadUser->id])->orderBy('id','DESC')->get();
+        return response()->json([
+            'status' => true , "message" => 'Notes Added Successfully' ,
+            'data' => $responseNotes
+        ]);
+    }
+    public function myActivity(Request $request){
+        $this->validate($request, [
+            'lead_id' => 'required'
+        ]);
+        $leadUser = LeadUser::where(['user_id' => auth('api')->user()->id,'lead_id' => $request->input('lead_id')])->first();
+        if($leadUser === null){
+            return response()->json(['status' => false , "message" => 'Lead Does not Exist' , 'data' => []], 200);
+        }
+        $responseActivity = ResponseActivity::where(['lead_user_id' => $leadUser->id])->orderBy('id','DESC')->get();
+        return response()->json(['status' => true , "message" => 'Updated Activity Log' , 'data' => $responseActivity], 200);
     }
 }

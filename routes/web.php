@@ -19,6 +19,7 @@ Auth::routes();
 
 
 Route::get('/', [App\Http\Controllers\FrontEnd\HomeController::class, 'index'])->name('home');
+Route::get('/localize/{lang}', [App\Http\Controllers\FrontEnd\HomeController::class, 'changeLang'])->name('changelang');
 Route::get('contact-us', [App\Http\Controllers\FrontEnd\HomeController::class, 'contactUs'])->name('contactUs');
 Route::post('submitContactUs', [App\Http\Controllers\FrontEnd\HomeController::class, 'submitContactUs'])->name('submitContactUs');
 
@@ -61,6 +62,7 @@ Route::get('review/{token}', [App\Http\Controllers\FrontEnd\HomeController::clas
 Route::post('submitReview', [App\Http\Controllers\FrontEnd\HomeController::class, 'reviewSubmit'])->name('submitReview');
 Route::get('review-success', [App\Http\Controllers\FrontEnd\HomeController::class, 'reviewSuccess'])->name('reviewSuccess');
 Route::get('review-failure', [App\Http\Controllers\FrontEnd\HomeController::class, 'reviewFailure'])->name('reviewFailure');
+Route::get('emailChecker', [App\Http\Controllers\FrontEnd\LeadController::class, 'emailChecker'])->name('emailChecker');
 
 
 Route::group(['middleware' => ['auth:web']], function() {
@@ -74,6 +76,7 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::get('vendor/response/details', [App\Http\Controllers\FrontEnd\LeadController::class, 'responseDetails'])->name('vendor-response-lead-details');
     Route::get('vendor/activityLogger', [App\Http\Controllers\FrontEnd\LeadController::class, 'activityLogger'])->name('vendor-activity-logger');
     Route::post('vendor/addEstimation', [App\Http\Controllers\FrontEnd\LeadController::class, 'addEstimation'])->name('vendor-estimation');
+    Route::post('vendor/addNotes', [App\Http\Controllers\FrontEnd\LeadController::class, 'addNotes'])->name('vendor-notes');
     
     Route::get('vendor/edit', [App\Http\Controllers\FrontEnd\VendorController::class, 'edit'])->name('vendor-edit');
     Route::post('vendor/company/update', [App\Http\Controllers\FrontEnd\VendorController::class, 'updateCompanyDetails'])->name('update-company-details');
@@ -87,6 +90,10 @@ Route::group(['middleware' => ['auth:web']], function() {
     // Route::post('vendor/my-credits', [App\Http\Controllers\RazorpayPaymentController::class, 'store']);
     Route::post('vendor/my-credits', [App\Http\Controllers\FrontEnd\VendorController::class, 'storePayment']);
 
+    Route::get('vendor/update-response', [App\Http\Controllers\FrontEnd\LeadController::class, 'updateResponse'])->name('updateResponse');
+
+
+
     // Route::get('vendor/payment', [RazorpayPaymentController::class, 'index']);
     // Route::post('vendor/payment', [App\Http\Controllers\RazorpayPaymentController::class, 'store']);
 
@@ -94,8 +101,12 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::get('/change-password', [App\Http\Controllers\FrontEnd\VendorController::class, 'ChangePassword'])->name('change-password');
     Route::post('/change-password', [App\Http\Controllers\FrontEnd\VendorController::class, 'UpdatePassword'])->name('updatePassword');
 
-    Route::post('/addlocation', [App\Http\Controllers\FrontEnd\VendorController::class, 'addLocation'])->name('addlocation');
+    Route::post('/addlocation', [App\Http\Controllers\FrontEnd\LocationController::class, 'addLocation'])->name('vendor-addLocation');
+    Route::post('/deleteLocation', [App\Http\Controllers\FrontEnd\LocationController::class, 'deleteLocation'])->name('vendor-deleteLocation');
+    Route::get('/getLocation', [App\Http\Controllers\FrontEnd\LocationController::class, 'getLocation'])->name('vendor-getLocation');
+    Route::post('/updateLocation', [App\Http\Controllers\FrontEnd\LocationController::class, 'updateLocation'])->name('vendor-updateLocation');
 
+    Route::post('/requestReview', [App\Http\Controllers\FrontEnd\LeadController::class, 'requestReview'])->name('vendor-requestReview');
     
 
 });

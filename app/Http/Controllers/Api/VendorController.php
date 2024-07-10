@@ -136,6 +136,17 @@ class VendorController extends BaseApiController
                 $userservice->user_id =  $userId ;
                 $userservice->service_id = $serviceId;
                 $userservice->save();
+                //tagging existing locations to available services
+                $locations = Location::where(['user_id' => $userId])->get();
+                foreach($locations as $l => $location){
+                    $userServiceLocation = new UserServiceLocation();
+                    $userServiceLocation->user_id = $userId;
+                    $userServiceLocation->service_id = $serviceId;
+                    $userServiceLocation->location_id = $location->id;
+                    $userServiceLocation->service_user_id = $userservice->id;
+                    $userServiceLocation->status = 'Active';
+                    $userServiceLocation->save();
+                }
                 $services = $this->userService($userId);
             }else{
                 //update
@@ -467,8 +478,8 @@ class VendorController extends BaseApiController
         $validator = Validator::make($request->all(), [
             'type' => 'required|in:nationwide,distance',
             'distance_value' => 'required_if:type,distance',
-            'latitude' => 'required_if:type,distance',
-            'longitude' => 'required_if:type,distance',
+            // 'latitude' => 'required_if:type,distance',
+            // 'longitude' => 'required_if:type,distance',
             'address' => 'required_if:type,distance',
             'services' => 'required',
         ]);
@@ -486,8 +497,8 @@ class VendorController extends BaseApiController
         $location->type = $request->input('type');
         $location->user_id = $userId;
         if($request->input('type') == 'distance'){
-            $location->latitude = $request->input('latitude');
-            $location->longitude = $request->input('longitude');
+            $location->latitude = $request->input('latitude') ?? '44.968046';
+            $location->longitude = $request->input('longitude') ?? '-94.420307';
             $location->pincode = '12345';
             $location->address = $request->input('address');
             $location->distance_value = $request->input('distance_value');
@@ -523,8 +534,8 @@ class VendorController extends BaseApiController
         $validator = Validator::make($request->all(), [
             'type' => 'required|in:nationwide,distance',
             'distance_value' => 'required_if:type,distance',
-            'latitude' => 'required_if:type,distance',
-            'longitude' => 'required_if:type,distance',
+            // 'latitude' => 'required_if:type,distance',
+            // 'longitude' => 'required_if:type,distance',
             'address' => 'required_if:type,distance',
             'services' => 'required',
             'id' => 'required'
@@ -545,8 +556,8 @@ class VendorController extends BaseApiController
         $locationDetails->type = $request->input('type');
         $locationDetails->user_id = $userId;
         if($request->input('type') == 'distance'){
-            $locationDetails->latitude = $request->input('latitude');
-            $locationDetails->longitude = $request->input('longitude');
+            $locationDetails->latitude = $request->input('latitude') ?? '44.968046';
+            $locationDetails->longitude = $request->input('longitude') ?? '-94.420307';
             $locationDetails->pincode = '12345';
             $locationDetails->address = $request->input('address');
             $locationDetails->distance_value = $request->input('distance_value');
@@ -559,7 +570,7 @@ class VendorController extends BaseApiController
 
         //updating or adding new user Service Location
         foreach($serviceIds as $key => $value){
-            $userServiceLocation = UserServiceLocation::where(['user_id' => $userId , 'service_id' => $value , 'status' => 'Active' ,'location_id' =>$request->input('id')])->first();
+            $userServiceLocation = UserServiceLocation::where(['user_id' => $userId , 'service_id' => $value  ,'location_id' =>$request->input('id')])->first();
 
             if($userServiceLocation === null){
 
@@ -624,7 +635,7 @@ class VendorController extends BaseApiController
         $leadId = $request->input('lead_id');
         $requesteduserId = auth('api')->user()->id;
         $leadDeatils = Lead::find($leadId);
-        $reviewLeadChecker = ReviewLeadChecker::where(['lead_id' => $leadId , 'email' => $leadDeatils->email])->get();
+        $reviewLeadChecker = ReviewLeadChecker::where(['lead_id' => $leadId , 'email' => $leadDeatils->email ,'requested_user_id' => auth('api')->user()->id])->get();
         if($reviewLeadChecker->count() > 0){
             $url = route('requestReview', ['token' => Crypt::encrypt($reviewLeadChecker[0]->id)]);
             $response = ["status" =>false ,"message" => "Request Already Sent" , 'link'=>$url];

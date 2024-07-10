@@ -15,7 +15,7 @@ class CreateEmailMailersTable extends Migration
     {
         Schema::create('email_mailers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('email_template_id');
+            $table->unsignedBigInteger('email_template_id')->nullable();;
             $table->unsignedBigInteger('template_user_id')->nullable();
             $table->string('mail_from');
             $table->string('mail_from_name');
@@ -25,8 +25,8 @@ class CreateEmailMailersTable extends Migration
             $table->unsignedBigInteger('reference_id')->nullable();
             $table->string('mail_subject');
             $table->string('mail_message');
-            $table->dateTime('send_date_time');
-            $table->dateTime('updated_date_time');
+            $table->dateTime('send_date_time')->nullable();
+            $table->dateTime('updated_date_time')->nullable();;
             $table->enum('is_cron',[0,1])->default(0);
             $table->enum('cron_status',[0,1])->default(0);
             $table->enum('status',['Active','InActive'])->default('Active');

@@ -21,11 +21,14 @@ use App\Models\VendorService;
 use Illuminate\Validation\Rule;
 use App\Models\ResponseActivity;
 use App\Models\NotInterestedLead;
+use App\Models\ReviewLeadChecker;
 use Illuminate\Support\Facades\DB;
+use App\Models\UserServiceLocation;
 use App\Http\Controllers\Controller;
 use App\Models\CreditTransactionLog;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Redirect;
 
@@ -218,8 +221,18 @@ class VendorController extends Controller
             $obj['path'] = asset('/uploads/company/'.$file->image);
             $existingImages[] = $obj;
         }
+        
         $myservices = ServiceUser::with('service')->where(['user_id' => auth()->user()->id , 'status' => "Active"])->get();
-        return view('front_end.vendor.edit',compact( 'titles','vendorDetails','services','userServicesIds','existingImages' , 'myservices'));
+        $myLocations = Location::where(["user_id" => auth('web')->user()->id])->OrderBy('id' , 'desc')->get();
+        $showNationalwide = true;
+        foreach($myLocations as $l=>$location){
+            if($location->type == "nationwide"){
+                $showNationalwide = false;
+            }
+            $locationservice = UserServiceLocation::where(['location_id' => $location->id , 'status' => "Active"])->get();
+            $myLocations[$l]['services'] = $locationservice->count();
+        }
+        return view('front_end.vendor.edit',compact( 'titles','vendorDetails','services','userServicesIds','existingImages' , 'myservices','myLocations','showNationalwide'));
     }
 
     //Update user details 
@@ -358,23 +371,37 @@ class VendorController extends Controller
         ]);
 
         $services = $request->input('serviceId');
+        $userId = auth('web')->user()->id;
+
 
         // ServiceUser::Where('user_id', auth()->user()->id)->update((['status'=>'InActive']));
         //DB::table('service_users')->where('user_id', auth()->user()->id)->update(['status' => 'InActive']);
-        ServiceUser::where('user_id', auth()->user()->id)->update(['status' => 'InActive']);
+        ServiceUser::where('user_id', $userId)->update(['status' => 'InActive']);
 
         foreach($services as $service){
-            $serviceUser = ServiceUser::where(["user_id" => auth()->user()->id , "service_id" =>$service])->first();
+            $serviceUser = ServiceUser::where(["user_id" => $userId , "service_id" =>$service])->first();
             if(!empty($serviceUser)){
                 //Activating service
                 $serviceUser->status = "Active";
                 $serviceUser->save();
             }else{
                 $serviceUser = new ServiceUser();
-                $serviceUser->user_id =  auth()->user()->id;
+                $serviceUser->user_id =  $userId;
                 $serviceUser->service_id =  $service;
                 $serviceUser->status = "Active";
                 $serviceUser->save();
+
+                //new service added then we are tagging available locations for that service
+                $locations = Location::where(['user_id' => $userId])->get();
+                foreach($locations as $l => $location){
+                    $userServiceLocation = new UserServiceLocation();
+                    $userServiceLocation->user_id = $userId;
+                    $userServiceLocation->service_id = $service;
+                    $userServiceLocation->location_id = $location->id;
+                    $userServiceLocation->service_user_id = $serviceUser->id;
+                    $userServiceLocation->status = 'Active';
+                    $userServiceLocation->save();
+                }
             }
         }
         return Redirect::back()->with(['success-info' => 'Service Details Updated successfully']);
@@ -509,53 +536,8 @@ class VendorController extends Controller
 
     }
 
-    public function addLocation(Request $request){
-        $this->validate($request, [
-            'LocationType' => 'required|in:nationwide,distance',
-            'distance_value' => 'required_if:type,distance',
-            // 'latitude' => 'required_if:type,distance',
-            // 'longitude' => 'required_if:type,distance',
-            'services' => 'required',
-        ]);
-     
-
-
-        $userId = auth('web')->user()->id;
-
-        $location = new Location();
-        $location->type = $request->input('type');
-        if($request->input('type') == 'distance'){
-            $location->latitude = $request->input('latitude');
-            $location->longitude = $request->input('longitude');
-            $location->pincode = '12345';
-            $location->distance_value = $request->input('distance_value');
-            $location->user_id = $userId;
-        }
-   
-        $location->save();
-
-        $serviceIds = explode(',' , $request->input('services'));
-        if(in_array('all_services' , $serviceIds)){
-            $serviceIds = 'all_services';
-        }
-        if($serviceIds == 'all_services'){
-            $serviceIds = ServiceUser::where(['user_id' => $userId , 'status' => 'Active'])->pluck('service_id')->toArray();
-        }
-
-        foreach($serviceIds as $key => $value){
-            $serviceUser = ServiceUser::where(['user_id' => $userId , 'service_id' => $value , 'status' => 'Active'])->first();
-            $userServiceLocation = new UserServiceLocation();
-            $userServiceLocation->user_id = $userId;
-            $userServiceLocation->service_id = $value;
-            $userServiceLocation->location_id = $location->id;
-            $userServiceLocation->service_user_id = $serviceUser->id;
-            $userServiceLocation->status = 'Active';
-            $userServiceLocation->save();
-        }
-        $response = ["status" =>true ,"message" => "Location Added Successfully" ,'data' => []];
-        return response($response, 200);
-    }
-
+    
+  
 
   
 }

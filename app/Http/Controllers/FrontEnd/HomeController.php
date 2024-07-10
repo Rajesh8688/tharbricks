@@ -138,4 +138,18 @@ class HomeController extends Controller
         $message = 'Something went wrong';
         return view('front_end.review.error' , compact('message'));
     }
+
+    public function changeLang($lang)
+    {
+        session(['lang' => $lang]);
+        return redirect()->back();
+    }
+
+    public function emailChecker(){
+
+        $leadId = 9;
+        $LeadDetails = Lead::with('service')->find($leadId);
+
+        return view('front_end.email_templates.lead');
+    }
 }

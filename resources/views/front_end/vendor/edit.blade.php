@@ -611,29 +611,30 @@
 
         <div class="card aon-card" id="aon-location-panel">
             <div class="card-header aon-card-header"><h4><i class="fa fa-list-alt"></i> Locations</h4> </div>
-            <form method="POST" action ="{{route('update-vendor-services')}}">
-                @csrf
-                <div class="card-body aon-card-body">
-                    <div class="row">
-                        <div class="col-md-12">
+            <div class="card-body aon-card-body" id = "locationCard">
+                <div >
+                    <div class="row aon-avi-time-slot">
+                        @forelse  ($myLocations as $location)
                             <div class="col-lg-3 col-md-4">
                                 <div class="sf-avai-time-slots-wrap">
                                     <div class="pl-2">
-                                        <p>Within <b>20 kms</b> of <b>Location</b></p>
-                                        
-                                        <p class="" style="color: gray;opacity: 0.7;font-weight: 500;">1 service</p>
+                                        @if($location->type == "distance")
+                                        <p>Within <b>{{$location->distance_value}} kms</b> of <b>{{$location->address}}</b></p>
+                                        @else
+                                        <p><b>{{ucfirst($location->type)}}</b> </p>
+                                        @endif
+                                        <p class="" style="color: gray;opacity: 0.7;font-weight: 500;">{{$location->services}} service</p>
                                     </div>
                                     <div class="sf-avai-time-slots-control" style="justify-content: center">
-
                                         <div class="sf-avai-time-slots-btn">
-                                            <button type="button" class="btn slot-delete  has-toltip" title="Delete">
+                                            <button type="button" class="btn slot-delete  has-toltip" title="Delete" onClick="deleteLocation({{$location->id}})">
                                                 <i class="fa fa-remove"> &nbsp; Delete</i>
                                                 <span class="header-toltip">Delete</span>
                                             </button>
-                                         </div>
+                                            </div>
                                         
                                         <div class="sf-avai-time-slots-btn">
-                                            <button type="button" class="btn slot-update has-toltip" title="Update">
+                                            <button type="button" class="btn slot-update has-toltip" title="Update" onClick="getLocation({{$location->id}})">
                                                 <i class="fa fa-refresh">&nbsp; Update</i>
                                                 <span class="header-toltip">Update</span>
                                             </button>
@@ -643,24 +644,24 @@
         
                                 </div>
                             </div>
-                            {{-- <center>No Locations Found</center> --}}
-                        </div>
-                        <div class ="col-12" > 
-                            <hr>
-                            <div  style="float:right">
-                                <button type="button"  class="site-button"  style="margin-right: 10px;"> Cancle </button>
-                                <button class="site-button" data-toggle="modal" data-target="#addLocation" type="button">
-                                    <i class="fa fa-plus"></i>
-                                    Add Location
-                                </button>
-                            </div>
-                        </div> 
-
+                        @empty
+                        <p class="text-center">No Locations Added.</p>
+                        @endforelse
+                        
+                        {{-- <center>No Locations Found</center> --}}
                     </div>
-                   
-                    {{-- <p>Enter same password in both fields. Use an uppercase letter and a number for stronger password.</p> --}}
+                    <div class ="col-12" > 
+                        <hr>
+                        <div  style="float:right">
+                            <button type="button"  class="site-button"  style="margin-right: 10px;margin-bottom: 26px;"> Cancle </button>
+                            <button class="site-button" data-toggle="modal" data-target="#addLocation" type="button">
+                                <i class="fa fa-plus"></i>
+                                Add Location
+                            </button>
+                        </div>
+                    </div> 
                 </div>
-            </form>
+            </div>
         </div>
 
         
@@ -835,11 +836,12 @@
                                 <div class="form-group">
                                     <label>Choose how you want to set your location</label>
                                     <div class="aon-inputicon-box"> 
-                                        <div class="radio-inline-box">
-                                            <div class="checkbox sf-radio-checkbox sf-radio-check-2">
+                                        <div class="radio-inline-box"><?php $displayProperty = $showNationalwide ? "block" : "none";?>
+                                            <div class="checkbox sf-radio-checkbox sf-radio-check-2" style="display:{{$displayProperty}}" id ="locationNationalWide">
                                                 <input id="loc1" name="locationType" value="nationwide" type="radio" required>
                                                 <label for="loc1">Nationwide</label>
                                             </div>
+                              
                                             <div class="checkbox sf-radio-checkbox sf-radio-check-2">
                                                 <input id="loc2" name="locationType" value="distance" type="radio" required>
                                                 <label for="loc2">Distance</label>
@@ -894,8 +896,8 @@
                                             </div>
                                             @foreach($myservices as $UserService)
                                                 <div class="checkbox sf-radio-checkbox sf-radio-check-2">
-                                                    <input id="lo{{$UserService->service->id}}" name="services" value="{{$UserService->service->id}}" type="checkbox" required>
-                                                    <label for="lo{{$UserService->service->id}}">{{ ucfirst($UserService->service->name) }}</label>
+                                                    <input id="loSer{{$UserService->service->id}}" name="services[]" value="{{$UserService->service->id}}" type="checkbox" required>
+                                                    <label for="loSer{{$UserService->service->id}}">{{ ucfirst($UserService->service->name) }}</label>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -918,6 +920,8 @@
           </div>
         </div>
     </div>
+    <div id ="updateLocationpop">
+    </div>
 @endsection
 @section('extraScripts')
 
@@ -926,6 +930,10 @@
     <script>
         // Array of existing image URLs
         var existingImages = {!! json_encode($existingImages) !!};
+        var addLocationUrl = '{{route("vendor-addLocation")}}';
+        var deleteLocationUrl = '{{route("vendor-deleteLocation")}}';
+        var getLocationUrl = '{{route("vendor-getLocation")}}';
+        var updateLocationUrl = '{{route("vendor-updateLocation")}}';
 
         // Initialize Dropzone
         Dropzone.options.myDropzone =
@@ -1089,21 +1097,95 @@
                     var formData = $('#locationform').serialize();
 
                     $.ajax({
-                        url: '/your-endpoint',
+                        url: addLocationUrl,
                         method: 'POST',
                         data: formData,
                         success: function(response) {
                             console.log(response);
-                            alert('Location added successfully!');
+                            $("#locationCard").html(response.locationCard);
+                            // Reset the form
+                            $('#addLocation').modal('hide');
+                            $('#locationform')[0].reset();
+                            toastr.success(response.message, 'success');
                         },
                         error: function(xhr, status, error) {
                             console.error(error);
-                            alert('An error occurred. Please try again.');
+                            toastr.error(response.message, 'error');
+          
                         }
                     });
                 }
             });
         });
+        function deleteLocation(locationId)
+            {
+                alert("dd");
+                $.ajax({
+                    url: deleteLocationUrl,
+                    method: 'POST',
+                    data: {"locationId": locationId},
+                    success: function(response) {
+                        console.log(response);
+                        $("#locationCard").html(response.locationCard);
+                        // Reset the form
+                        $('#locationform')[0].reset();
+                        toastr.success(response.message, 'success');
+                        if(response.showNationalwide){
+                            $("#locationNationalWide").css("display", "block");
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                        toastr.error(response.message, 'error');
+                    }
+                });
+            }
+        function getLocation(locationId)
+        {
+            $.ajax({
+                url: getLocationUrl,
+                method: 'GET',
+                data: {"locationId": locationId},
+                success: function(response) {
+                    console.log(response);
+                    $("#updateLocationpop").html(response.updatePopup);
+                    $('#updateLocationpopup').modal('show');
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    toastr.error(error, 'error');
+                }
+            });
+        }    
+
+        function updateLocation(){
+            if ($("#updatelocationform").valid()) {
+                    var formData = $('#updatelocationform').serialize();
+
+                    $.ajax({
+                        url: updateLocationUrl,
+                        method: 'POST',
+                        data: formData,
+                        success: function(response) {
+                            console.log(response);
+                            $("#locationCard").html(response.locationCard);
+                            // Reset the form
+                            
+                            $('#updateLocationpopup').modal('hide');
+                            $('#updatelocationform')[0].reset();
+                            toastr.success(response.message, 'success');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(error);
+                            toastr.error(response.message, 'error');
+          
+                        }
+                    });
+                }
+
+        }
+
+            
 
     </script>
 

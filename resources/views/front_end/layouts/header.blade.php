@@ -88,6 +88,24 @@
                       
                     </ul>
                 </div>
+               
+                    
+                    
+                
+                <div class="header-widget">
+                    <div class="aon-admin-messange sf-toogle-btn">
+                        <i class="feather-globe"></i>
+                        <span class="header-toltip">Language</span>
+                    </div>
+                    <div class="ws-toggle-popup popup-tabs-wrap-section " style ="width: revert-layer">
+                        <ul class="popup-curra-lang-list">
+                            <li> <a  href="{{route('changelang',['lang'=>'en'])}}">English</a></li>
+                            <li> <a  href="{{route('changelang',['lang'=>'hi'])}}">Hindi</a></li>
+                            <li> <a  href="{{route('changelang',['lang'=>'kn'])}}">Kannada</a></li>
+                        </ul>
+                    </div>
+                </div>
+           
 
                 @if(Auth::guard('web')->check())
                 <div class="header-widget">

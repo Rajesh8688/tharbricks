@@ -47,6 +47,8 @@ Route::prefix('v1')->group(function () {
         Route::get('/responseDetails', [App\Http\Controllers\Api\LeadController::class, 'responseDetails']);
         Route::post('/activityLogger', [App\Http\Controllers\Api\LeadController::class, 'activityLogger']);
         Route::post('/addestimation', [App\Http\Controllers\Api\LeadController::class, 'addestimation']);
+        Route::post('/addNotes', [App\Http\Controllers\Api\LeadController::class, 'addNotes']);
+        Route::get('/myActivity', [App\Http\Controllers\Api\LeadController::class, 'myActivity']);
 
 
         Route::post('/deleteAccount', [App\Http\Controllers\Api\VendorController::class, 'deleteAccount']);
@@ -77,7 +79,7 @@ Route::prefix('v1')->group(function () {
         Route::get('/allLocations', [App\Http\Controllers\Api\VendorController::class, 'allLocations']); // all location
         Route::post('/addLocation', [App\Http\Controllers\Api\VendorController::class, 'addLocation']); // Add Location
         Route::post('/editLocation', [App\Http\Controllers\Api\VendorController::class, 'editLocation']); // Edit Location
-        Route::delete('/deleteLocation', [App\Http\Controllers\Api\VendorController::class, 'deleteLocation']); // Delete Location
+        Route::post('/deleteLocation', [App\Http\Controllers\Api\VendorController::class, 'deleteLocation']); // Delete Location
     
 
         Route::post('/delete-gallary-image', [App\Http\Controllers\Api\VendorController::class, 'deleteGalleryImage']); // available location
