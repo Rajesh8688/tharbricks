@@ -165,7 +165,8 @@ class LeadController extends BaseApiController
 
                     $responseActivity = new ResponseActivity();
                     $responseActivity->lead_user_id = $leadUser->id;
-                    $responseActivity->message = "Looking for a ".$leadDetails->name;
+                    $responseActivity->message = "looking_for_a_name";
+                    $responseActivity->wildcard = json_encode(['name'=>$leadDetails->name]);
                     $responseActivity->logged_date = now();
                     $responseActivity->from = 'customer';
                     $responseActivity->status = "Active";
@@ -173,7 +174,7 @@ class LeadController extends BaseApiController
 
                     $responseActivity = new ResponseActivity();
                     $responseActivity->lead_user_id = $leadUser->id;
-                    $responseActivity->message = "Purchased the Lead ";
+                    $responseActivity->message = "purchased_the_lead";
                     $responseActivity->logged_date = now();
                     $responseActivity->from = 'vendor';
                     $responseActivity->status = "Active";
@@ -312,22 +313,28 @@ class LeadController extends BaseApiController
         }
 
         $messageKey = $request->input('message');
-        if(in_array($messageKey, ['no_answer' , 'left_voice_mail' , 'we_talked' , 'didnt_call'])){
+        if(in_array($messageKey, ['no_answer' , 'left_voice_mail' , 'we_talked' , 'didnt_call' ,'sent_whatsapp_message' ,'sent_email'])){
             switch ($messageKey) {
                 case 'no_answer':
-                    $message = 'No Answer';
+                    $message = 'no_answer';
                     break;
                 case 'left_voice_mail':
                     $message = 'Left Voice Mail';
                     break;
                 case 'we_talked':
-                    $message = 'We Talked';
+                    $message = 'we_talked';
                     break;
                 case 'didnt_call':
-                    $message = "Didn't Call";
+                    $message = "didnt_call";
                     break;
+                case 'send_whats_app':
+                    $message = "sent_whatsapp_message";
+                    break;  
+                case 'send_email':
+                    $message = "sent_email";
+                    break;            
                 default:
-                    $message = 'No Answer';
+                    $message = 'no_answer';
                     break;
             }
             $responseActivity = new ResponseActivity();
@@ -368,13 +375,13 @@ class LeadController extends BaseApiController
         //storing in logs
         $responseActivity = new ResponseActivity();
         $responseActivity->lead_user_id = $leadUser->id;
-        $responseActivity->message = 'estimation added';
+        $responseActivity->message = 'estimation_added';
         $responseActivity->save();
 
         //mail to triggred
 
 
-        return response()->json(['status' => true , "message" => 'Estimation added' ], 200);
+        return response()->json(['status' => true , "message" => __('lang.estimation_added_successfully') ], 200);
     }
 
     public function addNotes(Request $request){
@@ -406,14 +413,14 @@ class LeadController extends BaseApiController
         //storing in logs
         $responseActivityLog = new ResponseActivity();
         $responseActivityLog->lead_user_id = $LeadUserId;
-        $responseActivityLog->message = 'Notes added';
+        $responseActivityLog->message = 'notes_added';
         $responseActivityLog->logged_date = now();
         $responseActivityLog->save();
 
         $responseNotes = ResponseNote::where(['response_id' => $LeadUserId])->get();
         //$responseActivity = ResponseActivity::where(['lead_user_id' => $leadUser->id])->orderBy('id','DESC')->get();
         return response()->json([
-            'status' => true , "message" => 'Notes Added Successfully' ,
+            'status' => true , "message" => __('lang.notes_added_successfully') ,
             'data' => $responseNotes
         ]);
     }

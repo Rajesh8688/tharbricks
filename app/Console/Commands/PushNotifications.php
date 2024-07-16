@@ -39,7 +39,7 @@ class PushNotifications extends Command
     public function handle()
     {
         $this->info("Push Notifications");
-        $notifications = Notification::with('user')->where(['is_delivered'=> 0,'is_failed' => 0])->where_not('to_all', 1)->limit(10)->get();
+        $notifications = Notification::with('user')->where(['is_delivered'=> 0,'is_failed' => 0])->where('to_all', "!=",1)->limit(10)->get();
         foreach($notifications as $notification){
             if(!empty($notification->user->fcm_token)){
                 $data = ['title' => $notification->title , 'description' => $notification->message];

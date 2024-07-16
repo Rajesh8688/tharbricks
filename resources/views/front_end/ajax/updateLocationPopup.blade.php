@@ -2,7 +2,7 @@
     <div class="modal-dialog model-w800" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel2">Update New Location</h5>
+          <h5 class="modal-title" id="exampleModalLabel2">{{__('lang.update_new_location')}}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -13,20 +13,21 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Choose how you want to set your location</label>
+                                <label>{{__('lang.choose_how_you_want_to_set_your_location')}}</label>
                                 <div class="aon-inputicon-box"> 
                                     <div class="radio-inline-box">
                                         <div class="checkbox sf-radio-checkbox sf-radio-check-2"  id ="locationNationalWide">
                                             <input id="loc1" name="locationType" value="nationwide" type="radio" readonly @if($myLocation->type == "nationwide") checked @endif>
-                                            <label for="loc1">Nationwide</label>
+                                            <label for="loc1">{{__('lang.Nationwide')}}
+                                            </label>
                                         </div>
                           
                                         <div class="checkbox sf-radio-checkbox sf-radio-check-2">
                                             <input id="loc2" name="locationType" value="distance" type="radio" readonly @if($myLocation->type == "distance") checked @endif>
-                                            <label for="loc2">Distance</label>
+                                            <label for="loc2">{{__('lang.distance')}}</label>
                                         </div>
                                     </div>
-                                    <div class="error-message" id="locationTypeError">Please select a location type.</div>
+                                    <div class="error-message" id="locationTypeError">{{__('lang.please_select_a_location_type')}}.</div>
                                 </div>
                             </div>
                         </div>
@@ -35,17 +36,17 @@
                             <div class="row">
                                 <div class="col-md-8"> 
                                     <div class="form-group">
-                                        <label>Pin Code / City</label>
+                                        <label>{{__('lang.pin_code_city')}}</label>
                                         <div class="aon-inputicon-box"> 
-                                            <input class="form-control sf-form-control" name="address" id="address" type="text" placeholder="PinCode/City" value="{{$myLocation->address}}">
+                                            <input class="form-control sf-form-control" name="address" id="address" type="text" placeholder="{{__('lang.pin_code_city')}}" value="{{$myLocation->address}}">
                                             <i class="aon-input-icon fa fa-user"></i>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4"> 
                                     <div class="form-group">
-                                        <label>Distance</label>
-                                        <select class="sf-select-box form-control sf-form-control form-control" name="distance_value" id="distance_value" data-live-search="true" title="Distance">
+                                        <label>{{__('lang.distance')}}</label>
+                                        <select class="sf-select-box form-control sf-form-control form-control" name="distance_value" id="distance_value" data-live-search="true" title="{{__('lang.distance')}}">
                                             <option value="1" @if($myLocation->distance_value == 1) selected @endif>1 Km</option>
                                             <option value="2" @if($myLocation->distance_value == 2) selected @endif>2 Kms</option>
                                             <option value="5" @if($myLocation->distance_value == 5) selected @endif>5 Kms</option>
@@ -66,7 +67,7 @@
                         <input type="hidden" name="location_id"  value="{{$myLocation->id}}">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Services</label>
+                                <label>{{__('lang.services')}}</label>
                                 <div class="aon-inputicon-box"> 
                                     <div class="radio-inline-box">
                                         @foreach($myservices as $UserService)
@@ -76,7 +77,7 @@
                                             </div>
                                         @endforeach
                                     </div>
-                                    <div class="error-message" id="servicesError">Please select at least one service.</div>
+                                    <div class="error-message" id="servicesError">{{__('lang.please_select_at_least_one_service')}}.</div>
                                 </div>
                             </div>
                         </div>
@@ -86,8 +87,8 @@
             @csrf
     
             <div class="modal-footer">
-                <button type="button" class="site-button" data-dismiss="modal">Cancel</button>
-                <button type="button" class="site-button" id="addButton" onclick="updateLocation()">Update</button>
+                <button type="button" class="site-button" data-dismiss="modal">{{__('lang.cancle')}}</button>
+                <button type="button" class="site-button" id="addButton" onclick="updateLocation()">{{__('lang.update')}}</button>
             </div>
         </form>
       </div>

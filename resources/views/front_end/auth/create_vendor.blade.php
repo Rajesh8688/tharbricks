@@ -2,8 +2,8 @@
 @section('content')
   <!-- Login Sign Up Modal -->
   <div style="text-align:center;padding: 15px 0px ">
-    <h3> Some details about you </h3>
-    <p>You’re just a few steps away from viewing our Graphic Design leads</p>
+    <h3>{{__('lang.some_details_about_you')}}</h3>
+    <p>{{__('lang.youre_just_a_few_steps_away_from_viewing_our_graphic_design_leads')}}</p>
 </div>
   <div class="card aon-card" id="aon-contact-panel" style="max-width: 900px;margin-left: auto;margin-right: auto;">
     {{-- <div class="card-header aon-card-header"><h4><i class="fa fa-envelope"></i> Contact Detail</h4></div> --}}
@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label>Your Name</label>
+                        <label>{{__('lang.your_name')}}</label>
                         <div class="aon-inputicon-box"> 
                             <input class="form-control sf-form-control  @error('name') is-invalid @enderror" name="name" type="text" required value="{{old('name')}}">
                             <i class="aon-input-icon fa fa-user"></i>
@@ -30,12 +30,12 @@
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label>Company name</label>
+                        <label>{{__('lang.company_name')}}</label>
                         <div class="aon-inputicon-box"> 
                             <input class="form-control sf-form-control" name="company_name" type="text" value="{{old('company_name')}}">
                             <i class="aon-input-icon fa fa-building"></i>
                         </div>
-                        <span>If you aren't a business or don't have this information, you can leave this blank</span>
+                        <span>{{__('lang.If_you_arent_a_business_or_dont_have_this_information_you_can_leave_this_blank')}}</span>
                     </div>
                 
                 </div>
@@ -43,12 +43,12 @@
                 
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label>Company Size</label>
+                        <label>{{__('lang.company_size')}}</label>
                         <div class="aon-inputicon-box"> 
                             <div class="radio-inline-box sf-radio-check-row">
                                 <div class="checkbox sf-radio-checkbox sf-radio-check-2 sf-raChe-6 " style="width: calc(50% - 200px)" >
                                     <input id="any111" name="company_size" value="1" type="radio" {{ old('company_size') == '1' ? 'checked' : '' }} required class="@error('company_size') is-invalid @enderror" checked>
-                                    <label for="any111">Self-employed, Sole trader</label>
+                                    <label for="any111">{{__('lang.selfemployed_soletrader')}}</label>
                                 </div>
                                 <div class="checkbox sf-radio-checkbox sf-radio-check-2 sf-raChe-6 " style="width: calc(50% - 200px)" >
                                     <input id="body111" name="company_size" value="2" type="radio" {{ old('company_size') == '2' ? 'checked' : '' }} required class="@error('company_size') is-invalid @enderror">
@@ -81,16 +81,16 @@
                 <input type="hidden" name ="servicesSlug" value = {{$servicesSlug}}>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label>Where would you like to see leads from?</label>
+                        <label>{{__('lang.where_would_you_like_to_see_leads_from')}}</label>
                         <div class="aon-inputicon-box"> 
                             <div class="radio-inline-box sf-radio-check-row">
                                 <div class="checkbox sf-radio-checkbox sf-radio-check-2 sf-raChe-6 @error('see_leads_from') is-invalid @enderror" required >
                                     <input id="nationwide11" name="see_leads_from" value="nationwide" type="radio" checked {{ old('see_leads_from') == 'nationwide' ? 'checked' : '' }}>
-                                    <label for="nationwide11">I serve customers nationwide</label>
+                                    <label for="nationwide11">{{__('lang.i_serve_customers_nationwide')}}</label>
                                 </div>
                                 <div class="checkbox sf-radio-checkbox sf-radio-check-2 sf-raChe-6 @error('see_leads_from') is-invalid @enderror" required {{ old('see_leads_from') == 'custom' ? 'checked' : '' }}>
                                     <input id="custom11" name="see_leads_from" value="custom" type="radio">
-                                    <label for="custom11">I serve customers within</label>
+                                    <label for="custom11">{{__('lang.i_serve_customers_within')}}</label>
                                 </div>
                                 @error('see_leads_from')
                                 <span class="text-danger" role="alert">
@@ -128,7 +128,7 @@
                             </div>
                         </div>
                         <div class="col-md-2 pt-2 pl-5">
-                            <p>from</p>
+                            <p>{{__('lang.from')}}</p>
                         </div> 
                         <div class="col-md-5"> 
                             <div class="form-group">
@@ -147,7 +147,7 @@
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label>Email Address</label>
+                        <label>{{__('lang.email_address')}}</label>
                         <div class="aon-inputicon-box"> 
                             <input class="form-control sf-form-control  @error('email') is-invalid @enderror" name="email" type="email" required value="{{ old('email')}}">
                             <i class="aon-input-icon fa fa-envelope"></i>
@@ -161,7 +161,7 @@
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label> Website (optional)</label>
+                        <label> {{__('lang.website_optional')}}</label>
                         <div class="aon-inputicon-box"> 
                             <input class="form-control sf-form-control" name="website" type="text" value="{{ old('website')}}">
                             <i class="aon-input-icon fa fa-globe"></i>
@@ -170,7 +170,7 @@
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label>Phone Number</label>
+                        <label>{{__('lang.phone_number')}}</label>
                         <div class="aon-inputicon-box"> 
                             <input class="form-control sf-form-control" name="mobile" type="number" pattern="[0-9]{10}" required value="{{ old('mobile')}}">
                             <i class="aon-input-icon fa fa-phone"></i>
@@ -179,7 +179,7 @@
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label>Password</label>
+                        <label>{{__('lang.password')}}</label>
                         <div class="aon-inputicon-box"> 
                             <input class="form-control sf-form-control" name="password" type="password"  required value="{{ old('password')}}"  id ="password" autocomplete="new-password">
                             <i class="aon-input-icon fa fa-lock " ></i>
@@ -194,7 +194,7 @@
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label>Confirm Password</label>
+                        <label>{{__('lang.confirm_password')}}</label>
                         <div class="aon-inputicon-box" > 
                             <input class="form-control sf-form-control" name="password_confirmation" type="password"  required value="{{ old('password_confirmation')}}" id ="password_confirmation">
                             <i class="aon-input-icon fa fa-lock " ></i>
@@ -213,7 +213,7 @@
             
                 
             </div>
-            <div class="center" style="display: flex;justify-content: center;"><button type="submit" class="site-button aon-btn-login">Next</button></div>
+            <div class="center" style="display: flex;justify-content: center;"><button type="submit" class="site-button aon-btn-login">{{__('lang.next')}}</button></div>
         </form>    
     </div>
 </div>  

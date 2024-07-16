@@ -3,7 +3,7 @@
     <div class="sf-provi-bio-box cleafix margin-b-50 ">
         <br>
         <h3>{{$lead->name}} </h3>
-        <div class="sf-provi-cat"><strong>Service:</strong> {{$lead->service->name}}</div>
+        <div class="sf-provi-cat"><strong>{{__('lang.service')}}:</strong> {{$lead->service->name}}</div>
         <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-map-marker"></i> &nbsp; {{$lead->address}}</div>
         <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-phone"></i> &nbsp; {{$lead->encrypted_phone}}</div>
         <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-envelope"></i> &nbsp; {{$lead->encrypted_email}}</div>
@@ -11,10 +11,10 @@
 
             <div class="sf-provi-btn" style="padding-bottom: 20px">
                 <a href="{{route('vendor-interested-lead',['lead_id'=>$lead->id])}}" class="site-button">
-                    <i class="fa fa-briefcase"></i>Contact 
+                    <i class="fa fa-briefcase"></i> {{__('lang.contact')}} 
                 </a>
                 <a href="{{route('vendor-not-interested-lead',['lead_id'=>$lead->id])}}" style="padding-left: 35px;">
-                    Not interested
+                    {{__('lang.not_interested')}}
                 </a>
             </div>
            
@@ -24,7 +24,7 @@
     <div class="sf-provi-amqudo-box margin-b-50 sf-provi-fullBox">
         <div class="sf-custom-tabs sf-custom-new">
             <ul class="nav nav-tabs nav-table-cell font-20">
-                <li><a data-toggle="tab" href="#tab-11111" class="active">Details</a></li>
+                <li><a data-toggle="tab" href="#tab-11111" class="active">{{__('lang.details')}}</a></li>
             </ul>
             <div class="tab-content">
                 <div id="tab-11111" class="tab-pane active">

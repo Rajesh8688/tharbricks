@@ -17,9 +17,9 @@
                         {{ucfirst($lead->response_status)}}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#" onclick="UpdateResponse({{$lead->id}} , 'Pending')">Pending</a>
-                        <a class="dropdown-item" href="#" onclick="UpdateResponse({{$lead->id}} , 'Hired')">Hired</a>
-                        <a class="dropdown-item" href="#" onclick="UpdateResponse({{$lead->id}} , 'Archived')">Archived</a>
+                        <a class="dropdown-item" href="#" onclick="UpdateResponse({{$lead->id}} , 'Pending')">{{__('lang.pending')}}</a>
+                        <a class="dropdown-item" href="#" onclick="UpdateResponse({{$lead->id}} , 'Hired')">{{__('lang.hired')}}</a>
+                        <a class="dropdown-item" href="#" onclick="UpdateResponse({{$lead->id}} , 'Archived')">{{__('lang.archived')}}</a>
                     </div>
                 </div>
             </div>
@@ -38,29 +38,29 @@
             <div class="">
                 <div class="sf-provi-btn" style="padding-bottom: 20px">
                     <a href="#" class="site-button" data-toggle="modal" data-target="#call-feedback-modal" >
-                        <i class="fa fa-phone"></i>Show Number <i class="fa fa-external-link "></i>
+                        <i class="fa fa-phone"></i>{{__('lang.show_number')}} <i class="fa fa-external-link "></i>
                     </a>
                     <a class="site-button"  href="#" onclick="updateActivityLogger('send_whats_app' ,{{$lead->id}})">
-                        <i class="fa fa-whatsapp"></i>Send WhatsApp </i>
+                        <i class="fa fa-whatsapp"></i>{{__('lang.send_whatsapp')}} </i>
                     </a>
                     <a  class="site-button" href="#" onclick="updateActivityLogger('send_email' ,{{$lead->id}})">
-                        <i class="fa fa-envelope"></i>Send Email 
+                        <i class="fa fa-envelope"></i>{{__('lang.send_email')}}
                     </a>
                     {{-- <a href="{{route('vendor-interested-lead',['lead_id'=>$lead->id])}}" class="site-button">
                         <i class="fa fa-comments"></i>Send SMS 
                     </a> --}}
                 </div>
             </div>
-            <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-tag"></i> &nbsp; Your estimate : <a href="#" data-toggle="modal" data-target="#add_estimation"> send an estimate</a></div>
+            <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-tag"></i> &nbsp; {{__('lang.your_estimate')}} : <a href="#" data-toggle="modal" data-target="#add_estimation"> {{__('lang.send_an_estimate')}}</a></div>
     
         </div>
         <!--Q A-->
         <div class="sf-provi-amqudo-box margin-b-50 sf-provi-fullBox">
             <div class="sf-custom-tabs sf-custom-new">
                 <ul class="nav nav-tabs nav-table-cell font-20">
-                    <li><a data-toggle="tab" href="#tab-11111" class="active">Activity</a></li>
-                    <li><a data-toggle="tab" href="#tab-22222" >Lead Details</a></li>
-                    <li><a data-toggle="tab" href="#tab-33333" >My Notes</a></li>
+                    <li><a data-toggle="tab" href="#tab-11111" class="active">{{__('lang.activity')}}</a></li>
+                    <li><a data-toggle="tab" href="#tab-22222" >{{__('lang.lead_details')}}</a></li>
+                    <li><a data-toggle="tab" href="#tab-33333" >{{__('lang.my_notes')}}</a></li>
                 </ul>
                 <div class="tab-content">
                     <div id="tab-11111" class="tab-pane active">
@@ -87,7 +87,7 @@
                                                     <div class="details-top-left flex-grow-1">
                                                         <div class="item-actor-name">
                                                             @if($activity->from == 'vendor')
-                                                            You
+                                                            {{__('lang.you')}}
                                                             @else
                                                             {{ucfirst($lead->name)}}
                                                             @endif
@@ -139,7 +139,7 @@
                             </div>
                             <input type="hidden" name="lead_user_id" value="{{$lead->lead_user_id}}">
                             <div style="float:right;padding-top:20px">
-                                <button type="button"  class="site-button" onclick="addnotesfun()">Add </button>
+                                <button type="button"  class="site-button" onclick="addnotesfun()">{{__('lang.add')}} </button>
                             </div> 
                         </form>
                     </div>
@@ -152,7 +152,7 @@
             <div class="modal-content">
                 <div class="modal-body" id="call-feedback-modal-container">
                     <div class="header-section">
-                            <h1 class="text-xl text-center text-overflow-ellipsis">Call Janes</h1>
+                            <h1 class="text-xl text-center text-overflow-ellipsis">{{__('lang.call_name' , ['name' => $lead->name])}} </h1>
                             <div class="buyer-number-container d-flex justify-content-center align-items-center">
                                 <a href="tel:+918147547067" class="d-flex justify-content-center align-items-center">
                                     <span class="bark-svg-icon bsi-primary-primary mr-1 bsi-sm flex-shrink-0"><i calss="aon-input-icon fa fa-phone"></i> </span> 
@@ -160,7 +160,7 @@
                                 </a>
                             </div>
                     </div>
-                    <h2 class="btns-title text-center mt-2 mb-3">Update your progress</h2>
+                    <h2 class="btns-title text-center mt-2 mb-3">{{__('lang.update_your_progress')}}</h2>
                     <div class="d-flex justify-content-center align-items-center response-btns-container">
                         <div class="text-center d-flex justify-content-center align-items-center flex-column">
                             <button class="btn bg-danger mb-2 js-cfb-no-answer-btn" onclick="updateActivityLogger('no_answer' ,{{$lead->id}})"> <span class="bark-svg-icon bsi-primary-white ">
@@ -175,7 +175,7 @@
                                     </defs>
                                 </svg></span> 
                             </button>
-                            <span class="regular-text text-xs text-danger">No<br>answer</span>
+                            <span class="regular-text text-xs text-danger">{{__('lang.no_answer')}}</span>
                         </div>
                         <div class="text-center d-flex justify-content-center align-items-center flex-column mx-3">
                             <button class="btn bg-grey-200 mb-2 js-cfb-left-voicemail-btn" onclick="updateActivityLogger('left_voice_mail' ,{{$lead->id}})"> <span class="bark-svg-icon bsi-primary-white ">
@@ -183,7 +183,7 @@
                                     <path d="M18.5 6.5C15.46 6.5 13 8.96 13 12C13 13.33 13.47 14.55 14.26 15.5H9.74C10.53 14.55 11 13.33 11 12C11 8.96 8.54 6.5 5.5 6.5C2.46 6.5 0 8.96 0 12C0 15.04 2.46 17.5 5.5 17.5H18.5C21.54 17.5 24 15.04 24 12C24 8.96 21.54 6.5 18.5 6.5ZM5.5 15.5C3.57 15.5 2 13.93 2 12C2 10.07 3.57 8.5 5.5 8.5C7.43 8.5 9 10.07 9 12C9 13.93 7.43 15.5 5.5 15.5ZM18.5 15.5C16.57 15.5 15 13.93 15 12C15 10.07 16.57 8.5 18.5 8.5C20.43 8.5 22 10.07 22 12C22 13.93 20.43 15.5 18.5 15.5Z" fill="white"></path>
                                 </svg></span> 
                             </button>
-                            <span class="regular-text text-xs text-grey-600">Left<br>voicemail</span>
+                            <span class="regular-text text-xs text-grey-600">{{__('lang.left_voicemail')}}</span>
                         </div>
                         <div class="text-center d-flex justify-content-center align-items-center flex-column">
                             <button class="btn bg-success mb-2 js-cfb-we-talked-btn" onclick="updateActivityLogger('we_talked' ,{{$lead->id}})"> <span class="bark-svg-icon bsi-primary-white ">
@@ -192,12 +192,12 @@
                                     <path d="M16 11.42L12 7.42L13.41 6.01L16 8.59L20.59 4L22 5.42L16 11.42Z" fill="white"></path>
                                     </svg></span> 
                                 </button>
-                            <span class="regular-text text-xs text-success">We<br>talked</span>
+                            <span class="regular-text text-xs text-success">{{__('lang.we_talked')}}</span>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn text-grey-400 js-cfb-dismiss-btn regular-text text-xs" onclick="updateActivityLogger('didnt_call' ,{{$lead->id}})">Didn’t call</button>
+                    <button type="button" class="btn text-grey-400 js-cfb-dismiss-btn regular-text text-xs" onclick="updateActivityLogger('didnt_call' ,{{$lead->id}})">{{__('lang.didnt_call')}}</button>
                 </div>
             </div>
         </div>
@@ -206,7 +206,7 @@
         <div class="modal-dialog model-w800" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel2">Add Estimation</h5>
+                    <h5 class="modal-title" id="exampleModalLabel2">{{__('lang.add_estimation')}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -218,14 +218,14 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Estimation Text</label>
+                                        <label>{{__('lang.text')}}</label>
                                         <textarea class="form-control" rows="5" name="estimationText" id="estimationText"></textarea>
                                         <div id="estimationTexterror" style="display: none"></div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Estimation</label><br>
+                                        <label>{{__('lang.estimation')}}</label><br>
                                         <input type="file" name="estimationattachment" id="estimationattachment">
                                         <div id="estimationattachmentError" style="display: none"></div>
                                     </div>
@@ -236,8 +236,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="admin-button" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="admin-button" onclick="sendEstimationfun()">Add</button>
+                    <button type="button" class="admin-button" data-dismiss="modal">{{__('lang.cancle')}}</button>
+                    <button type="button" class="admin-button" onclick="sendEstimationfun()">{{__('lang.add')}}</button>
                 </div>
             </div>
         </div>
@@ -249,8 +249,8 @@
             <h4 class="mt-2">
                 No responses
             </h4>
-            <p class="text-center mt-2 text-light-grey">You haven’t responded to any customers yet. When you do, you’ll be able to contact and access their details here.</p>
-            <a href="{{route('vendor-leads')}}">View leads</a>
+            <p class="text-center mt-2 text-light-grey">{{__('lang.you_havent_responded_to_any_customers_yet_When_you_do_youll_be_able_to_contact_and_access_their_details_here')}}.</p>
+            <a href="{{route('vendor-leads')}}">{{__('lang.view_leads')}}</a>
         </div>
     </div>
 @endif

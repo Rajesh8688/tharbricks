@@ -27,9 +27,9 @@
                 <div class="nav-animation header-nav navbar-collapse collapse d-flex justify-content-start">
 
                     <ul class=" nav navbar-nav">
-                      <li class="{{Request::segment(1) == '' ? 'current-menu-item' : '' }}" ><a href="{{url('/')}}">Home</a></li>
-                      <li class="{{Request::segment(1) == 'service' ? 'current-menu-item' : '' }}" ><a href="{{route('service')}}">Service</a></li>
-                      <li class="{{Request::segment(1) == 'blogs' ? 'current-menu-item' : '' }}" ><a href="{{route('blogs')}}">Blog</a></li>
+                      <li class="{{Request::segment(1) == '' ? 'current-menu-item' : '' }}" ><a href="{{url('/')}}">{{__('lang.home')}}</a></li>
+                      <li class="{{Request::segment(1) == 'service' ? 'current-menu-item' : '' }}" ><a href="{{route('service')}}">{{__('lang.service')}}</a></li>
+                      <li class="{{Request::segment(1) == 'blogs' ? 'current-menu-item' : '' }}" ><a href="{{route('blogs')}}">{{__('lang.blog')}}</a></li>
 
                       {{-- <li class="has-child">
                           <a href="javascript:;">Pages</a>
@@ -56,16 +56,17 @@
                               </li>
                               <li><a href="error-404.html">Error 404</a></li>
                           </ul>                                
-                      </li>
+                      </li> --}}
 
-                      <li class="has-child"><a href="javascript:;">Profile</a>
+                      <li class="has-child"><a href="javascript:;">{{__('lang.language')}}</a>
                           <ul class="sub-menu">
-                              <li><a href="profile-full.html">Profile</a></li>
-                              <li><a href="profile-sidebar.html">Profile Sidebar</a></li>
+                              <li><a href="{{route('changelang',['lang'=>'en'])}}">English</a></li>
+                              <li><a href="{{route('changelang',['lang'=>'hi'])}}">हिंदी</a></li>
+                              <li><a href="{{route('changelang',['lang'=>'kn'])}}">ಕನ್ನಡ</a></li>
                           </ul>                                                                 
                       </li>
 
-                      <li class="has-child"><a href="javascript:;">Jobs</a>
+                      {{--<li class="has-child"><a href="javascript:;">Jobs</a>
                           <ul class="sub-menu">
                               <li><a href="job-listing.html">Job listing</a></li>                                        
                               <li><a href="job-grid.html">Job grid</a></li>
@@ -84,7 +85,7 @@
                               <li><a href="blog-detail.html">Blog detail</a></li>
                           </ul>                                
                       </li> --}}
-                      <li class="{{Request::segment(1) == 'contact-us' ? 'current-menu-item' : '' }}" ><a href="{{url('/contact-us')}}">Contact</a></li>
+                      <li class="{{Request::segment(1) == 'contact-us' ? 'current-menu-item' : '' }}" ><a href="{{url('/contact-us')}}">{{__('lang.contact')}}</a></li>
                       
                     </ul>
                 </div>
@@ -92,19 +93,19 @@
                     
                     
                 
-                <div class="header-widget">
+                {{-- <div class="header-widget">
                     <div class="aon-admin-messange sf-toogle-btn">
                         <i class="feather-globe"></i>
-                        <span class="header-toltip">Language</span>
+                        <span class="header-toltip">{{__('lang.language')}}</span>
                     </div>
                     <div class="ws-toggle-popup popup-tabs-wrap-section " style ="width: revert-layer">
                         <ul class="popup-curra-lang-list">
-                            <li> <a  href="{{route('changelang',['lang'=>'en'])}}">English</a></li>
-                            <li> <a  href="{{route('changelang',['lang'=>'hi'])}}">Hindi</a></li>
-                            <li> <a  href="{{route('changelang',['lang'=>'kn'])}}">Kannada</a></li>
+                            <li> <a  href="{{route('changelang',['lang'=>'en'])}}">{{__('lang.english')}}</a></li>
+                            <li> <a  href="{{route('changelang',['lang'=>'hi'])}}">हिंदी</a></li>
+                            <li> <a  href="{{route('changelang',['lang'=>'kn'])}}">ಕನ್ನಡ</a></li>
                         </ul>
                     </div>
-                </div>
+                </div> --}}
            
 
                 @if(Auth::guard('web')->check())
@@ -124,11 +125,11 @@
                         <ul class="user-welcome-list">
                             <li><strong>Welcome , <span class="site-text-primary">{{auth()->user()->name}}</span></strong></li>
                             {{-- <li><a href="{{route('vendor-dashboard')}}"><i class="feather-sliders"></i> Dashboard</a></li> --}}
-                            <li><a href="#"><i class="feather-file"></i> Add Listing</a></li>
-                            <li><a href="{{route('vendor-dashboard')}}"><i class="feather-repeat"></i> Switch to seller</a></li>
-                            <li><a href="#"><i class="feather-settings"></i> Setting</a></li>
+                            <li><a href="#"><i class="feather-file"></i>{{__('lang.add_listing')}}</a></li>
+                            <li><a href="{{route('vendor-dashboard')}}"><i class="feather-repeat"></i> {{__('lang.switch_to_seller')}}</a></li>
+                            <li><a href="#"><i class="feather-settings"></i> {{__('lang.settings')}}</a></li>
                             <li>
-                                <a href="{{ route('logout') }}"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-in-alt"></i> Log Out</a>
+                                <a href="{{ route('logout') }}"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-in-alt"></i>{{__('lang.logout')}}</a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
@@ -142,11 +143,11 @@
                     <div class="extra-cell">
                         <!--Login-->
                         <a href="{{url('/login')}}" class="site-button aon-btn-login">
-                            <i class="fa fa-user"></i> Login
+                            <i class="fa fa-user"></i> {{__('lang.login')}}
                         </a>
                         <!--Sign up-->
                         <a href="{{route('signup')}}" class="site-button aon-btn-login">
-                            <i class="fa fa-plus"></i> Join as a Professional
+                            <i class="fa fa-plus"></i> {{__('lang.join_as_a_professional')}}
                         </a>
                     </div>
                 </div>  

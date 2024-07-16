@@ -5,11 +5,11 @@
             <div class="footer-top-newsletter">
                 <div class="container">
                     <div class="sf-news-letter">
-                        <span>Subscribe Our Newsletter</span>
+                        <span>{{__('lang.subscribe_our_newsletter')}}</span>
                         <form>
                             <div class="form-group sf-news-l-form">
                                 <input type="text" class="form-control" placeholder="Enter Your Email">
-                                <button type="submit" class="sf-sb-btn">Submit</button>
+                                <button type="submit" class="sf-sb-btn">{{__('lang.submit')}}</button>
                             </div>
                         </form>
                     </div>
@@ -22,12 +22,11 @@
                         <!-- Footer col 1--> 
                         <div class="col-lg-3 col-md-6 col-sm-6  m-b30">
                             <div class="sf-site-link sf-widget-link">
-                                <h4 class="sf-f-title">Site Links</h4>
+                                <h4 class="sf-f-title">{{__('lang.site_links')}}</h4>
                                 <ul>
-                                    <li><a href="blog-grid.html">Blog</a></li>
-                                    <li><a href="contact-us.html">Contact Us</a></li>
-                                    <li><a href="job-grid.html">Jobs</a></li>
-                                    <li><a href="all-categories.html">Services</a></li>
+                                    <li><a href="{{route('blogs')}}">{{__('lang.blog')}}</a></li>
+                                    <li><a href="{{route('contactUs')}}">{{__('lang.contact_us')}}</a></li>
+                                    <li><a href="{{route('service')}}">{{__('lang.services')}}</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -77,7 +76,7 @@
                     <div class="sf-footer-bottom-section">
                         <div class="sf-f-logo"><a href="javascript:void(0);"><img src="{{ asset('frontEnd/images/logo-dark.png')}}" alt=""></a></div>
                     	<div class="sf-f-copyright">
-                        	<span>Copyright 2022 | Aone Theme. All Rights Reserved</span>
+                        	<span>Copyright {{ date('Y') }} | Tharbricks All Rights Reserved</span>
                         </div>
                        
                         <div class="sf-f-social">

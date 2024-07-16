@@ -36,4 +36,6 @@ class ServiceController extends Controller
         return view('front_end.service.details',compact('titles','service','services'));
 
     }
+
+    
 }

@@ -229,6 +229,17 @@ if (! function_exists('deleteImage')) {
     //     }
     // }
 
+    
+    if (! function_exists('translator')) {
+        function translator($message , $json = null){
+            if(!empty($json)){
+                $jsonArray = json_decode($json , true);
+                return __('lang.'.$message , $jsonArray);
+            }
+            return __('lang.'.$message );
+        }
+    }
+
     if (! function_exists('sendNotification')) {
             function sendNotification($token,$data)
             {

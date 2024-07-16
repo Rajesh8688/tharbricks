@@ -8,7 +8,7 @@
                 <div class="sf-custom-tabs sf-custom-new aon-logon-sign-area p-3">
                     <div class="">
                         <!--Forgot Password Form-->
-                        <h2>Reset Password</h2>
+                        <h2>{{__('lang.reset_password')}}</h2>
                        
                         @if (session('error'))
                             <div class="alert alert-danger">
@@ -24,8 +24,8 @@
                                         
                                     <div class="row">
                                         <div class="col-md-12" style="margin-bottom:10px!important">
-                                            <label class="form-label" for="newPassword">New Password</label>
-                                            <input type="password" class="form-control @error('new-password') is-invalid @enderror" data-bv-field="newpassword" id="newPassword" required placeholder="New Password" name="new-password">
+                                            <label class="form-label" for="newPassword">{{__('lang.new_password')}}</label>
+                                            <input type="password" class="form-control @error('new-password') is-invalid @enderror" data-bv-field="newpassword" id="newPassword" required placeholder="{{__('lang.new_password')}}" name="new-password">
                                             @error('new-password')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -33,13 +33,13 @@
                                             @enderror
                                         </div>
                                         <div class="col-md-12" style="margin-bottom:10px!important">
-                                            <label class="form-label" for="existingPassword">Confirm Password</label>
-                                            <input type="password" class="form-control @error('new-password_confirmation') is-invalid @enderror" data-bv-field="confirmgpassword" id="confirmPassword" required placeholder="Confirm Password" name ="new-password_confirmation">
+                                            <label class="form-label" for="existingPassword">{{__('lang.confirm_password')}}</label>
+                                            <input type="password" class="form-control @error('new-password_confirmation') is-invalid @enderror" data-bv-field="confirmgpassword" id="confirmPassword" required placeholder="{{__('lang.confirm_password')}}" name ="new-password_confirmation">
                                         </div>
                               
                                      
                                         <div class="col-md-12">
-                                            <button type="submit" class="site-button w-100">Continue <i class="feather-arrow-right"></i> </button>
+                                            <button type="submit" class="site-button w-100">{{__('lang.continue')}} <i class="feather-arrow-right"></i> </button>
                                         </div>                                          
                                         
                                     </div>

@@ -37,11 +37,11 @@
                     <div class="nav-animation header-nav navbar-collapse collapse d-flex justify-content-start">
 
                         <ul class=" nav navbar-nav">
-                            <li class="{{request()->route()->getName() == 'vendor-dashboard' ? 'current-menu-item' : '' }}"><a href="{{route('vendor-dashboard')}}">Dashboard</a></li>  
-                            <li class="{{request()->route()->getName() == 'vendor-leads' ? 'current-menu-item' : '' }}"><a href="{{route('vendor-leads')}}">Leads</a></li>  
-                            <li class="{{request()->route()->getName() == 'my-tharbricks' ? 'current-menu-item' : '' }}"><a href="{{route('my-tharbricks')}}">My Response</a></li>  
-                            <li class="{{request()->route()->getName() == 'vendor-edit' ? 'current-menu-item' : '' }}"><a href="{{route('vendor-edit')}}">Settings</a></li>  
-                            <li><a href="contact-us.html">Help</a></li>  
+                            <li class="{{request()->route()->getName() == 'vendor-dashboard' ? 'current-menu-item' : '' }}"><a href="{{route('vendor-dashboard')}}">{{__('lang.dashboard')}}</a></li>  
+                            <li class="{{request()->route()->getName() == 'vendor-leads' ? 'current-menu-item' : '' }}"><a href="{{route('vendor-leads')}}">{{__('lang.leads')}}</a></li>  
+                            <li class="{{request()->route()->getName() == 'my-tharbricks' ? 'current-menu-item' : '' }}"><a href="{{route('my-tharbricks')}}">{{__('lang.my_response')}}</a></li>  
+                            <li class="{{request()->route()->getName() == 'vendor-edit' ? 'current-menu-item' : '' }}"><a href="{{route('vendor-edit')}}">{{__('lang.settings')}}</a></li>  
+                            <li><a href="contact-us.html">{{__('lang.help')}}</a></li>  
                         </ul>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                                                     </div>
                                                 </div>
 
-                                                <!--list Two-->
+                                 
                                                 <div class="ws-poptab-list">
                                                     <div class="ws-poptab-media">
                                                         <img src="images/testimonials2/pic2.jpg" alt="">
@@ -100,7 +100,7 @@
                                                     </div>
                                                 </div>
 
-                                                <!--list three-->
+                            
                                                 <div class="ws-poptab-list">
                                                     <div class="ws-poptab-media">
                                                         <img src="images/testimonials2/pic3.jpg" alt="">
@@ -121,7 +121,7 @@
 
                                         <div id="rejected1" class="tab-pane">
                                             <div class="ws-poptab-list-wrap">
-                                                <!--list One-->
+         
                                                 <div class="ws-poptab-list">
                                                     <div class="ws-poptab-media">
                                                         <img src="images/testimonials2/pic1.jpg" alt="">
@@ -133,7 +133,7 @@
                                                     </div>
                                                 </div>
 
-                                                <!--list Two-->
+                          
                                                 <div class="ws-poptab-list">
                                                     <div class="ws-poptab-media">
                                                         <img src="images/testimonials2/pic2.jpg" alt="">
@@ -145,7 +145,7 @@
                                                     </div>
                                                 </div>
 
-                                                <!--list three-->
+                                    
                                                 <div class="ws-poptab-list">
                                                     <div class="ws-poptab-media">
                                                         <img src="images/testimonials2/pic3.jpg" alt="">
@@ -195,13 +195,13 @@
                         <div class="ws-toggle-popup popup-tabs-wrap-section user-welcome-area">
                             <ul class="user-welcome-list">
                                 <li><strong>Welcome , <span class="site-text-primary">{{auth()->user()->name}}</span></strong></li>
-                                <li><a href="{{route('vendor-dashboard')}}"><i class="feather-sliders"></i> Dashboard</a></li>
-                                <li><a href="#"><i class="feather-file"></i> Add Listing</a></li>
-                                <li><a href="{{route('home')}}"><i class="feather-repeat"></i> Switch to public</a></li>
+                                <li><a href="{{route('vendor-dashboard')}}"><i class="feather-sliders"></i> {{__('lang.dashboard')}}</a></li>
+                                <li><a href="#"><i class="feather-file"></i> {{__('lang.add_listing')}}</a></li>
+                                <li><a href="{{route('home')}}"><i class="feather-repeat"></i> {{__('lang.switch_to_public')}}</a></li>
                                 <li><a href="#"><i class="feather-settings"></i> Setting</a></li>
-                                <li><a href="{{route('change-password')}}"><i class="feather-settings"></i> Change Password</a></li>
+                                <li><a href="{{route('change-password')}}"><i class="feather-settings"></i> {{__('lang.change_password')}}</a></li>
                                 <li>
-                                    <a href="{{ route('logout') }}"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-in-alt"></i> Log Out</a>
+                                    <a href="{{ route('logout') }}"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-in-alt"></i>{{__('lang.logout')}}</a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>

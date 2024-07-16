@@ -23,12 +23,12 @@ class CreateEmailMailersTable extends Migration
             $table->string('mail_to_name');
             $table->enum('reference',['lead','vendor','customer'])->nullable();
             $table->unsignedBigInteger('reference_id')->nullable();
-            $table->string('mail_subject');
-            $table->string('mail_message');
+            $table->text('mail_subject');
+            $table->longText('mail_message');
             $table->dateTime('send_date_time')->nullable();
             $table->dateTime('updated_date_time')->nullable();;
             $table->enum('is_cron',[0,1])->default(0);
-            $table->enum('cron_status',[0,1])->default(0);
+            $table->enum('cron_status',[0,1,2])->comment('0=>InQueue,1=>success,2=>Failure')->default(0);
             $table->enum('status',['Active','InActive'])->default('Active');
             $table->timestamps();
         });

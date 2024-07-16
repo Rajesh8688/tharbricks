@@ -11,14 +11,14 @@
                     <div class="col-md-6">
                         <?php $image = asset('uploads/services').'/'.$service->image ;?>
                         <div class="sf-caty-pic" style="background-image: url({{$image}})">
-                            <div class="sf-caty-btn">View Service</div>
+                            <div class="sf-caty-btn">{{__('lang.view_service')}}</div>
                             <div class="sf-caty-cirle"><i class="fa fa-arrow-circle-down"></i></div>
                         </div>
                     </div>
                     <!--Category Detail Right-->
                     <div class="col-md-6">
                         <div class="sf-caty-info">
-                            <div class="m-b10"><strong> Service</strong> / {{$service->name}}</div>
+                            <div class="m-b10"><strong> {{__('lang.service')}}</strong> / {{$service->name}}</div>
                             <h3>{{$service->name}}</h3>
                             <div class="sf-caty-text">
                                 {!!$service->description!!}
@@ -36,7 +36,7 @@
                 <div class="section-head">
                     <div class="row">
                         <div class="col-md-6">
-                            <h2 class="sf-title text-white">All Services</h2>
+                            <h2 class="sf-title text-white">{{__('lang.all_services')}}</h2>
                         </div>
                         <div class="col-md-6">
                         </div>
@@ -70,11 +70,11 @@
             </div>
         </div>
         
-        <div class="section-content sf-caty-listResult-wrap">
+        {{-- <div class="section-content sf-caty-listResult-wrap">
             <div class="container">
 
                 <div class="section-content">
-                    <!--Showing results topbar Start-->
+                 
                     <div class="sf-search-result-top flex-wrap d-flex justify-content-between">
                         <div class="sf-search-result-title"> <h5>Showing 1 – 10 of 16 results</h5></div>
                         <div class="sf-search-result-option">
@@ -116,7 +116,7 @@
                             </ul>
                         </div>
                     </div>
-                    <!--Showing results topbar End-->
+              
                     <div class="row">
                         <!--BLock 1-->
                         <div class="col-md-6">
@@ -415,7 +415,7 @@
                 </div>                       
                 
             </div>
-        </div>
+        </div> --}}
         
     </div>
     <!-- Content END-->

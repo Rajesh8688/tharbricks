@@ -130,13 +130,13 @@ class LeadController extends Controller
             }
             //storing email templates
             $email = explode("@",$lead->email);
-            $lead->service_name = Service::find($lead->service);
+            $lead->service_name = Service::find($lead->service)->pluck('name');
             $lead->encrypted_email = "**********@".$email[1];
             $lead->encrypted_phone = "*******".substr ($lead->phone, -3);
             $lead->url = route('vendor-leads');
             $lead->leadAnswers = LeadAnswer::with('question')->where(['lead_id' => $lead->id])->get();
 
-           //$this->sendEmailtoUsers(['lead_details' => $lead]);
+            $this->sendEmailtoUsers(['lead_details' => $lead]);
 
             return redirect()->route('home')->with('success',$serviceDetails->name.' request submitted successfully');
 
@@ -147,14 +147,15 @@ class LeadController extends Controller
 
 
     public function emailChecker(){
-        $leadId = 9;
-        $lead = Lead::find($leadId);
-        $email = explode("@",$lead->email);
-        $lead->encrypted_email = "**********@".$email[1];
-        $lead->encrypted_phone = "*******".substr ($lead->phone, -3);
-        $lead->url = route('vendor-leads');
-        $lead->leadAnswers = LeadAnswer::with('question')->where(['lead_id' => $lead->id])->get();
-        return $this->sendEmailtoUsers(['lead_details' => $lead]);
+        return view('front_end.email_templates.estimation');
+        // $leadId = 9;
+        // $lead = Lead::find($leadId);
+        // $email = explode("@",$lead->email);
+        // $lead->encrypted_email = "**********@".$email[1];
+        // $lead->encrypted_phone = "*******".substr ($lead->phone, -3);
+        // $lead->url = route('vendor-leads');
+        // $lead->leadAnswers = LeadAnswer::with('question')->where(['lead_id' => $lead->id])->get();
+        // return $this->sendEmailtoUsers(['lead_details' => $lead]);
       
     }
 
@@ -162,18 +163,16 @@ class LeadController extends Controller
 
     public function sendEmailtoUsers($data){
         $leadDetails = $data['lead_details'];
-
-        return view('front_end.email_templates.lead',compact('leadDetails'));
-        
         $users = DB::table('users as u')
         ->leftJoin('vendor_details as vd', 'vd.user_id', '=', 'u.id')
         ->leftJoin('service_users as su', 'su.user_id', '=', 'u.id')
         ->where('vd.is_new_lead_i_receive_email_notifications', 1)
-        ->where('su.service_id', $data['service_id'])
+        ->where('su.service_id', $leadDetails->service_id)
         ->where('su.status', 'Active')
         ->where('u.status', 'Active')
         ->select('u.*')
         ->get();
+    
 
     if(count($users) > 0){
         foreach($users as $user){
@@ -183,12 +182,11 @@ class LeadController extends Controller
             $emailMailer->mail_to = $user->email;
             $emailMailer->mail_to_name = $user->name;
             $emailMailer->reference = 'lead';
-            $emailMailer->reference_id = $data['lead_details']->lead_id;
-            $emailMailer->mail_subject = $data['lead_details']->name;
-            $leadDetails = $data['lead_details'];
-            $emailMailer->mail_message = view('front_end.email_templates.lead',compact($leadDetails));
-            $emailMailer->is_cron = 1;
-            $emailMailer->cron_status = 0;
+            $emailMailer->reference_id = $leadDetails->id;
+            $emailMailer->mail_subject = $leadDetails->name . " is looking for " . $leadDetails->service_name;
+            $emailMailer->mail_message = view('front_end.email_templates.lead',compact('leadDetails'))->render();
+            $emailMailer->is_cron = '1';
+            $emailMailer->cron_status = '0';
             $emailMailer->status = 'Active';
             $emailMailer->save();
         }
@@ -269,7 +267,8 @@ class LeadController extends Controller
 
                     $responseActivity = new ResponseActivity();
                     $responseActivity->lead_user_id = $leadUser->id;
-                    $responseActivity->message = "Looking for a ".$leadDetails->name;
+                    $responseActivity->message = "looking_for_a_name";
+                    $responseActivity->wildcard = json_encode(['name'=>$leadDetails->name]);
                     $responseActivity->logged_date = now();
                     $responseActivity->from = 'customer';
                     $responseActivity->status = "Active";
@@ -277,7 +276,7 @@ class LeadController extends Controller
 
                     $responseActivity = new ResponseActivity();
                     $responseActivity->lead_user_id = $leadUser->id;
-                    $responseActivity->message = "Purchased the Lead ";
+                    $responseActivity->message = "purchased_the_lead";
                     $responseActivity->logged_date = now();
                     $responseActivity->from = 'vendor';
                     $responseActivity->status = "Active";
@@ -405,7 +404,13 @@ class LeadController extends Controller
             $lead = Lead::with('service')->find($myleads[0]->id);
             $leadAnswers = LeadAnswer::with('question')->where("lead_id" , $lead->id)->where("status" , "Active")->get();
             $lead->leadAnswers = $leadAnswers;
-            $lead->responseActivities = ResponseActivity::where('lead_user_id' , $myleads[0]->leadUsersId)->orderBy('id','DESC')->get();
+            $lead->responseActivities = ResponseActivity::where(['lead_user_id' => $myleads[0]->leadUsersId,'status' =>'Active'])->orderBy('id','DESC')->get();
+            foreach($lead->responseActivities as $k=>$responseActivity){
+                $lead->responseActivities[$k]->message = translator($responseActivity->message , $responseActivity->wildcards);
+            }
+      
+
+
             $lastActivity = ResponseActivity::where('lead_user_id' , $myleads[0]->leadUsersId)->orderBy('id','DESC')->first();
             $lead->lastActivityDate = $lastActivity->logged_date;
             $lead->lastActivityMessage = $lastActivity->message;
@@ -450,7 +455,10 @@ class LeadController extends Controller
                 $lastActivity = ResponseActivity::where('lead_user_id' , $leadUser->id)->orderBy('id','DESC')->first();
                 $leadAnswers = LeadAnswer::with('question')->where("lead_id" , $lead->id)->where("status" , "Active")->get();
                 $lead->leadAnswers = $leadAnswers;
-                $lead->responseActivities = ResponseActivity::where('lead_user_id' , $leadUser->id)->orderBy('id','DESC')->get();
+                $lead->responseActivities = ResponseActivity::where(['lead_user_id' => $leadUser->id,'status' =>'Active'])->orderBy('id','DESC')->get();
+                foreach($lead->responseActivities as $k=>$responseActivity){
+                    $lead->responseActivities[$k]->message = translator($responseActivity->message , $responseActivity->wildcards);
+                }
                 $lead->notes = ResponseNote::where(['response_id' => $leadUser->id])->orderBy('id','DESC')->get();
                 $lead->lastActivityDate = $lastActivity->logged_date;
                 $lead->lastActivityMessage = $lastActivity->message;
@@ -534,29 +542,29 @@ class LeadController extends Controller
             $email = null;
             switch ($messageKey) {
                 case 'no_answer':
-                    $message = 'No Answer';
+                    $message = 'no_answer';
                     break;
                 case 'left_voice_mail':
-                    $message = 'Left Voice Mail';
+                    $message = 'left_voicemail';
                     break;
                 case 'we_talked':
-                    $message = 'We Talked';
+                    $message = 'we_talked';
                     break;
                 case 'didnt_call':
-                    $message = "Didn't Call";
+                    $message = "didnt_call";
                     break;
                 case 'send_whats_app':
-                    $message = "Sent Whatsapp Message";
+                    $message = "sent_whatsapp_message";
                     $openwhatsapp = true;
                     $whatsapp = "+91".$leadDetails->phone;
                     break;  
                 case 'send_email':
-                    $message = "Sent Email";
+                    $message = "sent_email";
                     $openemail = true;
                     $email = $leadDetails->email;
                     break;        
                 default:
-                    $message = 'No Answer';
+                    $message = 'no_answer';
                     break;
             }
             $responseActivity = new ResponseActivity();
@@ -569,7 +577,7 @@ class LeadController extends Controller
         $responseData = $this->responseDetails($leadResponse);
         return response()->json([
             'ajaxActivityLogger' => $this->activityLogs($leadUser->id),
-            'message' => "Log Updated Successfully",
+            'message' => __('lang.log_updated_successfully'),
             'openwhatsapp' => $openwhatsapp,
             'whatsappNumber' => $whatsapp,
             'openemail' => $openemail,
@@ -602,20 +610,51 @@ class LeadController extends Controller
         $estimation = new Estimation();
         $estimation->text = $request->input('text');
         $estimation->attachment = $dbpath;
+        $estimation->lead_user_id = $LeadUserId;
         $estimation->save();
+
+
+        //send estimation through mail
+
+        $this->sendEstimationmailtoUsers(['estimation' => $estimation]);        
+
 
 
         //storing in logs
         $responseActivityLog = new ResponseActivity();
         $responseActivityLog->lead_user_id = $LeadUserId;
-        $responseActivityLog->message = 'estimation added';
+        $responseActivityLog->message = 'estimation_added';
         $responseActivityLog->logged_date = now();
         $responseActivityLog->save();
     
         return response()->json([
-            'status' => true , "message" => 'Estimation added' ,
+            'status' => true , "message" => __('lang.estimation_added_successfully') ,
             'ajaxActivityLogger' => $this->activityLogs($LeadUserId)
         ]);
+    }
+
+    public function sendEstimationmailtoUsers($data){
+
+        $leadUser = LeadUser::find($data['estimation']->lead_user_id);
+        $lead = Lead::with('service')->find($leadUser->lead_id);
+        $lead->vendorName = auth('web')->user()->name;
+        $estimation = $data['estimation'];
+
+        $lead->LeadAnswers = LeadAnswer::with('question')->where(['lead_id' => $leadUser->lead_id])->get();
+
+        $emailMailer = new EmailMailer();
+        $emailMailer->mail_from = env('MAIL_FROM_ADDRESS');
+        $emailMailer->mail_from_name = env('MAIL_FROM_NAME');
+        $emailMailer->mail_to = $lead->email;
+        $emailMailer->mail_to_name = $lead->name;
+        $emailMailer->reference = 'estimation';
+        $emailMailer->reference_id = $estimation->id;
+        $emailMailer->mail_subject = "Estimation for your ".$lead->service->name." by ".auth('web')->user()->name;
+        $emailMailer->mail_message = view('front_end.email_templates.estimation' ,compact('lead' , 'estimation' ))->render();
+        $emailMailer->is_cron = '1';
+        $emailMailer->cron_status = '0';
+        $emailMailer->status = 'Active';
+        $emailMailer->save();
     }
 
     public function addNotes(Request $request){
@@ -639,12 +678,12 @@ class LeadController extends Controller
         //storing in logs
         $responseActivityLog = new ResponseActivity();
         $responseActivityLog->lead_user_id = $LeadUserId;
-        $responseActivityLog->message = 'Notes added';
+        $responseActivityLog->message = 'notes_added';
         $responseActivityLog->logged_date = now();
         $responseActivityLog->save();
 
         return response()->json([
-            'status' => true , "message" => 'Estimation added' ,
+            'status' => true , "message" => __('lang.notes_added_successfully') ,
             'ajaxActivityLogger' => $this->activityLogs($request->input('lead_user_id')),
             'ajaxnotes' => $this->notesLogs($request->input('lead_user_id'))
         ]);
@@ -653,9 +692,12 @@ class LeadController extends Controller
     public function activityLogs($responseId){
         //$responseId = $lead_user_id
         $leadUser = LeadUser::find($responseId);
-        $responseActivity = ResponseActivity::where(['lead_user_id' => $responseId])->orderBy('id','DESC')->get();
+        $responseActivitys = ResponseActivity::where(['lead_user_id' => $responseId,'status' =>'Active'])->orderBy('id','DESC')->get();
+        foreach($responseActivitys as $k=>$responseActivity){
+            $responseActivitys[$k]->message = translator($responseActivity->message , $responseActivity->wildcards);
+        }        
         $lead = Lead::find($leadUser->lead_id);
-        return view('front_end.ajax.activityLogger' , compact('responseActivity','lead'))->render();
+        return view('front_end.ajax.activityLogger' , compact('responseActivitys','lead'))->render();
     }
 
     public function notesLogs($responseId){

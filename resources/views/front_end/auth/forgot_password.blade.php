@@ -7,8 +7,8 @@
                 <div class="sf-custom-tabs sf-custom-new aon-logon-sign-area p-3">
                     <div class="">
                         <!--Forgot Password Form-->
-                        <h2>Forgot Password</h2>
-                        <label><b>Enter your Email and we’ll help you reset your password.</b></label>
+                        <h2>{{__('lang.forgot_password')}}</h2>
+                        <label><b>{{__('lang.enter_your_email_and_well_help_you_reset_your_password')}}.</b></label>
                         @if (Session::has('message'))
                             <div class="alert alert-success" role="alert">
                                 {{ Session::get('message') }}
@@ -36,7 +36,7 @@
                               
                                      
                                         <div class="col-md-12">
-                                            <button type="submit" class="site-button w-100">Continue <i class="feather-arrow-right"></i> </button>
+                                            <button type="submit" class="site-button w-100">{{__('lang.continue')}} <i class="feather-arrow-right"></i> </button>
                                         </div>                                          
                                         
                                     </div>

@@ -11,46 +11,46 @@
                 </div>
             @endif  
             <div class="alert  alert-tharbricks fade show" role="alert" >
-                Last activity {{Carbon\Carbon::parse($lead->lastActivityDate)->diffForHumans(null,null,true)}}
+                {{__('lang.last_activity')}} {{Carbon\Carbon::parse($lead->lastActivityDate)->diffForHumans(null,null,true)}}
             </div>
             <div class="d-flex flew-row flex-wrap justify-content-between align-items-center pb-2">
                 <div class="project-name-location pr-3 pt-2">
                     <h4 class="mb-0"><span class="buyer_name">{{ucfirst($lead->name)}}</span></h4>
                 </div>
                 <div class="responded-ago text-xs-14 text-light-grey pt-2">
-                    <b>Responded {{Carbon\Carbon::parse($lead->lastActivityDate)->diffForHumans(null,null,true)}}</b>
+                    <b>{{__('lang.responded')}} {{Carbon\Carbon::parse($lead->lastActivityDate)->diffForHumans(null,null,true)}}</b>
                 </div>
             </div>
             <div class="sf-provi-cat"><strong>{{$lead->service->name}}</strong> | {{$lead->address}} </div>
         
-            <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-phone"></i> &nbsp; <a ref="#"  data-toggle="modal" data-target="#call-feedback-modal" >Show Number</a></div>
+            <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-phone"></i> &nbsp; <a ref="#"  data-toggle="modal" data-target="#call-feedback-modal" >{{__('lang.show_number')}}</a></div>
             <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-envelope"></i> &nbsp; {{$lead->email}}</div>
             <div class="">
                 <div class="sf-provi-btn" style="padding-bottom: 20px">
                     <a href="#" class="site-button" data-toggle="modal" data-target="#call-feedback-modal" >
-                        <i class="fa fa-phone"></i>Show Number <i class="fa fa-external-link "></i>
+                        <i class="fa fa-phone"></i>{{__('lang.show_number')}} <i class="fa fa-external-link "></i>
                     </a>
                     <a href={{"https://wa.me/$lead->phone"}} class="site-button" target = "_blank">
-                        <i class="fa fa-whatsapp"></i>Send WhatsApp </i>
+                        <i class="fa fa-whatsapp"></i>{{__('lang.send_whatsapp')}} </i>
                     </a>
                     <a href={{"mailto:$lead->email"}} class="site-button">
-                        <i class="fa fa-envelope"></i>Send Email 
+                        <i class="fa fa-envelope"></i>{{__('lang.send_email')}}
                     </a>
-                    <a href="{{route('vendor-interested-lead',['lead_id'=>$lead->id])}}" class="site-button">
+                    {{-- <a href="{{route('vendor-interested-lead',['lead_id'=>$lead->id])}}" class="site-button">
                         <i class="fa fa-comments"></i>Send SMS 
-                    </a>
+                    </a> --}}
                 </div>
             </div>
-            <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-tag"></i> &nbsp; Your estimate : <a href="#" target="_blank"> send an estimate</a></div>
+            <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-tag"></i> &nbsp; {{__('lang.your_estimate')}} : <a href="#" target="_blank"> {{__('lang.send_an_estimate')}}</a></div>
     
         </div>
         <!--Q A-->
         <div class="sf-provi-amqudo-box margin-b-50 sf-provi-fullBox">
             <div class="sf-custom-tabs sf-custom-new">
                 <ul class="nav nav-tabs nav-table-cell font-20">
-                    <li><a data-toggle="tab" href="#tab-11111" class="active">Activity</a></li>
-                    <li><a data-toggle="tab" href="#tab-22222" >Lead Details</a></li>
-                    <li><a data-toggle="tab" href="#tab-33333" >My Notes</a></li>
+                    <li><a data-toggle="tab" href="#tab-11111" class="active">{{__('lang.activity')}}</a></li>
+                    <li><a data-toggle="tab" href="#tab-22222" >{{__('lang.lead_details')}}</a></li>
+                    <li><a data-toggle="tab" href="#tab-33333" >{{__('lang.my_notes')}}</a></li>
                 </ul>
                 <div class="tab-content">
                     <div id="tab-11111" class="tab-pane active">
@@ -175,8 +175,8 @@
                             </div>
                         </div>
                         <div style="float:right;padding-top:20px">
-                            <button type="button"  class="site-button" >Cancel </button>
-                            <button type="button"  class="site-button" >Update </button>
+                            <button type="button"  class="site-button" >{{__('lang.cancle')}} </button>
+                            <button type="button"  class="site-button" >{{__('lang.update')}} </button>
                         </div> 
                     </div>
                 </div>

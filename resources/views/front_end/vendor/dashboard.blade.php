@@ -108,14 +108,14 @@
                                 <a href="{{route('my-credits')}}">
                                     <div class="panel panel-default ser-card-default">
                                         <div class="panel-body ser-card-body ser-puple p-a30">
-                                            <div class="ser-card-title">Credits</div>
+                                            <div class="ser-card-title">{{__('lang.credits')}}</div>
                                             <div class="ser-card-icons"><img src="{{asset('frontEnd/images/wallet.png')}}" alt=""/></div>
                                             <div class="ser-card-amount">{{$vendorDetails->credits}}</div>
                                             <div class="ser-card-table">
                                                 <div class="ser-card-left">
                                                     <div class="ser-card-total">
                                                         <div class="ser-total-table">
-                                                            <div class="ser-total-cell1">Total</div>
+                                                            <div class="ser-total-cell1">{{__('lang.total')}}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -132,14 +132,14 @@
                                 <a href="{{route('vendor-leads')}}">
                                     <div class="panel panel-default ser-card-default">
                                         <div class="panel-body ser-card-body ser-orange p-a30">
-                                            <div class="ser-card-title">Leads</div>
+                                            <div class="ser-card-title">{{__('lang.leads')}}</div>
                                             <div class="ser-card-icons"><img src="{{asset('frontEnd/images/booking.png')}}" alt=""/></div>
                                             <div class="ser-card-amount">{{$data['totalLeads']}}</div>
                                             <div class="ser-card-table">
                                                 <div class="ser-card-left">
                                                     <div class="ser-card-total">
                                                         <div class="ser-total-table">
-                                                            <div class="ser-total-cell1">Total</div>
+                                                            <div class="ser-total-cell1">{{__('lang.total')}}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -156,14 +156,14 @@
                                 <a href="{{route('my-tharbricks')}}">
                                     <div class="panel panel-default ser-card-default">
                                         <div class="panel-body ser-card-body ser-blue p-a30">
-                                            <div class="ser-card-title">Response</div>
+                                            <div class="ser-card-title">{{__('lang.response')}}</div>
                                             <div class="ser-card-icons"><img src="{{asset('frontEnd/images/earning.png')}}" alt=""/></div>
                                             <div class="ser-card-amount">{{$data['totalResponses']}}</div>
                                             <div class="ser-card-table">
                                                 <div class="ser-card-left">
                                                     <div class="ser-card-total">
                                                         <div class="ser-total-table">
-                                                            <div class="ser-total-cell1">Total</div>
+                                                            <div class="ser-total-cell1">{{__('lang.total')}}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -196,7 +196,7 @@
                             <div class="px-3 pb-3">
                                 <div class="border-top pt-3 js-profile-completeness">
                                     <div class="d-flex justify-content-between align-items-center flex-wrap font-bolder" >
-                                        <p class="text-xs mb-0">Your profile is {{$data['percentage']}}% complete</p>
+                                        <p class="text-xs mb-0">{{__('lang.your_profile_is_complete_percentage' , ['percentage' => $data['percentage']])}}</p>
                                         <a href="{{url('vendor/edit#aon-about-panel')}}" class="text-grey-200 text-xs hover-dark noline">Edit</a>
                                     </div>
                                     <div class="mt-4">
@@ -206,7 +206,7 @@
                                     </div>
                                 </div>
                                 <p class="text-secondary my-3 text-xs">
-                                    Completing your profile is a great way to appeal to customers
+                                    {{__('lang.completing_your_profile_is_a_great_way_to_appeal_to_customers')}}
                                     
                                 </p>
                             </div>
@@ -215,7 +215,7 @@
                     </div>
                     <div class="col-md-6 col-sm-12">
                         <div class="card aon-card">
-                            <div class="card-header aon-card-header aon-card-header2"><h4>Help</h4></div>
+                            <div class="card-header aon-card-header aon-card-header2"><h4>{{__('lang.help')}}</h4></div>
                             <div class="card-body" style="padding:1.0rem !important">
                                 <hr>
                                 <div class="tab-content">
@@ -224,16 +224,16 @@
                                            <i class="fa fa-question-circle" style="padding-top: 10px;"></i>
                                             <div class="text-dark-blue text-xs ml-2">
                                                 <p class="text-left mb-3">
-                                                    Visit <a class="text-nowrap text-dark-blue hover-light" href="#"><u>help centre</u></a> for tips &amp; advice.
+                                                    {{__('lang.visit')}} <a class="text-nowrap text-dark-blue hover-light" href="#"><u>{{__('lang.help_centre')}}</u></a>{{__('lang.for_tips_advice')}}
                                                 </p>
                                                 <p class="text-left mb-2">
-                                                    Email <a class="text-dark-blue text-nowrap noline" href="mailto:{{$data['email']}}">{{$data['email']}}</a>
+                                                    {{__('lang.email')}} <a class="text-dark-blue text-nowrap noline" href="mailto:{{$data['email']}}">{{$data['email']}}</a>
                                                 </p>
                                                 <p class="text-dark-blue mb-0">
-                                                    Call <a class="text-nowrap text-dark-blue" href="tel:+91{{$data['phone_number']}}">+91 {{$data['phone_number']}}</a>
+                                                    {{__('lang.call')}} <a class="text-nowrap text-dark-blue" href="tel:+91{{$data['phone_number']}}">+91 {{$data['phone_number']}}</a>
                                                 </p>
                                                 <p class="text-xs text-grey-400   mb-0">
-                                                    Mon-Fri 8am-8pm, Sat-Sun 9am-6pm
+                                                    {{__('lang.avilability')}}
                                                 </p>
                                             </div>
                                         </div>
@@ -250,7 +250,7 @@
             
             <div class="col-xl-4 col-lg-4 col-md-12 m-b30">
                 <div class="card aon-card">
-                    <div class="card-header aon-card-header aon-card-header2"><h4>Lead Settings</h4></div>
+                    <div class="card-header aon-card-header aon-card-header2"><h4>{{__('lang.lead_settings')}}</h4></div>
                     <div class="card-body" style="padding: 1rem !important">
                         <hr>
                         <div class="tab-content">
@@ -261,7 +261,7 @@
                                         Edit
                                     </a>
                                 </div>
-                                <p class="text-secondary text-xs">You'll receive leads in these services</p>
+                                <p class="text-secondary text-xs">{{__('lang.Youll_receive_leads_in_these_services')}}</p>
                                 <div class="widget_tag_cloud ">                   
                                     <div class="tagcloud">
                                         @foreach ($data['services'] as $service)
@@ -274,10 +274,10 @@
                             <hr>
                             <div class="content mx-2">
                                 <div class="d-flex justify-content-between align-items-center mb-1 font-bolder" >
-                                    <p class="mb-0 text-md">Locations</p>
-                                    <a href="{{url('vendor/edit#aon-category-panel')}}" class="text-grey-200 noline hover-dark text-xs">Edit</a>
+                                    <p class="mb-0 text-md">{{__('lang.locations')}}</p>
+                                    <a href="{{url('vendor/edit#aon-category-panel')}}" class="text-grey-200 noline hover-dark text-xs">{{__('lang.edit')}}</a>
                                 </div>
-                                <p class="text-secondary text-xs">You're receiving customers within</p>
+                                <p class="text-secondary text-xs">{{__('lang.Youre_receiving_customers_within')}}</p>
                                     <div class="locations d-flex flex-column justify-content-around align-items-start">
                                         <div class="d-flex justify-content-start align-items-center my-1 mw-100">
                                             <span class="bark-svg-icon bsi-primary-grey-200 bsi-sm mr-2">
@@ -296,7 +296,7 @@
                             <hr>
                             <div class="content mx-2">
                                 <div class="d-flex justify-content-between align-items-center mb-1 font-bolder" >
-                                    <p class="mb-0 text-md">Sending new leads to</p>
+                                    <p class="mb-0 text-md">{{__('lang.sending_new_leads_to')}}</p>
                                     <a href="{{url('vendor/edit#aon-about-panel')}}" class="text-grey-200 noline hover-dark text-xs">
                                         <u>Change</u>
                                     </a>

@@ -44,7 +44,7 @@
         <!-- All categories Block Section  END -->
 
         <!-- all cat list Section -->
-        <div class="aon-all-cat-list1-wrap2">
+        {{-- <div class="aon-all-cat-list1-wrap2">
             <div class="container">
                 <div class="aon-all-cat-list1-section">
                     <div class="aon-cat-list1-title">Find Provider in Florida</div>
@@ -105,11 +105,11 @@
                 </div>
                 
             </div>
-        </div> 
+        </div>  --}}
         <!-- all cat list Section  END -->
 
         <!-- all cat list Section -->
-        <div class="aon-all-cat-list1-wrap2">
+        {{-- <div class="aon-all-cat-list1-wrap2">
             <div class="container">
                 <div class="aon-all-cat-list1-section">
                     <div class="aon-cat-list1-title">Find Provider in Australia </div>
@@ -170,11 +170,11 @@
                 </div>
                 
             </div>
-        </div> 
+        </div>  --}}
         <!-- all cat list Section  END -->
 
         <!-- all cat list Section -->
-        <div class="aon-all-cat-list1-wrap2 m-b30">
+        {{-- <div class="aon-all-cat-list1-wrap2 m-b30">
             <div class="container">
                 <div class="aon-all-cat-list1-section">
                     <div class="aon-cat-list1-title">Find Provider in India</div>
@@ -235,7 +235,7 @@
                 </div>
                 
             </div>
-        </div> 
+        </div>  --}}
         <!-- all cat list Section  END -->
         
     </div>

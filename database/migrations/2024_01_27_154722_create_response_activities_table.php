@@ -17,6 +17,7 @@ class CreateResponseActivitiesTable extends Migration
             $table->id();
             $table->integer('lead_user_id');
             $table->string('message');
+            $table->json('wildcard')->nullable();
             $table->dateTime('logged_date');
             $table->enum('from',['vendor','customer'])->default('vendor');
             $table->enum('status',['Active','InActive'])->default('Active');

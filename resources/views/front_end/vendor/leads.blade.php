@@ -41,12 +41,12 @@
                         <!-- user msg list start-->
                         <div style="position: static;height: 77px;background-color: black;color: white;display: flex;">
                             <div style="padding: 11px 16px;"> 
-                                <div>{{$information['totalAvaiableLeads']}} matching Leads</div>
-                                <div style="font-size: small;"> {{$information['userServices']}}  services &nbsp; <span><i class="fa fa-map-marker"></i> &nbsp;1 location</span></div>
+                                <div>{{$information['totalAvaiableLeads']}} {{__('lang.matching_leads')}}</div>
+                                <div style="font-size: small;"> {{$information['userServices']}}  {{__('lang.services')}} &nbsp; <span><i class="fa fa-map-marker"></i> &nbsp;1 {{__('lang.locations')}}</span></div>
                             </div>
                             <div style="text-align: end;flex: 1;padding: 14px 22px;"> 
                                 <a href="javascript:void(0);" class="site-button">
-                                    <i class="fa fa-edit"></i> Edit
+                                    <i class="fa fa-edit"></i> {{__('lang.edit')}}
                                  </a>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                                         <div class="msg-user-discription"><i class="aon-input-icon fa fa-map-marker"></i> {{$item->address}}</div>
                                         <div class="msg-user-discription">{{$item->leadAnswersShort}} </div>
                                         <div >
-                                            <div class=" msg-user-discription">26 credits <span style="position: absolute;right: 10px;font-size: 12px;color: #2d7af1;">Be the <span class="font-weight-bold">1st to respond</span> </span></div>
+                                            <div class=" msg-user-discription">26 {{__('lang.credits')}} <span style="position: absolute;right: 10px;font-size: 12px;color: #2d7af1;">Be the <span class="font-weight-bold">1st to respond</span> </span></div>
                                         </div>
                                     </div>
                                 </a>
@@ -81,8 +81,8 @@
                                     <h4 class="mt-2">
                                         No Lead
                                     </h4>
-                                    <p class="text-center mt-2 text-light-grey">You haven’t responded to any customers yet. When you do, you’ll be able to contact and access their details here.</p>
-                                    <a href="/sellers/dashboard/">View leads</a>
+                                    <p class="text-center mt-2 text-light-grey">{{__('lang.you_havent_responded_to_any_customers_yet_When_you_do_youll_be_able_to_contact_and_access_their_details_here')}}.</p>
+                                    <a href="/sellers/dashboard/">{{__('lang.view_leads')}}</a>
                                 </div>
                             </div>
                                 
@@ -111,17 +111,17 @@
                                           </div>
                                         @endif  
                                         <h3>{{$lead->name}} </h3>
-                                        <div class="sf-provi-cat"><strong>Service:</strong> {{$lead->service->name}}</div>
+                                        <div class="sf-provi-cat"><strong>{{__('lang.service')}}:</strong> {{$lead->service->name}}</div>
                                         <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-map-marker"></i> &nbsp; {{$lead->address}}</div>
                                         <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-phone"></i> &nbsp; {{$lead->encrypted_phone}}</div>
                                         <div class="sf-provi-cat"> <i class="aon-input-icon fa fa-envelope"></i> &nbsp; {{$lead->encrypted_email}}</div>
                                         <div class="sf-provi-bio-text">
                                             <div class="sf-provi-btn" style="padding-bottom: 20px">
                                                 <a href="{{route('vendor-interested-lead',['lead_id'=>$lead->id])}}" class="site-button">
-                                                    <i class="fa fa-briefcase"></i>Contact 
+                                                    <i class="fa fa-briefcase"></i>{{__('lang.contact')}} 
                                                 </a>
                                                 <a href="{{route('vendor-not-interested-lead',['lead_id'=>$lead->id])}}" style="padding-left: 35px;">
-                                                    Not interested
+                                                    {{__('lang.not_interested')}}
                                                 </a>
                                             </div>
                                         </div>
@@ -130,7 +130,7 @@
                                     <div class="sf-provi-amqudo-box margin-b-50 sf-provi-fullBox">
                                         <div class="sf-custom-tabs sf-custom-new">
                                             <ul class="nav nav-tabs nav-table-cell font-20">
-                                            <li><a data-toggle="tab" href="#tab-11111" class="active">Details</a></li>
+                                            <li><a data-toggle="tab" href="#tab-11111" class="active">{{__('lang.details')}}</a></li>
                                             </ul>
                                             <div class="tab-content">
                                             <div id="tab-11111" class="tab-pane active">
@@ -161,7 +161,7 @@
                                             <h4 class="mt-2">
                                                 No Lead
                                             </h4>
-                                            <p class="text-center mt-2 text-light-grey">You haven’t responded to any customers yet. When you do, you’ll be able to contact and access their details here.</p>
+                                            <p class="text-center mt-2 text-light-grey">{{__('lang.you_havent_responded_to_any_customers_yet_When_you_do_youll_be_able_to_contact_and_access_their_details_here')}}.</p>
                                             {{-- <a href="/sellers/dashboard/">View leads</a> --}}
                                         </div>
                                     </div>

@@ -46,7 +46,7 @@
 
 
     <div class="aon-admin-heading">
-        <h4>My Credits</h4>
+        <h4>{{__('lang.my_credits')}}</h4>
     </div>                
     
     <div class="card aon-card">
@@ -82,12 +82,12 @@
                 <div class="d-block d-md-flex justify-content-between align-items-center no-gutters mb-md-2 mb-0">
                     <div>
                         <div class="js-atu-header-off p-md-2 text-lg">
-                           <h3>Total Credits</h3>
+                           <h3>{{__('lang.total_credits')}}</h3>
                         </div>
                         
                     </div>
                     <div class="text-left pt-3 pb-3 pt-md-0 pb-md-0 text-md-right">
-                        <strong class="js-page-n-credits">{{auth()->user()->vendorDetails->credits}}</strong> credits
+                        <strong class="js-page-n-credits">{{auth()->user()->vendorDetails->credits}}</strong> {{__('lang.credits')}}
                     </div>
                 </div>
                 @foreach ($plans as $plan)
@@ -97,7 +97,7 @@
                                 <div class="credits-pill text-xs position-absolute">
                                     @if($plan->discount > 0)
                                         <span class="xl-rounded-left p-1 text-primary pill-light-blue pl-2">
-                                        <span class="js-discount-pct">{{$plan->discount}}</span>% OFF
+                                        <span class="js-discount-pct">{{$plan->discount}}</span>% {{__('lang.off')}}
                                         </span>
                                     @endif
                                     
@@ -132,7 +132,7 @@
                                                 <span class="js-currency-symbol"></span><span class="js-price">₹{{number_format($plan->amount,2)}}</span> <span class="js-vat-toggle">(ex GST)</span>
                                             </p>
                                             <span class="text-sm text-grey-400">
-                                                <span class="js-price-per-credit">₹{{number_format($plan->amount / $plan->no_of_credits ,2)}}</span>/credit
+                                                <span class="js-price-per-credit">₹{{number_format($plan->amount / $plan->no_of_credits ,2)}}</span>/{{__('lang.credit')}}
                                             </span>
                                         </div>
                                         <div class="d-flex d-md-none justify-content-between flex-column align-items-end col-5 col-md-5 text-right text-md-left">
@@ -141,7 +141,7 @@
                                             </p>
                                             <span class="text-sm text-grey-400">
                                                 <span class="js-currency-symbol"></span>
-                                                <span class="js-price-per-credit">₹{{number_format($plan->amount / $plan->no_of_credits ,2)}}</span>/credit
+                                                <span class="js-price-per-credit">₹{{number_format($plan->amount / $plan->no_of_credits ,2)}}</span>/{{__('lang.credit')}}
                                             </span>
                                         </div>
                                     </div>
@@ -178,17 +178,17 @@
              
               
 
-                <h3 class ="pt-4 pb-3">Credit transaction log</h3>
+                <h3 class ="pt-4 pb-3">{{__('lang.credit_transaction_log')}}</h3>
 
                 <div class="sf-bs-data-table">
                     <div class="table-responsive">
                         <table class="table table-striped" style="width:100%;font-weight:bold">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Description</th>
-                                    <th>Credits</th>
-                                    <th>Date</th>
+                                    <th>{{__('lang.id')}}</th>
+                                    <th>{{__('lang.description')}}</th>
+                                    <th>{{__('lang.credits')}}</th>
+                                    <th>{{__('lang.date')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -210,7 +210,7 @@
                                 </tr>
                             @empty
                             <tr align="center" class="alert alert-danger">
-                                <td colspan="4">No Log(s) found</td>
+                                <td colspan="4">{{__('lang.no_logs_found')}}</td>
                             </tr>
                                 
                             @endforelse

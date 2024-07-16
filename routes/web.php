@@ -89,7 +89,6 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::get('vendor/my-credits', [App\Http\Controllers\FrontEnd\VendorController::class, 'myCredits'])->name('my-credits');
     // Route::post('vendor/my-credits', [App\Http\Controllers\RazorpayPaymentController::class, 'store']);
     Route::post('vendor/my-credits', [App\Http\Controllers\FrontEnd\VendorController::class, 'storePayment']);
-
     Route::get('vendor/update-response', [App\Http\Controllers\FrontEnd\LeadController::class, 'updateResponse'])->name('updateResponse');
 
 
@@ -107,6 +106,7 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::post('/updateLocation', [App\Http\Controllers\FrontEnd\LocationController::class, 'updateLocation'])->name('vendor-updateLocation');
 
     Route::post('/requestReview', [App\Http\Controllers\FrontEnd\LeadController::class, 'requestReview'])->name('vendor-requestReview');
+
     
 
 });

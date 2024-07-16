@@ -9,11 +9,11 @@
         <div class="sf-overlay-main" style="opacity:0.8; background-color:#022279;"></div>
         <div class="sf-banner-heading-wrap">
           <div class="sf-banner-heading-area">
-            <div class="sf-banner-heading-large">Blog Detail</div>
+            <div class="sf-banner-heading-large">{{__('lang.blog_detail')}}</div>
             <div class="sf-banner-breadcrumbs-nav">
               <ul class="list-inline">
-                <li><a href="index.html"> Home </a></li>
-                <li>Blog Detail</li>
+                <li><a href="{{url('/')}}"> {{__('lang.home')}} </a></li>
+                <li>{{__('lang.blog_detail')}}</li>
               </ul>
             </div>
           </div>
@@ -40,7 +40,7 @@
                               <div class="post-info">
                                 <div class="post-meta sf-icon-post-meta">
                                   <ul>
-                                    <li class="post-author"><i class="feather-user"></i>By
+                                    <li class="post-author"><i class="feather-user"></i>{{__('lang.by')}}
                                       <a href="#" title="" rel="">{{$blog->user_name}}</a>
                                     </li>
                                     <li class="post-comment">
@@ -60,7 +60,7 @@
                                   {!! $blog->description !!}
 
                                  <div class="sf-con-social-wrap">
-                                    <h4>Share this post</h4>
+                                    <h4>{{__('lang.share_this_post')}}</h4>
                                     <ul class="sf-con-social">
                                         <li><a href="#" class="sf-fb"><img src="images/contact-us/facebook.png" alt="">Facebook</a></li>
                                         <li><a href="#" class="sf-twitter"><img src="images/contact-us/twitter.png" alt="">Twitter</a></li>
@@ -198,7 +198,7 @@
                     </div>
                     @else
                     <h4 class="post-title">
-                       No Blog Found
+                        {{__('lang.no_blog_found')}}
                       </h4>
                     @endif
 
@@ -219,7 +219,7 @@
                         <!-- Social -->
                         <div class="widget rounded-sidebar-widget">
                             <div class="text-left m-b30">
-                                <h3 class="widget-title">Follow Us</h3>
+                                <h3 class="widget-title">{{__('lang.follow_us')}}</h3>
                             </div> 
                             <div class="widget_social_inks">
                                 <ul class="social-icons social-square social-darkest social-md">
@@ -234,7 +234,7 @@
                         <!-- CATEGORY -->   
                         <div class="widget widget_services rounded-sidebar-widget">
                             <div class="text-left m-b30">
-                                <h3 class="widget-title">Services</h3>
+                                <h3 class="widget-title">{{__('lang.services')}}</h3>
                             </div>
                             <ul>
                                 @forEach($services as $service)
@@ -247,7 +247,7 @@
                         <!-- RECENT POSTS -->
                         <div class="widget recent-posts-entry rounded-sidebar-widget">
                              <div class="text-left m-b30">
-                                 <h3 class="widget-title">Recent Posts</h3>
+                                 <h3 class="widget-title">{{__('lang.recent_blogs')}}</h3>
                              </div>                                    
                              
                              <div class="widget-post-bx">
@@ -268,18 +268,9 @@
                                         </div>                                            
                                     </div>
                                 </div>
-                                @endforeach
-                                
-                                                                               
+                                @endforeach                                            
                             </div>
-                             
                          </div>
-                             
-                                                                 
-                       
-                         
-                                                                 
-                   
                     </aside>
 
                 </div>

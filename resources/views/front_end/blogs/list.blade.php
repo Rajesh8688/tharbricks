@@ -2,26 +2,6 @@
 @section('content')
 <!-- Content -->
 <div class="page-content">
-            
-    <!-- Banner Area -->
-    {{-- <div class="aon-page-benner-area">
-      <div class="aon-page-banner-row" style="background-image: url(images/banner/job-banner.jpg)">
-        <div class="sf-overlay-main" style="opacity:0.8; background-color:#022279;"></div>
-        <div class="sf-banner-heading-wrap">
-          <div class="sf-banner-heading-area">
-            <div class="sf-banner-heading-large">Blog List 2</div>
-            <div class="sf-banner-breadcrumbs-nav">
-              <ul class="list-inline">
-                <li><a href="index.html"> Home </a></li>
-                <li>Blog List</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> --}}
-    <!-- Banner Area End -->
-    
     <!-- Left & right section -->
     <div class="aon-blog-page-wrap">
         <div class="container">
@@ -53,10 +33,9 @@
                                     <div class="post-meta1">
                                         <ul>
                                             
-                                            <li class="post-author"><i class="feather-user"></i>By
+                                            <li class="post-author"><i class="feather-user"></i>{{__('lang.by')}}
                                                 <a href="#" title="Posts by admin" rel="author">{{$blog->user_name}}</a>
                                             </li>
-                                            {{-- <li class="post-comment"><span><i class="feather-message-square"></i>Comment</span></li> --}}
                                         </ul>
                                     </div>
                                                                         
@@ -80,7 +59,7 @@
                           </div>
                           @empty
                           <div>
-                            <h1> No Blogs Found</h1>
+                            <h1>{{__('lang.no_blog_found')}}</h1>
                           </div>
                               
                           @endforelse
@@ -123,7 +102,7 @@
                         <div class="widget rounded-sidebar-widget">
                              <div class="widget_search_bx">
                                 <div class="text-left m-b30">
-                                    <h3 class="widget-title">Search</h3>
+                                    <h3 class="widget-title">{{__('lang.search')}}</h3>
                                 </div> 
                                  <form role="search" method="post">
                                      <div class="input-group">
@@ -139,7 +118,7 @@
                         <!-- Social -->
                         <div class="widget rounded-sidebar-widget">
                             <div class="text-left m-b30">
-                                <h3 class="widget-title">Follow Us</h3>
+                                <h3 class="widget-title">{{__('lang.follow_us')}}</h3>
                             </div> 
                             <div class="widget_social_inks">
                                 <ul class="social-icons social-square social-darkest social-md">
@@ -154,7 +133,7 @@
                         <!-- CATEGORY -->   
                         <div class="widget widget_services rounded-sidebar-widget">
                             <div class="text-left m-b30">
-                                <h3 class="widget-title">Services</h3>
+                                <h3 class="widget-title">{{__('lang.services')}}</h3>
                             </div>
                             <ul>
                                 @forEach($services as $service)
@@ -167,7 +146,7 @@
                         <!-- RECENT POSTS -->
                         <div class="widget recent-posts-entry rounded-sidebar-widget">
                              <div class="text-left m-b30">
-                                 <h3 class="widget-title">Recent Posts</h3>
+                                 <h3 class="widget-title">{{__('lang.recent_blogs')}}</h3>
                              </div>                                    
                              
                             <div class="widget-post-bx">
@@ -188,18 +167,9 @@
                                         </div>                                            
                                     </div>
                                 </div>
-                                @endforeach
-                                
-                                                                               
+                                @endforeach 
                             </div>
-                             
                          </div>
-                             
-                                                                 
-                        
-                         
-                                                                 
-                   
                     </aside>
 
                 </div>

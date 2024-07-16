@@ -132,28 +132,30 @@ class VendorController extends BaseApiController
             $serviceUser = ServiceUser::where(['user_id'=>$userId , 'service_id' => $serviceId])->first();
             if ($serviceUser === null) {
                 //insert
-                $userservice = new ServiceUser();
-                $userservice->user_id =  $userId ;
-                $userservice->service_id = $serviceId;
-                $userservice->save();
-                //tagging existing locations to available services
-                $locations = Location::where(['user_id' => $userId])->get();
-                foreach($locations as $l => $location){
-                    $userServiceLocation = new UserServiceLocation();
-                    $userServiceLocation->user_id = $userId;
-                    $userServiceLocation->service_id = $serviceId;
-                    $userServiceLocation->location_id = $location->id;
-                    $userServiceLocation->service_user_id = $userservice->id;
-                    $userServiceLocation->status = 'Active';
-                    $userServiceLocation->save();
-                }
-                $services = $this->userService($userId);
+                $serviceUser = new ServiceUser();
+                $serviceUser->user_id =  $userId ;
+                $serviceUser->service_id = $serviceId;
+                $serviceUser->save();
+              
             }else{
                 //update
                 $serviceUser->status = "Active";
                 $serviceUser->save();
-                $services = $this->userService($userId);
+                //deleting unwanted user Service Location 
+                UserServiceLocation::where(['service_id' => $serviceId , 'user_id' => $userId ])->delete();
             }
+            //tagging existing locations to available services
+            $locations = Location::where(['user_id' => $userId])->get();
+            foreach($locations as $l => $location){
+                $userServiceLocation = new UserServiceLocation();
+                $userServiceLocation->user_id = $userId;
+                $userServiceLocation->service_id = $serviceId;
+                $userServiceLocation->location_id = $location->id;
+                $userServiceLocation->service_user_id = $serviceUser->id;
+                $userServiceLocation->status = 'Active';
+                $userServiceLocation->save();
+            }
+            $services = $this->userService($userId);
         }
         $response = ["status" =>true ,"message" => "Service added successfully" ,'data' => $services];
         return response($response, 200);
@@ -662,8 +664,6 @@ class VendorController extends BaseApiController
         $response = ["status" =>true ,"message" => "Vendor Reviews" ,'data' => $review];
         return response($response, 200);
     }
-
-    
 
     public function deleteGalleryImage(Request $request){
         $validator = Validator::make($request->all(), [

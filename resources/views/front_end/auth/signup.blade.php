@@ -6,11 +6,11 @@
             <div class="section-head">
                 <div class="row">
                     <div class="col-lg-8 col-md-12">
-                        <span class="aon-sub-title">SignUp</span>
-                        <h2 class="sf-title">Win local jobs and grow your business</h2>
+                        <span class="aon-sub-title">{{__('lang.signup')}}</span>
+                        <h2 class="sf-title">{{__('lang.win_local_jobs_and_grow_your_business')}}</h2>
                     </div>
                     <div class="col-lg-4 col-md-12">
-                        <p>Hundreds of thousands of small businesses have found new customers on TharBricks</p>
+                        <p>{{__('lang.hundreds_of_thousands_of_small_businesses_have_found_new_customers_on_tharBricks')}}</p>
                     </div>
                 </div>
             </div>
@@ -28,12 +28,12 @@
                                 </select>
                             </div>
                             <div class ="">
-                                <button class="site-button aon-btn-login" type="submit"> Get Started</button>
+                                <button class="site-button aon-btn-login" type="submit"> {{__('lang.get_started')}}</button>
                             </div>
                         </div>
                     </form>
                     <br>
-                    <label>Popular Service</label>
+                    <label>{{__('lang.popular_services')}}</label>
                     <div class="widget widget_tag_cloud ">                   
                         <div class="tagcloud">
                             @foreach ($services as $service)

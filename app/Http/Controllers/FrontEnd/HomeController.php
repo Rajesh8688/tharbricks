@@ -146,10 +146,6 @@ class HomeController extends Controller
     }
 
     public function emailChecker(){
-
-        $leadId = 9;
-        $LeadDetails = Lead::with('service')->find($leadId);
-
-        return view('front_end.email_templates.lead');
+        return view('front_end.email_templates.estimation');
     }
 }

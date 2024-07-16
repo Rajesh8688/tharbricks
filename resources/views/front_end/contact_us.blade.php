@@ -8,11 +8,11 @@
             <div class="sf-overlay-main" style="opacity:0.8; background-color:#DF5901;"></div>
             <div class="sf-banner-heading-wrap">
                 <div class="sf-banner-heading-area">
-                <div class="sf-banner-heading-large">Contact Us</div>
+                <div class="sf-banner-heading-large">{{__('lang.contact_us')}}</div>
                 <div class="sf-banner-breadcrumbs-nav">
                     <ul class="list-inline">
-                    <li><a href="{{url('/')}}"> Home </a></li>
-                    <li>Contact us</li>
+                    <li><a href="{{url('/')}}"> {{__('lang.home')}} </a></li>
+                    <li>{{__('lang.contact_us')}}</li>
                     </ul>
                 </div>
                 </div>
@@ -26,7 +26,7 @@
             <div class="container">
             <!--Title Section Start-->
             <div class="section-head text-center">
-                <h2 class="sf-title">Contact Information</h2>
+                <h2 class="sf-title">{{__('lang.contact_information')}}</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do usmod tempor incididunt ut labore et dolore magna aliqua.</p>
             </div>
             <!--Title Section End-->
@@ -43,7 +43,7 @@
                                 <span><img src="{{ asset('frontEnd/images/contact-us/1.png')}}" alt=""></span>
                             </div>
                             <div class="sf-contact-info">
-                                <h4 class="sf-title">Mailing Address</h4>
+                                <h4 class="sf-title">{{__('lang.address')}}</h4>
                                 <p>{{$data['address']}}</p>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                                 <span><img src="{{ asset('frontEnd/images/contact-us/2.png')}}" alt=""></span>
                             </div>
                             <div class="sf-contact-info">
-                                <h4 class="sf-title">Email Info</h4>
+                                <h4 class="sf-title">{{__('lang.email_info')}}</h4>
                                 <p>{{$data['email']}}</p>
                             <br>
                             </div>
@@ -68,8 +68,8 @@
                                 <span><img src="{{ asset('frontEnd/images/contact-us/3.png')}}" alt=""></span>
                             </div>
                             <div class="sf-contact-info">
-                                <h4 class="sf-title">Phone Number</h4>
-                                <p>+91 {{$data['phone_number']}} (24/7 Support Line)</p>
+                                <h4 class="sf-title">phone_number</h4>
+                                <p>+91 {{$data['phone_number']}} ({{__('lang.support_line')}})</p>
                             <br>
                                 
                             </div>
@@ -83,7 +83,7 @@
                 <!--Contact Information-->  
                 <div class="sf-contact-form">
                     <div class="sf-con-form-title text-center">
-                        <h2 class="m-b30">Contact Information</h2>
+                        <h2 class="m-b30">{{__('lang.contact_information')}}</h2>
                     </div>
 
                     @if(session('success'))
@@ -167,7 +167,7 @@
                             
                         </div>
                         <div class="sf-contact-submit-btn">
-                            <button class="site-button" type="submit">Submit</button>
+                            <button class="site-button" type="submit">{{__('lang.submit')}}</button>
                         </div>
                     </form>
                 </div>
@@ -183,11 +183,11 @@
             <div class="container">
 
                 <div class="sf-map-social-block text-center">
-                    <h2>Trusted by thousands of people all over the world</h2>
+                    <h2>{{__('lang.trusted_by_thousands_of_people_all_over_the_world')}}</h2>
                     <ul class="sf-con-social">
-                        <li><a href="#" class="sf-fb"><img src="{{ asset('frontEnd/images/contact-us/facebook.png')}}" alt="">Facebook</a></li>
-                        <li><a href="#" class="sf-twitter"><img src="{{ asset('frontEnd/images/contact-us/twitter.png')}}" alt="">Twitter</a></li>
-                        <li><a href="#" class="sf-pinterest"><img src="{{ asset('frontEnd/images/contact-us/pinterest.png')}}" alt="">Pinterest</a></li>
+                        <li><a href="#" class="sf-fb"><img src="{{ asset('frontEnd/images/contact-us/facebook.png')}}" alt="">{{__('lang.facebook')}}</a></li>
+                        <li><a href="#" class="sf-twitter"><img src="{{ asset('frontEnd/images/contact-us/twitter.png')}}" alt="">{{__('lang.twitter')}}</a></li>
+                        <li><a href="#" class="sf-pinterest"><img src="{{ asset('frontEnd/images/contact-us/pinterest.png')}}" alt="">{{__('lang.pinterest')}}</a></li>
                     </ul>
 
                     <div class="sf-con-social-pic">

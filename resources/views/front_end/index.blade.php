@@ -25,10 +25,10 @@
                             <div class="aon-bnr2-content-wrap">
                                 <!--Banner Text-->
                                 <div class="aon-bnr-write">
-                                    <h2 class="text-top-line">Hire 
-                                        <span class="text-secondry">Experts</span> &amp; 
+                                    <h2 class="text-top-line">{{__('lang.hire')}}
+                                        <span class="text-secondry">{{__('lang.experts')}}</span> &amp; 
                                     </h2>
-                                    <h2 class="text-bot-line">Get Your Job Done</h2>
+                                    <h2 class="text-bot-line">{{__('lang.get_your_job_done')}}</h2>
                                 </div>
                                 <!--Banner Text End-->
                                 <!--Seach Bar-->
@@ -39,7 +39,7 @@
                                             <!-- COLUMNS 1 -->
                                             <div class="aon-search-input category-select ">
                                                 <select id="categorysrh" name="catid" class="form-control sf-form-control aon-categories-select sf-select-box" title="Service">
-                                                    <option class="bs-title-option" value="">Select a Service</option>
+                                                    <option class="bs-title-option" value="">{{__('lang.select_a_service')}}</option>
 
                                                     @foreach ($Services as $service)
                                                     {{$icon = asset('uploads/services/icons/'.$service->icon)}}
@@ -64,12 +64,12 @@
                                             </div>
                                             <!-- COLUMNS 3 -->
                                             <div class="aon-search-btn-wrap">
-                                                <button class="aon-search-btn" type="button" onclick="servicepopup()">Search</button>
+                                                <button class="aon-search-btn" type="button" onclick="servicepopup()">{{__('lang.search')}}</button>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
-                                <div class="text-danger" style="display: none" id="serviceError">* Please select a service</div>
+                                <div class="text-danger" style="display: none" id="serviceError">* {{__('lang.please_select_a_service')}} </div>
                                 <!--Seach Bar End-->
                             </div>
                         </div>
@@ -115,8 +115,8 @@
                     <div class="row">
                         <!-- COLUMNS LEFT -->
                         <div class="col-lg-6 col-md-12">
-                            <span class="aon-sub-title">Services</span>
-                            <h2 class="sf-title">Popular Services</h2>
+                            <span class="aon-sub-title">{{__('lang.services')}}</span>
+                            <h2 class="sf-title">{{__('lang.popular_services')}}</h2>
                         </div>
                         <!-- COLUMNS RIGHT -->
                         <div class="col-lg-6 col-md-12">
@@ -141,7 +141,7 @@
                                         <div class="aon-cate-area2-content">
                                             {{-- <h4 class="aon-tilte"><a href="{{route('serviceDetails',['slug'=>$item->slug])}}">{{$item->name}}</a></h4> --}}
                                             <h4 class="aon-tilte">{{$item->name}}</h4>
-                                            <p>0 Listing</p>
+                                            <p>0 {{__('lang.listing')}}</p>
                                         </div>
                                     </div>
                                 </div>    
@@ -151,7 +151,7 @@
                             
                         </div>
                         <div class="aon-btn-pos-center">
-                            <a class="site-button" href="{{route('service')}}">View All</a>
+                            <a class="site-button" href="{{route('service')}}">{{__('lang.view_all')}}</a>
                         </div>
                     </div>
                 </div>
@@ -168,8 +168,8 @@
                     <div class="aon-howit-area2-bg">
                         <!--Title Section Start-->
                         <div class="section-head aon-title-center white">
-                            <span class="aon-sub-title">Stpes</span>
-                            <h2 class="sf-title">How It Work</h2>
+                            <span class="aon-sub-title">{{__('lang.steps')}}</span>
+                            <h2 class="sf-title">{{__('lang.how_it_work')}}</h2>
                         </div>
                         <!--Title Section Start End-->
                         <div class="section-content">
@@ -239,8 +239,8 @@
                 <div class="section-head">
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
-                            <span class="aon-sub-title">Vendor</span>
-                            <h2 class="sf-title">Featured Providers</h2>
+                            <span class="aon-sub-title">{{__('lang.vendor')}}</span>
+                            <h2 class="sf-title">{{__('lang.featured_providers')}}</h2>
                         </div>
                         <div class="col-lg-6 col-md-12">
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do usmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -386,215 +386,6 @@
                         </div>
                     </div>
                 </div>
-                
-                {{-- <div class="section-content">
-                    <div class="aon-postjobs-area2-section">
-                        <div class="row">
-                            <!-- COLUMNS 1 -->
-                            <div class="col-lg-6 col-md-6">
-                                <div class="aon-post-jobsCol media-bg-animate mba-bdr-15">
-                                    <div class="aon-post-jobs2 aon-icon-effect">
-
-                                        <div class="job-comapny-logo">
-                                            <img class="company_logo aon-icon" src="{{asset('frontEnd/images/jobs/1.jpg')}}" alt="">
-                                        </div>
-                                        <div class="job-comapny-info">
-                                            <div class="position">
-                                                <h3><a href="job-detail.html">UI & UX Designer</a></h3>
-                                                <div class="company"><strong>Digital Asset</strong></div>
-                                            </div>
-
-                                            <ul class="meta">
-                                                <li class="job-type hourly"><i class="fa fa-circle"></i>Full Time</li>
-                                            </ul>
-
-                                            <div class="job-date">
-                                                <span><i class="fa fa-calendar-o"></i>  3 years ago</span>
-                                            </div>
-
-                                            <div class="job-location">
-                                                <i class="fa fa-map-marker"></i> Brooklyn 
-                                            </div>
-                                            <div class="job-amount">
-                                                <i class="fa fa-money"></i>
-                                                <span>$1,200 - $1,500</span>
-                                            </div>
-                                            <div class="job-label"><img src="{{asset('frontEnd/images/label.png')}}" alt=""></div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- COLUMNS 2 -->
-                            <div class="col-lg-6 col-md-6">
-                                <div class="aon-post-jobsCol media-bg-animate mba-bdr-15">
-                                    <div class="aon-post-jobs2 aon-icon-effect">
-                                        <div class="job-comapny-logo">
-                                            <img class="company_logo aon-icon" src="{{asset('frontEnd/images/jobs/2.jpg')}}" alt="">
-                                        </div>
-                                        <div class="job-comapny-info">
-                                            <div class="position">
-                                                <h3><a href="job-detail.html">Web & App developer</a></h3>
-                                                <div class="company"><strong>Digital Asset</strong></div>
-                                            </div>
-
-                                            <ul class="meta">
-                                                <li class="job-type hourly"><i class="fa fa-circle"></i>Hourly</li>
-                                            </ul>
-
-                                            <div class="job-date">
-                                                <span><i class="fa fa-calendar-o"></i>  3 years ago</span>
-                                            </div>
-                                            <div class="job-location">
-                                                <i class="fa fa-map-marker"></i> Brooklyn 
-                                            </div>
-                                            <div class="job-amount">
-                                                <i class="fa fa-money"></i>
-                                                <span>$1,200 - $1,500</span>
-                                            </div>
-                                            <div class="job-label"><img src="{{asset('frontEnd/images/label.png')}}" alt=""></div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- COLUMNS 3 -->
-                            <div class="col-lg-6 col-md-6">
-                                <div class="aon-post-jobsCol media-bg-animate mba-bdr-15">
-                                    <div class="aon-post-jobs2 aon-icon-effect">
-                                        <div class="job-comapny-logo">
-                                            <img class="company_logo aon-icon" src="{{asset('frontEnd/images/jobs/3.jpg')}}" alt="">
-                                        </div>
-                                        <div class="job-comapny-info">
-                                            <div class="position">
-                                                <h3><a href="job-detail.html">Hotel Interior Designer</a></h3>
-                                                <div class="company"><strong>Digital Asset</strong></div>
-                                            </div>
-
-                                            <ul class="meta">
-                                                <li class="job-type hourly"><i class="fa fa-circle"></i>Hourly</li>
-                                            </ul>
-
-                                            <div class="job-date">
-                                                <span><i class="fa fa-calendar-o"></i>  3 years ago</span>
-                                            </div>
-                                            <div class="job-location">
-                                                <i class="fa fa-map-marker"></i> Brooklyn 
-                                            </div>
-                                            <div class="job-amount">
-                                                <i class="fa fa-money"></i>
-                                                <span>$1,200 - $1,500</span>
-                                            </div>
-                                            <div class="job-label"><img src="{{asset('frontEnd/images/label.png')}}" alt=""></div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- COLUMNS 4 -->
-                            <div class="col-lg-6 col-md-6">
-                                <div class="aon-post-jobsCol media-bg-animate mba-bdr-15">
-                                    <div class="aon-post-jobs2 aon-icon-effect">
-                                        <div class="job-comapny-logo">
-                                            <img class="company_logo aon-icon" src="{{asset('frontEnd/images/jobs/4.jpg')}}" alt="">
-                                        </div>
-                                        <div class="job-comapny-info">
-                                            <div class="position">
-                                                <h3><a href="job-detail.html">Digital Marketing Agency</a></h3>
-                                                <div class="company"><strong>Digital Asset</strong></div>
-                                            </div>
-
-                                            <ul class="meta">
-                                                <li class="job-type hourly"><i class="fa fa-circle"></i>Hourly</li>
-                                            </ul>
-
-                                            <div class="job-date">
-                                                <span><i class="fa fa-calendar-o"></i> 3 years ago</span>
-                                            </div>
-                                            <div class="job-location">
-                                                <i class="fa fa-map-marker"></i> Brooklyn 
-                                            </div>
-                                            <div class="job-amount">
-                                                <i class="fa fa-money"></i>
-                                                <span>$1,200 - $1,500</span>
-                                            </div>
-                                            <div class="job-label"><img src="{{asset('frontEnd/images/label.png')}}" alt=""></div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- COLUMNS 5 -->
-                            <div class="col-lg-6 col-md-6">
-                                <div class="aon-post-jobsCol media-bg-animate mba-bdr-15">
-                                    <div class="aon-post-jobs2 aon-icon-effect">
-                                        <div class="job-comapny-logo">
-                                            <img class="company_logo ao-icon" src="{{asset('frontEnd/images/jobs/5.jpg')}}" alt="">
-                                        </div>
-                                        <div class="job-comapny-info">
-                                            <div class="position">
-                                                <h3><a href="job-detail.html">Fish & Game Warden</a></h3>
-                                                <div class="company"><strong>Digital Asset</strong></div>
-                                            </div>
-
-                                            <ul class="meta">
-                                                <li class="job-type hourly"><i class="fa fa-circle"></i>Hourly</li>
-                                            </ul>
-
-                                            <div class="job-date">
-                                                <span><i class="fa fa-calendar-o"></i> 3 years ago</span>
-                                            </div>
-                                            <div class="job-location">
-                                                <i class="fa fa-map-marker"></i> Brooklyn 
-                                            </div>
-                                            <div class="job-amount">
-                                                <i class="fa fa-money"></i>
-                                                <span>$1,200 - $1,500</span>
-                                            </div>
-                                            <div class="job-label"><img src="{{asset('frontEnd/images/label.png')}}" alt=""></div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- COLUMNS 6 -->
-                            <div class="col-lg-6 col-md-6">
-                                <div class="aon-post-jobsCol media-bg-animate mba-bdr-15">
-                                    <div class="aon-post-jobs2 aon-icon-effect">
-                                        <div class="job-comapny-logo">
-                                            <img class="company_logo aon-icon" src="{{asset('frontEnd/images/jobs/6.jpg')}}" alt="">
-                                        </div>
-                                        <div class="job-comapny-info">
-                                            <div class="position">
-                                                <h3><a href="job-detail.html">Certified Nursing Assistant</a></h3>
-                                                <div class="company"><strong>Digital Asset</strong></div>
-                                            </div>
-
-                                            <ul class="meta">
-                                                <li class="job-type hourly"><i class="fa fa-circle"></i>Hourly</li>
-                                            </ul>
-
-                                            <div class="job-date">
-                                                <span><i class="fa fa-calendar-o"></i> 3 years ago</span>
-                                            </div>
-                                            <div class="job-location">
-                                                <i class="fa fa-map-marker"></i> Brooklyn 
-                                            </div>
-                                            <div class="job-amount">
-                                                <i class="fa fa-money"></i>
-                                                <span>$1,200 - $1,500</span>
-                                            </div>
-                                            <div class="job-label"><img src="{{asset('frontEnd/images/label.png')}}" alt=""></div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-
             </div>
         </div>
         <!-- Recently Posted Jobs Section END -->
@@ -672,8 +463,8 @@
                 <div class="section-head">
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
-                            <span class="aon-sub-title">Blog</span>
-                            <h2 class="sf-title">Latest News</h2>
+                            <span class="aon-sub-title">{{__('lang.blog')}}</span>
+                            <h2 class="sf-title">{{__('lang.latest_blogs')}}</h2>
                         </div>
                         <div class="col-lg-6 col-md-12">
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do usmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -735,8 +526,8 @@
                 <div class="section-head">
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
-                            <span class="aon-sub-title">Testimonials</span>
-                            <h2 class="aon-title">What People Say</h2>
+                            <span class="aon-sub-title">{{__('lang.testimonials')}}</span>
+                            <h2 class="aon-title">{{__('lang.what_people_say')}}</h2>
                         </div>
                         <div class="col-lg-6 col-md-12">
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do usmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -779,8 +570,8 @@
                     <div class="aon-statics-area2-bg">
                         <!--Title Section Start-->
                         <div class="section-head aon-title-center white">
-                            <span class="aon-sub-title">Statics</span>
-                            <h2 class="sf-title">Trusted by thousands of people all over the world</h2>
+                            <span class="aon-sub-title">{{__('lang.statics')}}</span>
+                            <h2 class="sf-title">{{__('lang.trusted_by_thousands_of_people_all_over_the_world')}}</h2>
                         </div>
                             
                         <div class="section-content">
@@ -791,7 +582,7 @@
                                     <div class="col-lg-3 col-md-6 col-6">
                                         <div class="aon-static-section2 aon-t-white2">
                                             <div class="aon-company-static-num2 counter">36</div>
-                                            <div class="aon-company-static-name2">Providers</div>
+                                            <div class="aon-company-static-name2">{{__('lang.vendors')}}</div>
                                         </div>
                                     </div>
 
@@ -799,7 +590,7 @@
                                     <div class="col-lg-3 col-md-6 col-6">
                                         <div class="aon-static-section2 aon-t-skyblue2">
                                             <div class="aon-company-static-num2 counter">{{count($Services)}}</div>
-                                            <div class="aon-company-static-name2">Services</div>
+                                            <div class="aon-company-static-name2">{{__('lang.services')}}</div>
                                         </div>
                                     </div>
 
@@ -829,24 +620,7 @@
         </section>
         <!-- Statics END -->
 
-        <!--Newsletter Start-->
-        {{-- <section class="aon-newsletter-area2">
-            <div class="container">
 
-                <div class="aon-newsletter-area2-section">
-                    <h3 class="aon-title">We empower clients to grow their businesses based on the effective use of technology</h3>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. lorem Ipsum has been the standard dummy text ever since the 1500s, when.</p>
-                    <form class="aon-nl-width">
-                        <div class="form-group sf-news-l-form">
-                            <input type="text" class="form-control" placeholder="Enter Your Email">
-                            <button type="submit" class="sf-sb-btn">Submit</button>
-                        </div>
-                    </form>
-                </div>
-                
-            </div>
-        </section> --}}
-        <!--Newsletter Start-->
 
     </div>
     <!-- CONTENT END -->
@@ -874,7 +648,7 @@
           <div class="modal-content">
               
               <div class="modal-header">
-                <h4 class="modal-title" id = "ServiceName">Modal </h4>
+                <h4 class="modal-title" id = "ServiceName"> </h4>
                 <button type="button" class="close"  onclick = "closeModelPopup()" >&times;</button>
                 {{--  --}}
               </div>
@@ -886,14 +660,7 @@
                                 @csrf
                                 <input type="hidden" name="service_id" id="service_id" value ="">
                                 <div id = "stepsList">
-                                    {{-- <div class="checkbox sf-radio-checkbox">
-                                        <label >
-                                            <input id="td2_2" name="abc" value="five" type="checkbox" >
-                                            <label for="td2_2">Keep me logged Keep me logged Keep me logged Keep me logged</label>
-                                        </label>
-                                    </div> --}}
-                                  
-
+                          
                                 </div>
                               </form>
                         </div>

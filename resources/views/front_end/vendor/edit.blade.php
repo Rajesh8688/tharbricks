@@ -22,14 +22,14 @@
         <div class="aon-provi-tabs  flex-wrap justify-content-between">
             <div class="aon-provi-left">
                 <ul class="aon-provi-links">
-                    <li><a href="#aon-about-panel">About</a></li>
-                    <li><a href="#aon-contact-panel">Company</a></li>
+                    <li><a href="#aon-about-panel">{{__('lang.about')}}</a></li>
+                    <li><a href="#aon-contact-panel">{{__('lang.company')}}</a></li>
                     {{-- <li><a href="#aon-adress-panel">Address</a></li> --}}
-                    <li><a href="#aon-socialMedia-panel">Social Media</a></li>
-                    <li><a href="#aon-category-panel">Services</a></li>
-                    <li><a href="#aon-location-panel">Locations</a></li>
-                    <li><a href="#aon-qa-panel">Q & A</a></li>
-                    <li><a href="#aon-gallery-panel">Gallery</a></li>
+                    <li><a href="#aon-socialMedia-panel">{{__('lang.social_media')}}</a></li>
+                    <li><a href="#aon-category-panel">{{__('lang.services')}}</a></li>
+                    <li><a href="#aon-location-panel">{{__('lang.locations')}}</a></li>
+                    <li><a href="#aon-qa-panel">{{__('lang.q_a')}}</a></li>
+                    <li><a href="#aon-gallery-panel">{{__('lang.gallery')}}</a></li>
                 
                     {{--<li><a href="#aon-video-panel">Video</a></li>
                      <li><a href="#aon-serviceArea-panel">Service Area</a></li>
@@ -54,17 +54,17 @@
         @if(session('success-info'))
         <div class="alert alert-success alert-dismissible">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Success!</strong> {{session('success-info')}}
+            <strong>{{__('lang.success')}}!</strong> {{session('success-info')}}
         </div>
         @endif
         @if(session('error-info'))
         <div class="alert alert-danger alert-dismissible">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Success!</strong> {{session('error-info')}}
+            <strong>{{__('lang.error')}}!</strong> {{session('error-info')}}
         </div>
         @endif
         <div class="card aon-card">
-            <div class="card-header aon-card-header"><h4><i class="fa fa-user"></i> About</h4></div>
+            <div class="card-header aon-card-header"><h4><i class="fa fa-user"></i> {{__('lang.about')}}</h4></div>
             <div class="card-body aon-card-body">
         
                
@@ -82,7 +82,7 @@
                                         @endif
                                         <button class="admin-button has-toltip">
                                             <i class="fa fa-camera"></i>
-                                            <span class="header-toltip">Upload Avtar</span>
+                                            <span class="header-toltip">{{__('lang.upload_avtar')}}</span>
                                             <input type="file" name="profile_pic">
                                         </button>
                                     </div>
@@ -95,13 +95,13 @@
                                             @endif
                                         </div>
                                         <div class="admin-button-upload">
-                                            <span>Upload Company Logo</span>
+                                            <span>{{__('lang.upload_company_logo')}}</span>
                                             <input type="file" name="company_logo">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="aon-staff-avtar-footer">
-                                    <h4 class="aon-staff-avtar-title">Upload</h4>
+                                    <h4 class="aon-staff-avtar-title">{{__('lang.upload')}}</h4>
                                     <ul>
                                         {{-- <li>Min width and height: <span>600 x 600 px</span></li> --}}
                                         <li>Max Upload Size: <span>512MB</span></li>
@@ -114,7 +114,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>First Name</label>
+                                        <label>{{__('lang.first_name')}}</label>
                                         <div class="aon-inputicon-box"> 
                                             <input class="form-control sf-form-control" name="first_name" type="text" placeholder="First Name" value="{{old('first_name', auth()->user()->first_name)}}">
                                             <i class="aon-input-icon fa fa-user"></i>
@@ -123,7 +123,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Last Name</label>
+                                        <label>{{__('lang.last_name')}}</label>
                                         <div class="aon-inputicon-box"> 
                                             <input class="form-control sf-form-control" name="last_name" type="text" placeholder="Last Name" value="{{old('last_name', auth()->user()->last_name)}}">
                                             <i class="aon-input-icon fa fa-user"></i>
@@ -132,7 +132,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Username</label>
+                                        <label>{{__('lang.username')}}</label>
                                         <div class="aon-inputicon-box"> 
                                             <input class="form-control sf-form-control @error('name') is-invalid @enderror" name="name" type="text" placeholder="UserName" value="{{old('name', auth()->user()->name)}}">
                                             <i class="aon-input-icon fa fa-user"></i>
@@ -146,7 +146,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Email</label>
+                                        <label>{{__('lang.email')}}</label>
                                         <div class="aon-inputicon-box"> 
                                             <input class="form-control sf-form-control  @error('email') is-invalid @enderror" name="email" type="email" value="{{old('email', auth()->user()->email)}}">
                                             <i class="aon-input-icon fa fa-envelope"></i>
@@ -177,7 +177,7 @@
                                 </div> --}}
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Biography</label>
+                                        <label>{{__('lang.biography')}}</label>
                                         <div class="editer-wrap">
                                             <div class="editer-textarea">
                                                 <textarea class="form-control" rows="6" naame ="bio">{{old('description', auth()->user()->description)}}</textarea>
@@ -189,8 +189,8 @@
                         </div>
                         <div class ="col-12" >
                             <div  style="float:right">
-                                <button type="button"  class="site-button"  style="margin-right: 10px;">Cancle </button>
-                                <button type="submit"  class="site-button" >Submit </button>
+                                <button type="button"  class="site-button"  style="margin-right: 10px;">{{__('lang.cancle')}} </button>
+                                <button type="submit"  class="site-button" >{{__('lang.submit')}} </button>
                             </div>
                         </div> 
                     </div>
@@ -199,14 +199,14 @@
         </div>   
 
         <div class="card aon-card" id="aon-contact-panel">
-            <div class="card-header aon-card-header"><h4><i class="fa fa-address-card"></i> Comapny Details</h4></div>
+            <div class="card-header aon-card-header"><h4><i class="fa fa-address-card"></i> {{__('lang.comapny_details')}}</h4></div>
             <form method="POST" action="{{route('update-company-details')}}">
                 <div class="card-body aon-card-body">
                     <div class="row">
                     @csrf
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Company Name</label>
+                                <label>{{__('lang.company_name')}}</label>
                                 <div class="aon-inputicon-box"> 
                                     <input class="form-control sf-form-control" name="company_name" type="text" value="{{old('company_name', $vendorDetails->company_name)}}">
                                     <i class="aon-input-icon fa fa-building-o"></i>
@@ -216,7 +216,7 @@
                         
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label> Website</label>
+                                <label> {{__('lang.website')}}</label>
                                 <div class="aon-inputicon-box"> 
                                     <input class="form-control sf-form-control  @error('website') is-invalid @enderror" name="website" type="text" value="{{old('website', $vendorDetails->website)}}">
                                     <i class="aon-input-icon fa fa-globe"></i>
@@ -230,7 +230,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Mobile</label>
+                                <label>{{__('lang.mobile')}}</label>
                                 <div class="aon-inputicon-box"> 
                                     <input class="form-control sf-form-control @error('mobile') is-invalid @enderror" name="mobile" type="text" value="{{old('mobile', $vendorDetails->mobile)}}">
                                     <i class="aon-input-icon fa fa-phone"></i>
@@ -244,7 +244,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Alt Mobile</label>
+                                <label>{{__('lang.alt_mobile')}}</label>
                                 <div class="aon-inputicon-box"> 
                                     <input class="form-control sf-form-control @error('alter_mobile') is-invalid @enderror" name="alter_mobile" type="text" value="{{old('alter_mobile', $vendorDetails->alter_mobile)}}">
                                     <i class="aon-input-icon fa fa-phone"></i>
@@ -258,8 +258,8 @@
                         </div>
                         <div class="col-md-6"> 
                             <div class="form-group">
-                                <label>Company Size </label>
-                                <select class="sf-select-box form-control sf-form-control bs-select-hidden form-control" name="company_size" data-live-search="true" title="Company Size"><option class="bs-title-option" value="">Company Size</option>
+                                <label>{{__('lang.company_size')}} </label>
+                                <select class="sf-select-box form-control sf-form-control bs-select-hidden form-control" name="company_size" data-live-search="true" title="Company Size"><option class="bs-title-option" value="">{{__('lang.company_size')}}</option>
                                 
                                     <option value="1"  {{ old('company_size', $vendorDetails->company_size) == '1' ? 'selected' : '' }}> Self-employed, Sole trader</option>
                                     <option value="2" {{ old('company_size', $vendorDetails->company_size) == '2' ? 'selected' : '' }}> 2-10</option>
@@ -271,7 +271,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Years in business</label>
+                                <label>{{__('lang.years_in_business')}}</label>
                                 <div class="aon-inputicon-box"> 
                                     <input class="form-control sf-form-control" name="years_in_business" placeholder="Years In Business" type="number" value="{{old('years_in_business', $vendorDetails->years_in_business)}}">
                                     <i class="aon-input-icon fa fa-skype"></i>
@@ -280,7 +280,7 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Describe your company</label>
+                                <label>{{__('lang.describe_your_company')}}</label>
                                 <div class="editer-wrap">
                                     <div class="editer-textarea">
                                         <textarea class="form-control" rows="6" naame ="company_description">{{old('years_in_business', $vendorDetails->company_description)}}</textarea>
@@ -290,20 +290,20 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Location</label>
+                                <label>{{__('lang.locations')}}</label>
                                 <div class="grayscle-area address-area-map">
                                     <iframe height="460" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3304.8534521658976!2d-118.2533646842856!3d34.073270780600225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c6fd9829c6f3%3A0x6ecd11bcf4b0c23a!2s1363%20Sunset%20Blvd%2C%20Los%20Angeles%2C%20CA%2090026%2C%20USA!5e0!3m2!1sen!2sin!4v1620815366832!5m2!1sen!2sin"></iframe>
                                 </div>
                                 
-                                <button class="button rwmb-map-goto-address-button btn btn-primary m-t20" value="address"> Find Address on Map </button>
+                                <button class="button rwmb-map-goto-address-button btn btn-primary m-t20" value="address"> {{__('lang.find_address_on_map')}} </button>
                                 <p>Note: This will load your address on map and fillup latitude and longitude</p>
                                 
                             </div>
                         </div>
                         <div class ="col-12" >
                             <div  style="float:right">
-                                <button type="button"  class="site-button"  style="margin-right: 10px;">Cancle </button>
-                                <button type="submit"  class="site-button" >Submit </button>
+                                <button type="button"  class="site-button"  style="margin-right: 10px;">{{__('lang.cancle')}} </button>
+                                <button type="submit"  class="site-button" >{{__('lang.submit')}} </button>
                             </div>
                         </div> 
                         
@@ -464,14 +464,14 @@
         </div> --}}
         
         <div class="card aon-card" id="aon-socialMedia-panel">
-            <div class="card-header aon-card-header"><h4><i class="fa fa-share-alt"></i> Social Media</h4></div>
+            <div class="card-header aon-card-header"><h4><i class="fa fa-share-alt"></i> {{__('lang.social_media')}}</h4></div>
             <div class="card-body aon-card-body">
                 <form method="POST" action = "{{route('update-vendor-social-account-details')}}">
                     <div class="row">
                         @csrf
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Facebook</label>
+                                <label>{{__('lang.facebook')}}</label>
                                 <div class="aon-inputicon-box"> 
                                     <input class="form-control sf-form-control  @error('facebook_url') is-invalid @enderror" name="facebook_url" type="text" value="{{old('facebook_url', $vendorDetails->facebook_url)}}">
                                     <i class="aon-input-icon fa fa-facebook"></i>
@@ -485,7 +485,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Twitter</label>
+                                <label>{{__('lang.twitter')}}</label>
                                 <div class="aon-inputicon-box"> 
                                     <input class="form-control sf-form-control @error('twitter_url') is-invalid @enderror" name="twitter_url" type="text" value="{{old('twitter_url', $vendorDetails->twitter_url)}}">
                                     <i class="aon-input-icon fa fa-twitter"></i>
@@ -499,7 +499,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label> Linkedin</label>
+                                <label> {{__('lang.linkedin')}}</label>
                                 <div class="aon-inputicon-box"> 
                                     <input class="form-control sf-form-control @error('linked_in_url') is-invalid @enderror" name="linked_in_url" type="text" value="{{old('linked_in_url', $vendorDetails->linked_in_url)}}">
                                     <i class="aon-input-icon fa fa-linkedin"></i>
@@ -528,7 +528,7 @@
                     
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Instagram</label>
+                                <label>{{__('lang.instagram')}}</label>
                                 <div class="aon-inputicon-box"> 
                                     <input class="form-control sf-form-control @error('instagram_url') is-invalid @enderror" name="company_name" type="text" value="{{old('instagram_url', $vendorDetails->instagram_url)}}">
                                     <i class="aon-input-icon fa fa-instagram"></i>
@@ -542,8 +542,8 @@
                         </div>
                         <div class ="col-12" >
                             <div  style="float:right">
-                                <button type="button"  class="site-button"  style="margin-right: 10px;">Cancle </button>
-                                <button type="submit"  class="site-button" >Submit </button>
+                                <button type="button"  class="site-button"  style="margin-right: 10px;">{{__('lang.cancle')}} </button>
+                                <button type="submit"  class="site-button" >{{__('lang.submit')}} </button>
                             </div>
                         </div> 
                     </div>
@@ -580,14 +580,14 @@
         </div> --}}
 
         <div class="card aon-card" id="aon-category-panel">
-            <div class="card-header aon-card-header"><h4><i class="fa fa-list-alt"></i> Services</h4></div>
+            <div class="card-header aon-card-header"><h4><i class="fa fa-list-alt"></i> {{__('lang.services')}}</h4></div>
             <form method="POST" action ="{{route('update-vendor-services')}}">
                 @csrf
                 <div class="card-body aon-card-body">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Services</label>
+                                <label>{{__('lang.services')}}</label>
                             
                                 <select class="selectpicker" multiple data-live-search="true" name="serviceId[]">
                                     @foreach ($services as $item)
@@ -598,8 +598,8 @@
                         </div>
                         <div class ="col-12" >
                             <div  style="float:right">
-                                <button type="button"  class="site-button"  style="margin-right: 10px;"> Cancle </button>
-                                <button type="submit"  class="site-button"> Submit </button>
+                                <button type="button"  class="site-button"  style="margin-right: 10px;"> {{__('lang.cancle')}} </button>
+                                <button type="submit"  class="site-button"> {{__('lang.submit')}} </button>
                             </div>
                         </div> 
                     </div>
@@ -610,7 +610,7 @@
         </div>
 
         <div class="card aon-card" id="aon-location-panel">
-            <div class="card-header aon-card-header"><h4><i class="fa fa-list-alt"></i> Locations</h4> </div>
+            <div class="card-header aon-card-header"><h4><i class="fa fa-list-alt"></i> {{__('lang.locations')}}</h4> </div>
             <div class="card-body aon-card-body" id = "locationCard">
                 <div >
                     <div class="row aon-avi-time-slot">
@@ -627,16 +627,16 @@
                                     </div>
                                     <div class="sf-avai-time-slots-control" style="justify-content: center">
                                         <div class="sf-avai-time-slots-btn">
-                                            <button type="button" class="btn slot-delete  has-toltip" title="Delete" onClick="deleteLocation({{$location->id}})">
-                                                <i class="fa fa-remove"> &nbsp; Delete</i>
-                                                <span class="header-toltip">Delete</span>
+                                            <button type="button" class="btn slot-delete  has-toltip" title="{{__('lang.delete')}}" onClick="deleteLocation({{$location->id}})">
+                                                <i class="fa fa-remove"> &nbsp; {{__('lang.delete')}}</i>
+                                                <span class="header-toltip">{{__('lang.delete')}}</span>
                                             </button>
                                             </div>
                                         
                                         <div class="sf-avai-time-slots-btn">
-                                            <button type="button" class="btn slot-update has-toltip" title="Update" onClick="getLocation({{$location->id}})">
-                                                <i class="fa fa-refresh">&nbsp; Update</i>
-                                                <span class="header-toltip">Update</span>
+                                            <button type="button" class="btn slot-update has-toltip" title="{{__('lang.update')}}" onClick="getLocation({{$location->id}})">
+                                                <i class="fa fa-refresh">&nbsp; {{__('lang.update')}}</i>
+                                                <span class="header-toltip">{{__('lang.update')}}</span>
                                             </button>
                                         </div>
         
@@ -645,7 +645,7 @@
                                 </div>
                             </div>
                         @empty
-                        <p class="text-center">No Locations Added.</p>
+                        <p class="text-center">{{__('lang.no_locations_added')}}</p>
                         @endforelse
                         
                         {{-- <center>No Locations Found</center> --}}
@@ -653,10 +653,10 @@
                     <div class ="col-12" > 
                         <hr>
                         <div  style="float:right">
-                            <button type="button"  class="site-button"  style="margin-right: 10px;margin-bottom: 26px;"> Cancle </button>
+                            <button type="button"  class="site-button"  style="margin-right: 10px;margin-bottom: 26px;"> {{__('lang.cancle')}} </button>
                             <button class="site-button" data-toggle="modal" data-target="#addLocation" type="button">
                                 <i class="fa fa-plus"></i>
-                                Add Location
+                                {{__('lang.add_location')}}
                             </button>
                         </div>
                     </div> 
@@ -667,14 +667,14 @@
         
 
         <div class="card aon-card" id="aon-qa-panel">
-            <div class="card-header aon-card-header"><h4><i class="fa fa-question-circle"></i> Q & A</h4></div>
+            <div class="card-header aon-card-header"><h4><i class="fa fa-question-circle"></i>{{__('lang.q_a')}}</h4></div>
             <div class="card-body aon-card-body">
                 <form method="POST" action = "{{route('update-vendor-questions')}}">
                     <div class="row">
                         @csrf
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>What do you love most about your job ?</label>
+                                <label>{{__('lang.what_do_you_love_most_about_your_job')}}</label>
                                 <div class="editer-wrap">
                                     <div class="editer-textarea">
                                         <textarea class="form-control" rows="2" name ="what_do_you_love_most_about_your_job">{{old('what_do_you_love_most_about_your_job', $vendorDetails->what_do_you_love_most_about_your_job)}}</textarea>
@@ -689,7 +689,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>What inspired you to start your own business?</label>
+                                <label>{{__('lang.what_inspired_you_to_start_your_own_business')}}</label>
                                 <div class="editer-wrap">
                                     <div class="editer-textarea">
                                         <textarea class="form-control" rows="2" name ="what_inspired_you_to_start_your_own_business">{{old('what_inspired_you_to_start_your_own_business', $vendorDetails->what_inspired_you_to_start_your_own_business)}}</textarea>
@@ -704,7 +704,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Why should our clients choose you?</label>
+                                <label>{{__('lang.why_should_our_clients_choose_you')}}</label>
                                 <div class="editer-wrap">
                                     <div class="editer-textarea">
                                         <textarea class="form-control" rows="2" name ="why_should_our_clients_choose_you">{{old('why_should_our_clients_choose_you', $vendorDetails->why_should_our_clients_choose_you)}}</textarea>
@@ -719,7 +719,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Can you provide your service online or remotely? If so,please add details</label>
+                                <label>{{__('lang.can_you_provide_your_service_online_or_remotely_If_so_please_add_details')}}</label>
                                 <div class="editer-wrap">
                                     <div class="editer-textarea">
                                         <textarea class="form-control" rows="2" name ="can_you_provide_your_service_online_or_remotely">{{old('can_you_provide_your_service_online_or_remotely', $vendorDetails->can_you_provide_your_service_online_or_remotely)}}</textarea>
@@ -734,7 +734,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>What changes have made to keep customers safe from Covid-19?</label>
+                                <label>{{__('lang.what_changes_have_made_to_keep_customers_safe_from_covid19')}}</label>
                                 <div class="editer-wrap">
                                     <div class="editer-textarea">
                                         <textarea class="form-control" rows="2" name ="what_changes_have_made_to_keep_customers_safe_from_covid19">{{old('what_changes_have_made_to_keep_customers_safe_from_covid19', $vendorDetails->what_changes_have_made_to_keep_customers_safe_from_covid19)}}</textarea>
@@ -749,7 +749,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>How long have you been in business?</label>
+                                <label>{{__('lang.how_long_have_you_been_in_business')}}</label>
                                 <div class="editer-wrap">
                                     <div class="editer-textarea">
                                         <textarea class="form-control" rows="2" name ="how_long_have_you_been_in_business">{{old('how_long_have_you_been_in_business', $vendorDetails->how_long_have_you_been_in_business)}}</textarea>
@@ -764,7 +764,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>What guarantee does your work comes with?</label>
+                                <label>{{__('lang.what_guarantee_does_your_work_comes_with')}}</label>
                                 <div class="editer-wrap">
                                     <div class="editer-textarea">
                                         <textarea class="form-control" rows="2" name ="what_guarantee_does_your_work_comes_with">{{old('what_guarantee_does_your_work_comes_with', $vendorDetails->what_guarantee_does_your_work_comes_with)}}</textarea>
@@ -779,8 +779,8 @@
                         </div>
                         <div class ="col-12" >
                             <div  style="float:right">
-                                <button type="button"  class="site-button"  style="margin-right: 10px;">Cancle </button>
-                                <button type="submit"  class="site-button" >Submit </button>
+                                <button type="button"  class="site-button"  style="margin-right: 10px;">{{__('lang.cancle')}} </button>
+                                <button type="submit"  class="site-button" >{{__('lang.submit')}} </button>
                             </div>
                         </div> 
                     </div>
@@ -793,7 +793,7 @@
     
 
         <div class="card aon-card" id="aon-gallery-panel">
-            <div class="card-header aon-card-header"><h4><i class="fa fa-image"></i> Gallery Images</h4>
+            <div class="card-header aon-card-header"><h4><i class="fa fa-image"></i> {{__('lang.gallery_images')}}</h4>
             </div>
             
             <div class="card-body aon-card-body">
@@ -823,7 +823,7 @@
         <div class="modal-dialog model-w800" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel2">Add New Location</h5>
+              <h5 class="modal-title" id="exampleModalLabel2">{{__('lang.add_new_location')}}</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -834,20 +834,20 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Choose how you want to set your location</label>
+                                    <label>{{__('lang.choose_how_you_want_to_set_your_location')}}</label>
                                     <div class="aon-inputicon-box"> 
                                         <div class="radio-inline-box"><?php $displayProperty = $showNationalwide ? "block" : "none";?>
                                             <div class="checkbox sf-radio-checkbox sf-radio-check-2" style="display:{{$displayProperty}}" id ="locationNationalWide">
                                                 <input id="loc1" name="locationType" value="nationwide" type="radio" required>
-                                                <label for="loc1">Nationwide</label>
+                                                <label for="loc1">{{__('lang.nationwide')}}</label>
                                             </div>
                               
                                             <div class="checkbox sf-radio-checkbox sf-radio-check-2">
                                                 <input id="loc2" name="locationType" value="distance" type="radio" required>
-                                                <label for="loc2">Distance</label>
+                                                <label for="loc2">{{__('lang.distance')}}</label>
                                             </div>
                                         </div>
-                                        <div class="error-message" id="locationTypeError">Please select a location type.</div>
+                                        <div class="error-message" id="locationTypeError">{{__('lang.please_select_a_location_type')}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -856,9 +856,9 @@
                                 <div class="row">
                                     <div class="col-md-8"> 
                                         <div class="form-group">
-                                            <label>Pin Code / City</label>
+                                            <label>{{__('lang.pin_code_city')}}</label>
                                             <div class="aon-inputicon-box"> 
-                                                <input class="form-control sf-form-control" name="address" id="address" type="text" placeholder="PinCode/City">
+                                                <input class="form-control sf-form-control" name="address" id="address" type="text" placeholder="{{__('lang.pin_code_city')}}">
                                                 <i class="aon-input-icon fa fa-user"></i>
                                             </div>
                                         </div>
@@ -866,8 +866,8 @@
         
                                     <div class="col-md-4"> 
                                         <div class="form-group">
-                                            <label>Distance</label>
-                                            <select class="sf-select-box form-control sf-form-control bs-select-hidden form-control" name="distance_value" id="distance_value" data-live-search="true" title="Distance">
+                                            <label>{{__('lang.distance')}}</label>
+                                            <select class="sf-select-box form-control sf-form-control bs-select-hidden form-control" name="distance_value" id="distance_value" data-live-search="true" title="{{__('lang.distance')}}">
                                                 <option value="1">1 Km</option>
                                                 <option value="2">2 Kms</option>
                                                 <option value="5">5 Kms</option>
@@ -892,7 +892,7 @@
                                         <div class="radio-inline-box">
                                             <div class="checkbox sf-radio-checkbox sf-radio-check-2">
                                                 <input id="lo1" name="services" value="all_services" type="checkbox" required>
-                                                <label for="lo1">All Services</label>
+                                                <label for="lo1">{{__('lang.all_services')}}</label>
                                             </div>
                                             @foreach($myservices as $UserService)
                                                 <div class="checkbox sf-radio-checkbox sf-radio-check-2">
@@ -901,7 +901,7 @@
                                                 </div>
                                             @endforeach
                                         </div>
-                                        <div class="error-message" id="servicesError">Please select at least one service.</div>
+                                        <div class="error-message" id="servicesError">{{__('lang.please_select_at_least_one_service')}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -911,8 +911,8 @@
                 @csrf
         
                 <div class="modal-footer">
-                    <button type="button" class="site-button" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="site-button" id="addButton">Add</button>
+                    <button type="button" class="site-button" data-dismiss="modal">{{__('lang.cancle')}}</button>
+                    <button type="button" class="site-button" id="addButton">{{__('lang.add')}}</button>
                 </div>
             </form>
     

@@ -1,6 +1,6 @@
 <div id="activity-log-container" class="">
     <div id="activity-log-items-container">
-        @foreach ($responseActivity as $k=>$activity)
+        @foreach ($responseActivitys as $k=>$activity)
             <div class="activity-log-item d-flex justify-content-between @if($k==0) first @endif">
                 <div class="left-track flex-grow-0 d-flex flex-column align-items-center">
                     <div class="line top"></div>
@@ -20,7 +20,7 @@
                         <div class="details-top-left flex-grow-1">
                             <div class="item-actor-name">
                                 @if($activity->from == 'vendor')
-                                You
+                                {{__('lang.you')}}
                                 @else
                                 {{ucfirst($lead->name)}}
                                 @endif
