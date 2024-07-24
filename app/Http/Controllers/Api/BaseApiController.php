@@ -152,7 +152,7 @@ class BaseApiController extends Controller
         //$userData['services'] = ServiceUser::select('service.*')->with('service')->where('user_id' , $user->id)->get();
         
 
-        return ['status' => true , 'data' => $userData ,'message' => 'User Information'] ;
+        return ['status' => true , 'data' => $userData ,'message' => __('lang.user_information')] ;
     }
 
 

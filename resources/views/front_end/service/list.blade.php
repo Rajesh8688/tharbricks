@@ -23,7 +23,7 @@
                                 <?php $image = asset('uploads/services').'/'.$service->image;?>
                                 <div class="aon-all-cat-block" style="background-image: url({{$image}});">
                                     <div class="aon-cat-quantity">
-                                        <span><i>+</i>00</span>
+                                        <span><i>+</i>{{$service->leadCount}}</span>
                                     </div>
                                     <div class="aon-cat-name">
                                         <h3><a href="{{route('serviceDetails',['slug'=>$service->slug])}}">{{$service->name}}</a></h3>

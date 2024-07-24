@@ -3,16 +3,19 @@
 namespace App\Http\Controllers\FrontEnd;
 
 use App\Models\Blog;
+use App\Models\Lead;
 use App\Models\Plan;
 use App\Models\User;
+use App\Models\Review;
 use App\Models\Service;
 use App\Models\Setting;
+use App\Models\NewsLetter;
+use App\Models\EmailMailer;
 use App\Models\Testimonial;
 use App\Models\UserRequest;
 use Illuminate\Http\Request;
 use App\Models\ReviewLeadChecker;
 use App\Http\Controllers\Controller;
-use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Config;
@@ -23,14 +26,23 @@ class HomeController extends Controller
         $titles = [
             'title' => "Home",
         ];
-        $Services = Service::where("status" , "Active")->get();
+        $Services = Service::where("status" , "Active")->limit(9)->get();
+        foreach ($Services as $key => $value) {
+            $Services[$key]->leadCount = Lead::where(['service_id' => $value->id , 'status' => 'Active'])->count();
+        }
         $Testimonials = Testimonial::with('service')->where("status" , "Active")->get();
-        $Vendors = User::with('vendorDetails')->where("is_vendor" , '1')->where("status" , "Active")->get();
+        $Vendors = User::with('vendorDetails')->where("is_vendor" , '1')->where("status" , "Active")->limit(6)->get();
         $Blogs = Blog::with('service')->where("status" , "Active")->orderBy('id' ,'DESC')->get();
         $noImage = asset(Config::get('constants.NO_IMG_ADMIN'));
+        $staticsData = [
+            'vendors' =>  User::where("is_vendor" , '1')->where("status" , "Active")->count(),
+            'services' => Service::where("status" , "Active")->count(),
+            'leads' => Lead::where("status" , "Active")->count(),
+            'blogs' => Blog::where("status" , "Active")->count(),
+        ];
         //dd($Vendors);
         // $Plans = Plan::with('Details')->OrderBy('order' ,'asc')->get();
-        return view('front_end.index',compact('titles','Services','Testimonials','Vendors','noImage','Blogs'));
+        return view('front_end.index',compact('titles','Services','Testimonials','Vendors','noImage','Blogs','staticsData'));
     }
 
     public function contactUs(){
@@ -63,6 +75,19 @@ class HomeController extends Controller
 
             //mail function need to implement
 
+            $emailMailer = new EmailMailer();
+            $emailMailer->mail_from = env('MAIL_FROM_ADDRESS');
+            $emailMailer->mail_from_name = env('MAIL_FROM_NAME');
+            $emailMailer->mail_to = env('ADMIN_MAIL_ADDRESS');
+            $emailMailer->mail_to_name = env('ADMIN_MAIL_NAME');
+            $emailMailer->reference = 'userRequest';
+            $emailMailer->reference_id = $userRequest->id;
+            $emailMailer->mail_subject = "User Request From ".$request->input('name');
+            $emailMailer->mail_message = view('front_end.email_templates.userRequest' ,compact('userRequest'))->render();
+            $emailMailer->is_cron = '1';
+            $emailMailer->cron_status = '0';
+            $emailMailer->status = 'Active';
+            $emailMailer->save();
             return redirect()->route('contactUs')->with('success','Submited successfully.');
         }else{
             return redirect()->route('contactUs')->with('error','something went wrong');
@@ -147,5 +172,17 @@ class HomeController extends Controller
 
     public function emailChecker(){
         return view('front_end.email_templates.estimation');
+    }
+
+    public function subscribe(Request $request){
+        $this->validate($request, [
+            'email' => 'required|email|unique:news_letters'
+        ]);
+        $data = new NewsLetter();
+        $data->email = $request->input('email');
+        $data->save();
+        $succcessMessage = __('lang.subscribe_success');
+        $response = ["status" =>true ,"message" => $succcessMessage ,'data' => []];
+        return response($response, 200);
     }
 }

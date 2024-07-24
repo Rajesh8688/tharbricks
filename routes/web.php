@@ -63,6 +63,7 @@ Route::post('submitReview', [App\Http\Controllers\FrontEnd\HomeController::class
 Route::get('review-success', [App\Http\Controllers\FrontEnd\HomeController::class, 'reviewSuccess'])->name('reviewSuccess');
 Route::get('review-failure', [App\Http\Controllers\FrontEnd\HomeController::class, 'reviewFailure'])->name('reviewFailure');
 Route::get('emailChecker', [App\Http\Controllers\FrontEnd\LeadController::class, 'emailChecker'])->name('emailChecker');
+Route::post('/subscribe', [App\Http\Controllers\FrontEnd\HomeController::class, 'subscribe'])->name('subscribe');
 
 
 Route::group(['middleware' => ['auth:web']], function() {
@@ -106,6 +107,7 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::post('/updateLocation', [App\Http\Controllers\FrontEnd\LocationController::class, 'updateLocation'])->name('vendor-updateLocation');
 
     Route::post('/requestReview', [App\Http\Controllers\FrontEnd\LeadController::class, 'requestReview'])->name('vendor-requestReview');
+
 
     
 

@@ -34,10 +34,10 @@ class VendorController extends BaseApiController
         $user = User::find(auth('api')->user()->id);
 
         if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
+            return response()->json(['message' => __('lang.user_not_found')], 404);
         }
         $user->delete();
-        return response()->json(['message' => 'User deleted successfully' , 'status' => true]);
+        return response()->json(['message' => __('lang.user_deleted_successfully') , 'status' => true]);
     }
     public function UserProfile(Request $request){
         $info = $this->profileInfo(auth('api')->user()->id);
@@ -77,7 +77,7 @@ class VendorController extends BaseApiController
         $vendorInfo->update(); 
         $info = $this->profileInfo(auth('api')->user()->id);
         if($info['status']){
-            $info['message'] = 'User Information updated successfully';
+            $info['message'] = __('lang.user_information_updated_successfully');
         }
         return response()->json($info);
 
@@ -88,7 +88,7 @@ class VendorController extends BaseApiController
         //function for getting transation logs
         $user = User::find(auth('api')->user()->id);
         $transactionLogs = CreditTransactionLog::where("user_id" , $user->id)->orderBy("id","desc")->get();
-        $response = ['data' => $transactionLogs,"status"=>true ,"message" => "user Transation Logs"];
+        $response = ['data' => $transactionLogs,"status"=>true ,"message" => __('lang.user_transation_logs')];
         return response($response, 200);
     }
 
@@ -109,7 +109,7 @@ class VendorController extends BaseApiController
         //function for getting My Services
         $userid = auth('api')->user()->id;
         $services = $this->userService($userid);
-        $response = ['data' => $services,"status"=>true ,"message" => "user services"];
+        $response = ['data' => $services,"status"=>true ,"message" => __('lang.user_services')];
         return response($response, 200);
     }
 
@@ -157,7 +157,7 @@ class VendorController extends BaseApiController
             }
             $services = $this->userService($userId);
         }
-        $response = ["status" =>true ,"message" => "Service added successfully" ,'data' => $services];
+        $response = ["status" =>true ,"message" => __('lang.service_added_successfully') ,'data' => $services];
         return response($response, 200);
     }
 
@@ -192,7 +192,7 @@ class VendorController extends BaseApiController
             }
         }
         $services = $this->userService($userId);
-        $response = ["status" =>true ,"message" => "Service Location Updated Successfully" ,'data' => $services];
+        $response = ["status" =>true ,"message" => __('lang.service_location_updated_successfully') ,'data' => $services];
         return response($response, 200);
     }
 
@@ -214,12 +214,12 @@ class VendorController extends BaseApiController
         $serviceUser = ServiceUser::where(['user_id'=>$userId , 'service_id' => $serviceId])->first();
         if($serviceUser === null){
             
-            $response = ["status" =>false ,"message" => "Service Not Tagged to this user" ,'data' => []];
+            $response = ["status" =>false ,"message" => __('lang.service_not_tagged_to_this_user') ,'data' => []];
             return response($response, 200);
         }else{
             ServiceUser::where(['user_id'=>$userId , 'service_id' => $serviceId])->update(['status'=>'InActive']);
             $services = $this->userService($userId);
-            $response = ["status" =>true ,"message" => "Service Removed Successfully" ,'data' => $services];
+            $response = ["status" =>true ,"message" => __('lang.service_removed_successfully') ,'data' => $services];
             return response($response, 200);
         }
     }
@@ -252,21 +252,21 @@ class VendorController extends BaseApiController
         
 
         if (!(Hash::check($request->get('current_password'), auth()->user()->password))) {
-            $response = ["status" =>false ,"message" => "Your current password does not matches with the password." ];
+            $response = ["status" =>false ,"message" => __('lang.your_current_password_does_not_matches_with_the_password') ];
             return response($response, 200);
         }
 
         if(strcmp($request->get('current_password'), $request->get('new_password')) == 0){
             // Current password and new password same
 
-            $response = ["status" =>false ,"message" => "New Password cannot be same as your current password." ];
+            $response = ["status" =>false ,"message" => __('lang.new_password_cannot_be_same_as_your_current_password') ];
             return response($response, 200);
         }
 
         $user = User::where("id",auth()->user()->id)->update([
         'password' =>  Hash::make($request->input('new_password'))]);
 
-        $response = ["status" =>true ,"message" => "Password updated successfully"];
+        $response = ["status" =>true ,"message" => __('lang.password_updated_successfully')];
         return response($response, 200);
       
     }
@@ -392,7 +392,7 @@ class VendorController extends BaseApiController
                     'razorpay_key' => env('RAZOR_PAY_KEY'),
                     'razorpay_secret_key' => env('RAZOR_PAY_SECRET_KEY')
                 ];
-                $response = ["status" =>true ,"message" => "Order Id created Successfully" , 'data' => $data];
+                $response = ["status" =>true ,"message" => __('lang.order_id_created_successfully') , 'data' => $data];
                 return response($response, 200);
             }else{
                 //error fom Razorpay
@@ -400,7 +400,7 @@ class VendorController extends BaseApiController
                 return response($response, 200);
             }
         }else{
-            $response = ["status" =>false ,"message" => "Plan id Does not exists" ,'data' => []];
+            $response = ["status" =>false ,"message" => __('lang.plan_id_does_not_exists') ,'data' => []];
             return response($response, 200);
         }
     }
@@ -453,11 +453,11 @@ class VendorController extends BaseApiController
 
         $lead = LeadUser::where(['lead_id'=>$leadId , 'user_id' => $userId])->first();
         if($lead === null){
-            $response = ["status" =>false ,"message" => "Lead Not Tagged to this user" ,'data' => []];
+            $response = ["status" =>false ,"message" => __('lang.lead_not_tagged_to_this_user') ,'data' => []];
             return response($response, 200);
         }else{
             LeadUser::where(['lead_id'=>$leadId , 'user_id' => $userId])->update(['response_status'=>$status]);
-            $response = ["status" =>true ,"message" => "Status Updated Successfully" ,'data' => []];
+            $response = ["status" =>true ,"message" => __('lang.status_updated_successfully') ,'data' => []];
             return response($response, 200);
         }
 
@@ -472,7 +472,7 @@ class VendorController extends BaseApiController
 
             $locations[$l]['user_service'] =UserServiceLocation::with('service')->where(['user_id' => $userId , 'location_id' => $location->id ,'status' => 'Active'])->get();
         }
-        $response = ["status" =>true ,"message" => "Locations" ,'data' => $locations];
+        $response = ["status" =>true ,"message" => __('lang.locations_listing') ,'data' => $locations];
         return response($response, 200);
     }
 
@@ -528,7 +528,7 @@ class VendorController extends BaseApiController
             $userServiceLocation->save();
         }
         $locations = $this->allLocations();
-        $response = ["status" =>true ,"message" => "Location Added Successfully" ,'data' => json_decode($locations->getContent(),true)['data']];
+        $response = ["status" =>true ,"message" => __('lang.location_added_successfully') ,'data' => json_decode($locations->getContent(),true)['data']];
         return response($response, 200);
     }
 
@@ -552,7 +552,7 @@ class VendorController extends BaseApiController
         $locationDetails = Location::find($request->input('id'));
         $userId = auth('api')->user()->id;
         if($locationDetails === null){
-            $response = ["status" =>false ,"message" => "Location Not Found" ,'data' => []];
+            $response = ["status" =>false ,"message" => __('lang.location_not_found') ,'data' => []];
             return response($response, 200);
         }
         $locationDetails->type = $request->input('type');
@@ -593,7 +593,7 @@ class VendorController extends BaseApiController
             }
         }
         $locations = $this->allLocations();
-        $response = ["status" =>true ,"message" => "Location Updated Successfully" ,'data' => json_decode($locations->getContent(),true)['data']];
+        $response = ["status" =>true ,"message" => __('lang.location_updated_successfully') ,'data' => json_decode($locations->getContent(),true)['data']];
         return response($response, 200);
 
     }
@@ -611,13 +611,13 @@ class VendorController extends BaseApiController
         }
         $location = Location::find($request->input('location_id'));
         if($location === null){
-            $response = ["status" =>false ,"message" => "Location Not Found" ,'data' => []];
+            $response = ["status" =>false ,"message" => __('lang.location_not_found') ,'data' => []];
             return response($response, 200);
         }
         $location->delete();
         UserServiceLocation::where('location_id' , $request->input('location_id'))->delete();
         $locations = $this->allLocations();
-        $response = ["status" =>true ,"message" => "Location Deleted Successfully" ,'data' => json_decode($locations->getContent(),true)['data']];
+        $response = ["status" =>true ,"message" => __('lang.location_deleted_successfully') ,'data' => json_decode($locations->getContent(),true)['data']];
         return response($response, 200);
     }
 
@@ -640,7 +640,7 @@ class VendorController extends BaseApiController
         $reviewLeadChecker = ReviewLeadChecker::where(['lead_id' => $leadId , 'email' => $leadDeatils->email ,'requested_user_id' => auth('api')->user()->id])->get();
         if($reviewLeadChecker->count() > 0){
             $url = route('requestReview', ['token' => Crypt::encrypt($reviewLeadChecker[0]->id)]);
-            $response = ["status" =>false ,"message" => "Request Already Sent" , 'link'=>$url];
+            $response = ["status" =>false ,"message" => __('lang.location_deleted_successfully') , 'link'=>$url];
             
             return response($response, 200);
         }else{
@@ -653,7 +653,7 @@ class VendorController extends BaseApiController
             //sending email
         }
      
-        $response = ["status" =>true ,"message" => "Request Sent Successfully",  'link'=>$url];
+        $response = ["status" =>true ,"message" => __('lang.request_sent_successfully'),  'link'=>$url];
         return response($response, 200);
     }
 
@@ -661,7 +661,7 @@ class VendorController extends BaseApiController
 
         $userId = auth('api')->user()->id;
         $review = Review::with('lead')->where(['user_id' => $userId])->get();
-        $response = ["status" =>true ,"message" => "Vendor Reviews" ,'data' => $review];
+        $response = ["status" =>true ,"message" => __('lang.vendor_reviews') ,'data' => $review];
         return response($response, 200);
     }
 
@@ -688,7 +688,7 @@ class VendorController extends BaseApiController
             }
         }
 
-        $response = ["status" =>true ,"message" => "Image Deleted Successfully" ,'data' => []];
+        $response = ["status" =>true ,"message" => __('lang.image_deleted_successfully') ,'data' => []];
         return response($response, 200);
 
 

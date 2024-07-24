@@ -70,7 +70,7 @@ class LeadController extends BaseApiController
         
 
         if(empty($leadId)){
-            return response()->json(['status' => false , "message" => 'Lead Id Required'], 200);
+            return response()->json(['status' => false , "message" => __('lang.lead_id_required')], 200);
         }else{
             $lead = Lead::with('service')->find($leadId);
             if(empty($lead)){
@@ -97,7 +97,7 @@ class LeadController extends BaseApiController
             
 
             if($notIntrested > 0){
-                $response = ['message' => 'Lead removed successfully',"status"=>true];
+                $response = ['message' => __('lang.lead_removed_successfully'),"status"=>true];
                 return response($response, 200);
             }
             $notInterestedLead = new NotInterestedLead();
@@ -107,12 +107,12 @@ class LeadController extends BaseApiController
             $notInterestedLead->save();
 
             if($notInterestedLead){
-                $response = ['message' => 'Lead removed successfully',"status"=>true];
+                $response = ['message' => __('lang.lead_removed_successfully'),"status"=>true];
             }else{
-                $response = ['message' => 'something went wrong',"status"=>false];
+                $response = ['message' => __('lang.something_went_wrong'),"status"=>false];
             }
         }else{
-            $response = ['message' => 'something went wrong',"status"=>false];
+            $response = ['message' => __('lang.something_went_wrong'),"status"=>false];
         }
         return response($response, 200);
     }
@@ -180,15 +180,15 @@ class LeadController extends BaseApiController
                     $responseActivity->status = "Active";
                     $responseActivity->save();
 
-                    $response = ['message' => 'Lead Purchased Successfully',"status"=>true];
+                    $response = ['message' => __('lang.lead_purchased_successfully'),"status"=>true];
                 }else{
-                    $response = ['message' => 'Insufficient Credits',"status"=>false];
+                    $response = ['message' => __('lang.insufficient_credits'),"status"=>false];
                 }
             }else{
-                $response = ['message' => 'Something went wrong',"status"=>false];
+                $response = ['message' => __('lang.something_went_wrong'),"status"=>false];
             }
         }else{
-            $response = ['message' => 'Lead id required',"status"=>false];
+            $response = ['message' => __('lang.lead_id_required'),"status"=>false];
         }
 
         return response($response, 200);
@@ -255,11 +255,11 @@ class LeadController extends BaseApiController
         $leadId = null;
         $leadId = $request->has('lead_id') ? $request->input('lead_id') : null;
         if(empty($leadId)){
-            return response()->json(['status' => false , "message" => 'Lead Id Required'], 200);
+            return response()->json(['status' => false , "message" => __('lang.lead_id_required')], 200);
         }else{
             $lead = Lead::with('service')->find($leadId);
             if(empty($lead)){
-                return response()->json(['status' => false , "message" => 'Lead does not exist'], 200);
+                return response()->json(['status' => false , "message" => __('lang.lead_does_not_exist')], 200);
             }
             $leadUser = LeadUser::where(["user_id" => auth('api')->user()->id ,"lead_id" => $leadId ,"status" => "Active"])->first();
 
@@ -281,7 +281,7 @@ class LeadController extends BaseApiController
                 $lead->lastActivityMessage = $lastActivity->message;
                 return response(['data' => $lead , "status"=>true ,"message" => Self::SUCCESS_MSG], 200);
             }else{
-                return response()->json(['status' => false , "message" => "You Don't have access to this Lead"], 200);
+                return response()->json(['status' => false , "message" => __('lang.you_dont_have_access_to_this_lead')], 200);
             }
             
 
@@ -319,7 +319,7 @@ class LeadController extends BaseApiController
                     $message = 'no_answer';
                     break;
                 case 'left_voice_mail':
-                    $message = 'Left Voice Mail';
+                    $message = 'left_voicemail';
                     break;
                 case 'we_talked':
                     $message = 'we_talked';
@@ -346,7 +346,7 @@ class LeadController extends BaseApiController
 
         $responseActivity = ResponseActivity::where(['lead_user_id' => $leadUser->id])->orderBy('id','DESC')->get();
 
-        return response()->json(['status' => true , "message" => 'Updated Activity Log' , 'data' => $responseActivity], 200);
+        return response()->json(['status' => true , "message" => __('lang.updated_activity_log') , 'data' => $responseActivity], 200);
     }
 
     public function addestimation(Request $request){
@@ -364,7 +364,7 @@ class LeadController extends BaseApiController
         $lead_id = $request->input('lead_id');
         $leadUser = LeadUser::where(['lead_id' => $lead_id , 'user_id' => auth('api')->user()->id ,'status' => 'Active'])->first();
         if($leadUser === null){
-            return response()->json(['status' => false , "message" => 'Lead Does not Exist' , 'data' => []], 200);
+            return response()->json(['status' => false , "message" => __('lang.lead_does_not_exist') , 'data' => []], 200);
         }
         $estimation = new Estimation();
         $estimation->text = $request->input('text');
@@ -399,7 +399,7 @@ class LeadController extends BaseApiController
         $LeadId = $request->input('lead_id');
         $leadUser = LeadUser::where(['lead_id' => $LeadId , 'user_id' => auth('api')->user()->id ,'status' => 'Active'])->first();
         if($leadUser === null){
-            return response()->json(['status' => false , "message" => 'Lead Does not Exist' , 'data' => []], 200);
+            return response()->json(['status' => false , "message" => __('lang.lead_does_not_exist') , 'data' => []], 200);
         }
         $LeadUserId = $leadUser->id;
         $responseNotes = new ResponseNote();
@@ -430,9 +430,9 @@ class LeadController extends BaseApiController
         ]);
         $leadUser = LeadUser::where(['user_id' => auth('api')->user()->id,'lead_id' => $request->input('lead_id')])->first();
         if($leadUser === null){
-            return response()->json(['status' => false , "message" => 'Lead Does not Exist' , 'data' => []], 200);
+            return response()->json(['status' => false , "message" => __('lang.lead_does_not_exist') , 'data' => []], 200);
         }
         $responseActivity = ResponseActivity::where(['lead_user_id' => $leadUser->id])->orderBy('id','DESC')->get();
-        return response()->json(['status' => true , "message" => 'Updated Activity Log' , 'data' => $responseActivity], 200);
+        return response()->json(['status' => true , "message" => __('lang.updated_activity_log') , 'data' => $responseActivity], 200);
     }
 }

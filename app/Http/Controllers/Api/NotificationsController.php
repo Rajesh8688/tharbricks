@@ -16,7 +16,7 @@ class NotificationsController extends Controller
         })->orderBy('id','desc')->get();
         
         $response['data'] =  $Notifications;
-        $response['message'] =  "Notifications List";
+        $response['message'] =  __('lang.notifications_list');
         $response['status'] = true;
         return response($response, 200);
     }

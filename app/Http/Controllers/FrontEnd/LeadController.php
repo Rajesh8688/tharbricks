@@ -147,7 +147,7 @@ class LeadController extends Controller
 
 
     public function emailChecker(){
-        return view('front_end.email_templates.estimation');
+        return view('front_end.email_templates.userRequest');
         // $leadId = 9;
         // $lead = Lead::find($leadId);
         // $email = explode("@",$lead->email);
@@ -268,7 +268,7 @@ class LeadController extends Controller
                     $responseActivity = new ResponseActivity();
                     $responseActivity->lead_user_id = $leadUser->id;
                     $responseActivity->message = "looking_for_a_name";
-                    $responseActivity->wildcard = json_encode(['name'=>$leadDetails->name]);
+                    $responseActivity->wildcards = json_encode(['name'=>$leadDetails->name]);
                     $responseActivity->logged_date = now();
                     $responseActivity->from = 'customer';
                     $responseActivity->status = "Active";
@@ -395,8 +395,15 @@ class LeadController extends Controller
             $lead->leadAnswersShort = substr($lead->leadAnswers,0,60).((strlen($lead->leadAnswers) > 60) ? "...":"");
             $lead->lead_added_on = $lead->created_at->diffForHumans(null,null,true);
             $lastActivity = ResponseActivity::where('lead_user_id' , $lead->leadUsersId)->orderBy('id','DESC')->first();
-            $lead->lastActivityDate = $lastActivity->logged_date;
-            $lead->lastActivityMessage = $lastActivity->message;
+            $lead->lastActivityDate =  $lastActivity->logged_date ?? '' ;
+            $lead->lastActivityMessage = translator($lastActivity->message ?? '' , $lastActivity->wildcards ?? '' );
+            // if($lastActivity != null){
+            //     $lead->lastActivityDate =  $lastActivity->logged_date ;
+            //     $lead->lastActivityMessage = translator($lastActivity->message  , $lastActivity->wildcards );
+            // }else{
+            //     $lead->lastActivityDate =  '';
+            //     $lead->lastActivityMessage = '';
+            // }
         }
         
        
@@ -408,12 +415,9 @@ class LeadController extends Controller
             foreach($lead->responseActivities as $k=>$responseActivity){
                 $lead->responseActivities[$k]->message = translator($responseActivity->message , $responseActivity->wildcards);
             }
-      
-
-
             $lastActivity = ResponseActivity::where('lead_user_id' , $myleads[0]->leadUsersId)->orderBy('id','DESC')->first();
-            $lead->lastActivityDate = $lastActivity->logged_date;
-            $lead->lastActivityMessage = $lastActivity->message;
+            $lead->lastActivityDate =  $lastActivity->logged_date ?? '' ;
+            $lead->lastActivityMessage = translator($lastActivity->message ?? '' , $lastActivity->wildcards ?? '' );
             $leadUser = LeadUser::where(['user_id' => auth('web')->user()->id , 'lead_id' => $lead->id])->first();
             $lead->lead_user_id = $leadUser->id;  
             $lead->response_status = $leadUser->response_status;   
@@ -460,8 +464,8 @@ class LeadController extends Controller
                     $lead->responseActivities[$k]->message = translator($responseActivity->message , $responseActivity->wildcards);
                 }
                 $lead->notes = ResponseNote::where(['response_id' => $leadUser->id])->orderBy('id','DESC')->get();
-                $lead->lastActivityDate = $lastActivity->logged_date;
-                $lead->lastActivityMessage = $lastActivity->message;
+                $lead->lastActivityDate =  $lastActivity->logged_date ?? '' ;
+                $lead->lastActivityMessage = translator($lastActivity->message ?? '' , $lastActivity->wildcards ?? '' );
                 $lead->lead_user_id = $leadUser->id;   
                 $lead->response_status = $leadUser->response_status;
                 $lead->notes = ResponseNote::where(['response_id' => $leadUser->id])->orderBy('id','DESC')->get();

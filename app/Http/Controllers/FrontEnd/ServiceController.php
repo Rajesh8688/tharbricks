@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\FrontEnd;
 
+use App\Models\Lead;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -14,6 +15,9 @@ class ServiceController extends Controller
         ];
 
         $services = Service::where('status' , 'Active')->paginate(10);
+        foreach ($services as $key => $value) {
+            $services[$key]->leadCount = Lead::where(['service_id' => $value->id , 'status' => 'Active'])->count();
+        }
         $serviceCount = Service::where('status' , 'Active')->count();
        
         return view('front_end.service.list',compact('titles','services','serviceCount'));

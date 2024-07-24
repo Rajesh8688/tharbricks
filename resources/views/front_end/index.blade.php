@@ -141,7 +141,7 @@
                                         <div class="aon-cate-area2-content">
                                             {{-- <h4 class="aon-tilte"><a href="{{route('serviceDetails',['slug'=>$item->slug])}}">{{$item->name}}</a></h4> --}}
                                             <h4 class="aon-tilte">{{$item->name}}</h4>
-                                            <p>0 {{__('lang.listing')}}</p>
+                                            <p>{{$item->leadCount}} {{__('lang.listing')}}</p>
                                         </div>
                                     </div>
                                 </div>    
@@ -240,7 +240,7 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
                             <span class="aon-sub-title">{{__('lang.vendor')}}</span>
-                            <h2 class="sf-title">{{__('lang.featured_providers')}}</h2>
+                            <h2 class="sf-title">{{__('lang.featured_vendors')}}</h2>
                         </div>
                         <div class="col-lg-6 col-md-12">
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do usmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -372,7 +372,7 @@
             
 
         <!-- Recently Posted Jobs -->
-        <div class="section-full aon-postjobs-area2">
+        {{-- <div class="section-full aon-postjobs-area2">
             <div class="container">
                 <!--Title Section Start-->
                 <div class="section-head">
@@ -387,7 +387,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- Recently Posted Jobs Section END -->
 
 
@@ -507,12 +507,13 @@
                                 </div>
                             </div>
                             @endforeach
-                            
-                            
-                            
+                        </div>
+                        <div class="aon-btn-pos-center">
+                            <a class="site-button" href="{{route('blogs')}}">{{__('lang.view_all')}}</a>
                         </div>
                     </div>
                 </div>
+               
 
             </div>
         </div>
@@ -581,7 +582,7 @@
                                     <!-- COLUMNS 1 -->
                                     <div class="col-lg-3 col-md-6 col-6">
                                         <div class="aon-static-section2 aon-t-white2">
-                                            <div class="aon-company-static-num2 counter">36</div>
+                                            <div class="aon-company-static-num2 counter">{{$staticsData['vendors']}}</div>
                                             <div class="aon-company-static-name2">{{__('lang.vendors')}}</div>
                                         </div>
                                     </div>
@@ -589,7 +590,7 @@
                                     <!-- COLUMNS 2 -->
                                     <div class="col-lg-3 col-md-6 col-6">
                                         <div class="aon-static-section2 aon-t-skyblue2">
-                                            <div class="aon-company-static-num2 counter">{{count($Services)}}</div>
+                                            <div class="aon-company-static-num2 counter">{{$staticsData['services']}},</div>
                                             <div class="aon-company-static-name2">{{__('lang.services')}}</div>
                                         </div>
                                     </div>
@@ -597,16 +598,16 @@
                                     <!-- COLUMNS 3 -->
                                     <div class="col-lg-3 col-md-6 col-6">
                                         <div class="aon-static-section2 aon-t-yellow2">
-                                            <div class="aon-company-static-num2 counter">108</div>
-                                            <div class="aon-company-static-name2">Jobs</div>
+                                            <div class="aon-company-static-num2 counter">{{$staticsData['leads']}}</div>
+                                            <div class="aon-company-static-name2">{{__('lang.leads')}}</div>
                                         </div>
                                     </div>
 
                                     <!-- COLUMNS 4 -->
                                     <div class="col-lg-3 col-md-6 col-6">
                                         <div class="aon-static-section2 aon-t-green2">
-                                            <div class="aon-company-static-num2 counter">89</div>
-                                            <div class="aon-company-static-name2">Customer</div>
+                                            <div class="aon-company-static-num2 counter">{{$staticsData['blogs']}}</div>
+                                            <div class="aon-company-static-name2">{{__('lang.blogs')}}</div>
                                         </div>
                                     </div>
 

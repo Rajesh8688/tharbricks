@@ -18,12 +18,20 @@ class BlogController extends Controller
         {
             $serviceId = $request->input('serviceId');
         }
+        if($request->has('search'))
+        {
+            $search = $request->input('search');
+        }
         $blogs = Blog::where('status' , 'Active')->orderBy("id","DESC");
         if(!empty($serviceId))
         {
             $blogs = $blogs->where('service_id' , $serviceId);
         }
-        $blogs = $blogs->paginate(4);
+        if(!empty($search))
+        {
+            $blogs = $blogs->where('name', 'like', '%'.$search.'%'); 
+        }
+        $blogs = $blogs->paginate(10);
         $Recentblogs = Blog::where('status' , 'Active')->limit(4)->orderBy("id","DESC")->get();
        
         $services = Service::where('status' , 'Active')->get();

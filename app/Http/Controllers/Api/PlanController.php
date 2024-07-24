@@ -25,7 +25,7 @@ class PlanController extends Controller
         }
         $response['data']['plans'] =  $plans;
         $response['data']['available_credit'] =  $available_credit;
-        $response['message'] =  "Active plans";
+        $response['message'] =  __('lang.active_plans');
         $response['status'] = true;
         return response($response, 200);
     }

@@ -154,6 +154,9 @@ class VendorController extends Controller
         //userServices 
         $services = ServiceUser::with('service')->where(['user_id' => auth('web')->user()->id , "status" => 'Active'])->get();
 
+        //Locations
+        $locations = Location::where(['user_id' => auth('web')->user()->id , "status" => 'Active'])->get();
+
 
         //Leads
         $unInterestedLeads = NotInterestedLead::select('lead_id')->where(['user_id' => auth('web')->user()->id ,"status" => 'Active'])->get();
@@ -193,6 +196,7 @@ class VendorController extends Controller
         $data['phone_number'] = $supportDetails->phone_number;
         $data['address'] = $supportDetails->address;
         $data['services'] = $services;
+        $data['locations'] = $locations;
 
         
         return view('front_end.vendor.dashboard',compact('titles','vendorDetails','data'));

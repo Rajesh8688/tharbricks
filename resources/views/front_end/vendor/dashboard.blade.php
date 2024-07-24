@@ -279,18 +279,18 @@
                                 </div>
                                 <p class="text-secondary text-xs">{{__('lang.Youre_receiving_customers_within')}}</p>
                                     <div class="locations d-flex flex-column justify-content-around align-items-start">
+                                        @foreach ($data['locations'] as $location)
                                         <div class="d-flex justify-content-start align-items-center my-1 mw-100">
                                             <span class="bark-svg-icon bsi-primary-grey-200 bsi-sm mr-2">
                                                 <i class="fa fa-map-marker"></i>
                                             </span>
-                                            <p class="text-sm text-grey-800 location mb-0 text-truncate text-capitalize">K R Puram</p>
+                                            <p class="text-sm text-grey-800 location mb-0 text-truncate text-capitalize">
+                                                @if($location->type == 'nationwide') {{__('lang.nationwide')}} @elseif($location->type == 'distance') {{$location->address}} @endif
+                                                
+                                              </p>
                                         </div>
-                                        <div class="d-flex justify-content-start align-items-center my-1 mw-100">
-                                            <span class="bark-svg-icon bsi-primary-grey-200 bsi-sm mr-2">
-                                                <i class="fa fa-map-marker"></i>
-                                            </span>
-                                            <p class="text-sm text-grey-800 location mb-0 text-truncate text-capitalize">Bengaluru</p>
-                                        </div>
+                                        @endforeach
+                                       
                                     </div>
                             </div>
                             <hr>

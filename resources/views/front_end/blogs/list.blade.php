@@ -104,9 +104,9 @@
                                 <div class="text-left m-b30">
                                     <h3 class="widget-title">{{__('lang.search')}}</h3>
                                 </div> 
-                                 <form role="search" method="post">
+                                 <form role="search" method="get" action="{{route('blogs')}}">
                                      <div class="input-group">
-                                         <input name="news-letter" type="text" class="form-control" placeholder="Write your text">
+                                         <input name="search" type="text" class="form-control" placeholder="Write your text">
                                          <span class="input-group-btn">
                                              <button type="submit" class="btn"><i class="fa fa-search"></i></button>
                                          </span>

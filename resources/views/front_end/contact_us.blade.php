@@ -68,7 +68,7 @@
                                 <span><img src="{{ asset('frontEnd/images/contact-us/3.png')}}" alt=""></span>
                             </div>
                             <div class="sf-contact-info">
-                                <h4 class="sf-title">phone_number</h4>
+                                <h4 class="sf-title">{{__('lang.phone_number')}}</h4>
                                 <p>+91 {{$data['phone_number']}} ({{__('lang.support_line')}})</p>
                             <br>
                                 

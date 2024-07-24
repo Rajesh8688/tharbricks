@@ -280,6 +280,63 @@
 <script src="{{ asset('frontEnd/js/lc_lightbox.lite.js')}}"></script><!-- IMAGE POPUP -->
 <script  src="{{ asset('frontEnd/js/bootstrap-slider.min.js')}}"></script><!-- Form js -->
 
+<script>
+     
+    $(document).ready(function() {
+    $('#emailLetter').submit(function(event) {
+        event.preventDefault();
+
+        var formData = $(this).serialize();
+
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('subscribe') }}',
+            data: formData,
+            success: function(response) {
+                // Handle success
+                console.log(response);
+                let successMessage = response.message;
+                Swal.fire({
+                title: "Success",
+                text: successMessage,
+                type: "success",
+                confirmButtonClass: 'site-button',
+                buttonsStyling: false,
+            });
+            $('#emailLetter')[0].reset();
+            },
+         
+            error: function(xhr, status, error) {
+            if (xhr.status === 422) {
+                // Handle validation errors
+                let errors = $.parseJSON(xhr.responseText);
+                let errorMes = errors.errors.email;
+                Swal.fire({
+                    title: "Error!",
+                    text: errorMes,
+                    type: "error",
+                    confirmButtonClass: 'site-button',
+                    buttonsStyling: false,
+                });
+                // Display errors to the user
+            } else {
+                // Handle other errors
+                Swal.fire({
+                    title: "Error!",
+                    text: error,
+                    type: "error",
+                    confirmButtonClass: 'site-button',
+                    buttonsStyling: false,
+                });
+            }
+        }
+        });
+    });
+});
+</script>
+
+
+
 @yield('extraScripts')
 
 </body>

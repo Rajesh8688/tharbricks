@@ -53,7 +53,7 @@ class EmailTemplateController extends BaseApiController
 
         $response['data'] = $emailTemplate;
         $response['status'] = true;
-        $response['message'] = 'Email Template added successfully';
+        $response['message'] = __('lang.email_template_added_successfully');
         return response($response, 200);
 
     }
@@ -83,7 +83,7 @@ class EmailTemplateController extends BaseApiController
         $emailTemplate->save();
         $response['data'] = $emailTemplate;
         $response['status'] = true;
-        $response['message'] = "Email Template updated successfully";
+        $response['message'] = __('lang.email_template_updated_successfully');
         return response($response, 200);
     }
 
@@ -93,7 +93,7 @@ class EmailTemplateController extends BaseApiController
         $emailTemplate->update(['status' => 'InActive']);
         $response['data'] = [];
         $response['status'] = true;
-        $response['message'] = "Email Template deleted successfully";
+        $response['message'] = __('lang.email_eemplate_deleted_successfully');
         return response($response, 200);
     }
 }

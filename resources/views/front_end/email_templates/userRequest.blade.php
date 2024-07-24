@@ -6,7 +6,7 @@
   <body>
  <div style="margin:0;background-color:#f4f4f4;padding:0">
    <div style="color:transparent;display:none;height:0;max-height:0;max-width:0;opacity:0;overflow:hidden;width:0">
-        Estimation for your {{$lead->service->name}} by {{$lead->vendorName}}
+        User Request Form TharBricks by {{$userRequest->name}}
 
       &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;<wbr>&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;<wbr>&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;<wbr>&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;<wbr>&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;<wbr>&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;<wbr>&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;<wbr>&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;<wbr>&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;<wbr>&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
    </div>
@@ -77,7 +77,7 @@
                                                             <strong>
                                                             <span>
                                                             <span style="color:#111539">
-                                                            <img data-emoji="🔔" alt="🔔" aria-label="🔔" draggable="false" src="https://fonts.gstatic.com/s/e/notoemoji/15.0/1f514/32.png" loading="lazy">     Estimation for your {{$lead->service->name}} by {{$lead->vendorName}}
+                                                            <img data-emoji="🔔" alt="🔔" aria-label="🔔" draggable="false" src="https://fonts.gstatic.com/s/e/notoemoji/15.0/1f514/32.png" loading="lazy">     User Request Form TharBricks by {{$userRequest->name}}
                                                             </span>
                                                             </span>
                                                             </strong>
@@ -97,6 +97,8 @@
                      </tr>
                   </tbody>
                </table>
+             
+           
                <table align="center" border="0" cellpadding="0" cellspacing="0"  role="presentation" width="100%">
                   <tbody>
                      <tr>
@@ -104,70 +106,7 @@
                            <table align="center" border="0" cellpadding="0" cellspacing="0"  role="presentation" style="background-color:#fff;border-radius:0;color:#000;width:600px;margin:0 auto" width="600">
                               <tbody>
                                  <tr>
-                                    <td  style="font-weight:400;text-align:left;vertical-align:top;border-top:0;border-right:0;border-bottom:0;border-left:0" width="100%">
-                                       <table border="0" cellpadding="0" cellspacing="0"  role="presentation" style="word-break:break-word" width="100%">
-                                          <tbody>
-                                             <tr>
-                                                <td style="padding-bottom:10px;padding-left:40px;padding-right:40px;padding-top:5px">
-                                                   <div style="font-family:sans-serif">
-                                                      <div style="font-size:14px;font-family:Lato,Tahoma,Verdana,Segoe,sans-serif;color:#555;line-height:1.2">
-                                                         <p style="margin:0;font-size:18px">
-                                                            <span style="font-size:18px;color:#111539">
-                                                            <img data-emoji="📍"  alt="📍" aria-label="📍" draggable="false" src="https://fonts.gstatic.com/s/e/notoemoji/15.0/1f4cd/32.png" loading="lazy">  {{$lead->address}} 
-                                                            </span>
-                                                         </p>
-                                                      </div>
-                                                   </div>
-                                                </td>
-                                             </tr>
-                                          </tbody>
-                                       </table>
-                                    </td>
-                                 </tr>
-                              </tbody>
-                           </table>
-                        </td>
-                     </tr>
-                  </tbody>
-               </table>
-               
-               <table align="center" border="0" cellpadding="0" cellspacing="0"  role="presentation" width="100%">
-                  <tbody>
-                     <tr>
-                        <td>
-                           <table align="center" border="0" cellpadding="0" cellspacing="0"  role="presentation" style="background-color:#fff;border-radius:0;color:#000;width:600px;margin:0 auto" width="600">
-                              <tbody>
-                                 <tr>
-                                    <td  style="font-weight:400;text-align:left;vertical-align:top;border-top:0;border-right:0;border-bottom:0;border-left:0" width="100%">
-                                       <table border="0" cellpadding="0" cellspacing="0"  role="presentation" width="100%">
-                                          <tbody>
-                                             <tr>
-                                                <td  style="padding-bottom:15px;padding-left:40px;padding-top:5px;width:100%;padding-right:0">
-                                                   <div align="left"  style="line-height:10px">
-                                                      <div style="max-width:143px">
-                                                         <img src="{{asset('frontEnd/template/verified.png')}}" style="display:block;height:auto;border:0;width:100%" width="143"  data-bit="iit">
-                                                      </div>
-                                                   </div>
-                                                </td>
-                                             </tr>
-                                          </tbody>
-                                       </table>
-                                    </td>
-                                 </tr>
-                              </tbody>
-                           </table>
-                        </td>
-                     </tr>
-                  </tbody>
-               </table>
-               <table align="center" border="0" cellpadding="0" cellspacing="0"  role="presentation" width="100%">
-                  <tbody>
-                     <tr>
-                        <td>
-                           <table align="center" border="0" cellpadding="0" cellspacing="0"  role="presentation" style="background-color:#fff;border-radius:0;color:#000;width:600px;margin:0 auto" width="600">
-                              <tbody>
-                                 <tr>
-                                    <td  style="font-weight:400;text-align:left;padding-top:10px;vertical-align:top;border-top:0;border-right:0;border-bottom:0;border-left:0" width="16.666666666666668%">
+                                    <td  style="font-weight:400;text-align:left;padding-top:10px;vertical-align:top;border-top:0;border-right:0;border-bottom:0;border-left:0" width="20.666666666666668%">
                                       
                                       
                                        <table border="0" cellpadding="0" cellspacing="0"  role="presentation" width="100%">
@@ -175,9 +114,31 @@
                                              <tr>
                                                 <td style="padding-bottom:5px;padding-right:10px;padding-top:7px;width:100%;padding-left:0">
                                                    <div align="right" style="line-height:10px">
-                                                      <div style="max-width:50px">
-                                                         
-                                                         <img src="{{asset('frontEnd/template/phone.png')}}" style="display:block;height:auto;border:0;width:100%" width="50"  data-bit="iit">
+                                                      <div style="max-width:70px">
+                                                         <b style="margin:0;font-size: 28px;">
+                                                            <span style="color:#111539">
+                                                            <span style="font-size:16px">
+                                                            Name :</span>
+                                                            </span>
+                                                         </b>
+                                                      </div>
+                                                   </div>
+                                                </td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                       <table border="0" cellpadding="0" cellspacing="0"  role="presentation" width="100%">
+                                          <tbody>
+                                             <tr>
+                                                <td style="padding-bottom:5px;padding-right:10px;padding-top:7px;width:100%;padding-left:0">
+                                                   <div align="right" style="line-height:10px">
+                                                      <div style="max-width:70px">
+                                                         <b style="margin:0;font-size: 28px;">
+                                                            <span style="color:#111539">
+                                                            <span style="font-size:16px">
+                                                            Phone :</span>
+                                                            </span>
+                                                         </b>
                                                       </div>
                                                    </div>
                                                 </td>
@@ -189,10 +150,51 @@
                                        <table border="0" cellpadding="0" cellspacing="0"  role="presentation" width="100%">
                                           <tbody>
                                              <tr>
-                                                <td  style="padding-bottom:10px;padding-right:20px;padding-top:12px;width:100%;padding-left:0">
-                                                   <div align="right"  style="line-height:10px">
-                                                      <div style="max-width:30px">
-                                                         <img src="{{asset('frontEnd/template/message.png')}}" style="display:block;height:auto;border:0;width:100%" width="30"  data-bit="iit">
+                                                <td  style="padding-bottom:5px;padding-right:10px;padding-top:7px;width:100%;padding-left:0">
+                                                   <div align="right" style="line-height:10px">
+                                                      <div style="max-width:70px">
+                                                         <b style="margin:0;font-size: 28px;">
+                                                            <span style="color:#111539">
+                                                            <span style="font-size:16px">
+                                                            Email :</span>
+                                                            </span>
+                                                         </b>
+                                                      </div>
+                                                   </div>
+                                                </td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                       <table border="0" cellpadding="0" cellspacing="0"  role="presentation" width="100%">
+                                          <tbody>
+                                             <tr>
+                                                <td  style="padding-bottom:5px;padding-right:10px;padding-top:7px;width:100%;padding-left:0">
+                                                   <div align="right" style="line-height:10px">
+                                                      <div style="max-width:70px">
+                                                         <b style="margin:0;font-size: 28px;">
+                                                            <span style="color:#111539">
+                                                            <span style="font-size:16px">
+                                                            Subject :</span>
+                                                            </span>
+                                                         </b>
+                                                      </div>
+                                                   </div>
+                                                </td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                       <table border="0" cellpadding="0" cellspacing="0"  role="presentation" width="100%">
+                                          <tbody>
+                                             <tr>
+                                                <td  style="padding-bottom:5px;padding-right:10px;padding-top:7px;width:100%;padding-left:0">
+                                                   <div align="right" style="line-height:10px">
+                                                      <div style="max-width:70px">
+                                                         <b style="margin:0;font-size: 28px;">
+                                                            <span style="color:#111539">
+                                                            <span style="font-size:16px">
+                                                            Message :</span>
+                                                            </span>
+                                                         </b>
                                                       </div>
                                                    </div>
                                                 </td>
@@ -230,7 +232,7 @@
                                                          <p style="margin:0;font-size:14px">
                                                             <span style="color:#111539">
                                                             <span style="font-size:16px">
-                                                            +91 {{$lead->phone}}
+                                                                {{$userRequest->name}}
                                                             </span>
                                                             </span>
                                                          </p>
@@ -243,13 +245,70 @@
                                        <table border="0" cellpadding="0" cellspacing="0"  role="presentation" style="word-break:break-word" width="100%">
                                           <tbody>
                                              <tr>
-                                                <td  style="padding-bottom:10px;padding-top:12px">
+                                                <td  style="padding-top:4px">
                                                    <div style="font-family:sans-serif">
                                                       <div style="font-size:14px;font-family:Lato,Tahoma,Verdana,Segoe,sans-serif;color:#555;line-height:1.2">
                                                          <p style="margin:0;font-size:14px">
                                                             <span style="color:#111539">
                                                             <span style="font-size:16px">
-                                                                {{$estimation->text}}
+                                                               {{$userRequest->phone}}
+                                                            </span>
+                                                            </span>
+                                                         </p>
+                                                      </div>
+                                                   </div>
+                                                </td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                       <table border="0" cellpadding="0" cellspacing="0"  role="presentation" style="word-break:break-word" width="100%">
+                                          <tbody>
+                                             <tr>
+                                                <td  style="padding-top:4px">
+                                                   <div style="font-family:sans-serif">
+                                                      <div style="font-size:14px;font-family:Lato,Tahoma,Verdana,Segoe,sans-serif;color:#555;line-height:1.2">
+                                                         <p style="margin:0;font-size:14px">
+                                                            <span style="color:#111539">
+                                                            <span style="font-size:16px">
+                                                               {{$userRequest->email}}
+                                                            </span>
+                                                            </span>
+                                                         </p>
+                                                      </div>
+                                                   </div>
+                                                </td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                       <table border="0" cellpadding="0" cellspacing="0"  role="presentation" style="word-break:break-word" width="100%">
+                                          <tbody>
+                                             <tr>
+                                                <td  style="padding-top:4px">
+                                                   <div style="font-family:sans-serif">
+                                                      <div style="font-size:14px;font-family:Lato,Tahoma,Verdana,Segoe,sans-serif;color:#555;line-height:1.2">
+                                                         <p style="margin:0;font-size:14px">
+                                                            <span style="color:#111539">
+                                                            <span style="font-size:16px">
+                                                               {{$userRequest->subject}}
+                                                            </span>
+                                                            </span>
+                                                         </p>
+                                                      </div>
+                                                   </div>
+                                                </td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                       <table border="0" cellpadding="0" cellspacing="0"  role="presentation" style="word-break:break-word" width="100%">
+                                          <tbody>
+                                             <tr>
+                                                <td  style="padding-top:8px">
+                                                   <div style="font-family:sans-serif">
+                                                      <div style="font-size:14px;font-family:Lato,Tahoma,Verdana,Segoe,sans-serif;color:#555;line-height:1.2">
+                                                         <p style="margin:0;font-size:14px">
+                                                            <span style="color:#111539">
+                                                            <span style="font-size:16px">
+                                                               {{$userRequest->message}}
                                                             </span>
                                                             </span>
                                                          </p>
@@ -282,40 +341,7 @@
                </table>
               
                
-               <table align="center" border="0" cellpadding="0" cellspacing="0"  role="presentation" width="100%">
-                  <tbody>
-                     <tr>
-                        <td>
-                           <table align="center" border="0" cellpadding="0" cellspacing="0"  role="presentation" style="background-color:#fff;border-radius:0;color:#000;width:600px;margin:0 auto" width="600">
-                              <tbody>
-                                 <tr>
-                                    <td style="font-weight:400;text-align:left;padding-bottom:20px;padding-top:5px;vertical-align:top;border-top:0;border-right:0;border-bottom:0;border-left:0" width="58.333333333333336%">
-                                       <table border="0" cellpadding="0" cellspacing="0"  role="presentation" width="100%">
-                                          <tbody>
-                                             <tr>
-                                                <td style="padding-left:30px;text-align:center">
-                                                   <div align="center" >
-                                                      <a href="{{asset($estimation->attachment)}}" style="text-decoration:none;display:block;color:#ffffff;background-color:#2d79f0;border-radius:4px;width:85%;border-top:1px solid #60a7f7;font-weight:400;border-right:1px solid #60a7f7;border-bottom:1px solid #60a7f7;border-left:1px solid #60a7f7;padding-top:15px;padding-bottom:15px;font-family:Lato,Tahoma,Verdana,Segoe,sans-serif;font-size:16px;text-align:center;word-break:keep-all" target="_blank" download>
-                                                      <span style="padding-left:15px;padding-right:15px;font-size:16px;display:inline-block;letter-spacing:normal">
-                                                      <span style="word-break:break-word;line-height:24px">
-                                                      Download Estimation
-                                                      </span>
-                                                      </span>
-                                                      </a>
-                                                   </div>
-                                                </td>
-                                             </tr>
-                                          </tbody>
-                                       </table>
-                                    </td>
-                                  
-                                 </tr>
-                              </tbody>
-                           </table>
-                        </td>
-                     </tr>
-                  </tbody>
-               </table>
+               
                <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                   <tbody>
                      <tr>
@@ -323,7 +349,7 @@
                            <table align="center" border="0" cellpadding="0" cellspacing="0"  role="presentation" style="background-color:#fff;border-radius:0;color:#000;width:600px;margin:0 auto" width="600">
                               <tbody>
                                  <tr>
-                                    <td  style="font-weight:400;text-align:left;padding-bottom:5px;padding-top:5px;vertical-align:top;border-top:0;border-right:0;border-bottom:0;border-left:0" width="100%">
+                                    <td  style="font-weight:400;text-align:left;padding-bottom: 20px;padding-top:5px;vertical-align:top;border-top:0;border-right:0;border-bottom:0;border-left:0" width="100%">
                                        <table border="0" cellpadding="0" cellspacing="0"  role="presentation" style="word-break:break-word" width="100%">
                                           <tbody>
                                              <tr>
@@ -384,95 +410,8 @@
                      </tr>
                   </tbody>
                </table>
-               <table align="center" border="0" cellpadding="0" cellspacing="0"  role="presentation" width="100%">
-                  <tbody>
-                     <tr>
-                        <td>
-                           <table align="center" border="0" cellpadding="0" cellspacing="0"  role="presentation" style="background-color:#fff;color:#000;width:600px;margin:0 auto" width="600">
-                              <tbody>
-                                 <tr>
-                                    <td  style="font-weight:400;text-align:left;padding-bottom:5px;padding-top:5px;vertical-align:top;border-top:0;border-right:0;border-bottom:0;border-left:0" width="100%">
-                                       
-                                       <table border="0" cellpadding="0" cellspacing="0"  role="presentation" style="word-break:break-word" width="100%">
-                                          <tbody>
-                                             <tr>
-                                                <td  style="padding-bottom:10px;padding-left:25px;padding-right:40px;padding-top:15px">
-                                                   <div style="font-family:sans-serif">
-                                                      <div style="font-size:14px;font-family:Lato,Tahoma,Verdana,Segoe,sans-serif;color:#31708f;line-height:1.2">
-                                                         <p style="margin:0;font-size:14px;text-align:left">
-                                                            <span style="font-size:20px">
-                                                            <strong>
-                                                            <span style="color:#111539">
-                                                            Lead Details
-                                                            </span>
-                                                            </strong>
-                                                            </span>
-                                                         </p>
-                                                      </div>
-                                                   </div>
-                                                </td>
-                                             </tr>
-                                          </tbody>
-                                       </table>
-                                    </td>
-                                 </tr>
-                              </tbody>
-                           </table>
-                        </td>
-                     </tr>
-                  </tbody>
-               </table>
-               <table align="center" border="0" cellpadding="0" cellspacing="0"  role="presentation" width="100%">
-                  <tbody>
-                     <tr>
-                        <td>
-                           <table align="center" border="0" cellpadding="0" cellspacing="0"  role="presentation" style="background-color:#fff;color:#000;width:600px;margin:0 auto" width="600">
-                              <tbody>
-                                 <tr>
-                                    <td  style="font-weight:400;text-align:left;padding-bottom:5px;padding-top:5px;vertical-align:top;border-top:0;border-right:0;border-bottom:0;border-left:0" width="100%">
-                                       <table border="0" cellpadding="0" cellspacing="0"  role="presentation" style="word-break:break-word" width="100%">
-                                          <tbody>
-                                             <tr>
-                                                <td  style="padding-bottom:5px;padding-left:25px;padding-right:40px">
-                                                   <div style="font-family:sans-serif">
-                                                      <div style="font-size:12px;font-family:Lato,Tahoma,Verdana,Segoe,sans-serif;color:#61696d;line-height:1.5">
-                                                        
-                                                         @foreach ($lead->LeadAnswers as $leadanswer)
-                                                         <p style="margin:0;font-size:15px">
-                                                            <span style="font-size:15px;color:#111539">
-                                                            </span>
-                                                         </p>
-                                                         <p style="margin:0;font-size:15px">
-                                                            <span style="color:#111539">
-                                                            <strong>
-                                                            <span style="font-size:15px">
-                                                            {{$leadanswer->question->question_text}}
-                                                            </span>
-                                                            </strong>
-                                                            </span>
-                                                         </p>
-                                                         <p style="margin:0;font-size:15px">
-                                                            <span style="color:#111539">
-                                                                {{$leadanswer->answer_text}}
-                                                            </span>
-                                                         </p>
-                                                         @endforeach
-                                                       
-                                                      </div>
-                                                   </div>
-                                                </td>
-                                             </tr>
-                                          </tbody>
-                                       </table>
-                                      
-                                    </td>
-                                 </tr>
-                              </tbody>
-                           </table>
-                        </td>
-                     </tr>
-                  </tbody>
-               </table>
+               
+
                <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                   <tbody>
                      <tr>

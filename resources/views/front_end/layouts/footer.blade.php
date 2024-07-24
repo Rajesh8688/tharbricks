@@ -6,9 +6,10 @@
                 <div class="container">
                     <div class="sf-news-letter">
                         <span>{{__('lang.subscribe_our_newsletter')}}</span>
-                        <form>
+                        <form id = "emailLetter" >
                             <div class="form-group sf-news-l-form">
-                                <input type="text" class="form-control" placeholder="Enter Your Email">
+                                <input type="text" class="form-control" placeholder="Enter Your Email" name= "email" >
+                                @csrf
                                 <button type="submit" class="sf-sb-btn">{{__('lang.submit')}}</button>
                             </div>
                         </form>

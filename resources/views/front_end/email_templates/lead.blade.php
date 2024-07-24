@@ -187,7 +187,7 @@
                                                 <td  style="padding-bottom:5px;padding-right:10px;padding-top:7px;width:100%;padding-left:0">
                                                    <div align="right"  style="line-height:10px">
                                                       <div style="max-width:50px">
-                                                         <img src="https://ci3.googleusercontent.com/meips/ADKq_NZ0nUjeBceq0OxLiLdf6BqTOnQ3GeM4B9n45gjgTgFzMhcXqWN27NFGeIus-VWbvVa91q-_yGx1-glt7UlWXNEhmaD9Xhm0H-LXSpwKqoHJLHXhY7-I6LReP_dxO-QciedOii3G6Ed2mwhvutUcw7esha91ciT9B0pk6kpAa30xegZ7x-Wi1nMgP0cj_oqTVeIgyGLhf_qzlhqLsqhcmlFRIIv_XOJEtiXDpOlkLsPSKkwCs-5OZfXMtDRIK2mlkMMhrPeeVPfiZQTKVVdT10Mcvg=s0-d-e1-ft#https://d15k2d11r6t6rl.cloudfront.net/public/users/Integrators/669d5713-9b6a-46bb-bd7e-c542cff6dd6a/e66521b7ab824d17a5d3f63b8624123e/editor_images/df3c8579-6584-4821-99a9-459d5181b831.png" style="display:block;height:auto;border:0;width:100%" width="50" data-bit="iit">
+                                                         <img src="{{asset('frontEnd/template/phone.png')}}" style="display:block;height:auto;border:0;width:100%" width="50" data-bit="iit">
                                                       </div>
                                                    </div>
                                                 </td>
@@ -202,7 +202,7 @@
                                                 <td style="padding-bottom:10px;padding-right:20px;padding-top:12px;width:100%;padding-left:0">
                                                    <div align="right"  style="line-height:10px">
                                                       <div style="max-width:30px">
-                                                         <img src="https://ci3.googleusercontent.com/meips/ADKq_Na5im4UUFEWxw1YuE5c1Q01dkvKb8L22tOdM5QA6p_h9Xpm9Afax4UfRx3GQupTgAmQ2_8Wlh6bIk8mzNncyMW-p4N9J8d6YR57fkLqOjN8BGhse8CnD73XsEr7uLqvKKgt4pSkb4FD-8DhQ1uag4bNzMzHF5ptwN8d2t6D3aXe16SNj08-OZ2yV8eP4lKwMvMgg57VHyCaEWYnkSOyF9Jdo1SvhiX7TmjZUp6nIQbFJnQnGVm_g-ZR6VW_aIYYqcssemrHb1zRxh2uK6U3wmgTJg=s0-d-e1-ft#https://d15k2d11r6t6rl.cloudfront.net/public/users/Integrators/669d5713-9b6a-46bb-bd7e-c542cff6dd6a/e66521b7ab824d17a5d3f63b8624123e/editor_images/961ad467-f344-47a9-b2c8-4d2c851e1673.png" style="display:block;height:auto;border:0;width:100%" width="30" data-bit="iit">
+                                                         <img src="{{asset('frontEnd/template/message.png')}}" style="display:block;height:auto;border:0;width:100%" width="30" data-bit="iit">
                                                       </div>
                                                    </div>
                                                 </td>

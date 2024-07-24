@@ -21,7 +21,7 @@ class CreateEmailMailersTable extends Migration
             $table->string('mail_from_name');
             $table->string('mail_to');
             $table->string('mail_to_name');
-            $table->enum('reference',['lead','vendor','customer'])->nullable();
+            $table->enum('reference',['lead','vendor','customer','estimation','userRequest'])->nullable();
             $table->unsignedBigInteger('reference_id')->nullable();
             $table->text('mail_subject');
             $table->longText('mail_message');
