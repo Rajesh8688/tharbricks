@@ -223,10 +223,10 @@
                             </div> 
                             <div class="widget_social_inks">
                                 <ul class="social-icons social-square social-darkest social-md">
-                                    <li><a href="javascript:void(0);" class="fb-1"><img src="{{asset('frontEnd/images/social-icon/fb-1.png')}}" alt=""></a></li>
-                                    <li><a href="javascript:void(0);" class="tw-1"><img src="{{asset('frontEnd/images/social-icon/tw-1.png')}}" alt=""></a></li>
-                                    <li><a href="javascript:void(0);" class="pint-1"><img src="{{asset('frontEnd/images/social-icon/pint-1.png')}}" alt=""></a></li>
-                                    <li><a href="javascript:void(0);" class="in-1"><img src="{{asset('frontEnd/images/social-icon/in-1.png')}}" alt=""></a></li>
+                                    <li><a href="{{$GeneralSettings->facebook_url ?? 'javascript:void(0);'}}" ><img src="{{asset('frontEnd/social_media/facebook.png')}}" alt=""></a></li>
+                                    <li><a href="{{$GeneralSettings->x_url ?? 'javascript:void(0);'}}" ><img src="{{asset('frontEnd/social_media/twitter.png')}}" alt=""></a></li>
+                                    <li><a href="https://wa.me/{{$GeneralSettings->whatsapp_number}}" ><img src="{{asset('frontEnd/social_media/whatsapp.png')}}" alt=""></a></li>
+                                    <li><a href="{{$GeneralSettings->instagram_url ?? 'javascript:void(0);'}}" ><img src="{{asset('frontEnd/social_media/instagram.png')}}" alt=""></a></li>
                                 </ul>
                             </div>
                         </div> 

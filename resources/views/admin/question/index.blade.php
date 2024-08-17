@@ -13,7 +13,8 @@
                 <section class="invoice-print mb-1">
                     <div class="row">
                         <div class="col-12 col-md-12 d-flex flex-column flex-md-row justify-content-end">
-                            <a href="{{route('question.create')}}" class="btn btn-primary btn-print mb-1 mb-md-0"><i
+                            <?php $serviceId = request()->query('service_id')?>
+                            <a href="{{route('question.create',['service_id' => $serviceId])}}" class="btn btn-primary btn-print mb-1 mb-md-0"><i
                                     class="feather icon-plus-circle"></i>&nbsp;Add Question</a>
                             </a>
                         </div>

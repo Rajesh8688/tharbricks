@@ -108,6 +108,38 @@
                                                     </div>
                                                     <div class="col-md-6 col-12">
                                                         <div class="form-label-group">
+                                                            <input type="text" id="port" class="form-control"
+                                                                   name="x_url" placeholder="X Url"
+                                                                   value="{{$settings->x_url}}">
+                                                            <label for="x_url">X Url</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-label-group">
+                                                            <input type="number" id="port" class="form-control"
+                                                                   name="whatsapp_number" placeholder="Whatsapp Number"
+                                                                   value="{{$settings->whatsapp_number}}">
+                                                            <label for="whatsapp_number">Whatsapp Number</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-label-group">
+                                                            <input type="text" id="port" class="form-control"
+                                                                   name="facebook_url" placeholder="Facebook Url"
+                                                                   value="{{$settings->facebook_url}}">
+                                                            <label for="facebook_url">Facebook Url</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-label-group">
+                                                            <input type="text" id="port" class="form-control"
+                                                                   name="instagram_url" placeholder="Instagram Url"
+                                                                   value="{{$settings->instagram_url}}">
+                                                            <label for="instagram_url">Instagram Url</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-label-group">
                                                             <input type="number" id="port" class="form-control"
                                                                    name="phone_number" placeholder="Phone number"
                                                                    value="{{$settings->phone_number}}">

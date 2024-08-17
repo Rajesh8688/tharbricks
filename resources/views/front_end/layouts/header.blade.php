@@ -28,7 +28,7 @@
 
                     <ul class=" nav navbar-nav">
                       <li class="{{Request::segment(1) == '' ? 'current-menu-item' : '' }}" ><a href="{{url('/')}}">{{__('lang.home')}}</a></li>
-                      <li class="{{Request::segment(1) == 'service' ? 'current-menu-item' : '' }}" ><a href="{{route('service')}}">{{__('lang.service')}}</a></li>
+                      <li class="{{Request::segment(1) == 'service' ? 'current-menu-item' : '' }}" ><a href="{{route('service')}}">{{__('lang.services')}}</a></li>
                       <li class="{{Request::segment(1) == 'blogs' ? 'current-menu-item' : '' }}" ><a href="{{route('blogs')}}">{{__('lang.blog')}}</a></li>
 
                       {{-- <li class="has-child">
@@ -85,7 +85,7 @@
                               <li><a href="blog-detail.html">Blog detail</a></li>
                           </ul>                                
                       </li> --}}
-                      <li class="{{Request::segment(1) == 'contact-us' ? 'current-menu-item' : '' }}" ><a href="{{url('/contact-us')}}">{{__('lang.contact')}}</a></li>
+                      <li class="{{Request::segment(1) == 'contact-us' ? 'current-menu-item' : '' }}" ><a href="{{url('/contact-us')}}">{{__('lang.contact_us')}}</a></li>
                       
                     </ul>
                 </div>

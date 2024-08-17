@@ -43,6 +43,10 @@ class SettingsController extends Controller
         $settings->email = $request->email;
         $settings->phone_number = $request->phone_number;
         $settings->address = $request->address;
+        $settings->x_url = $request->x_url;
+        $settings->whatsapp_number = $request->whatsapp_number;
+        $settings->facebook_url = $request->facebook_url;
+        $settings->instagram_url = $request->instagram_url;
 
         // $settings->host = $request->host;
         // $settings->port = $request->port;

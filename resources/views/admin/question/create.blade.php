@@ -95,10 +95,11 @@
                                                     <div class="col-md-6 col-12">
                                                         <label for="first-name-column">Service</label>
                                                         <div class="form-label-group">
+                                                            <?php $serviceId = request()->query('service_id')?>
                                                         <select name="service_id" class="form-control @error('service_id') is-invalid @enderror" required id="service_id">
                                                             <option value = "" >Select Service</option>
                                                             @foreach($services as $service)
-                                                                <option value = "{{$service->id}}" {{old('service_id') == $service->id ? 'selected' : ''}}>{{$service->name}}</option>
+                                                                <option value = "{{$service->id}}" {{ (old('service_id') == $service->id || $serviceId == $service->id )? 'selected' : ''}}>{{$service->name}}</option>
                                                             @endforeach
                                                         </select>
                                                         @error('service_id')
@@ -110,7 +111,7 @@
                                                         </div>
                                                     </div>
                                                     
-                                                    <div class="col-md-6 col-12"> 
+                                                    {{-- <div class="col-md-6 col-12"> 
                                                         <div class="form-label-group">
                                                             <div class="custom-control custom-switch mr-2 mb-1">
                                                                 <p class="mb-0">show Others </p>
@@ -122,7 +123,7 @@
                                                                     for="customSwitch4"></label>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
 
                                                 <div class="row">

@@ -119,9 +119,9 @@
                             <h2 class="sf-title">{{__('lang.popular_services')}}</h2>
                         </div>
                         <!-- COLUMNS RIGHT -->
-                        <div class="col-lg-6 col-md-12">
+                        {{-- <div class="col-lg-6 col-md-12">
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do usmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <!--Title Section End-->
@@ -242,9 +242,9 @@
                             <span class="aon-sub-title">{{__('lang.vendor')}}</span>
                             <h2 class="sf-title">{{__('lang.featured_vendors')}}</h2>
                         </div>
-                        <div class="col-lg-6 col-md-12">
+                        {{-- <div class="col-lg-6 col-md-12">
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do usmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <!--Title Section Start-->
@@ -466,9 +466,9 @@
                             <span class="aon-sub-title">{{__('lang.blog')}}</span>
                             <h2 class="sf-title">{{__('lang.latest_blogs')}}</h2>
                         </div>
-                        <div class="col-lg-6 col-md-12">
+                        {{-- <div class="col-lg-6 col-md-12">
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do usmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
@@ -530,9 +530,9 @@
                             <span class="aon-sub-title">{{__('lang.testimonials')}}</span>
                             <h2 class="aon-title">{{__('lang.what_people_say')}}</h2>
                         </div>
-                        <div class="col-lg-6 col-md-12">
+                        {{-- <div class="col-lg-6 col-md-12">
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do usmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                     
@@ -705,7 +705,7 @@
     }
 
     function getQuestions(serviceId=null ,questionId = null,step =1){
-   
+        console.log(serviceId,questionId,step);
         $.ajax({
             type: 'get',
             url: url,
@@ -851,6 +851,7 @@
                             <div class="col-9">
                                 <div class="form-group">
                                     <input type="text" class="form-control QuestionStep`+currentStep+`" name="phone" required id = 'phoneNumber'>
+                                    <div id="mobileVerification" style="display: block;color: red;" class="">(Please Verify Your Number)</div>
                                     <div id ="ErrorphoneNumber" style="display: none;color: red;" class=""></div>
                                     <input type="hidden" name="serverOtp" id = 'serverOtp'>
                                 </div>
@@ -913,25 +914,25 @@
 
     function nextQuestion(formtype,questionId){
         validateStep = ($(".step[data-step]").length - 1);
-    
         var isvalid = false;
         isvalid = validateAnswer(formtype , validateStep);
         if(isvalid){
+            if(formtype == "imageRadio" || formtype == "normalRadio"){
+                optionNext =  $(".QuestionStep"+validateStep+":checked").data("nextquestionid");
+                if(!(optionNext == '' || optionNext == null || optionNext == undefined )){
+                    questionId = optionNext;
+                }
+            }
             if(questionId == null){
                 htmlMaker(null,null,null,'yes');
             }else{
-                if(formtype == "imageRadio" || formtype == "normalRadio"){
-                    optionNext =  $(".QuestionStep"+validateStep+":checked").data("nextquestionid");
-                    if(!(optionNext == '' || optionNext == null || optionNext == undefined )){
-                        questionId = optionNext;
-                    }
-                }
                 getQuestions(null,questionId);
             }
         }   
     }
     
     function validateAnswer(formtype ,validateStep){
+        var value = '';
         if(formtype == "input" || formtype == "date" || formtype == "imageRadio" || formtype == "normalRadio" || formtype == "multiSelect"){
             if(formtype == "input" || formtype == "date"){
                 value = $(".QuestionStep"+validateStep).val();
@@ -1081,6 +1082,7 @@
         }else{
             $("#ErrorphoneNumber").html("");
             $("#ErrorphoneNumber").css("display","none");
+            $("#mobileVerification").css("display","none");
             sendOTP(phone).then((otp) => {
                 serverOtp = $("#serverOtp").val(otp);
                 $("#otpDiv").css("display","block");

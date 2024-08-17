@@ -35,6 +35,8 @@ class CreateSettingsTable extends Migration
             $table->string('instagram_url')->nullable();
             $table->string('twitter_url')->nullable();
             $table->string('youtube_url')->nullable();
+            $table->string('x_url')->nullable();
+            $table->string('whatsapp_number')->nullable();
             $table->text('google_analytics')->nullable();
             $table->enum('maintenance', ['0', '1'])->default('0');
             $table->string('phone_number')->nullable();

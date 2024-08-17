@@ -21,7 +21,7 @@
                 <div class="container">
                     <div class="row">
                         <!-- Footer col 1--> 
-                        <div class="col-lg-3 col-md-6 col-sm-6  m-b30">
+                        <div class="col-lg-4 col-md-6 col-sm-6  m-b30">
                             <div class="sf-site-link sf-widget-link">
                                 <h4 class="sf-f-title">{{__('lang.site_links')}}</h4>
                                 <ul>
@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <!-- Footer col 2-->
-                        <div class="col-lg-3 col-md-6 col-sm-6  m-b30">
+                        {{-- <div class="col-lg-3 col-md-6 col-sm-6  m-b30">
                             <div class="sf-site-link sf-widget-cities">
                                 <h4 class="sf-f-title">Popular Cities</h4>
                                 <ul>
@@ -42,9 +42,9 @@
                                     <li><a href="all-categories.html">Cambridge</a></li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- Footer col 1-->
-                        <div class="col-lg-3 col-md-6 col-sm-6  m-b30">
+                        <div class="col-lg-4 col-md-6 col-sm-6  m-b30">
                             <div class="sf-site-link sf-widget-categories">
                                 <h4 class="sf-f-title">Categories</h4>
                                 <ul>
@@ -56,7 +56,7 @@
                             </div>
                         </div>
                         <!-- Footer col 1-->
-                        <div class="col-lg-3 col-md-6 col-sm-6  m-b30">
+                        <div class="col-lg-4 col-md-6 col-sm-6  m-b30">
                             <div class="sf-site-link sf-widget-contact">
                                 <h4 class="sf-f-title">Contact Info</h4>
                                 <ul>
@@ -79,13 +79,15 @@
                     	<div class="sf-f-copyright">
                         	<span>Copyright {{ date('Y') }} | Tharbricks All Rights Reserved</span>
                         </div>
+
+                  
                        
                         <div class="sf-f-social">
                             <ul class="socila-box">
-                                <li><a href="javascript:void(0);"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="javascript:void(0);"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="javascript:void(0);"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="javascript:void(0);"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="{{$GeneralSettings->x_url ?? 'javascript:void(0);'}}" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="{{$GeneralSettings->facebook_url ?? 'javascript:void(0);'}}" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="https://wa.me/{{$GeneralSettings->whatsapp_number}}" target="_blank"><i class="fa fa-whatsapp"></i></a></li>
+                                <li><a href="{{$GeneralSettings->instagram_url ?? 'javascript:void(0);'}}" target="_blank"><i class="fa fa-instagram"></i></a></li>
                             </ul>
                         </div>
                         

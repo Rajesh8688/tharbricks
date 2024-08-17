@@ -170,8 +170,9 @@ class QuestionController extends Controller
         //         $questionOption->save();
         //     }
         // }
+        
        
-        return redirect()->route('question.index')->with('success','Question created Successfully');
+        return redirect()->route('question.index', ['service_id' => $question->service_id])->with('success','Question created Successfully');
     }
 
     public function edit($id)
@@ -341,9 +342,8 @@ class QuestionController extends Controller
             }
         }
         $qq = QuestionOption::whereNotIn('id' , $questionOptionId)->where("question_id" , $question->id)->delete();
-
-
-        return redirect()->route('question.index')->with('success', 'Updated Successfully');
+        
+        return redirect()->route('question.index', ['service_id' => $question->service_id])->with('success','Question Updated Successfully');
 
     }
 }

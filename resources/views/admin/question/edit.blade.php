@@ -111,7 +111,7 @@
                                                         </div>
                                                     </div>
                                                     
-                                                    <div class="col-md-6 col-12"> 
+                                                    {{-- <div class="col-md-6 col-12"> 
                                                         <div class="form-label-group">
                                                             <div class="custom-control custom-switch mr-2 mb-1">
                                                                 <p class="mb-0">show Others </p>
@@ -123,7 +123,7 @@
                                                                     for="customSwitch4"></label>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6 col-12">
