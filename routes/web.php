@@ -64,33 +64,41 @@ Route::get('review-success', [App\Http\Controllers\FrontEnd\HomeController::clas
 Route::get('review-failure', [App\Http\Controllers\FrontEnd\HomeController::class, 'reviewFailure'])->name('reviewFailure');
 Route::get('emailChecker', [App\Http\Controllers\FrontEnd\LeadController::class, 'emailChecker'])->name('emailChecker');
 Route::post('/subscribe', [App\Http\Controllers\FrontEnd\HomeController::class, 'subscribe'])->name('subscribe');
+Route::get('vendor/details/{id}', [App\Http\Controllers\FrontEnd\VendorController::class, 'details'])->name('vendor.details');
 
 
-Route::group(['middleware' => ['auth:web']], function() {
-    Route::get('vendor/dashboard', [App\Http\Controllers\FrontEnd\VendorController::class, 'dashboard'])->name('vendor-dashboard');
-    Route::get('vendor/leads', [App\Http\Controllers\FrontEnd\LeadController::class, 'leads'])->name('vendor-leads');
-    Route::get('vendor/leads/details', [App\Http\Controllers\FrontEnd\LeadController::class, 'leadDetails'])->name('vendor-lead-details');
-    Route::get('vendor/not-interested-lead', [App\Http\Controllers\FrontEnd\LeadController::class, 'notInterestedLead'])->name('vendor-not-interested-lead');
-    Route::get('vendor/interested-lead', [App\Http\Controllers\FrontEnd\LeadController::class, 'InterestedLead'])->name('vendor-interested-lead');
-    
-    Route::get('vendor/my-tharbricks', [App\Http\Controllers\FrontEnd\LeadController::class, 'myleads'])->name('my-tharbricks');
-    Route::get('vendor/response/details', [App\Http\Controllers\FrontEnd\LeadController::class, 'responseDetails'])->name('vendor-response-lead-details');
-    Route::get('vendor/activityLogger', [App\Http\Controllers\FrontEnd\LeadController::class, 'activityLogger'])->name('vendor-activity-logger');
-    Route::post('vendor/addEstimation', [App\Http\Controllers\FrontEnd\LeadController::class, 'addEstimation'])->name('vendor-estimation');
-    Route::post('vendor/addNotes', [App\Http\Controllers\FrontEnd\LeadController::class, 'addNotes'])->name('vendor-notes');
-    
-    Route::get('vendor/edit', [App\Http\Controllers\FrontEnd\VendorController::class, 'edit'])->name('vendor-edit');
-    Route::post('vendor/company/update', [App\Http\Controllers\FrontEnd\VendorController::class, 'updateCompanyDetails'])->name('update-company-details');
-    Route::post('vendor/user/update', [App\Http\Controllers\FrontEnd\VendorController::class, 'updateUserDetails'])->name('update-user-details');
-    Route::post('vendor/social-account/update', [App\Http\Controllers\FrontEnd\VendorController::class, 'updateSocialMediaDetails'])->name('update-vendor-social-account-details');
-    Route::post('vendor/update/services', [App\Http\Controllers\FrontEnd\VendorController::class, 'updateServices'])->name('update-vendor-services');
-    Route::post('vendor/update/questions', [App\Http\Controllers\FrontEnd\VendorController::class, 'updateQuestions'])->name('update-vendor-questions');
-    Route::post('vendor/image/upload', [App\Http\Controllers\FrontEnd\VendorController::class, 'uploadCompanyImage'])->name('update-company-image');
-    Route::post('vendor/image/delete', [App\Http\Controllers\FrontEnd\VendorController::class, 'deleteCompanyImage'])->name('delete-company-image');
-    Route::get('vendor/my-credits', [App\Http\Controllers\FrontEnd\VendorController::class, 'myCredits'])->name('my-credits');
-    // Route::post('vendor/my-credits', [App\Http\Controllers\RazorpayPaymentController::class, 'store']);
-    Route::post('vendor/my-credits', [App\Http\Controllers\FrontEnd\VendorController::class, 'storePayment']);
-    Route::get('vendor/update-response', [App\Http\Controllers\FrontEnd\LeadController::class, 'updateResponse'])->name('updateResponse');
+Route::group(['middleware' => ['auth:web']] ,  function() {
+
+    Route::group(['prefix' => 'vendor'] ,  function() {
+        Route::get('dashboard', [App\Http\Controllers\FrontEnd\VendorController::class, 'dashboard'])->name('vendor-dashboard');
+        Route::get('leads', [App\Http\Controllers\FrontEnd\LeadController::class, 'leads'])->name('vendor-leads');
+        Route::get('leads/details', [App\Http\Controllers\FrontEnd\LeadController::class, 'leadDetails'])->name('vendor-lead-details');
+        Route::get('not-interested-lead', [App\Http\Controllers\FrontEnd\LeadController::class, 'notInterestedLead'])->name('vendor-not-interested-lead');
+        Route::get('interested-lead', [App\Http\Controllers\FrontEnd\LeadController::class, 'InterestedLead'])->name('vendor-interested-lead');
+        
+        Route::get('my-tharbricks', [App\Http\Controllers\FrontEnd\LeadController::class, 'myleads'])->name('my-tharbricks');
+        Route::get('response/details', [App\Http\Controllers\FrontEnd\LeadController::class, 'responseDetails'])->name('vendor-response-lead-details');
+        Route::get('activityLogger', [App\Http\Controllers\FrontEnd\LeadController::class, 'activityLogger'])->name('vendor-activity-logger');
+        Route::post('addEstimation', [App\Http\Controllers\FrontEnd\LeadController::class, 'addEstimation'])->name('vendor-estimation');
+        Route::post('addNotes', [App\Http\Controllers\FrontEnd\LeadController::class, 'addNotes'])->name('vendor-notes');
+        
+        Route::get('edit', [App\Http\Controllers\FrontEnd\VendorController::class, 'edit'])->name('vendor-edit');
+        Route::post('company/update', [App\Http\Controllers\FrontEnd\VendorController::class, 'updateCompanyDetails'])->name('update-company-details');
+        Route::post('user/update', [App\Http\Controllers\FrontEnd\VendorController::class, 'updateUserDetails'])->name('update-user-details');
+        Route::post('social-account/update', [App\Http\Controllers\FrontEnd\VendorController::class, 'updateSocialMediaDetails'])->name('update-vendor-social-account-details');
+        Route::post('update/services', [App\Http\Controllers\FrontEnd\VendorController::class, 'updateServices'])->name('update-vendor-services');
+        Route::post('update/questions', [App\Http\Controllers\FrontEnd\VendorController::class, 'updateQuestions'])->name('update-vendor-questions');
+        Route::post('image/upload', [App\Http\Controllers\FrontEnd\VendorController::class, 'uploadCompanyImage'])->name('update-company-image');
+        Route::post('image/delete', [App\Http\Controllers\FrontEnd\VendorController::class, 'deleteCompanyImage'])->name('delete-company-image');
+        Route::get('my-credits', [App\Http\Controllers\FrontEnd\VendorController::class, 'myCredits'])->name('my-credits');
+        // Route::post('my-credits', [App\Http\Controllers\RazorpayPaymentController::class, 'store']);
+        Route::post('my-credits', [App\Http\Controllers\FrontEnd\VendorController::class, 'storePayment']);
+        Route::get('update-response', [App\Http\Controllers\FrontEnd\LeadController::class, 'updateResponse'])->name('updateResponse');
+
+
+    });
+
+
 
 
 

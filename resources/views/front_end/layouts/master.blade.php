@@ -17,6 +17,7 @@
     
     <!-- PAGE TITLE HERE -->
     <title>{{ env('APP_NAME') }} - {{ isset($titles['title']) && !empty($titles['title']) ? $titles['title'] : '' }}</title>
+    @yield('headMetaData')
     
     <!-- MOBILE SPECIFIC -->
     <meta name="viewport" content="width=device-width, initial-scale=1">

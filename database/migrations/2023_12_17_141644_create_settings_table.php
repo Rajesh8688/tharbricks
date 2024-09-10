@@ -41,6 +41,9 @@ class CreateSettingsTable extends Migration
             $table->enum('maintenance', ['0', '1'])->default('0');
             $table->string('phone_number')->nullable();
             $table->text('address')->nullable();
+            $table->string('x_url')->nullable();
+            $table->string('whatsapp_number')->nullable();
+            $table->string('linked_in_url')->nullable();
             $table->timestamps();
         });
     }

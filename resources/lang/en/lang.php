@@ -20,7 +20,6 @@
         'testimonials' => 'Testimonials',
         'what_people_say' => 'What People Say',
         'statics' => 'Statics',
-        'trusted_by_thousands_of_people_all_over_the_world' => 'Trusted by thousands of people all over the world',
         'vendors' => 'Vendors',
         'contact_us' => 'Contact Us',
         'home' => 'Home',
@@ -104,7 +103,7 @@
         'add_location' => 'Add Location',
         'what_do_you_love_most_about_your_job' => 'What do you love most about your job ?',
         'what_inspired_you_to_start_your_own_business' => 'What inspired you to start your own business?',
-        'why_should_our_clients_choose_you' => 'Why should our clients choose you?',
+        'why_should_our_clients_choose_you' => 'Why should our clients choose you ?',
         'can_you_provide_your_service_online_or_remotely_If_so_please_add_details' => 'Can you provide your service online or remotely? If so,please add details',
         'what_changes_have_made_to_keep_customers_safe_from_covid19?' => 'What changes have made to keep customers safe from Covid-19?',
         'how_long_have_you_been_in_business' => 'How long have you been in business?',
@@ -250,7 +249,23 @@
         'request_already_sent' => 'Request Already Sent',
         'request_sent_successfully' => 'Request Sent Successfully',
         'vendor_reviews' => 'Vendor Reviews',
-        'image_deleted_successfully' => 'Image Deleted Successfully'
+        'image_deleted_successfully' => 'Image Deleted Successfully',
+        'describe_your_task' => 'Describe Your Task',
+        'this_helps_us_determine_which_Taskers_We_are_abest_jobs' => 'This helps us determine which Taskers We are abest jobs.',
+        'choose_a_tasker' => 'Choose a Tasker',
+        'live_smarter' => 'Live Smarter',
+        'trusted_by_thousands_of_people_all_over_the_india' => 'Trusted by thousands of people all over the India',
+        'tagline' => 'Tagline',
+        'whatsapp_number' => 'Whatsapp',
+        'whatsapp' => 'WhatsApp',
+        'not_available' => 'Not Available',
+        'no_photos_available' => 'No Photos Available',
+        'request_a_quote' => 'Request a Quote',
+        'photos' => 'Photos',
+        'about_vendor' => 'About Vendor',
+        'no_description' => 'No Description',
+        'share' => 'Share',
+        'telephone' => 'Telephone'
 
         
       ];

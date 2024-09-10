@@ -19,6 +19,7 @@ class CreateServicesTable extends Migration
             $table->string('slug');
             $table->string('image');
             $table->string('icon');
+            $table->integer('sort_order')->default(0);
             $table->text('description')->nullable();
             $table->enum('status', ['Active', 'InActive'])->default('Active');
             $table->timestamps();

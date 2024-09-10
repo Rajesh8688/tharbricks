@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Review;
 use Laravel\Passport\HasApiTokens;
 use App\Permissions\HasPermissionsTrait;
 use Illuminate\Notifications\Notifiable;
@@ -98,5 +99,15 @@ class User extends Authenticatable
 
     public function vendorDetails(){
         return $this->hasOne(VendorDetails::class,'user_id','id');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function sumOfRatings()
+    {
+        return $this->reviews()->sum('rating');
     }
 }

@@ -10,18 +10,6 @@
                 <x-admin-breadcrumb :title="$titles['title']"></x-admin-breadcrumb>
             </div>
             <div class="content-body">
-                <section class="invoice-print mb-1">
-                    <div class="row">
-                        <div class="col-12 col-md-12 d-flex flex-column flex-md-row justify-content-end">
-                            <a href="{{route('service.create')}}" class="btn btn-primary btn-print mb-1 mb-md-0"><i
-                                    class="feather icon-plus-circle"></i>&nbsp;Add Service</a>
-                            </a>
-                        </div>
-                    </div>
-                </section>
-
-             
-
                 <!-- List Datatable Starts -->
                 <section id="basic-datatable">
                     <div class="row">
@@ -37,40 +25,45 @@
                                                 <thead>
                                                 <tr>
                                                     <th>Name</th>
-                                                    <th>Icon</th>
-                                                    <th>Order</th>
+                                                    {{-- <th>Image</th> --}}
+                                                    <th>Email</th>
+                                                    <th>Phone</th>
                                                     <th>Status</th>
                                                     <th>Actions</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
 
-                                                @if(count($services) > 0)
-                                                    @foreach($services as $service)
+                                                @if(count($vendors) > 0)
+                                                    @foreach($vendors as $vendor)
                                                         <tr>
-                                                            <td>{{$service->name}}</td>
-                                                            <td class="product-img">
-                                                                <img
-                                                                    src="{{$service->icon ?  asset('uploads/services/icons/'.$service->icon) : $noImage}} "
+                                                            <td>{{$vendor->name}}</td>
+                                                            {{-- <td class="product-img">
+                                                                <img 
+                                                                    src="{{$vendor->vendorDetails->company_logo ?  asset('uploads/company/'.$vendor->vendorDetails->company_logo) : $noImage}} "
                                                                     width="44"/>
-                                                            </td>
-                                                            <td>{{$service->sort_order}}</td>
-                                                            <td>{{$service->status}}</td>
+                                                            </td> --}}
+                                                            <td>{{$vendor->email}}</td>
+                                                            <td>{{$vendor->mobile}}</td>
+                                                            <td>{{$vendor->status}}</td>
                                                             <td>
-                                                                @can('question-view')
-                                                                <a href="{{ route('question.index', ['service_id' =>$service->id]) }}"><i
-                                                                        class="feather icon-edit"></i> Question View</a> |
-                                                                @endcan
-                                                          
-                                                                @can('service-update')
-                                                                    <a href="{{ route('service.edit', $service->id) }}"><i
+                                                              
+                                                                
+                                                                @can('vendor-update')
+                                                                    <a href="{{ route('vendor.edit', $vendor->id) }}"><i
                                                                             class="feather icon-edit"></i> Edit</a> |
                                                                 @endcan
+                                                                @can('vendor-view')
+                                                                    <a href="{{ route('vendor.view', $vendor->id) }}" class="text-primary"><i
+                                                                            class="feather icon-eye"></i> view</a> |
+                                                                @endcan
+                                                          
+                                                               
 
-                                                                @can('service-delete')
+                                                                @can('vendor-delete')
                                                                     <a href="javascript:" class="text-danger deleteBtn"
-                                                                       onclick="destroy({{$service->id}})"
-                                                                       data-id="{{$service->id}}"
+                                                                       onclick="destroy({{$vendor->id}})"
+                                                                       data-id="{{$vendor->id}}"
                                                                        data-toggle="modal"
                                                                        data-target="#deleteModal" id="deleteBtn"><i
                                                                             class="feather icon-trash"></i> Delete</a>
@@ -80,7 +73,7 @@
                                                     @endforeach
                                                 @else
                                                     <tr align="center" class="alert alert-danger">
-                                                        <td colspan="5">No Record(s)</td>
+                                                        <td colspan="6">No Record(s)</td>
                                                     </tr>
                                                 @endif
 
@@ -118,7 +111,7 @@
 
         // Functionality section
         function destroy(delId) {
-            let url = '{{ route("service.destroy", ":id") }}';
+            let url = '{{ route("vendor.destroy", ":id") }}';
             url = url.replace(':id', delId);
             $("#deleteForm").attr('action', url);
             $("#delete_id").val(delId);

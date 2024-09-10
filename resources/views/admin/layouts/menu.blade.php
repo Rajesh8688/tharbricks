@@ -18,11 +18,11 @@
             @endcan
             
             @can('service-view')
-                <li class=" nav-item {{Request::segment(2) == 'service' ? 'active' : '' }}"><a href="{{route('service.index')}}"><i class="feather icon-calendar"></i><span class="menu-title" data-i18n="Services">Service</span></a>
+                <li class=" nav-item {{Request::segment(2) == 'service' ? 'active' : '' }}"><a href="{{route('service.index')}}"><i class="feather icon-plus-square"></i><span class="menu-title" data-i18n="Services">Service</span></a>
             </li>
             @endcan
             @can('user-request-view')
-                <li class=" nav-item {{Request::segment(2) == 'user_request' ? 'active' : '' }}"><a href="{{route('user_request.index')}}"><i class="feather icon-message-circle"></i><span class="menu-title" data-i18n="User Requests">User Requests</span></a>
+                <li class=" nav-item {{Request::segment(2) == 'user_request' ? 'active' : '' }}"><a href="{{route('user_request.index')}}"><i class="feather icon-anchor"></i><span class="menu-title" data-i18n="User Requests">User Requests</span></a>
                 </li>
             @endcan
 
@@ -32,7 +32,7 @@
             @endcan
 
             @can('plan-view')
-                <li class=" nav-item {{Request::segment(2) == 'plan' ? 'active' : '' }}"><a href="{{route('plan.index')}}"><i class="feather icon-shopping-cart"></i><span class="menu-title" data-i18n="Plan">Plan</span></a>
+                <li class=" nav-item {{Request::segment(2) == 'plan' ? 'active' : '' }}"><a href="{{route('plan.index')}}"><i class="feather icon-credit-card"></i><span class="menu-title" data-i18n="Plan">Plan</span></a>
                 </li>
             @endcan
 
@@ -42,16 +42,24 @@
             @endcan
 
             @can('testimonials-view')
-                <li class=" nav-item {{Request::segment(2) == 'testimonials' ? 'active' : '' }}"><a href="{{route('testimonials.index')}}"><i class="feather icon-mail"></i><span class="menu-title" data-i18n="Plan">Testimonials</span></a>
+                <li class=" nav-item {{Request::segment(2) == 'testimonials' ? 'active' : '' }}"><a href="{{route('testimonials.index')}}"><i class="feather icon-slack"></i><span class="menu-title" data-i18n="Plan">Testimonials</span></a>
                 </li>
             @endcan
             
             @can('blogs-view')
-                <li class=" nav-item {{Request::segment(2) == 'blogs' ? 'active' : '' }}"><a href="{{route('blogs.index')}}"><i class="feather icon-mail"></i><span class="menu-title" data-i18n="Plan">Blogs</span></a>
+                <li class=" nav-item {{Request::segment(2) == 'blogs' ? 'active' : '' }}"><a href="{{route('blogs.index')}}"><i class="feather icon-box"></i><span class="menu-title" data-i18n="Plan">Blogs</span></a>
                 </li>
             @endcan
             @can('notifications-view')
-                <li class=" nav-item {{Request::segment(2) == 'notifications' ? 'active' : '' }}"><a href="{{route('notifications.index')}}"><i class="feather icon-mail"></i><span class="menu-title" data-i18n="Notifications">Notifications</span></a>
+                <li class=" nav-item {{Request::segment(2) == 'notifications' ? 'active' : '' }}"><a href="{{route('notifications.index')}}"><i class="feather icon-bell"></i><span class="menu-title" data-i18n="Notifications">Notifications</span></a>
+                </li>
+            @endcan
+            @can('vendor-view')
+                <li class=" nav-item {{Request::segment(2) == 'vendor' ? 'active' : '' }}"><a href="{{route('vendor.index')}}"><i class="feather icon-airplay"></i><span class="menu-title" data-i18n="Vendors">Vendors</span></a>
+                </li>
+            @endcan
+            @can('customer-view')
+                <li class=" nav-item {{Request::segment(2) == 'customer' ? 'active' : '' }}"><a href="{{route('customer.index')}}"><i class="feather icon-briefcase"></i><span class="menu-title" data-i18n="Customer">Customers</span></a>
                 </li>
             @endcan
 

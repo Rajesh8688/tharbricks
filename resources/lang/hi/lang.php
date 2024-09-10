@@ -250,7 +250,24 @@
         'request_already_sent' => 'अनुरोध पहले ही भेजा जा चुका है',
         'request_sent_successfully' => 'अनुरोध सफलतापूर्वक भेजा गया',
         'vendor_reviews' => 'विक्रेता समीक्षाएँ',
-        'image_deleted_successfully' => 'चित्र सफलतापूर्वक हटाया गया'
+        'image_deleted_successfully' => 'छवि सफलतापूर्वक हटाई गई',
+        'describe_your_task' => 'अपना कार्य विवरण दें',
+        'this_helps_us_determine_which_Taskers_We_are_abest_jobs' => 'यह हमें यह निर्धारित करने में मदद करता है कि कौन से टास्कर्स हम सबसे अच्छे कार्यों के लिए हैं।',
+        'choose_a_tasker' => 'एक टास्कर चुनें',
+        'live_smarter' => 'स्मार्ट तरीके से जिएं',
+        'trusted_by_thousands_of_people_all_over_the_india' => 'भारत भर में हजारों लोगों द्वारा विश्वसनीय',
+        'tagline' => 'टैगलाइन',
+        'whatsapp_number' => 'व्हाट्सएप',
+        'whatsapp' => 'व्हाट्सएप',
+        'not_available' => 'उपलब्ध नहीं है',
+        'no_photos_available' => 'कोई तस्वीरें उपलब्ध नहीं हैं',
+        'request_a_quote' => 'उद्धरण का अनुरोध करें',
+        'photos' => 'तस्वीरें',
+        'about_vendor' => 'विक्रेता के बारे में',
+        'no_description' => 'कोई विवरण नहीं',
+        'share' => 'साझा करें',
+        'telephone' => 'टेलीफोन'
+
 
 
     ];

@@ -250,7 +250,24 @@
         'request_already_sent' => 'ವಿನಂತಿ ಈಗಾಗಲೇ ಕಳುಹಿಸಲಾಗಿದೆ',
         'request_sent_successfully' => 'ವಿನಂತಿಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಕಳುಹಿಸಲಾಗಿದೆ',
         'vendor_reviews' => 'ವ್ಯಾಪಾರಿ ವಿಮರ್ಶೆಗಳು',
-        'image_deleted_successfully' => 'ಚಿತ್ರವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಅಳಿಸಲಾಗಿದೆ'
+        'image_deleted_successfully' => 'ಚಿತ್ರ ಯಶಸ್ವಿಯಾಗಿ ಅಳಿಸಲಾಗಿದೆ',
+        'describe_your_task' => 'ನಿಮ್ಮ ಕೆಲಸವನ್ನು ವಿವರಿಸಿ',
+        'this_helps_us_determine_which_Taskers_We_are_abest_jobs' => 'ಯಾವ ಟಾಸ್ಕರ್‌ಗಳು ನಾವು ಅತ್ಯುತ್ತಮ ಕೆಲಸಗಳಿಗೆ ಅಂತ ನಮಗೆ ನಿರ್ಧರಿಸಲು ಇದು ಸಹಾಯ ಮಾಡುತ್ತದೆ.',
+        'choose_a_tasker' => 'ಒಂದು ಟಾಸ್ಕರ್ ಆಯ್ಕೆಮಾಡಿ',
+        'live_smarter' => 'ಚಾತುರ್ಯದಿಂದ ಬದುಕಿ',
+        'trusted_by_thousands_of_people_all_over_the_india' => 'ಭಾರತದಾದ್ಯಂತ ಸಾವಿರಾರು ಜನರಿಂದ ವಿಶ್ವಾಸಾರ್ಹ',
+        'tagline' => 'ಟ್ಯಾಗ್ಲೈನ್',
+        'whatsapp_number' => 'ವಾಟ್ಸಾಪ್',
+        'whatsapp' => 'ವಾಟ್ಸಾಪ್',
+        'not_available' => 'ಲಭ್ಯವಿಲ್ಲ',
+        'no_photos_available' => 'ಯಾವುದೇ ಚಿತ್ರಗಳು ಲಭ್ಯವಿಲ್ಲ',
+        'request_a_quote' => 'ಕೊಟೇಶನ್ ಕೋರಿಕೆ',
+        'photos' => 'ಫೋಟೋಗಳು',
+        'about_vendor' => 'ವ್ಯಾಪಾರಿಯ ಬಗ್ಗೆ',
+        'no_description' => 'ವಿವರಣೆ ಲಭ್ಯವಿಲ್ಲ',
+        'share' => 'ಹಂಚಿಕೊಳ್ಳಿ',
+        'telephone' => 'ಟೆಲಿಫೋನ್'
+
 
     ];
 ?>

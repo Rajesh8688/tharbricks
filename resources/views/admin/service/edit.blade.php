@@ -70,55 +70,59 @@
                                                   
                                                         </div>
                                                     </div>
-
-                                              
-
-                                           
-                                                  
-
+                                                </div>
+                                                <div class="row">
                                                     <div class= "col-md-6 col-12">
-                                                        <div class="col-md-6 col-12">
-                                                            <label for="first-name-column">Icon(44*44)</label>
-                                                            <div class="form-label-group">
-                                                                <input type="file" id="icon" class="form-control @error('icon') is-invalid @enderror" placeholder="icon" name="icon" value="{{old('icon')}}">
-                                                                {{-- @error('icon')
-                                                                    <span class="invalid-feedback" role="alert">
-                                                                        <strong>{{ $message }}</strong>
-                                                                    </span>
-                                                                @enderror --}}
-                                                                
-                                                            </div>
+                                                        <label for="first-name-column">Icon(44*44)</label>
+                                                        <div class="form-label-group">
+                                                            <input type="file" id="icon" class="form-control @error('icon') is-invalid @enderror" placeholder="icon" name="icon" value="{{old('icon')}}">
+                                                            {{-- @error('icon')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror --}}
                                                         </div>
                                                     </div>
                                                     <div class= "col-md-6 col-12">
-                                                        <div class="col-md-6 col-12">
-                                                            <label for="first-name-column">Image(601*511)</label>
-                                                            <div class="form-label-group">
-                                                                
-                                                                <input type="file" id="image" class="form-control @error('image') is-invalid @enderror" placeholder="Image" name="image" value="{{old('image')}}">
-                                                                {{-- @error('image')
-                                                                    <span class="invalid-feedback" role="alert">
-                                                                        <strong>{{ $message }}</strong>
-                                                                    </span>
-                                                                @enderror --}}
-                                                                
-                                                            </div>
+                                                        <label for="first-name-column">Image(601*511)</label>
+                                                        <div class="form-label-group">
+                                                            
+                                                            <input type="file" id="image" class="form-control @error('image') is-invalid @enderror" placeholder="Image" name="image" value="{{old('image')}}">
+                                                            {{-- @error('image')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror --}}
                                                         </div>
                                                     </div>
-                                                    <div class="row">
-
-                                                        <div class="col-12">
-                                                            <div class="form-group">
-                                                                <label for="description">Description </label>
-                                                                <textarea id="ckeditor" class="form-control @error('description') is-invalid @enderror" rows="5" placeholder="Description" name="description" required>{{$service->description}}</textarea>
-                                                                @error('description')
-                                                                    <span class="invalid-feedback" role="alert">
-                                                                        <strong>{{ $message }}</strong>
-                                                                    </span>
-                                                                @enderror
-                                                            </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class= "col-md-6 col-12">
+                                                        <label for="first-name-column">Order</label>
+                                                        <div class="form-label-group">
+                                                            <input type="number" id="sort_order" class="form-control @error('sort_order') is-invalid @enderror" placeholder="Order" name="sort_order" value="{{$service->sort_order}}">
+                                                            @error('sort_order')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
                                                         </div>
-                                                    </div>  
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label for="description">Description </label>
+                                                            <textarea id="ckeditor" class="form-control @error('description') is-invalid @enderror" rows="5" placeholder="Description" name="description" required>{{$service->description}}</textarea>
+                                                            @error('description')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                </div>  
 
                                                 <div>&nbsp;</div>
                                                 <div class="col-md-8 offset-md-4">

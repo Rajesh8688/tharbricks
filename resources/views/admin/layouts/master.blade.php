@@ -9,6 +9,7 @@
     <meta name="description" content="Tharbricks | Admin">
     <meta name="keywords" content="Tharbricks,Admin">
     <meta name="author" content="Rajesh Vuppala">
+    
     <title>{{env('APP_NAME')}} - {{ !empty($title) ? $title : $titles['title']}}</title>
 
     <link rel="icon" href="{{asset('frontEnd/images/transperent-favion.png')}}" type="image/x-icon" />

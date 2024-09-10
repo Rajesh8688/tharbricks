@@ -28,14 +28,15 @@ Route::group([
     Route::resource('service', \App\Http\Controllers\Admin\ServiceController::class);//Service
     Route::resource('testimonials', \App\Http\Controllers\Admin\TestimonialsController::class);//Testimonials
     Route::resource('blogs', \App\Http\Controllers\Admin\BlogController::class);//Blogs
-    Route::resource('notifications', \App\Http\Controllers\Admin\PushNotificationsController::class);//Blogs
-
+    Route::resource('notifications', \App\Http\Controllers\Admin\PushNotificationsController::class);//Notifications
     Route::resource('user_request', \App\Http\Controllers\Admin\UserRequestController::class);//UserRequest
-
+    Route::resource('vendor', \App\Http\Controllers\Admin\VendorController::class);//Vendor
     Route::resource('question', \App\Http\Controllers\Admin\QuestionController::class);//question
     Route::resource('plan', \App\Http\Controllers\Admin\PlanController::class);//plan
+    Route::resource('customer', \App\Http\Controllers\Admin\CustomerController::class);//customer
     Route::resource('email-template', \App\Http\Controllers\Admin\EmailTemplateController::class);//email-template
     
+    Route::get('/vendor/view/{id}', [\App\Http\Controllers\Admin\VendorController::class , 'view'])->name('vendor.view');
     Route::get('/get-service-question', [\App\Http\Controllers\Admin\QuestionController::class , 'getCategorServiceQuestions'])->name('getServiceQuestions');
 
     Route::get('/user', [App\Http\Controllers\Admin\UserController::class, 'UserList'])->name('admin.userList');

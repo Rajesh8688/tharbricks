@@ -25,9 +25,11 @@
                             <div class="sf-site-link sf-widget-link">
                                 <h4 class="sf-f-title">{{__('lang.site_links')}}</h4>
                                 <ul>
-                                    <li><a href="{{route('blogs')}}">{{__('lang.blog')}}</a></li>
-                                    <li><a href="{{route('contactUs')}}">{{__('lang.contact_us')}}</a></li>
+                                    <li><a href="{{route('blogs')}}">{{__('lang.home')}}</a></li>
                                     <li><a href="{{route('service')}}">{{__('lang.services')}}</a></li>
+                                    <li><a href="{{route('blogs')}}">{{__('lang.blogs')}}</a></li>
+                                    <li><a href="{{route('contactUs')}}">{{__('lang.contact_us')}}</a></li>
+                                    
                                 </ul>
                             </div>
                         </div>
@@ -46,11 +48,10 @@
                         <!-- Footer col 1-->
                         <div class="col-lg-4 col-md-6 col-sm-6  m-b30">
                             <div class="sf-site-link sf-widget-categories">
-                                <h4 class="sf-f-title">Categories</h4>
+                                <h4 class="sf-f-title">{{__('lang.services')}}</h4>
                                 <ul>
-                                 
                                     @forEach($footerServices as $service)
-                                        <li><a href="categories-detail.html">{{$service->name}}</a></li>
+                                        <li><a href="{{route('serviceDetails',['slug'=>$service->slug])}}">{{ucfirst($service->name)}}</a></li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -61,9 +62,8 @@
                                 <h4 class="sf-f-title">Contact Info</h4>
                                 <ul>
                                     <li>India</li>
-                                    <li><a href="tel:+91 7624886912">+91 7624886912</a></li>
-        
-                                    <li> <a href="mailto:info@tharbricks.com">info@tharbricks.com</a></li>
+                                    <li><a href="tel:+91 {{$GeneralSettings->phone_number}}">+91 {{$GeneralSettings->phone_number}}</a></li>
+                                    <li> <a href="mailto:{{$GeneralSettings->email}}">{{$GeneralSettings->email}}</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -88,6 +88,7 @@
                                 <li><a href="{{$GeneralSettings->facebook_url ?? 'javascript:void(0);'}}" target="_blank"><i class="fa fa-facebook"></i></a></li>
                                 <li><a href="https://wa.me/{{$GeneralSettings->whatsapp_number}}" target="_blank"><i class="fa fa-whatsapp"></i></a></li>
                                 <li><a href="{{$GeneralSettings->instagram_url ?? 'javascript:void(0);'}}" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="{{$GeneralSettings->linked_in_url ?? 'javascript:void(0);'}}" target="_blank"><i class="fa fa-linkedin"></i></a></li>
                             </ul>
                         </div>
                         

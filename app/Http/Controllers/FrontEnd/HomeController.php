@@ -26,12 +26,12 @@ class HomeController extends Controller
         $titles = [
             'title' => "Home",
         ];
-        $Services = Service::where("status" , "Active")->limit(9)->get();
+        $Services = Service::where("status" , "Active")->orderBy('sort_order' , 'asc')->limit(9)->get();
         foreach ($Services as $key => $value) {
             $Services[$key]->leadCount = Lead::where(['service_id' => $value->id , 'status' => 'Active'])->count();
         }
         $Testimonials = Testimonial::with('service')->where("status" , "Active")->get();
-        $Vendors = User::with('vendorDetails')->where("is_vendor" , '1')->where("status" , "Active")->limit(6)->get();
+        $Vendors = User::with('vendorDetails')->withSum('reviews', 'rating')->where("is_vendor" , '1')->where("status" , "Active")->limit(6)->get();
         $Blogs = Blog::with('service')->where("status" , "Active")->orderBy('id' ,'DESC')->get();
         $noImage = asset(Config::get('constants.NO_IMG_ADMIN'));
         $staticsData = [
@@ -71,6 +71,11 @@ class HomeController extends Controller
         $userRequest->subject = $request->input('subject');
         $userRequest->message = $request->input('message');
 
+        if($request->has('vendor_id')){ 
+            $userRequest->type = 'vendor';
+            $userRequest->user_id = $request->input('vendor_id');
+        }
+
         if($userRequest->save()){
 
             //mail function need to implement
@@ -88,9 +93,9 @@ class HomeController extends Controller
             $emailMailer->cron_status = '0';
             $emailMailer->status = 'Active';
             $emailMailer->save();
-            return redirect()->route('contactUs')->with('success','Submited successfully.');
+            return back()->with('success','Request Submited successfully.');
         }else{
-            return redirect()->route('contactUs')->with('error','something went wrong');
+            return back()->with('error','Something went wrong');
         }
     }
 

@@ -177,10 +177,10 @@
                                 </div> --}}
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>{{__('lang.biography')}}</label>
+                                        <label>{{__('lang.tagline')}}</label>
                                         <div class="editer-wrap">
                                             <div class="editer-textarea">
-                                                <textarea class="form-control" rows="6" naame ="bio">{{old('description', auth()->user()->description)}}</textarea>
+                                                <textarea class="form-control" rows="6" name ="description">{{old('description', auth()->user()->description)}}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -230,9 +230,9 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>{{__('lang.mobile')}}</label>
+                                <label>{{__('lang.mobile')}} (Main)</label>
                                 <div class="aon-inputicon-box"> 
-                                    <input class="form-control sf-form-control @error('mobile') is-invalid @enderror" name="mobile" type="text" value="{{old('mobile', $vendorDetails->mobile)}}">
+                                    <input class="form-control sf-form-control @error('mobile') is-invalid @enderror" name="mobile" type="text" value="{{old('mobile',  auth()->user()->mobile)}}">
                                     <i class="aon-input-icon fa fa-phone"></i>
                                 </div>
                                 @error('mobile')
@@ -244,7 +244,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>{{__('lang.alt_mobile')}}</label>
+                                <label>{{__('lang.alt_mobile')}} </label>
                                 <div class="aon-inputicon-box"> 
                                     <input class="form-control sf-form-control @error('alter_mobile') is-invalid @enderror" name="alter_mobile" type="text" value="{{old('alter_mobile', $vendorDetails->alter_mobile)}}">
                                     <i class="aon-input-icon fa fa-phone"></i>
@@ -283,7 +283,7 @@
                                 <label>{{__('lang.describe_your_company')}}</label>
                                 <div class="editer-wrap">
                                     <div class="editer-textarea">
-                                        <textarea class="form-control" rows="6" naame ="company_description">{{old('years_in_business', $vendorDetails->company_description)}}</textarea>
+                                        <textarea class="form-control" rows="6" name ="company_description">{{old('company_description', $vendorDetails->company_description)}}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -530,10 +530,24 @@
                             <div class="form-group">
                                 <label>{{__('lang.instagram')}}</label>
                                 <div class="aon-inputicon-box"> 
-                                    <input class="form-control sf-form-control @error('instagram_url') is-invalid @enderror" name="company_name" type="text" value="{{old('instagram_url', $vendorDetails->instagram_url)}}">
+                                    <input class="form-control sf-form-control @error('instagram_url') is-invalid @enderror" name="instagram_url" type="text" value="{{old('instagram_url', $vendorDetails->instagram_url)}}">
                                     <i class="aon-input-icon fa fa-instagram"></i>
                                 </div>
                                 @error('instagram_url')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{__('lang.whatsapp_number')}}</label>
+                                <div class="aon-inputicon-box"> 
+                                    <input class="form-control sf-form-control @error('whatsapp_number') is-invalid @enderror" name="whatsapp_number" type="number" value="{{old('whatsapp_number', $vendorDetails->whatsapp_number)}}">
+                                    <i class="aon-input-icon fa fa-whatsapp"></i>
+                                </div>
+                                @error('whatsapp_number')
                                     <span class="text-danger" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

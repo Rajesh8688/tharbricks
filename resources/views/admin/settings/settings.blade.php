@@ -146,6 +146,14 @@
                                                             <label for="host">Phone Number</label>
                                                         </div>
                                                     </div>
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-label-group">
+                                                            <input type="number" id="port" class="form-control"
+                                                                   name="linked_in_url" placeholder="LinkedIn Url"
+                                                                   value="{{$settings->linked_in_url}}">
+                                                            <label for="host">LinkedIn Url</label>
+                                                        </div>
+                                                    </div>
                                                     <div class="col-12">
                                                             
                                                         <div class="form-group">

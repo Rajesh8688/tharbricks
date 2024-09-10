@@ -18,7 +18,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Edit Service</h4>
+                                    <h4 class="card-title">User Request</h4>
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
@@ -32,35 +32,18 @@
                                             @method('PUT')
                                             <div class="form-body">
                                                 <div class="row">
-
                                                     <div class="col-md-6 col-12">
                                                         <label for="first-name-column"> Name </label>
                                                         <div class="form-label-group">
-                                                            
-                                                            <input type="text" id="name" class="form-control"
-                                                                   placeholder="Name"
-                                                                   name="name"
-                                                                   value="{{$showUserRequest->name}}" autocomplete="off">
-                                                          
+                                                            <input type="text" id="name" class="form-control" placeholder="Name" name="name" value="{{$showUserRequest->name}}" autocomplete="off">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 col-12">
                                                         <label for="first-name-column"> Phone </label>
                                                         <div class="form-label-group">
-                                                            
-                                                            <input type="text" id="name" class="form-control"
-                                                                   placeholder=" Email"
-                                                                   name="name"
-                                                                   value="{{$showUserRequest->phone}}" autocomplete="off">
-                                                          
+                                                            <input type="text" id="name" class="form-control" placeholder=" Email" name="name" value="{{$showUserRequest->phone}}" autocomplete="off">
                                                         </div>
                                                     </div>
-
-                                              
-
-                                           
-                                                  
-
                                                     <div class= " col-12">
                                                         <label for="first-name-column">Email</label>
                                                         <div class="form-label-group">
@@ -73,20 +56,13 @@
                                                             <input type="text" id="icon" class="form-control " placeholder="icon" name="icon" value="{{$showUserRequest->subject}}">
                                                         </div>
                                                     </div>
-                                                    
-                                                   
-                                                   
                                                     <div class="col-12">
                                                         <div class="form-group">
                                                             <label for="description">Message </label>
                                                             <textarea  class="form-control" rows="8" placeholder="Description" name="description" required>{{$showUserRequest->message}}</textarea>
-                                                            
                                                         </div>
                                                     </div>
-                                                     
-
-                                              
-                                              
+                                                </div>
                                             </div>
                                         </form>
 

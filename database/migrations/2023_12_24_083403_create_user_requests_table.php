@@ -20,6 +20,8 @@ class CreateUserRequestsTable extends Migration
             $table->string('subject');
             $table->string('phone');
             $table->text('message');
+            $table->enum('type',['contactUs','vendor'])->default('contactUs');
+            $table->integer('user_id')->comment('Vendor Id');
             $table->timestamps();
         });
     }

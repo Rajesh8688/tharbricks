@@ -40,17 +40,10 @@
                                             <div class="aon-search-input category-select ">
                                                 <select id="categorysrh" name="catid" class="form-control sf-form-control aon-categories-select sf-select-box" title="Service">
                                                     <option class="bs-title-option" value="">{{__('lang.select_a_service')}}</option>
-
                                                     @foreach ($Services as $service)
-                                                    {{$icon = asset('uploads/services/icons/'.$service->icon)}}
-                                                
-                                                    
-                                                    <option value="{{$service->id}}" id = "servicedata{{$service->id}}" data-servicename = "{{$service->name}}" data-content="<img class='childcat-img' width='50' height='auto' style='border-radius: 5px !important' src={{$icon}}>
-                                                    
-                                                        <span class='childcat'>{{$service->name}}</span>">{{$service->name}}</option>
-                                                        
-                                                    @endforeach
-                                                                                                    
+                                                        {{$icon = asset('uploads/services/icons/'.$service->icon)}}
+                                                        <option value="{{$service->id}}" id = "servicedata{{$service->id}}" data-servicename = "{{$service->name}}" data-content="<img class='childcat-img' width='50' height='auto' style='border-radius: 5px !important' src={{$icon}}><span class='childcat'>{{ucfirst($service->name)}}</span>">{{ucfirst($service->name)}}</option>
+                                                    @endforeach                                        
                                                 </select>
                                             </div>
                                             <!-- COLUMNS 2 -->
@@ -140,7 +133,7 @@
                                         </div>
                                         <div class="aon-cate-area2-content">
                                             {{-- <h4 class="aon-tilte"><a href="{{route('serviceDetails',['slug'=>$item->slug])}}">{{$item->name}}</a></h4> --}}
-                                            <h4 class="aon-tilte">{{$item->name}}</h4>
+                                            <h4 class="aon-tilte">{{ucfirst($item->name)}}</h4>
                                             <p>{{$item->leadCount}} {{__('lang.listing')}}</p>
                                         </div>
                                     </div>
@@ -185,8 +178,8 @@
                                                 </span>
                                             </div>
                                             <div class="aon-howit-area2-content">
-                                                <h4 class="aon-tilte">Describe Your Task</h4>
-                                                <p>This helps us determine which Taskers We are abest jobs.</p>
+                                                <h4 class="aon-tilte">{{__('lang.describe_your_task')}}</h4>
+                                                <p>{{__('lang.this_helps_us_determine_which_Taskers_We_are_abest_jobs')}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -200,8 +193,8 @@
                                                 </span>
                                             </div>
                                             <div class="aon-howit-area2-content">
-                                                <h4 class="aon-tilte">Choose a Tasker</h4>
-                                                <p>This helps us determine which Taskers We are abest jobs.</p>
+                                                <h4 class="aon-tilte">{{__('lang.choose_a_tasker')}}</</h4>
+                                                <p>{{__('lang.this_helps_us_determine_which_Taskers_We_are_abest_jobs')}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -215,8 +208,8 @@
                                                 </span>
                                             </div>
                                             <div class="aon-howit-area2-content">
-                                                <h4 class="aon-tilte">Live Smarter</h4>
-                                                <p>This helps us determine which Taskers We are abest jobs.</p>
+                                                <h4 class="aon-tilte">{{__('lang.live_smarter')}}</h4>
+                                                <p>{{__('lang.this_helps_us_determine_which_Taskers_We_are_abest_jobs')}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -261,30 +254,41 @@
                                         <div class="aon-pro-check"><span><i class="fa fa-check"></i></span></div>
                                         <div class="aon-pro-favorite"><a href="#"><i class="fa fa-heart-o"></i></a></div>
                                         <div class="aon-ow-info">
-                                            <h4 class="sf-title"><a href="profile-full.html">{{$vendor->name}}</a></h4>
+                                            <h4 class="sf-title"><a href="{{route('vendor.details' , ['id' =>encrypt($vendor->id)])}}">{{$vendor->name}}</a></h4>
                                             <span>{{$vendor->vendorDetails->company_name??''}}</span>
                                         </div>
                                     </div>
                                     <div class="aon-ow-mid">
                                         <div class="aon-ow-media media-bg-animate">
-                                            @if(!empty($vendor->vendorDetails->company_logo??''))
-                                                <a class="shine-box" href="profile-full.html"><img src="{{asset('uploads/company/'.$vendor->vendorDetails->company_logo)}}" alt=""></a>
+                                            @if(!empty($vendor->vendorDetails->company_logo))
+                                                <a class="shine-box" href="{{route('vendor.details' , ['id' =>encrypt($vendor->id)])}}"><img src="{{asset('uploads/company/'.$vendor->vendorDetails->company_logo)}}" alt=""></a>
                                             @else
                                                 <?php //dd($noImage)?>
-                                                <a class="shine-box" href="profile-full.html"><img src="{{asset('frontEnd/images/default-vendor-image.png')}}" alt=""></a>
+                                                <a class="shine-box" href="{{route('vendor.details' , ['id' =>encrypt($vendor->id)])}}"><img src="{{asset('frontEnd/images/default-vendor-image.png')}}" alt=""></a>
                                             @endif
                                           
                                         </div>
                                         <p>{{$vendor->description}}</p>
                                         <div class="aon-ow-pro-rating">
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star text-gray"></span>
+                                            @if(!empty($vendor->reviews_sum_rating))
+                                                @for($i = 1; $i <= 5; $i++)
+                                                    @if($i <= $vendor->reviews_sum_rating)
+                                                        <span class="fa fa-star"></span>
+                                                    @else
+                                                        <span class="fa fa-star text-gray"></span>
+                                                    @endif
+                                                @endfor
+                                            @else
+                                                <span class="fa fa-star"></span>
+                                                <span class="fa fa-star"></span>
+                                                <span class="fa fa-star"></span>
+                                                <span class="fa fa-star"></span>
+                                                <span class="fa fa-star"></span>
+                                            @endif
+                                         
                                         </div>
                                         <div class="aon-ow-bottom">
-                                            <a href="profile-full.html" class="site-button">Details</a>
+                                            <a href="{{route('vendor.details' , ['id' =>encrypt($vendor->id)])}}" class="site-button">Details</a>
                                         </div>
                                     </div>
                                 </div>
@@ -572,7 +576,7 @@
                         <!--Title Section Start-->
                         <div class="section-head aon-title-center white">
                             <span class="aon-sub-title">{{__('lang.statics')}}</span>
-                            <h2 class="sf-title">{{__('lang.trusted_by_thousands_of_people_all_over_the_world')}}</h2>
+                            <h2 class="sf-title">{{__('lang.trusted_by_thousands_of_people_all_over_the_india')}}</h2>
                         </div>
                             
                         <div class="section-content">

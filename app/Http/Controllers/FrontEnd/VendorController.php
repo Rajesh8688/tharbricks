@@ -31,6 +31,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\File;
+
 
 class VendorController extends Controller
 {
@@ -218,13 +220,18 @@ class VendorController extends Controller
         }
         $existingImages = [];
         $vendorImages = VendorImage::where(['user_id' => auth()->user()->id , 'status' => 'Active'])->get();
+        
         foreach ( $vendorImages as $file ) {
-            $obj['name'] = $file->image;
-            $file_path = public_path('/uploads/company/').$file->image;
-            $obj['size'] = filesize($file_path);          
-            $obj['path'] = asset('/uploads/company/'.$file->image);
-            $existingImages[] = $obj;
+           
+            if (File::exists(public_path('/uploads/company/'.$file->image))) {
+                $obj['name'] = $file->image;
+                $file_path = public_path('/uploads/company/').$file->image;
+                $obj['size'] = filesize($file_path);          
+                $obj['path'] = asset('/uploads/company/'.$file->image);
+                $existingImages[] = $obj;
+            } 
         }
+    
         
         $myservices = ServiceUser::with('service')->where(['user_id' => auth()->user()->id , 'status' => "Active"])->get();
         $myLocations = Location::where(["user_id" => auth('web')->user()->id])->OrderBy('id' , 'desc')->get();
@@ -313,6 +320,7 @@ class VendorController extends Controller
         $vendorDetails->years_in_business = $request->years_in_business;
         $vendorDetails->company_description = $request->company_description;
         $userDeatils = User::find(auth()->user()->id);
+
         if(!empty($request->mobile)){
             $userDeatils->mobile = $request->mobile;
             $userDeatils->save();
@@ -333,14 +341,16 @@ class VendorController extends Controller
             'twitter_url' => 'nullable|url',
             'linked_in_url' => 'nullable|url',
             'pinterest_url' => 'nullable|url',
-            'instagram_url' => 'nullable|url'
+            'instagram_url' => 'nullable|url',
         ]);
+
         $vendorDetails =  VendorDetails::where("user_id" , auth()->user()->id)->first();
         $vendorDetails->facebook_url = $request->facebook_url;
         $vendorDetails->twitter_url = $request->twitter_url;
         $vendorDetails->linked_in_url = $request->linked_in_url;
         $vendorDetails->pinterest_url = $request->pinterest_url;
         $vendorDetails->instagram_url = $request->instagram_url;
+        $vendorDetails->whatsapp_number = $request->whatsapp_number;
 
         if($vendorDetails->save()){
             return Redirect::back()->with(['success-info' => 'Social Media Details Updated successfully']);
@@ -538,6 +548,21 @@ class VendorController extends Controller
         }
 
 
+    }
+
+    public function details($encryptedId){
+        try {
+            $id = decrypt($encryptedId);
+            $tharBricksSettings = Setting::first();
+            $vendor = User::with('vendorDetails')->withSum('reviews', 'rating')->find($id);
+            $vendorImages = VendorImage::where(['user_id' => $id])->get();
+            $userServices = ServiceUser::with('service')->where(['user_id' => $id , "status" => 'Active'])->get();
+            $titles['title'] = ' vendor '. (!empty($vendor->vendorDetails->company_name)?$vendor->company_name : $vendor->name);
+            // $vendorUrl = route()
+            return view('front_end.vendor_details', compact('vendor','tharBricksSettings','userServices' , 'vendorImages' ,'titles'));
+        } catch (DecryptException $e) {
+            return redirect()->route('error.page');
+        }
     }
 
     

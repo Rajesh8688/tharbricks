@@ -68,6 +68,7 @@ class ServiceController extends Controller
             'status' => 'required',
             'image' => 'image|required|mimes:jpeg,png,jpg,svg,gif|max:2048',
             'icon' => 'image|required|mimes:jpeg,png,jpg,svg,gif|max:2048',
+            'sort_order' => 'required',
         ]);
 
         $data = array();
@@ -130,6 +131,7 @@ class ServiceController extends Controller
         $data['name'] = $request->name;
         $data['description'] = $request->description;
         $data['status'] = $request->status;
+        $data['sort_order'] = $request->sort_order;
         
         Service::create($data);
         return redirect()->route('service.index')->with('success','Service created Successfully');
@@ -183,6 +185,7 @@ class ServiceController extends Controller
             'status' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg,svg,gif|max:2048',
             'icon' => 'image|mimes:jpeg,png,jpg,svg,gif|max:2048',
+            'sort_order' => 'required',
         ]);
 
         $data = array();
@@ -224,6 +227,7 @@ class ServiceController extends Controller
         $service->name = $request->name;
         $service->slug = unique_slug($request->name, 'Service' , $service->id);;
         $service->status = $request->status;
+        $service->sort_order = $request->sort_order;
         $service->description = $request->description;
 
         $service->save();

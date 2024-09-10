@@ -29,35 +29,7 @@
                     <ul class=" nav navbar-nav">
                       <li class="{{Request::segment(1) == '' ? 'current-menu-item' : '' }}" ><a href="{{url('/')}}">{{__('lang.home')}}</a></li>
                       <li class="{{Request::segment(1) == 'service' ? 'current-menu-item' : '' }}" ><a href="{{route('service')}}">{{__('lang.services')}}</a></li>
-                      <li class="{{Request::segment(1) == 'blogs' ? 'current-menu-item' : '' }}" ><a href="{{route('blogs')}}">{{__('lang.blog')}}</a></li>
-
-                      {{-- <li class="has-child">
-                          <a href="javascript:;">Pages</a>
-                          <ul class="sub-menu">
-                              <li><a href="about-us.html">About us</a></li>
-                              <li><a href="javascript:;">Categories</a>
-                                  <ul class="sub-menu">
-                                      <li><a href="all-categories.html">All Categories</a></li>
-                                      <li><a href="categories-detail.html">Categories Detail</a></li>
-                                      <li><a href="categories-detail-2.html">Categories Detail 2</a></li>
-                                  </ul>
-                              </li>
-
-                              <li><a href="javascript:;">Search</a>
-                                  <ul class="sub-menu">
-                                      <li><a href="search-list.html">Search List</a></li>
-                                      <li><a href="new-search-list-2.html">Search List 2</a></li>
-                                      <li><a href="search-list-map.html">Search List Map</a></li>
-                                      <li><a href="search-list-map2.html">Search List Map 2</a></li>
-                                      <li><a href="search-grid.html">Search-grid</a></li>
-                                      <li><a href="search-grids-map.html">Search-grid-map</a></li>
-                                      <li><a href="search-grid-map2.html">Search-grid-map2</a></li>
-                                  </ul>
-                              </li>
-                              <li><a href="error-404.html">Error 404</a></li>
-                          </ul>                                
-                      </li> --}}
-
+                      <li class="{{Request::segment(1) == 'blogs' ? 'current-menu-item' : '' }}" ><a href="{{route('blogs')}}">{{__('lang.blogs')}}</a></li>
                       <li class="has-child"><a href="javascript:;">{{__('lang.language')}}</a>
                           <ul class="sub-menu">
                               <li><a href="{{route('changelang',['lang'=>'en'])}}">English</a></li>
@@ -65,48 +37,9 @@
                               <li><a href="{{route('changelang',['lang'=>'kn'])}}">ಕನ್ನಡ</a></li>
                           </ul>                                                                 
                       </li>
-
-                      {{--<li class="has-child"><a href="javascript:;">Jobs</a>
-                          <ul class="sub-menu">
-                              <li><a href="job-listing.html">Job listing</a></li>                                        
-                              <li><a href="job-grid.html">Job grid</a></li>
-                              <li><a href="job-detail.html">Job detail</a></li>                                        
-                          </ul>                                
-                      </li>
-
-                      <li class="has-child"><a href="javascript:;">Blog</a>
-                          <ul class="sub-menu">
-                              <li><a href="blog-grid.html">Blog Grid</a></li>                                        
-                              <li><a href="blog-grid-2.html">Blog Grid 2</a></li>
-                              <li><a href="blog-list.html">Blog list</a></li>
-                              <li><a href="blog-list-2.html">Blog list 2</a></li>
-                              <li><a href="blog-list-3.html">Blog list 3</a></li>
-                              <li><a href="blog-list-4.html">Blog list 4</a></li>
-                              <li><a href="blog-detail.html">Blog detail</a></li>
-                          </ul>                                
-                      </li> --}}
                       <li class="{{Request::segment(1) == 'contact-us' ? 'current-menu-item' : '' }}" ><a href="{{url('/contact-us')}}">{{__('lang.contact_us')}}</a></li>
-                      
                     </ul>
                 </div>
-               
-                    
-                    
-                
-                {{-- <div class="header-widget">
-                    <div class="aon-admin-messange sf-toogle-btn">
-                        <i class="feather-globe"></i>
-                        <span class="header-toltip">{{__('lang.language')}}</span>
-                    </div>
-                    <div class="ws-toggle-popup popup-tabs-wrap-section " style ="width: revert-layer">
-                        <ul class="popup-curra-lang-list">
-                            <li> <a  href="{{route('changelang',['lang'=>'en'])}}">{{__('lang.english')}}</a></li>
-                            <li> <a  href="{{route('changelang',['lang'=>'hi'])}}">हिंदी</a></li>
-                            <li> <a  href="{{route('changelang',['lang'=>'kn'])}}">ಕನ್ನಡ</a></li>
-                        </ul>
-                    </div>
-                </div> --}}
-           
 
                 @if(Auth::guard('web')->check())
                 <div class="header-widget">
