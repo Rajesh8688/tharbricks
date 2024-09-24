@@ -1,7 +1,6 @@
 /node_modules
 /public/hot
-/public/storage/framework
-/public/storage/logs
+/public/storage
 /storage/*.key
 /vendor
 .env.backup
@@ -11,3 +10,8 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 /public/uploads/*
+
+
+
+# Except for .json files in the app directory
+!/storage/app/*.json
