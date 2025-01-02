@@ -294,5 +294,43 @@ if (! function_exists('deleteImage')) {
                 }
             }
         }
+     
+    if (! function_exists('callApi')) {
+        function callApi($url, $method = 'GET', $params = [], $headers = [])
+        {
+            $client = new Client();
+
+            try {
+                // Set up options with parameters and headers
+                $options = [
+                    'headers' => $headers,
+                ];
+
+                if ($method == 'GET') {
+                    $options['query'] = $params;
+                } else {
+                    $options['json'] = $params;
+                }
+
+                // Send the request
+                $response = $client->request($method, $url, $options);
+
+                // Return the response as an array
+                return [
+                    'status' => true,
+                    'data' => json_decode($response->getBody()->getContents(), true),
+                ];
+            } catch (\Exception $e) {
+                // Handle errors and return them
+                return [
+                    'status' => false,
+                    'error' => $e->getMessage(),
+                ];
+            }
+        }
+    }    
+
+
+
 }
 ?>
